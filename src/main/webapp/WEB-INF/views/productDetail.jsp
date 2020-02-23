@@ -32,7 +32,7 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
+            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -85,136 +85,145 @@
                 <p>
                     technika wykonania: <b>${product.makingTechnique.namePl}</b><br>
                     użyty materiał: <b>${product.material.namePl}</b><br>
-                    kolor: <b>${product.color}</b><br>
-                    zapięcie <b>${product.fasteningType.namePl}</b><br>
-                    kolor zapięcia <b>${product.fasteningColor}</b><br>
+                    kolor materiału: <b>
+                    <select name="colorId" class="" onchange="this.form.submit()">
+                        <option selected="selected"
+                                value="${product.materialColor.id}">
+                            ${product.materialColor.namePl}
+                        </option>
+                        <c:forEach var="color" items="${colors}">
+                            <option value="${color.materialColor.namePl}">${color.materialColor.namePl} - dostępność w ${color.availability}</option>
+                        </c:forEach>
+                    </select></b><br>
+                    zapięcie: <b>${product.fasteningType.namePl}</b><br>
+                    kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br>
                     długość: <b>${product.length} mm</b><br>
                     szerokość: <b>${product.width} mm</b><br>
                     <b>Opis:</b><br> ${product.description}
                 </p>
             </div>
-
-
         </div>
 
-
-        <div class="w3-col l3 s6">
-            <c:forEach var="color" items="${colors}">
+        <c:forEach var="color" items="${colors}">
+            <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="/images/${product.id}_1.webp" style="width:100%">
+                    <img src="/images/${product.id}_${color.materialColor.id}.webp" style="width:100%">
+                    <p>${color.materialColor.namePl}</p>
                 </div>
-            </c:forEach>
+            </div>
+        </c:forEach>
+        <div class="w3-container">
             <i class="fa fa-arrow-left"></i>
-            <a href="${pageContext.request.contextPath}/${product.type.name}">cofnij</a>
+            <a href="${pageContext.request.contextPath}/types/${product.type.name}">cofnij</a>
         </div>
-
-
-        <%--        <div class="w3-col l3 s6">--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <div class="w3-display-container">--%>
-        <%--                    <img src="/w3images/jeans2.jpg" style="width:100%">--%>
-        <%--                    <span class="w3-tag w3-display-topleft">New</span>--%>
-        <%--                    <div class="w3-display-middle w3-display-hover">--%>
-        <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
-        <%--                    </div>--%>
-        <%--                </div>--%>
-        <%--                <p>Mega Ripped Jeans<br><b>$19.99</b></p>--%>
-        <%--            </div>--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
-        <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-
-        <%--        <div class="w3-col l3 s6">--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
-        <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
-        <%--            </div>--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <div class="w3-display-container">--%>
-        <%--                    <img src="/w3images/jeans4.jpg" style="width:100%">--%>
-        <%--                    <span class="w3-tag w3-display-topleft">Sale</span>--%>
-        <%--                    <div class="w3-display-middle w3-display-hover">--%>
-        <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
-        <%--                    </div>--%>
-        <%--                </div>--%>
-        <%--                <p>Vintage Skinny Jeans<br><b class="w3-text-red">$14.99</b></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
-
-        <%--        <div class="w3-col l3 s6">--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <img src="/w3images/jeans4.jpg" style="width:100%">--%>
-        <%--                <p>Vintage Skinny Jeans<br><b>$14.99</b></p>--%>
-        <%--            </div>--%>
-        <%--            <div class="w3-container">--%>
-        <%--                <img src="/w3images/jeans1.jpg" style="width:100%">--%>
-        <%--                <p>Ripped Skinny Jeans<br><b>$24.99</b></p>--%>
-        <%--            </div>--%>
-        <%--        </div>--%>
     </div>
 
-    <!-- Subscribe section -->
-    <%--    <div class="w3-container w3-black w3-padding-32">--%>
-    <%--        <h1>Subskrybuj</h1>--%>
-    <%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
-    <%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
-    <%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
-    <%--    </div>--%>
 
-    <!-- Footer -->
-    <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
-        <div class="w3-row-padding">
-            <div class="w3-col s4">
-                <h4>Kontakt</h4>
-                <p>Masz pytania? Napisz do mnie.</p>
-                <form action="/action_page.php" target="_blank">
-                    <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Imię" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Temat" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Treść wiadomości"
-                              required></p>
-                    <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
-                </form>
-            </div>
+    <%--        <div class="w3-col l3 s6">--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <div class="w3-display-container">--%>
+    <%--                    <img src="/w3images/jeans2.jpg" style="width:100%">--%>
+    <%--                    <span class="w3-tag w3-display-topleft">New</span>--%>
+    <%--                    <div class="w3-display-middle w3-display-hover">--%>
+    <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
+    <%--                    </div>--%>
+    <%--                </div>--%>
+    <%--                <p>Mega Ripped Jeans<br><b>$19.99</b></p>--%>
+    <%--            </div>--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
+    <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
 
-            <div class="w3-col s4">
-                <h4>Przydatne informacje</h4>
-                <p><a href="/regulations">Regulamin</a></p>
-                <p><a href="/payment">Formy płatności</a></p>
-                <p><a href="/shipping">Koszty przesyłki</a></p>
-                <p><a href="/return">Zwroty</a></p>
-            </div>
+    <%--        <div class="w3-col l3 s6">--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
+    <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
+    <%--            </div>--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <div class="w3-display-container">--%>
+    <%--                    <img src="/w3images/jeans4.jpg" style="width:100%">--%>
+    <%--                    <span class="w3-tag w3-display-topleft">Sale</span>--%>
+    <%--                    <div class="w3-display-middle w3-display-hover">--%>
+    <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
+    <%--                    </div>--%>
+    <%--                </div>--%>
+    <%--                <p>Vintage Skinny Jeans<br><b class="w3-text-red">$14.99</b></p>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
 
-            <div class="w3-col s4 w3-justify">
-                <h4>Dane sprzedającego</h4>
-                <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
-                <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
-                <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
-                <br>
-                <h6>Obsługuje nas</h6>
-                <i class='fab fa-dhl' style='font-size:48px'></i>
-                <i class='fab fa-ups' style='font-size:48px'></i>
-                <i class='fab fa-fedex' style='font-size:48px'></i>
-                <%--                <h4>We accept</h4>--%>
-                <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
-                <%--                <br>--%>
-                <%--                <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-instagram w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-twitter w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>--%>
-            </div>
+    <%--        <div class="w3-col l3 s6">--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <img src="/w3images/jeans4.jpg" style="width:100%">--%>
+    <%--                <p>Vintage Skinny Jeans<br><b>$14.99</b></p>--%>
+    <%--            </div>--%>
+    <%--            <div class="w3-container">--%>
+    <%--                <img src="/w3images/jeans1.jpg" style="width:100%">--%>
+    <%--                <p>Ripped Skinny Jeans<br><b>$24.99</b></p>--%>
+    <%--            </div>--%>
+    <%--        </div>--%>
+</div>
+
+<!-- Subscribe section -->
+<%--    <div class="w3-container w3-black w3-padding-32">--%>
+<%--        <h1>Subskrybuj</h1>--%>
+<%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
+<%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
+<%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
+<%--    </div>--%>
+
+<!-- Footer -->
+<footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+    <div class="w3-row-padding">
+        <div class="w3-col s4">
+            <h4>Kontakt</h4>
+            <p>Masz pytania? Napisz do mnie.</p>
+            <form action="/action_page.php" target="_blank">
+                <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Imię" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Temat" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Treść wiadomości"
+                          required></p>
+                <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
+            </form>
         </div>
-    </footer>
 
-    <div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
-            href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
+        <div class="w3-col s4">
+            <h4>Przydatne informacje</h4>
+            <c:forEach var="ruleSubject" items="${rules}">
+                <p><a href="/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
+            </c:forEach>
+        </div>
+
+        <div class="w3-col s4 w3-justify">
+            <h4>Dane sprzedającego</h4>
+            <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
+            <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
+            <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
+            <br>
+            <h6>Obsługuje nas</h6>
+            <i class='fab fa-dhl' style='font-size:48px'></i>
+            <i class='fab fa-ups' style='font-size:48px'></i>
+            <i class='fab fa-fedex' style='font-size:48px'></i>
+            <%--                <h4>We accept</h4>--%>
+            <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
+            <%--                <br>--%>
+            <%--                <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>--%>
+            <%--                <i class="fa fa-instagram w3-hover-opacity w3-large"></i>--%>
+            <%--                <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>--%>
+            <%--                <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>--%>
+            <%--                <i class="fa fa-twitter w3-hover-opacity w3-large"></i>--%>
+            <%--                <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>--%>
+        </div>
     </div>
+</footer>
 
-    <!-- End page content -->
+<div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
+        href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
+</div>
+
+<!-- End page content -->
 </div>
 
 <!-- Newsletter Modal -->

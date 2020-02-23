@@ -19,19 +19,22 @@ public class Product {
     private int id;
 
     private String name;
-    private String color;
     @ManyToOne(targetEntity = Type.class)
     private Type type;
+    @ManyToOne(targetEntity = Material.class)
+    private Material material;
+    @ManyToOne(targetEntity = MaterialColor.class)
+    private MaterialColor materialColor;
     private double length;
     private double width;
     @ManyToOne(targetEntity = FasteningType.class)
     private FasteningType fasteningType;  //zapięcie
-    private String fasteningColor;
-    @ManyToOne(targetEntity = Material.class)
-    private Material material;
+    @ManyToOne(targetEntity = FasteningColor.class)
+    private FasteningColor fasteningColor;
     @ManyToOne(targetEntity = MakingTechnique.class)
     private MakingTechnique makingTechnique;
     private int price;
+    @Column(length = 1000)
     private String description;
 
     public Product() {
@@ -61,12 +64,20 @@ public class Product {
         this.type = type;
     }
 
-    public String getColor() {
-        return color;
+    public Material getMaterial() {
+        return material;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public MaterialColor getMaterialColor() {
+        return materialColor;
+    }
+
+    public void setMaterialColor(MaterialColor color) {
+        this.materialColor = materialColor;
     }
 
     public double getLength() {
@@ -93,20 +104,12 @@ public class Product {
         this.fasteningType = fasteningType;
     }
 
-    public String getFasteningColor() {
+    public FasteningColor getFasteningColor() {
         return fasteningColor;
     }
 
-    public void setFasteningColor(String fasteningColor) {
+    public void setFasteningColor(FasteningColor fasteningColor) {
         this.fasteningColor = fasteningColor;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
     }
 
     public MakingTechnique getMakingTechnique() {

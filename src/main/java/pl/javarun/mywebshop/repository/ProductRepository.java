@@ -20,6 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Override
     Optional<Product> findById(Integer integer);
-    Set<Product> findAllByColor(String color);
+    Set<Product> findAllByMaterialColor(String materialColor);
     List<Product> findAllByType_Name(String name);
+
 }

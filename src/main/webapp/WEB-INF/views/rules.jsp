@@ -32,7 +32,7 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
+            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -60,7 +60,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">regulamin</p>
+        <p class="w3-left">${rule.namePl}</p>
         <p class="w3-right">
             <i class="fa fa-user w3-margin-right"></i>
             <i class="fa fa-search"></i>
@@ -87,7 +87,7 @@
         <div class="w3-row w3-grayscale">
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <h3 class="w3-wide"><b>Treść regulaminu..................</b></h3>
+                    <h3 class="w3-wide"><b>${rule.descriptionPl}</b></h3>
                 </div>
 
 
@@ -123,10 +123,9 @@
 
             <div class="w3-col s4">
                 <h4>Przydatne informacje</h4>
-                <p><a href="/regulations">Regulamin</a></p>
-                <p><a href="/payment">Formy płatności</a></p>
-                <p><a href="/shipping">Koszty przesyłki</a></p>
-                <p><a href="/return">Zwroty</a></p>
+                <c:forEach var="ruleSubject" items="${rules}">
+                    <p><a href="/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
+                </c:forEach>
             </div>
 
             <div class="w3-col s4 w3-justify">

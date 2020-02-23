@@ -1,9 +1,7 @@
 package pl.javarun.mywebshop.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -23,6 +21,10 @@ public class Material {
 
     private String name;
     private String namePl;
+
+    //TODO sprawdzić jak zrobić listę kolorów w oparciu o relacje
+//    @OneToMany(targetEntity = MaterialColor.class)
+//    private List<MaterialColor> materialColorList;
 
     public Material() {
     }

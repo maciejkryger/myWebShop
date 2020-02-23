@@ -1,9 +1,7 @@
 package pl.javarun.mywebshop.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -22,6 +20,7 @@ public class MaterialColor {
     private int id;
     private String name;
     private String namePl;
+
 
     public MaterialColor() {
     }

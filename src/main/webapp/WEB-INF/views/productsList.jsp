@@ -32,7 +32,7 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
+            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -132,10 +132,9 @@
 
             <div class="w3-col s4">
                 <h4>Przydatne informacje</h4>
-                <p><a href="/regulations">Regulamin</a></p>
-                <p><a href="/payment">Formy płatności</a></p>
-                <p><a href="/shipping">Koszty przesyłki</a></p>
-                <p><a href="/return">Zwroty</a></p>
+                <c:forEach var="ruleSubject" items="${rules}">
+                    <p><a href="/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
+                </c:forEach>
             </div>
 
             <div class="w3-col s4 w3-justify">
