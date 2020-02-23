@@ -26,4 +26,8 @@ public class MaterialColorService {
     public List<MaterialColor> getMaterialColorsByMaterialId(int id){
         return materialColorRepository.findMaterialColorsByMaterialId(id);
     }
+
+    public List<MaterialColor> getAllMaterialColors() {
+        return materialColorRepository.findAll();
+    }
 }

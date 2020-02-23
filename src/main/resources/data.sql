@@ -18,19 +18,19 @@ INSERT INTO user (username, password, first_name, last_name, email, role_id, cre
 values ('user', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0RC', 'Jan', 'Kowalski', 'test@wp.pl', 3,
         '2020-02-15', true, '2020-02-15', false, null, null);
 
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'bracelets', 'bransoletki');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'necklaces', 'naszyjniki');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'sets', 'komplety');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'pendants', 'wisiory');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'earrings', 'kolczyki');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'brooches', 'broszki');
-INSERT INTO type (id, name, name_Pl)
+INSERT INTO type (id, name, name_pl)
 values (nextval('type_seq'), 'decorations', 'ozdoby świąteczne');
 
 

@@ -40,4 +40,8 @@ public class ProductService {
     public Product getProductById(int id) {
         return productRepository.findById(id).orElseThrow(()->new ProductNotExistException("product "+id));
     }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 }

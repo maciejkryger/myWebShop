@@ -134,20 +134,11 @@
                 <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
                 <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
                 <br>
+                <h6>Media społecznościowe</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <br><br>
                 <h6>Obsługuje nas</h6>
                 <i class='fab fa-dhl' style='font-size:48px'></i>
-                <i class='fab fa-ups' style='font-size:48px'></i>
-                <i class='fab fa-fedex' style='font-size:48px'></i>
-                <%--                <h4>We accept</h4>--%>
-                <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
-                <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
-                <%--                <br>--%>
-<%--                <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-instagram w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-twitter w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>--%>
             </div>
         </div>
     </footer>

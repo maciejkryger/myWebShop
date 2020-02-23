@@ -1,11 +1,10 @@
 package pl.javarun.mywebshop.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.service.*;
 
 /**
@@ -24,34 +23,27 @@ public class FrontWebController {
     private final ProductService productService;
     private final TypeService typeService;
     private final CompanyService companyService;
-    private final MaterialColorService materialColorService;
     private final ColorPerMaterialService colorPerMaterialService;
     private final RuleService ruleService;
 
-    public FrontWebController(UserService userService, ProductService productService, TypeService typeService, CompanyService companyService, MaterialColorService materialColorService, ColorPerMaterialService colorPerMaterialService, RuleService ruleService) {
+    public FrontWebController(UserService userService, ProductService productService, TypeService typeService, CompanyService companyService, ColorPerMaterialService colorPerMaterialService, RuleService ruleService) {
         this.userService = userService;
         this.productService = productService;
         this.typeService = typeService;
         this.companyService = companyService;
-        this.materialColorService = materialColorService;
-        this.colorPerMaterialService=colorPerMaterialService;
+        this.colorPerMaterialService = colorPerMaterialService;
         this.ruleService = ruleService;
     }
 
     ModelAndView modelAndView;
 
-    @GetMapping("")
-    public ModelAndView getIndexPage() {
+    @GetMapping(value = {"", "/{id}"})
+    public ModelAndView getIndexPage(@PathVariable(required = false) String id) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         return modelAndView;
-    }
-
-    @GetMapping("/{id}")
-    public String getIndex2Page(@PathVariable(required = false) String id) {
-        return "redirect:/";
     }
 
 

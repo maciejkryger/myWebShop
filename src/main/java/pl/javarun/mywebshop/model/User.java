@@ -21,7 +21,7 @@ import java.util.Date;
  * *
  ******************************************************/
 @Entity
-public class User  {
+public class User {
 
     @Id
     @NotNull

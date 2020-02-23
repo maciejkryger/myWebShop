@@ -5,6 +5,7 @@ import pl.javarun.mywebshop.model.Company;
 import pl.javarun.mywebshop.repository.CompanyRepository;
 
 import javax.persistence.Entity;
+import java.util.List;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -25,5 +26,9 @@ public class CompanyService {
 
     public Company getCompanyData(){
         return companyRepository.getOne(1);
+    }
+
+    public List<Company> getAllCompanies(){
+        return companyRepository.findAll();
     }
 }

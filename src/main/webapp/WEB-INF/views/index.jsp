@@ -71,10 +71,10 @@
     <!-- Image header -->
     <div class="w3-display-container w3-container">
         <img src="/images/1.webp" alt="mainPage" style="width:100%">
-        <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-            <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
-            <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
-            <h1 class="w3-hide-small">COLLECTION 2020</h1>
+        <div class="w3-display-topleft w3-text-black" style="padding:24px 48px">
+            <h1 class="w3-jumbo w3-hide-small">Witam na mojej stronie :)</h1>
+            <h1 class="w3-hide-large w3-hide-medium">Witam na mojej stronie :)</h1>
+            <h1 class="w3-hide-small">Sylwia</h1>
         </div>
     </div>
     <br>
@@ -114,26 +114,21 @@
                 <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
                 <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
                 <br>
+                <h6>Media społecznościowe</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <br><br>
                 <h6>Obsługuje nas</h6>
                 <i class='fab fa-dhl' style='font-size:48px'></i>
-                <i class='fab fa-ups' style='font-size:48px'></i>
-                <i class='fab fa-fedex' style='font-size:48px'></i>
                 <%--                <h4>We accept</h4>--%>
                 <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
                 <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
-                <%--                <br>--%>
-                <%--                <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-instagram w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-twitter w3-hover-opacity w3-large"></i>--%>
-                <%--                <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>--%>
             </div>
         </div>
     </footer>
 
-    <div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
-            href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
+    <div class="w3-black w3-center w3-padding-24">Strona stworzona przez
+        <a href="mailto:javarun.pl@gmail.com" title="javarun" target="_blank" class="w3-hover-opacity">JAVArun</a>
+        na podstawie szablonu <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
     </div>
 
     <!-- End page content -->

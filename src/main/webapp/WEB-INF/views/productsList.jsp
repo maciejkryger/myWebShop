@@ -72,9 +72,9 @@
     <div class="w3-display-container w3-container">
         <img src="/images/1.webp" alt="${productType.namePL}" style="width:100%">
         <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-            <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>
-            <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>
-            <h1 class="w3-hide-small">COLLECTION 2020</h1>
+<%--            <h1 class="w3-jumbo w3-hide-small">Nowe modele</h1>--%>
+<%--            <h1 class="w3-hide-large w3-hide-medium">Nowe modele</h1>--%>
+<%--            <h1 class="w3-hide-small">KOLEKCJA 2020</h1>--%>
             <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO NASZYCH PRODUKTÓW</a></p>
         </div>
     </div>
@@ -96,11 +96,11 @@
 
     <!-- Product grid -->
     <div class="w3-row w3-grayscale">
-        <c:forEach var="product" items="${products}">
+        <c:forEach var="item" items="${products}">
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="/images/${product.id}.webp" style="width:100%">
-                    <p><a href="/details/${product.id}">${product.name}<br><b>${product.price} PLN</b></a></p>
+                    <img src="/images/${item.id}.webp" style="width:100%">
+                    <p><a href="/details/${item.id}">${item.name}<br><b>${item.price} PLN</b></a></p>
                 </div>
             </div>
         </c:forEach>
@@ -143,20 +143,15 @@
                 <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
                 <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
                 <br>
+                <h6>Media społecznościowe</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <br><br>
                 <h6>Obsługuje nas</h6>
                 <i class='fab fa-dhl' style='font-size:48px'></i>
-                <i class='fab fa-ups' style='font-size:48px'></i>
-                <i class='fab fa-fedex' style='font-size:48px'></i>
                 <%--                <h4>We accept</h4>--%>
                 <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
                 <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
-                <%--                <br>--%>
-<%--                <i class="fa fa-facebook-official w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-instagram w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-snapchat w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-pinterest-p w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-twitter w3-hover-opacity w3-large"></i>--%>
-<%--                <i class="fa fa-linkedin w3-hover-opacity w3-large"></i>--%>
+
             </div>
         </div>
     </footer>
