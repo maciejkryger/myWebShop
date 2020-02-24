@@ -37,7 +37,7 @@
         <a href="/panels/data/materialColors" class="w3-bar-item w3-button">Kolory materiałów</a>
         <a href="/panels/data/fasteningTypes" class="w3-bar-item w3-button">Zapięcia</a>
         <a href="/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory zapięć</a>
-        <a href="/panels/data/makingTechnique" class="w3-bar-item w3-button">Techniki wykonania</a>
+        <a href="/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki wykonania</a>
         ----------------------
         <a href="/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
         <a href="/panels/data/company" class="w3-bar-item w3-button">Dane firmy</a>

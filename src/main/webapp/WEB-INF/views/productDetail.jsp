@@ -32,7 +32,7 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
+            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -60,7 +60,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">${productType.namePL}</p>
+        <p class="w3-left">${productType.namePl}</p>
         <p class="w3-right">
             <i class="fa fa-user w3-margin-right"></i>
             <i class="fa fa-search"></i>

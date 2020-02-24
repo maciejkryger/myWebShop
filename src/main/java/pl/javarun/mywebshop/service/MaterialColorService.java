@@ -1,6 +1,8 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.MakingTechniqueNotExistException;
+import pl.javarun.mywebshop.exception.MaterialColorNotExistException;
 import pl.javarun.mywebshop.model.MaterialColor;
 import pl.javarun.mywebshop.repository.MaterialColorRepository;
 
@@ -29,5 +31,13 @@ public class MaterialColorService {
 
     public List<MaterialColor> getAllMaterialColors() {
         return materialColorRepository.findAll();
+    }
+
+    public MaterialColor getMaterialColorsById(Integer id) {
+        return materialColorRepository.findById(id).orElseThrow(()->new MaterialColorNotExistException("MaterialColor "+id));
+    }
+
+    public void save(MaterialColor materialColor) {
+        materialColorRepository.save(materialColor);
     }
 }

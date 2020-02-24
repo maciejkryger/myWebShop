@@ -35,4 +35,12 @@ public class TypeService {
     public List getAllTypes() {
         return typeRepository.findAll();
     }
+
+    public Type getTypeByNamePl(String namePl) {
+        return typeRepository.findByNamePl(namePl).orElseThrow(()->new TypeNotExistException("type "+namePl));
+    }
+
+    public void save(Type type) {
+        typeRepository.save(type);
+    }
 }

@@ -1,6 +1,8 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.FasteningTypeNotExistException;
+import pl.javarun.mywebshop.exception.MakingTechniqueNotExistException;
 import pl.javarun.mywebshop.model.FasteningType;
 import pl.javarun.mywebshop.repository.FasteningTypeRepository;
 
@@ -25,5 +27,13 @@ public class FasteningTypeService {
 
     public List<FasteningType> getAllFasteningTypes(){
         return fasteningTypeRepository.findAll();
+    }
+
+    public FasteningType getFasteningTypeById(Integer id) {
+        return fasteningTypeRepository.findById(id).orElseThrow(()->new FasteningTypeNotExistException("FasteningType "+id));
+    }
+
+    public void save(FasteningType fasteningType) {
+        fasteningTypeRepository.save(fasteningType);
     }
 }

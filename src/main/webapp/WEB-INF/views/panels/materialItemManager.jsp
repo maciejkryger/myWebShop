@@ -76,43 +76,38 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela użytkowników</h2>
+        <h2>Edycja materiału</h2>
         <div class="w3-responsive">
+            <a href="${pageContext.request.contextPath}/panels/data/materials/">
+                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+            </a>
             <table class="w3-table-all w3-hoverable">
-                <thead>
-                <tr class="w3-light-grey ">
-                    <th>username</th>
-                    <th>imię</th>
-                    <th>nazwisko</th>
-                    <th>email</th>
-                    <th>uprawnienia</th>
-                    <th>data utworzenia</th>
-                    <th>aktywny</th>
-                    <th>data aktywacji</th>
-                    <th>wykasowany</th>
-                    <th>data wykasowania</th>
-                    <th>opcje</th>
-                </tr>
-                </thead>
-                <c:forEach var="makingTechnique" items="${users}">
-                    <tr>
-                        <td>${makingTechnique.username}</td>
-                        <td>${makingTechnique.firstName}</td>
-                        <td>${makingTechnique.lastName}</td>
-                        <td>${makingTechnique.email}</td>
-                        <td>${makingTechnique.role.authority}</td>
-                        <td>${makingTechnique.creationDate}</td>
-                        <td>${makingTechnique.active}</td>
-                        <td>${makingTechnique.activationDate}</td>
-                        <td>${makingTechnique.deleted}</td>
-                        <td>${makingTechnique.deletingDate}</td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/${makingTechnique.username}">
-                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/materials/save/${material.id}"
+                      modelAttribute="product">
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+
+
+                    <p>
+                        <label><b>id: ${material.id}</b></label>
+                        <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
+                               value="${material.id}">
+                    </p>
+                    <p>
+                        <label><b>Nazwa ENG</b></label>
+                        <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
+                               value="${material.name}">
+                    </p>
+                    <p>
+                        <label><b>sNazwa PL</b></label>
+                        <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
+                               value="${material.namePl}">
+                    </p>
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                </form>
+                <a href="${pageContext.request.contextPath}/panels/data/materials/">
+                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+                </a>
+
             </table>
         </div>
 

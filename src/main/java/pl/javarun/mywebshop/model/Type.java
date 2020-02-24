@@ -42,7 +42,7 @@ public class Type {
         this.name = name;
     }
 
-    public String getNamePL() {
+    public String getNamePl() {
         return namePl;
     }
 

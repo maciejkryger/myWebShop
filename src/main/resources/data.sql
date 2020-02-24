@@ -585,12 +585,12 @@ values (nextval('product_seq'), 'Bransoletka z czerwonymi kryształkami.', 1, 6,
 INSERT INTO product (id, name, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
                      making_technique_id, price, description)
-values (nextval('product_seq'), 'Naszyjnik z źółtymi kryształkami.', 2, 19, 190, 7, 1, 3, 1, 2, 20,
+values (nextval('product_seq'), 'Naszyjnik z źółtymi kryształkami.', 2, 19, 190, 7, 1, 3, 5, 2, 20,
         'Delikatna Naszyjnik z koralików TOHO w połączeniu ze szklanymi kryształkami w kolorze czerwonym, baza bransoletki z koralików w kolorze srebrnym. Zapięcie na karabinek w kolorze srebrnym. .');
 INSERT INTO product (id, name, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
                      making_technique_id, price, description)
-values (nextval('product_seq'), 'Naszyjnik z niebieskimi kryształkami.', 2, 13, 190, 7, 1, 3, 1, 2, 32,
+values (nextval('product_seq'), 'Naszyjnik z niebieskimi kryształkami.', 2, 13, 190, 7, 1, 3, 5, 2, 32,
         'Delikatny naszyjnik z koralików TOHO w połączeniu ze szklanymi kryształkami w kolorze czerwonym, baza bransoletki z koralików w kolorze srebrnym. Zapięcie na karabinek w kolorze srebrnym. .');
 INSERT INTO product (id, name, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,

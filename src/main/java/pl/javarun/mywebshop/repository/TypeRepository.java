@@ -22,4 +22,5 @@ public interface TypeRepository extends JpaRepository<Type, Integer> {
     Optional<Type> findById(Integer integer);
     List<Type> findAllByName(String name);
     Optional<Type> findByName(String name);
+    Optional<Type> findByNamePl(String namePl);
 }

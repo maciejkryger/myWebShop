@@ -32,7 +32,7 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePL}</a>
+            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -60,7 +60,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">${productType.namePL}</p>
+        <p class="w3-left">${productType.namePl}</p>
         <p class="w3-right">
             <i class="fa fa-user w3-margin-right"></i>
             <i class="fa fa-search"></i>
@@ -70,7 +70,7 @@
 
     <!-- Image header -->
     <div class="w3-display-container w3-container">
-        <img src="/images/1.webp" alt="${productType.namePL}" style="width:100%">
+        <img src="/images/1.webp" alt="${productType.namePl}" style="width:100%">
         <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
 <%--            <h1 class="w3-jumbo w3-hide-small">Nowe modele</h1>--%>
 <%--            <h1 class="w3-hide-large w3-hide-medium">Nowe modele</h1>--%>
@@ -96,11 +96,11 @@
 
     <!-- Product grid -->
     <div class="w3-row w3-grayscale">
-        <c:forEach var="item" items="${products}">
+        <c:forEach var="makingTechnique" items="${products}">
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="/images/${item.id}.webp" style="width:100%">
-                    <p><a href="/details/${item.id}">${item.name}<br><b>${item.price} PLN</b></a></p>
+                    <img src="/images/${makingTechnique.id}.webp" style="width:100%">
+                    <p><a href="/details/${makingTechnique.id}">${makingTechnique.name}<br><b>${makingTechnique.price} PLN</b></a></p>
                 </div>
             </div>
         </c:forEach>

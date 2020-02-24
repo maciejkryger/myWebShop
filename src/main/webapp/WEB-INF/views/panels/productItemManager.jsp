@@ -37,6 +37,7 @@
         <a href="/panels/data/materialColors" class="w3-bar-item w3-button">Kolory materiałów</a>
         <a href="/panels/data/fasteningTypes" class="w3-bar-item w3-button">Zapięcia</a>
         <a href="/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory zapięć</a>
+        <a href="/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki wykonania</a>
         ----------------------
         <a href="/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
         <a href="/panels/data/company" class="w3-bar-item w3-button">Dane firmy</a>
@@ -75,23 +76,21 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Edycja produktu - id: ${product.id}</h2>
+        <h2>Edycja produktu</h2>
         <div class="w3-responsive">
-
+            <a href="${pageContext.request.contextPath}/panels/data/products/">
+                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+            </a>
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/products/{${product.id}}"
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/products/save/${product.id}"
                       modelAttribute="product">
-                    <input type="submit">
-                    <button class="w3-button w3-white w3-border w3-round-large">zapisz</button>
-                    </input>
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
-                    <a href="${pageContext.request.contextPath}/panels/data/products/">
-                        <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-                    </a>
+
                     <p>
-                        <label><b>id</b></label>
-                        ${product.id}
-                        <input type="text" name="id" placeholder="id" class="w3-input w3-border" value="${product.id}">
+                        <label><b>id: ${product.id}</b></label>
+                        <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
+                               value="${product.id}">
                     </p>
                     <p>
                         <label><b>nazwa</b></label>
@@ -100,33 +99,62 @@
                     </p>
                     <p>
                         <label><b>typ</b></label>
-                        <input type="text" name="type" placeholder="typ" class="w3-input w3-border"
-                               value="${product.type.namePL}">
+                        <select class="w3-input w3-border" name="typeId">
+                            <option selected="selected" value="${product.type.id}">${product.type.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${types}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>technika</b></label>
-                        <input type="text" name="makingTechnique" placeholder="technika" class="w3-input w3-border"
-                               value="${product.makingTechnique.namePl}">
+                        <select class="w3-input w3-border" name="makingTechniqueId">
+                            <option selected="selected" placeholder="technika"
+                                    value="${product.makingTechnique.id}">${product.makingTechnique.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${makingTechniques}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>materiał</b></label>
-                        <input type="text" name="material" placeholder="materiał" class="w3-input w3-border"
-                               value="${product.material.namePl}">
+                        <select class="w3-input w3-border" name="materialId">
+                            <option selected="selected" placeholder="materiał"
+                                    value="${product.material.id}">${product.material.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${materials}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>kolor materiału</b></label>
-                        <input type="text" name="materialColor" placeholder="kolor" class="w3-input w3-border"
-                               value="${product.materialColor.namePl}">
+                        <select class="w3-input w3-border" name="materialColorId">
+                            <option selected="selected" placeholder="kolor"
+                                    value="${product.materialColor.id}">${product.materialColor.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${materialColors}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>zapięcie</b></label>
-                        <input type="text" name="fasteningType" placeholder="zapięcie" class="w3-input w3-border"
-                               value="${product.fasteningType.namePl}">
+                        <select class="w3-input w3-border" name="fasteningTypeId">
+                            <option selected="selected" placeholder="zapięcie"
+                                    value="${product.fasteningType.id}">${product.fasteningType.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${fasteningTypes}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>kolor zapięcia</b></label>
-                        <input type="text" name="fasteningColor" placeholder="kolor zapięcia" class="w3-input w3-border"
-                               value="${product.fasteningColor.namePl}">
+                        <select class="w3-input w3-border" name="fasteningColorId">
+                            <option selected="selected" placeholder="kolor zapięcia"
+                                    value="${product.fasteningColor.id}">${product.fasteningColor.namePl}</option>
+                            <c:forEach var="makingTechnique" items="${fasteningColors}">
+                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            </c:forEach>
+                        </select>
                     </p>
                     <p>
                         <label><b>długość [mm]</b></label>
@@ -148,9 +176,7 @@
                         <input type="text" name="description" placeholder="opis" class="w3-input w3-border"
                                value="${product.description}">
                     </p>
-                    <input type="submit">
-                    <button class="w3-button w3-white w3-border w3-round-large">zapisz</button>
-                    </input>
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
                 <a href="${pageContext.request.contextPath}/panels/data/products/">
                     <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>

@@ -1,6 +1,7 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.FasteningColorNotExistException;
 import pl.javarun.mywebshop.model.FasteningColor;
 import pl.javarun.mywebshop.repository.FasteningColorRepository;
 
@@ -25,5 +26,13 @@ public class FasteningColorService {
 
     public List<FasteningColor> getAllFasteningColors(){
         return fasteningColorRepository.findAll();
+    }
+
+    public FasteningColor getFasteningColorById(Integer id) {
+        return fasteningColorRepository.findById(id).orElseThrow(()->new FasteningColorNotExistException("FasteningColor "+id));
+    }
+
+    public void save(FasteningColor fasteningColor) {
+        fasteningColorRepository.save(fasteningColor);
     }
 }

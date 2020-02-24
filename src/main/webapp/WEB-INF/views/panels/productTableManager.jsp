@@ -37,7 +37,7 @@
         <a href="/panels/data/materialColors" class="w3-bar-item w3-button">Kolory materiałów</a>
         <a href="/panels/data/fasteningTypes" class="w3-bar-item w3-button">Zapięcia</a>
         <a href="/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory zapięć</a>
-        <a href="/panels/data/makingTechnique" class="w3-bar-item w3-button">Techniki wykonania</a>
+        <a href="/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki wykonania</a>
         ----------------------
         <a href="/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
         <a href="/panels/data/company" class="w3-bar-item w3-button">Dane firmy</a>
@@ -96,22 +96,22 @@
                     <th>opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="item" items="${products}">
+                <c:forEach var="makingTechnique" items="${products}">
                     <tr>
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.type.namePL}</td>
-                        <td>${item.makingTechnique.namePl}</td>
-                        <td>${item.material.namePl}</td>
-                        <td>${item.materialColor.namePl}</td>
-                        <td>${item.fasteningType.namePl}</td>
-                        <td>${item.fasteningColor.namePl}</td>
-                        <td>${item.length}</td>
-                        <td>${item.width}</td>
-                        <td>${item.price}</td>
-                        <td>${item.description}</td>
+                        <td>${makingTechnique.id}</td>
+                        <td>${makingTechnique.name}</td>
+                        <td>${makingTechnique.type.namePl}</td>
+                        <td>${makingTechnique.makingTechnique.namePl}</td>
+                        <td>${makingTechnique.material.namePl}</td>
+                        <td>${makingTechnique.materialColor.namePl}</td>
+                        <td>${makingTechnique.fasteningType.namePl}</td>
+                        <td>${makingTechnique.fasteningColor.namePl}</td>
+                        <td>${makingTechnique.length}</td>
+                        <td>${makingTechnique.width}</td>
+                        <td>${makingTechnique.price}</td>
+                        <td>${makingTechnique.description}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
+                            <a href="${pageContext.request.contextPath}/panels/data/product/${makingTechnique.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
                         </td>
                     </tr>
                 </c:forEach>

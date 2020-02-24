@@ -37,7 +37,7 @@
         <a href="/panels/data/materialColors" class="w3-bar-item w3-button">Kolory materiałów</a>
         <a href="/panels/data/fasteningTypes" class="w3-bar-item w3-button">Zapięcia</a>
         <a href="/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory zapięć</a>
-        <a href="/panels/data/makingTechnique" class="w3-bar-item w3-button">Techniki wykonania</a>
+        <a href="/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki wykonania</a>
         ----------------------
         <a href="/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
         <a href="/panels/data/company" class="w3-bar-item w3-button">Dane firmy</a>
@@ -87,13 +87,13 @@
                     <th>Opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="item" items="${materialColors}">
+                <c:forEach var="makingTechnique" items="${materialColors}">
                     <tr>
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.namePl}</td>
+                        <td>${makingTechnique.id}</td>
+                        <td>${makingTechnique.name}</td>
+                        <td>${makingTechnique.namePl}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/materialColor/${item.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
+                            <a href="${pageContext.request.contextPath}/panels/data/materialColor/${makingTechnique.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
                         </td>
                     </tr>
                 </c:forEach>
