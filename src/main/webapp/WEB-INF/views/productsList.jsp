@@ -28,11 +28,11 @@
 <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
     <div class="w3-container w3-display-container w3-padding-16">
         <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-        <a href="/"><h3 class="w3-wide"><b>QUNSZTOWNA</b></h3></a>
+        <a href="${pageContext.request.contextPath}/"><h3 class="w3-wide"><b>QUNSZTOWNA</b></h3></a>
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
+            <a href="${pageContext.request.contextPath}/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -70,7 +70,7 @@
 
     <!-- Image header -->
     <div class="w3-display-container w3-container">
-        <img src="/images/1.webp" alt="${productType.namePl}" style="width:100%">
+        <img src="${pageContext.request.contextPath}/images/1.webp" alt="${productType.namePl}" style="width:100%">
         <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
 <%--            <h1 class="w3-jumbo w3-hide-small">Nowe modele</h1>--%>
 <%--            <h1 class="w3-hide-large w3-hide-medium">Nowe modele</h1>--%>
@@ -99,8 +99,8 @@
         <c:forEach var="makingTechnique" items="${products}">
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="/images/${makingTechnique.id}.webp" style="width:100%">
-                    <p><a href="/details/${makingTechnique.id}">${makingTechnique.name}<br><b>${makingTechnique.price} PLN</b></a></p>
+                    <img src="${pageContext.request.contextPath}/images/${makingTechnique.id}.webp" style="width:100%">
+                    <p><a href="${pageContext.request.contextPath}/details/${makingTechnique.id}">${makingTechnique.name}<br><b>${makingTechnique.price} PLN</b></a></p>
                 </div>
             </div>
         </c:forEach>
@@ -133,7 +133,7 @@
             <div class="w3-col s4">
                 <h4>Przydatne informacje</h4>
                 <c:forEach var="ruleSubject" items="${rules}">
-                    <p><a href="/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
+                    <p><a href="${pageContext.request.contextPath}/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
                 </c:forEach>
             </div>
 
