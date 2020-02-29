@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>qunsztowna.pl</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -70,12 +70,9 @@
 
     <!-- Image header -->
     <div class="w3-display-container w3-container">
-        <img src="${pageContext.request.contextPath}/images/1.webp" alt="${productType.namePl}" style="width:100%">
+        <img src="${pageContext.request.contextPath}/images/type${productType.id}.jpg" alt="${productType.namePl}" style="width:100%">
         <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-<%--            <h1 class="w3-jumbo w3-hide-small">Nowe modele</h1>--%>
-<%--            <h1 class="w3-hide-large w3-hide-medium">Nowe modele</h1>--%>
-<%--            <h1 class="w3-hide-small">KOLEKCJA 2020</h1>--%>
-            <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO NASZYCH PRODUKTÓW</a></p>
+            <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO PRODUKTÓW</a></p>
         </div>
     </div>
 
@@ -86,21 +83,21 @@
         <c:if test="${productsCounter==1}">
             <p>${productsCounter} pozycja</p>
         </c:if>
-        <c:if test="${productsCounter>1}">
+        <c:if test="${productsCounter>1}&&${productsCounter<=4}">
             <p>${productsCounter} pozycje</p>
         </c:if>
-        <c:if test="${productsCounter>5}">
+        <c:if test="${productsCounter>4}">
             <p>${productsCounter} pozycji</p>
         </c:if>
     </div>
 
     <!-- Product grid -->
     <div class="w3-row w3-grayscale">
-        <c:forEach var="makingTechnique" items="${products}">
+        <c:forEach var="item" items="${products}">
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="${pageContext.request.contextPath}/images/${makingTechnique.id}.webp" style="width:100%">
-                    <p><a href="${pageContext.request.contextPath}/details/${makingTechnique.id}">${makingTechnique.name}<br><b>${makingTechnique.price} PLN</b></a></p>
+                    <img src="${pageContext.request.contextPath}/images/${item.id}.1.jpg" style="width:100%">
+                    <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.name}<br><b>${item.price} PLN</b></a></p>
                 </div>
             </div>
         </c:forEach>
@@ -121,10 +118,10 @@
                 <h4>Kontakt</h4>
                 <p>Masz pytania? Napisz do mnie.</p>
                 <form action="/action_page.php" target="_blank">
-                    <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Imię" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="Imię" required></p>
                     <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Temat" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Treść wiadomości"
+                    <p><input class="w3-input w3-border" type="text" placeholder="Temat" name="Temat" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Wiadomość" name="Treść wiadomości"
                               required></p>
                     <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
                 </form>
@@ -138,13 +135,14 @@
             </div>
 
             <div class="w3-col s4 w3-justify">
-                <h4>Dane sprzedającego</h4>
+                <h4>Dane kontaktowe</h4>
                 <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
                 <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
                 <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
                 <br>
-                <h6>Media społecznościowe</h6>
-                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <h6>Facebook</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i
+                        class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
                 <br><br>
                 <h6>Obsługuje nas</h6>
                 <i class='fab fa-dhl' style='font-size:48px'></i>

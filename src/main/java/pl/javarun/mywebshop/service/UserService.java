@@ -1,5 +1,8 @@
 package pl.javarun.mywebshop.service;
 
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
@@ -18,7 +21,7 @@ import java.util.Set;
  * *
  ******************************************************/
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -26,10 +29,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-//        return userRepository.findByUsernameIgnoreCase(s).orElseThrow(() -> new UsernameNotFoundException("" + s));
-//    }
+
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return userRepository.findByUsernameIgnoreCase(s).orElseThrow(() -> new UsernameNotFoundException("" + s));
+    }
 
     public User saveUser(User user) {
         if (user.getUsername().equals("") || user.getEmail().equals("") || user.getFirstName().equals("") || user.getLastName().equals("")) {

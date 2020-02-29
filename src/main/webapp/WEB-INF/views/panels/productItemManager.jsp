@@ -101,8 +101,8 @@
                         <label><b>typ</b></label>
                         <select class="w3-input w3-border" name="typeId">
                             <option selected="selected" value="${product.type.id}">${product.type.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${types}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${types}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -111,8 +111,8 @@
                         <select class="w3-input w3-border" name="makingTechniqueId">
                             <option selected="selected" placeholder="technika"
                                     value="${product.makingTechnique.id}">${product.makingTechnique.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${makingTechniques}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${makingTechniques}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -121,8 +121,8 @@
                         <select class="w3-input w3-border" name="materialId">
                             <option selected="selected" placeholder="materiał"
                                     value="${product.material.id}">${product.material.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${materials}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${materials}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -131,8 +131,8 @@
                         <select class="w3-input w3-border" name="materialColorId">
                             <option selected="selected" placeholder="kolor"
                                     value="${product.materialColor.id}">${product.materialColor.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${materialColors}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${materialColors}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -141,8 +141,8 @@
                         <select class="w3-input w3-border" name="fasteningTypeId">
                             <option selected="selected" placeholder="zapięcie"
                                     value="${product.fasteningType.id}">${product.fasteningType.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${fasteningTypes}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${fasteningTypes}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -151,8 +151,8 @@
                         <select class="w3-input w3-border" name="fasteningColorId">
                             <option selected="selected" placeholder="kolor zapięcia"
                                     value="${product.fasteningColor.id}">${product.fasteningColor.namePl}</option>
-                            <c:forEach var="makingTechnique" items="${fasteningColors}">
-                                <option value="${makingTechnique.id}">${makingTechnique.namePl}</option>
+                            <c:forEach var="item" items="${fasteningColors}">
+                                <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>

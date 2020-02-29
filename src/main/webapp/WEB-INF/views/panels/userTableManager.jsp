@@ -94,20 +94,20 @@
                     <th>opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="makingTechnique" items="${users}">
+                <c:forEach var="item" items="${users}">
                     <tr>
-                        <td>${makingTechnique.username}</td>
-                        <td>${makingTechnique.firstName}</td>
-                        <td>${makingTechnique.lastName}</td>
-                        <td>${makingTechnique.email}</td>
-                        <td>${makingTechnique.role.authority}</td>
-                        <td>${makingTechnique.creationDate}</td>
-                        <td>${makingTechnique.active}</td>
-                        <td>${makingTechnique.activationDate}</td>
-                        <td>${makingTechnique.deleted}</td>
-                        <td>${makingTechnique.deletingDate}</td>
+                        <td>${item.username}</td>
+                        <td>${item.firstName}</td>
+                        <td>${item.lastName}</td>
+                        <td>${item.email}</td>
+                        <td>${item.role.authority}</td>
+                        <td>${item.creationDate}</td>
+                        <td>${item.active}</td>
+                        <td>${item.activationDate}</td>
+                        <td>${item.deleted}</td>
+                        <td>${item.deletingDate}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/${makingTechnique.username}">
+                            <a href="${pageContext.request.contextPath}/panels/data/user/${item.username}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
                         </td>

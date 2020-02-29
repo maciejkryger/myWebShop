@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>qunsztowna.pl</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -32,7 +32,8 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="${pageContext.request.contextPath}/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
+            <a href="${pageContext.request.contextPath}/types/${productType.name}"
+               class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -69,10 +70,38 @@
     </header>
 
     <!-- Image header -->
-    <div class="w3-display-container w3-container">
-        <img src="${pageContext.request.contextPath}/images/${product.id}.webp" alt="${product.name}" style="width:100%">
-        <p>${product.name} - cena: <b>${product.price} PLN</b></p>
+    <div class="w3-content" style="max-width:1200px">
+        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.1.jpg"
+             style="width:100%">
+        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.2.jpg"
+             style="width:100%;display:none">
+        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.3.jpg"
+             style="width:100%;display:none">
+
+        <div class="w3-row-padding w3-section">
+            <div class="w3-col s4">
+                <img class="demo w3-opacity w3-hover-opacity-off"
+                     src="${pageContext.request.contextPath}/images/${product.id}.1.jpg"
+                     style="width:100%;cursor:pointer" onclick="currentDiv(1)">
+            </div>
+            <div class="w3-col s4">
+                <img class="demo w3-opacity w3-hover-opacity-off"
+                     src="${pageContext.request.contextPath}/images/${product.id}.2.jpg"
+                     style="width:100%;cursor:pointer" onclick="currentDiv(2)">
+            </div>
+            <div class="w3-col s4">
+                <img class="demo w3-opacity w3-hover-opacity-off"
+                     src="${pageContext.request.contextPath}/images/${product.id}.3.jpg"
+                     style="width:100%;cursor:pointer" onclick="currentDiv(3)">
+            </div>
+        </div>
     </div>
+
+
+    <%--    <div class="w3-display-container w3-container">--%>
+    <%--        <img src="${pageContext.request.contextPath}/images/${product.id}.webp" alt="${product.name}" style="width:100%">--%>
+    <%--        <p>${product.name} - cena: <b>${product.price} PLN</b></p>--%>
+    <%--    </div>--%>
 
 
     <!-- Product grid -->
@@ -92,7 +121,8 @@
                             ${product.materialColor.namePl}
                         </option>
                         <c:forEach var="color" items="${colors}">
-                            <option value="${color.materialColor.namePl}">${color.materialColor.namePl} - dostępność w ${color.availability}</option>
+                            <option value="${color.materialColor.namePl}">${color.materialColor.namePl} - dostępność
+                                w ${color.availability}</option>
                         </c:forEach>
                     </select></b><br>
                     zapięcie: <b>${product.fasteningType.namePl}</b><br>
@@ -104,14 +134,14 @@
             </div>
         </div>
 
-        <c:forEach var="color" items="${colors}">
-            <div class="w3-col l3 s6">
-                <div class="w3-container">
-                    <img src="/images/${product.id}_${color.materialColor.id}.webp" style="width:100%">
-                    <p>${color.materialColor.namePl}</p>
-                </div>
-            </div>
-        </c:forEach>
+        <%--        <c:forEach var="color" items="${colors}">--%>
+        <%--            <div class="w3-col l3 s6">--%>
+        <%--                <div class="w3-container">--%>
+        <%--                    <img src="/images/${product.id}_${color.materialColor.id}.webp" style="width:100%">--%>
+        <%--                    <p>${color.materialColor.namePl}</p>--%>
+        <%--                </div>--%>
+        <%--            </div>--%>
+        <%--        </c:forEach>--%>
         <div class="w3-container">
             <i class="fa fa-arrow-left"></i>
             <a href="${pageContext.request.contextPath}/types/${product.type.name}">cofnij</a>
@@ -119,105 +149,63 @@
     </div>
 
 
-    <%--        <div class="w3-col l3 s6">--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <div class="w3-display-container">--%>
-    <%--                    <img src="/w3images/jeans2.jpg" style="width:100%">--%>
-    <%--                    <span class="w3-tag w3-display-topleft">New</span>--%>
-    <%--                    <div class="w3-display-middle w3-display-hover">--%>
-    <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--                <p>Mega Ripped Jeans<br><b>$19.99</b></p>--%>
-    <%--            </div>--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
-    <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
+    <!-- Subscribe section -->
+    <%--    <div class="w3-container w3-black w3-padding-32">--%>
+    <%--        <h1>Subskrybuj</h1>--%>
+    <%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
+    <%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
+    <%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
+    <%--    </div>--%>
 
-    <%--        <div class="w3-col l3 s6">--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <img src="/w3images/jeans3.jpg" style="width:100%">--%>
-    <%--                <p>Washed Skinny Jeans<br><b>$20.50</b></p>--%>
-    <%--            </div>--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <div class="w3-display-container">--%>
-    <%--                    <img src="/w3images/jeans4.jpg" style="width:100%">--%>
-    <%--                    <span class="w3-tag w3-display-topleft">Sale</span>--%>
-    <%--                    <div class="w3-display-middle w3-display-hover">--%>
-    <%--                        <button class="w3-button w3-black">Buy now <i class="fa fa-shopping-cart"></i></button>--%>
-    <%--                    </div>--%>
-    <%--                </div>--%>
-    <%--                <p>Vintage Skinny Jeans<br><b class="w3-text-red">$14.99</b></p>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
+    <!-- Footer -->
+    <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
+        <div class="w3-row-padding">
+            <div class="w3-col s4">
+                <h4>Kontakt</h4>
+                <p>Masz pytania? Napisz do mnie.</p>
+                <form action="/action_page.php" target="_blank">
+                    <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="Imię" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Temat" name="Temat" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Wiadomość" name="Treść wiadomości"
+                              required></p>
+                    <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
+                </form>
+            </div>
 
-    <%--        <div class="w3-col l3 s6">--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <img src="/w3images/jeans4.jpg" style="width:100%">--%>
-    <%--                <p>Vintage Skinny Jeans<br><b>$14.99</b></p>--%>
-    <%--            </div>--%>
-    <%--            <div class="w3-container">--%>
-    <%--                <img src="/w3images/jeans1.jpg" style="width:100%">--%>
-    <%--                <p>Ripped Skinny Jeans<br><b>$24.99</b></p>--%>
-    <%--            </div>--%>
-    <%--        </div>--%>
-</div>
+            <div class="w3-col s4">
+                <h4>Przydatne informacje</h4>
+                <c:forEach var="ruleSubject" items="${rules}">
+                    <p><a href="${pageContext.request.contextPath}/rules/${ruleSubject.name}">${ruleSubject.namePl}</a>
+                    </p>
+                </c:forEach>
+            </div>
 
-<!-- Subscribe section -->
-<%--    <div class="w3-container w3-black w3-padding-32">--%>
-<%--        <h1>Subskrybuj</h1>--%>
-<%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
-<%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
-<%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
-<%--    </div>--%>
+            <div class="w3-col s4 w3-justify">
+                <h4>Dane kontaktowe</h4>
+                <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
+                <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
+                <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
+                <br>
+                <h6>Facebook</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i
+                        class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <br><br>
+                <h6>Obsługuje nas</h6>
+                <i class='fab fa-dhl' style='font-size:48px'></i>
+                <%--                <h4>We accept</h4>--%>
+                <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
+                <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
 
-<!-- Footer -->
-<footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
-    <div class="w3-row-padding">
-        <div class="w3-col s4">
-            <h4>Kontakt</h4>
-            <p>Masz pytania? Napisz do mnie.</p>
-            <form action="/action_page.php" target="_blank">
-                <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Imię" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Temat" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Treść wiadomości"
-                          required></p>
-                <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
-            </form>
+            </div>
         </div>
+    </footer>
 
-        <div class="w3-col s4">
-            <h4>Przydatne informacje</h4>
-            <c:forEach var="ruleSubject" items="${rules}">
-                <p><a href="/rules/${ruleSubject.name}">${ruleSubject.namePl}</a></p>
-            </c:forEach>
-        </div>
-
-        <div class="w3-col s4 w3-justify">
-            <h4>Dane sprzedającego</h4>
-            <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
-            <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
-            <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
-            <br>
-            <h6>Media społecznościowe</h6>
-            <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
-            <br><br>
-            <h6>Obsługuje nas</h6>
-            <i class='fab fa-dhl' style='font-size:48px'></i>
-            <%--                <h4>We accept</h4>--%>
-            <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
-        </div>
+    <div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
+            href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
     </div>
-</footer>
 
-<div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
-        href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
-</div>
-
-<!-- End page content -->
+    <!-- End page content -->
 </div>
 
 <!-- Newsletter Modal -->
@@ -235,6 +223,33 @@
         </div>
     </div>
 </div>
+
+<script>
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        if (n > x.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = x.length
+        }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-opacity-off", "");
+        }
+        x[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " w3-opacity-off";
+    }
+</script>
+
 
 <script>
     // Accordion

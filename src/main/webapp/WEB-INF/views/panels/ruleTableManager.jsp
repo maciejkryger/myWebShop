@@ -88,14 +88,14 @@
                     <th>opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="makingTechnique" items="${rules}">
+                <c:forEach var="item" items="${rules}">
                     <tr>
-                        <td>${makingTechnique.id}</td>
-                        <td>${makingTechnique.description}</td>
-                        <td>${makingTechnique.descriptionPl}</td>
+                        <td>${item.id}</td>
+                        <td>${item.description}</td>
+                        <td>${item.descriptionPl}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/product/${makingTechnique.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
+                            <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
                         </td>
                     </tr>
                 </c:forEach>

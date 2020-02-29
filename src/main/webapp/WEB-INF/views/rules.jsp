@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
+<title>qunsztowna.pl</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -112,10 +112,10 @@
                 <h4>Kontakt</h4>
                 <p>Masz pytania? Napisz do mnie.</p>
                 <form action="/action_page.php" target="_blank">
-                    <p><input class="w3-input w3-border" type="text" placeholder="Name" name="Imię" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="Imię" required></p>
                     <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Subject" name="Temat" required></p>
-                    <p><input class="w3-input w3-border" type="text" placeholder="Message" name="Treść wiadomości"
+                    <p><input class="w3-input w3-border" type="text" placeholder="Temat" name="Temat" required></p>
+                    <p><input class="w3-input w3-border" type="text" placeholder="Wiadomość" name="Treść wiadomości"
                               required></p>
                     <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
                 </form>
@@ -129,16 +129,21 @@
             </div>
 
             <div class="w3-col s4 w3-justify">
-                <h4>Dane sprzedającego</h4>
+                <h4>Dane kontaktowe</h4>
                 <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
                 <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
                 <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
                 <br>
-                <h6>Media społecznościowe</h6>
-                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                <h6>Facebook</h6>
+                <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i
+                        class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
                 <br><br>
                 <h6>Obsługuje nas</h6>
                 <i class='fab fa-dhl' style='font-size:48px'></i>
+                <%--                <h4>We accept</h4>--%>
+                <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
+                <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>
+
             </div>
         </div>
     </footer>

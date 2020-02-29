@@ -87,13 +87,13 @@
                     <th>Opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="makingTechnique" items="${fasteningTypes}">
+                <c:forEach var="fasteningType" items="${fasteningTypes}">
                     <tr>
-                        <td>${makingTechnique.id}</td>
-                        <td>${makingTechnique.name}</td>
-                        <td>${makingTechnique.namePl}</td>
+                        <td>${fasteningType.id}</td>
+                        <td>${fasteningType.name}</td>
+                        <td>${fasteningType.namePl}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/fasteningType/${makingTechnique.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
+                            <a href="${pageContext.request.contextPath}/panels/data/fasteningType/${fasteningType.id}"><button class="w3-button w3-white w3-border w3-round-large" >edytuj</button></a>
                         </td>
                     </tr>
                 </c:forEach>

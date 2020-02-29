@@ -1,5 +1,7 @@
 package pl.javarun.mywebshop.model;
 
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 
 /**
@@ -23,9 +25,12 @@ public class Product {
     private Type type;
     @ManyToOne(targetEntity = Material.class)
     private Material material;
+    @Nullable
     @ManyToOne(targetEntity = MaterialColor.class)
     private MaterialColor materialColor;
+    @Nullable
     private double length;
+    @Nullable
     private double width;
     @ManyToOne(targetEntity = FasteningType.class)
     private FasteningType fasteningType;  //zapięcie

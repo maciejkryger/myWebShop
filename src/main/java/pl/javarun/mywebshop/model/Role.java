@@ -1,6 +1,8 @@
 package pl.javarun.mywebshop.model;
 
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -13,7 +15,7 @@ import java.util.Objects;
  * *
  ******************************************************/
 @Entity
-public class Role{
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleSeq")

@@ -37,6 +37,21 @@ public class FrontWebController {
 
     ModelAndView modelAndView;
 
+    @GetMapping("/login")
+    public ModelAndView loginUsername(){
+        modelAndView=new ModelAndView("login");
+        return modelAndView;
+    }
+
+    @PostMapping("/login")
+    public String loginUsername(@RequestParam String username, @RequestParam String password){
+        System.out.println("username: "+ username);
+        System.out.println("password: "+ password);
+        if(username.equals("admin"))
+        return "redirect:/panels/superpanel";
+        else return "redirect:/";
+    }
+
     @GetMapping(value = {"", "/{id}"})
     public ModelAndView getIndexPage(@PathVariable(required = false) String id) {
         ModelAndView modelAndView = new ModelAndView("index");

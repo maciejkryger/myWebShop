@@ -87,13 +87,13 @@
                     <th>opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="makingTechnique" items="${makingTechniques}">
+                <c:forEach var="makingTechniqe" items="${makingTechniques}">
                     <tr>
-                        <td>${makingTechnique.id}</td>
-                        <td>${makingTechnique.name}</td>
-                        <td>${makingTechnique.namePl}</td>
+                        <td>${makingTechniqe.id}</td>
+                        <td>${makingTechniqe.name}</td>
+                        <td>${makingTechniqe.namePl}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/makingTechnique/${makingTechnique.id}">
+                            <a href="${pageContext.request.contextPath}/panels/data/makingTechnique/${makingTechniqe.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
                         </td>
