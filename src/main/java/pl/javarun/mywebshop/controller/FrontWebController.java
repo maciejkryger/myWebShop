@@ -1,6 +1,7 @@
 package pl.javarun.mywebshop.controller;
 
 import com.sun.org.apache.xpath.internal.operations.Mod;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,19 +39,22 @@ public class FrontWebController {
     ModelAndView modelAndView;
 
     @GetMapping("/login")
-    public ModelAndView loginUsername(){
+    public ModelAndView loginUsername(@RequestParam(required = false) String error){
         modelAndView=new ModelAndView("login");
+        if(error != null) {
+            modelAndView.addObject("error", true);
+        }
         return modelAndView;
     }
 
-    @PostMapping("/login")
-    public String loginUsername(@RequestParam String username, @RequestParam String password){
-        System.out.println("username: "+ username);
-        System.out.println("password: "+ password);
-        if(username.equals("admin"))
-        return "redirect:/panels/superpanel";
-        else return "redirect:/";
-    }
+//    @PostMapping("/login")
+//    public String loginUsername(@RequestParam String username, @RequestParam String password){
+//        System.out.println("username: "+ username);
+//        System.out.println("password: "+ password);
+//        if(username.equals("admin"))
+//        return "redirect:/panels/superpanel";
+//        else return "redirect:/";
+//    }
 
     @GetMapping(value = {"", "/{id}"})
     public ModelAndView getIndexPage(@PathVariable(required = false) String id) {
@@ -85,6 +89,7 @@ public class FrontWebController {
         }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("productType",typeService.getTypeById(productService.getProductById(id).getType().getId()));
         modelAndView.addObject("rules", ruleService.getAllRules());
         return modelAndView;
     }

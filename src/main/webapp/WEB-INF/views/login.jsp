@@ -51,8 +51,8 @@
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
-    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"
-       onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>
+<%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"--%>
+<%--       onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>--%>
     <%--    <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subskrybuj</a>--%>
 </nav>
 
@@ -77,46 +77,34 @@
     <header class="w3-container w3-xlarge">
         <p class="w3-left">biżuteria ręcznie robiona</p>
         <p class="w3-right">
+            <c:if test="${sessionScope.user.enabled}">
+                <a class="w3-bar-item w3-padding w3-margin-right">Witaj <b>${sessionScope.user.firstName}</b>!!!</a>
+            </c:if>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"
                onclick="document.getElementById('login').style.display='block'"><i
-                    class="fa fa-user w3-margin-right"></i></a>
+                    class="fa fa-user"></i></a>
             <i class="fa fa-search"></i>
             <i class="fa fa-shopping-cart"></i>
         </p>
     </header>
 
-    <!-- Image header -->
-
-    <%--    <div class="w3-display-container w3-container">--%>
-    <%--        <img src="${pageContext.request.contextPath}/images/1.webp" alt="mainPage" style="width:100%">--%>
-    <%--        <div class="w3-display-topleft w3-text-black" style="padding:24px 48px">--%>
-    <%--            <h1 class="w3-jumbo w3-hide-small">Witam na mojej stronie :)</h1>--%>
-    <%--            <h1 class="w3-hide-large w3-hide-medium">Witam na mojej stronie :)</h1>--%>
-    <%--            <h1 class="w3-hide-small">Sylwia</h1>--%>
-    <%--        </div>--%>
-    <%--    </div>--%>
+    <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
-        <img class="mySlides" src="${pageContext.request.contextPath}/images/1.webp" style="width:100%">
-        <img class="mySlides" src="${pageContext.request.contextPath}/images/1.webp" style="width:100%">
-        <img class="mySlides" src="${pageContext.request.contextPath}/images/3.jpg">
-        <div class="w3-center w3-container w3-section w3-large w3-text-black w3-display-bottommiddle"
-             style="width:100%">
-            <div class="w3-left w3-hover-text-khaki" onclick="plusDivs(-1)">&#10094;</div>
-            <div class="w3-right w3-hover-text-khaki" onclick="plusDivs(1)">&#10095;</div>
-            <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(1)"></span>
-            <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
-            <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
-        </div>
+        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
+            <p class="w3-xlarge">Logowanie</p>
+            <p>zaloguj się</p>
+            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
+            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
+            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom"
+                    onclick="document.getElementById('login').style.display='none'">Zaloguj
+            </button>
+        </form>
     </div>
 
 
     <br>
-    <%--    <div class="w3-container w3-text-grey" id="jeans">--%>
-    <%--        <p>8 items</p>--%>
-    <%--    </div>--%>
 
-    <%--    <!-- Product grid -->--%>
-    <%--wykasowane--%>
 
     <!-- Footer -->
     <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
