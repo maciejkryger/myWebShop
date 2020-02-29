@@ -41,6 +41,9 @@ public class FrontWebController {
     @GetMapping("/login")
     public ModelAndView loginUsername(@RequestParam(required = false) String error){
         modelAndView=new ModelAndView("login");
+        modelAndView.addObject("company", companyService.getCompanyData());
+        modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("rules", ruleService.getAllRules());
         if(error != null) {
             modelAndView.addObject("error", true);
         }

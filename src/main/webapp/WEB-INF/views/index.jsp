@@ -78,9 +78,8 @@
         <p class="w3-left">biżuteria ręcznie robiona</p>
         <p class="w3-right">
             <c:if test="${sessionScope.user.enabled}">
-                <a class="w3-bar-item w3-padding w3-margin-right">Witaj <b>${sessionScope.user.role.authority}</b>!!!</a>
+                <a class="w3-bar-item w3-padding w3-margin-right">Witaj <b>${sessionScope.user.firstName}</b>!!!</a>
             </c:if>
-            <a class="w3-bar-item w3-padding w3-margin-right">${error ?  'Błędny użytkownik lub hasło' :''}</a>
             <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"
                onclick="document.getElementById('login').style.display='block'"><i
                     class="fa fa-user"></i></a>
@@ -183,7 +182,7 @@
                class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
             <c:if test="${sessionScope.user.enabled}">
                 <p class="w3-bar-item w3-padding">Jesteś zalogowany jako: ${sessionScope.user.username}</p>
-                <c:if test="${sessionScope.user.role.id=='1'}">
+                <c:if test="${sessionScope.user.role.id<='2'}">
                     <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button">superPanel</a>
                 </c:if>
                 <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button">wyloguj</a>

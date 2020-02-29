@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rules/**")
                 .permitAll()
                 .antMatchers("/panels/**")
-                .hasAnyAuthority("admin", "SUPERUSER")
+                .hasAnyAuthority("ADMIN", "SUPERUSER")
                 .antMatchers("/**")
                 .authenticated()
                 .and()

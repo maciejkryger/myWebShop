@@ -11,11 +11,15 @@ values (nextval('role_seq'), 'USER');
 
 INSERT INTO user (username, password, first_name, last_name, email, role_id, creation_date, active, activation_date,
                   deleted, deleting_date, token)
-values ('admin', '$2a$10$IPJizmA0rxJBq9incE/PWub6B2nIDGm3z/2cIz6hAs/hgvKlQ5F9q', 'Pan', 'Administrator',
+values ('admin', '$2a$10$IPJizmA0rxJBq9incE/PWub6B2nIDGm3z/2cIz6hAs/hgvKlQ5F9q', 'Maciej', 'Nowak',
         'admin@test.com', 1, '2020-02-15', true, '2020-02-15', false, null, null);
 INSERT INTO user (username, password, first_name, last_name, email, role_id, creation_date, active, activation_date,
                   deleted, deleting_date, token)
-values ('user', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0RC', 'Jan', 'Kowalski', 'test@wp.pl', 3,
+values ('superuser', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0RC', 'Sylwia', 'Kowalska', 'test@wp.pl', 2,
+        '2020-02-15', true, '2020-02-15', false, null, null);
+INSERT INTO user (username, password, first_name, last_name, email, role_id, creation_date, active, activation_date,
+                  deleted, deleting_date, token)
+values ('user', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0RC', 'Agnieszka', 'Walc', 'test@wp.pl', 3,
         '2020-02-15', true, '2020-02-15', false, null, null);
 
 INSERT INTO type (id, name, name_pl)
