@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='panels/head.html' %>
+<%@include file='head.html' %>
 <style>
     .w3-sidebar a {
         font-family: "Roboto", sans-serif
@@ -55,7 +55,7 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">${productType.namePl}</p>
-        <%@include file='panels/header.jsp' %>
+        <%@include file='header.jsp' %>
     </header>
 
     <!-- Image header -->
@@ -147,13 +147,13 @@
     <%@include file='footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='panels/signature.html' %>
+    <%@include file='signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='panels/loginModal.jsp' %>
+<%@include file='loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

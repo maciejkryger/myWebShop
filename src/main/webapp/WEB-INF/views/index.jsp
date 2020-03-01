@@ -76,7 +76,7 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">biżuteria ręcznie robiona</p>
-        <%@include file='panels/header.jsp' %>
+        <%@include file='header.jsp' %>
     </header>
 
     <!-- Image header -->
@@ -116,13 +116,13 @@
     <%@include file='footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='panels/signature.html' %>
+    <%@include file='signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='panels/loginModal.jsp' %>
+<%@include file='loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

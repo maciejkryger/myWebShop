@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='panels/head.html' %>
+<%@include file='head.html' %>
 <style>
     .mySlides {
         display: none
@@ -69,12 +69,23 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">biżuteria ręcznie robiona</p>
-        <%@include file='panels/header.jsp' %>
+        <%@include file='header.jsp' %>
     </header>
 
-    <!-- Login Modal -->
-    <%@include file='panels/loginModal.jsp' %>
+    <!-- Login form -->
+    <div class="w3-content w3-display-container" style="max-width:100%">
 
+        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
+            <p class="w3-xlarge">Logowanie</p>
+            <p>zaloguj się</p>
+            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
+            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
+            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom"
+                    onclick="document.getElementById('login').style.display='none'">Zaloguj
+            </button>
+        </form>
+    </div>
 
     <br>
 
@@ -83,13 +94,13 @@
     <%@include file='footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='panels/signature.html' %>
+    <%@include file='signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='panels/loginModal.jsp' %>
+<%@include file='loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

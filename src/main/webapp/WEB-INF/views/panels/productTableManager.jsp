@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .w3-sidebar a {
         font-family: "Roboto", sans-serif
@@ -40,7 +40,7 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">superPanel</p>
-        <%@include file='header.jsp' %>
+        <%@include file='../header.jsp' %>
     </header>
 
     <!-- Main grid -->
@@ -91,14 +91,14 @@
         </div>
 
         <!-- Signature -->
-        <%@include file='signature.html' %>
+        <%@include file='../signature.html' %>
 
     </div>
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 <script>
     // Accordion
