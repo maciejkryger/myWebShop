@@ -5,14 +5,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<%@include file='head.html' %>
+
 <style>
     .w3-sidebar a {
         font-family: "Roboto", sans-serif
@@ -25,26 +19,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-    <div class="w3-container w3-display-container w3-padding-16">
-        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-        <a href="${pageContext.request.contextPath}/"><h3 class="w3-wide"><b>QUNSZTOWNA</b></h3></a>
-    </div>
-    <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-        <a href="${pageContext.request.contextPath}/panels/data/products" class="w3-bar-item w3-button">Produkty</a>
-        <a href="${pageContext.request.contextPath}/panels/data/types" class="w3-bar-item w3-button">Asortyment</a>
-        <a href="${pageContext.request.contextPath}/panels/data/materials" class="w3-bar-item w3-button">Materiały</a>
-        <a href="${pageContext.request.contextPath}/panels/data/materialColors" class="w3-bar-item w3-button">Kolory materiałów</a>
-        <a href="${pageContext.request.contextPath}/panels/data/fasteningTypes" class="w3-bar-item w3-button">Zapięcia</a>
-        <a href="${pageContext.request.contextPath}/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory zapięć</a>
-        <a href="${pageContext.request.contextPath}/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki wykonania</a>
-        ----------------------
-        <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
-        <a href="${pageContext.request.contextPath}/panels/data/company" class="w3-bar-item w3-button">Dane firmy</a>
-        <a href="${pageContext.request.contextPath}/panels/data/rules" class="w3-bar-item w3-button">Regulaminy</a>
-    </div>
-
-</nav>
+<%@include file='panelsMenu.jsp' %>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
@@ -66,12 +41,9 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">superPanel</p>
-        <p class="w3-right">
-            <i class="fa fa-user w3-margin-right"></i>
-            <i class="fa fa-search"></i>
-            <i class="fa fa-shopping-cart"></i>
-        </p>
+        <%@include file='header.jsp' %>
     </header>
+
 
     <!-- Image header -->
     <div class="w3-display-container w3-container">
@@ -85,13 +57,14 @@
         <!-- Product grid -->
 
 
-    <div class="w3-black w3-center w3-padding-24">Strona stworzona przez JAVArun na podstawie szablonu <a
-            href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a>
-    </div>
+    <!-- Signature -->
+    <%@include file='signature.html' %>
 
     <!-- End page content -->
 </div>
 
+<!-- Login Modal -->
+<%@include file='loginModal.jsp' %>
 
 <script>
     // Accordion
