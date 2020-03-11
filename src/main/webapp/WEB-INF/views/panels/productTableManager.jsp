@@ -47,6 +47,10 @@
     <div class="w3-container">
 
         <h2>Tabela produktów</h2>
+        <a href="${pageContext.request.contextPath}/panels/data/product/add">
+            <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
+        </a>
+
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
                 <thead>
