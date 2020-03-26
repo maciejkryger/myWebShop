@@ -1,7 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
