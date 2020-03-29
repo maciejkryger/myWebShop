@@ -39,7 +39,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">superPanel</p>
+        <%@include file='panelsHeader.jsp' %>
         <%@include file='../header.jsp' %>
     </header>
 
@@ -47,6 +47,9 @@
     <div class="w3-container">
 
         <h2>Tabela materiałów</h2>
+        <a href="${pageContext.request.contextPath}/panels/data/material/new">
+           <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
+        </a>
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
                 <thead>

@@ -21,6 +21,7 @@ public class Product {
     private int id;
 
     private String name;
+    private String namePl;
     @ManyToOne(targetEntity = Type.class)
     private Type type;
     @ManyToOne(targetEntity = Material.class)
@@ -41,8 +42,26 @@ public class Product {
     private int price;
     @Column(length = 1000)
     private String description;
+    @Column(length = 1000)
+    private String descriptionPl;
 
     public Product() {
+    }
+
+    public Product(String name, String namePl, Type type, Material material, @Nullable MaterialColor materialColor, double length, double width, FasteningType fasteningType, FasteningColor fasteningColor, MakingTechnique makingTechnique, int price, String description, String descriptionPl) {
+        this.name = name;
+        this.namePl = namePl;
+        this.type = type;
+        this.material = material;
+        this.materialColor = materialColor;
+        this.length = length;
+        this.width = width;
+        this.fasteningType = fasteningType;
+        this.fasteningColor = fasteningColor;
+        this.makingTechnique = makingTechnique;
+        this.price = price;
+        this.description = description;
+        this.descriptionPl = descriptionPl;
     }
 
     public int getId() {
@@ -59,6 +78,14 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getNamePl() {
+        return namePl;
+    }
+
+    public void setNamePl(String namePl) {
+        this.namePl = namePl;
     }
 
     public Type getType() {
@@ -140,5 +167,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDescriptionPl() {
+        return descriptionPl;
+    }
+
+    public void setDescriptionPl(String descriptionPl) {
+        this.descriptionPl = descriptionPl;
     }
 }

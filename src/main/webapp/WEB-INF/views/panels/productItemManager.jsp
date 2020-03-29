@@ -39,7 +39,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">superPanel</p>
+        <%@include file='panelsHeader.jsp' %>
         <%@include file='../header.jsp' %>
     </header>
 
@@ -52,7 +52,7 @@
                 <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
             </a>
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/products/save/${product.id}"
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/product/save"
                       modelAttribute="product">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
@@ -63,9 +63,14 @@
                                value="${product.id}">
                     </p>
                     <p>
-                        <label><b>nazwa</b></label>
-                        <input type="text" name="name" placeholder="nazwa" class="w3-input w3-border"
-                               value="${product.name}">
+                        <label><b>nazwa po polsku</b></label>
+                        <input type="text" name="namePl" placeholder="nazwa po polsku" class="w3-input w3-border"
+                               value="${product.namePl}">
+                    </p>
+                    <p>
+                        <label><b>nazwa po angielsku</b></label>
+                        <input type="text" name="name" placeholder="nazwa po angielsku" class="w3-input w3-border"
+                        value="${product.name}">
                     </p>
                     <p>
                         <label><b>typ</b></label>
@@ -142,10 +147,16 @@
                                value="${product.price}">
                     </p>
                     <p>
-                        <label><b>opis</b></label>
-                        <input type="text" name="description" placeholder="opis" class="w3-input w3-border"
-                               value="${product.description}">
+                        <label><b>opis po polsku</b></label>
+                        <input type="text" name="descriptionPl" placeholder="opis po polsku" class="w3-input w3-border"
+                               value="${product.descriptionPl}">
                     </p>
+                    <p>
+                        <label><b>opis po angielsku</b></label>
+                        <input type="text" name="description" placeholder="opis opis po angielski" class="w3-input w3-border"
+                            value="${product.description}">
+                    </p>
+
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
                 <a href="${pageContext.request.contextPath}/panels/data/products/">

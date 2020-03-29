@@ -7,6 +7,20 @@
 <html>
 <%@include file='head.html' %>
 <style>
+    .mySlides {
+        display: none
+    }
+
+    .w3-left, .w3-right, .w3-badge {
+        cursor: pointer
+    }
+
+    .w3-badge {
+        height: 13px;
+        width: 13px;
+        padding: 0
+    }
+
     .w3-sidebar a {
         font-family: "Roboto", sans-serif
     }
@@ -25,7 +39,8 @@
     </div>
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
-            <a href="${pageContext.request.contextPath}/types/${productType.name}" class="w3-bar-item w3-button">${productType.namePl}</a>
+            <a href="${pageContext.request.contextPath}/types/${productType.name}"
+               class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
     <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
@@ -53,52 +68,26 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">${productType.namePl}</p>
+        <p class="w3-left">biżuteria ręcznie robiona</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Image header -->
-    <div class="w3-display-container w3-container">
-        <img src="${pageContext.request.contextPath}/images/type${productType.id}.jpg" alt="${productType.namePl}" style="width:100%">
-        <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-            <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO PRODUKTÓW</a></p>
-        </div>
+    <!-- Login form -->
+    <div class="w3-content w3-display-container" style="max-width:100%">
+
+        <a class="w3-bar-item w3-padding" style="color: crimson">${className}</a>
+        <p>${message}</p>
+        <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć na poprzednią stronę</button>
+        <a href="/" class="w3-button w3-white w3-border w3-round-large">wróć na stronę główną</a>
+        <script>
+           function goBack() {
+            window.history.back();
+           }
+        </script>
     </div>
 
-    <div class="w3-container w3-text-grey" id="products">
-        <c:if test="${productsCounter==0}">
-            <p>${productsCounter} pozycji</p>
-        </c:if>
-        <c:if test="${productsCounter==1}">
-            <p>${productsCounter} pozycja</p>
-        </c:if>
-        <c:if test="${productsCounter>1} && ${productsCounter<=4}">
-            <p>${productsCounter} pozycje</p>
-        </c:if>
-        <c:if test="${productsCounter>4}">
-            <p>${productsCounter} pozycji</p>
-        </c:if>
-    </div>
+    <br>
 
-    <!-- Product grid -->
-    <div class="w3-row w3-grayscale">
-        <c:forEach var="item" items="${products}">
-            <div class="w3-col l3 s6">
-                <div class="w3-container">
-                    <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
-                    <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
-                </div>
-            </div>
-        </c:forEach>
-    </div>
-
-    <!-- Subscribe section -->
-    <%--    <div class="w3-container w3-black w3-padding-32">--%>
-    <%--        <h1>Subskrybuj</h1>--%>
-    <%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
-    <%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
-    <%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
-    <%--    </div>--%>
 
     <!-- Footer -->
     <%@include file='footer.jsp' %>
@@ -111,6 +100,7 @@
 
 <!-- Login Modal -->
 <%@include file='loginModal.jsp' %>
+
 
 <!-- Newsletter Modal -->
 <div id="newsletter" class="w3-modal">
@@ -154,7 +144,38 @@
         document.getElementById("myOverlay").style.display = "none";
     }
 </script>
+<script>
+    var slideIndex = 1;
+    showDivs(slideIndex);
 
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function currentDiv(n) {
+        showDivs(slideIndex = n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        if (n > x.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = x.length
+        }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" w3-white", "");
+        }
+        x[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " w3-white";
+    }
+</script>
 </body>
 </html>
 

@@ -1,5 +1,7 @@
 package pl.javarun.mywebshop.service;
 
+import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.RoleNotExistException;
 import pl.javarun.mywebshop.model.Role;
 import pl.javarun.mywebshop.repository.RoleRepository;
 
@@ -14,6 +16,7 @@ import java.util.Set;
  * *
  * *
  ******************************************************/
+@Service
 public class RoleService {
     private final RoleRepository roleRepository;
 
@@ -23,5 +26,13 @@ public class RoleService {
 
     public Set<Role> getAllRoles() {
         return new HashSet<>(roleRepository.findAll());
+    }
+
+    public Role getRoleById(Integer id) {
+        return roleRepository.findById(id).orElseThrow(()->new RoleNotExistException("role "+id));
+    }
+
+    public void save(Role role) {
+        roleRepository.save(role);
     }
 }

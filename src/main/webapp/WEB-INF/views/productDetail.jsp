@@ -62,7 +62,7 @@
     <div class="w3-content" style="max-width:1200px">
         <div class="w3-display-container w3-container">
             <img src="${pageContext.request.contextPath}/images/${productType.id}/${product.id}.jpg" alt="${product.name}" style="width:100%">
-            <p>${product.name} - cena: <b>${product.price} PLN</b></p>
+            <p>${product.namePl} - cena: <b>${product.price} PLN</b></p>
         </div>
 <%--        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.1.jpg"--%>
 <%--             style="width:100%">--%>
@@ -115,7 +115,7 @@
                     kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br>
                     długość: <b>${product.length} mm</b><br>
                     szerokość: <b>${product.width} mm</b><br>
-                    <b>Opis:</b><br> ${product.description}
+                    <b>Opis:</b><br> ${product.descriptionPl}
                 </p>
             </div>
         </div>

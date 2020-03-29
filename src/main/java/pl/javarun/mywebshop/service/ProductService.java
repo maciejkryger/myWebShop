@@ -25,8 +25,8 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public Product saveProduct(Product product){
-        return productRepository.save(product);
+    public void saveProduct(Product product){
+        productRepository.save(product);
     }
 
     public void deleteProduct(Product product){

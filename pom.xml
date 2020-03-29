@@ -10,7 +10,7 @@
     </parent>
     <groupId>pl.javarun</groupId>
     <artifactId>mywebshop</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+<!--    <version>0.0.1-SNAPSHOT</version>-->
     <packaging>war</packaging>
     <name>mywebshop</name>
     <description>My webshop project for Spring Boot</description>
@@ -57,7 +57,7 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        H2 database-->
+<!--                H2 database-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

@@ -1,6 +1,7 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.RuleNotExistException;
 import pl.javarun.mywebshop.model.Rule;
 import pl.javarun.mywebshop.repository.RuleRepository;
 
@@ -27,7 +28,12 @@ public class RuleService {
         return ruleRepository.findByName(name);
     }
 
+    public Rule getRuleById(int id) { return ruleRepository.findById(id).orElseThrow(()->new RuleNotExistException("rule "+id)); }
+
     public List<Rule> getAllRules() {
         return ruleRepository.findAll();
+    }
+
+    public void save(Rule rule) { ruleRepository.save(rule);
     }
 }

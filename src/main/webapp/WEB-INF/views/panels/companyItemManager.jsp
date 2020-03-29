@@ -46,36 +46,65 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Edycja technik wykonania</h2>
+        <h2>Edycja danych firmy</h2>
         <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/makingTechniques/">
+            <a href="${pageContext.request.contextPath}/panels/data/companies/">
                 <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
             </a>
             <table class="w3-table-all w3-hoverable">
                 <form method="post"
-                      action="${pageContext.request.contextPath}/panels/data/makingTechnique/save"
-                      modelAttribute="makingTechnique">
+                      action="${pageContext.request.contextPath}/panels/data/company/save}"
+                      modelAttribute="company">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
 
                     <p>
-                        <label><b>id: ${makingTechnique.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
-                               value="${makingTechnique.id}">
+                               value="${company.id}">
                     </p>
                     <p>
-                        <label><b>Nazwa ENG</b></label>
-                        <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
-                               value="${makingTechnique.name}">
+                        <label><b>Nazwa firmy</b></label>
+                        <input type="text" name="name" placeholder="nazwa firmy" class="w3-input w3-border"
+                               value="${company.name}">
                     </p>
                     <p>
-                        <label><b>Nazwa PL</b></label>
-                        <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
-                               value="${makingTechnique.namePl}">
+                        <label><b>Adres</b></label>
+                        <input type="text" name="address" placeholder="adres" class="w3-input w3-border"
+                               value="${company.address}">
+                    </p>
+                    <p>
+                        <label><b>kod pocztowy</b></label>
+                        <input type="text" name="postCode" placeholder="kod pocztowy" class="w3-input w3-border"
+                               value="${company.postCode}">
+                    </p>
+                    <p>
+                        <label><b>Miasto</b></label>
+                        <input type="text" name="city" placeholder="miasto" class="w3-input w3-border"
+                               value="${company.city}">
+                    </p>
+                    <p>
+                        <label><b>Numer telefonu</b></label>
+                        <input type="text" name="phone" placeholder="phone" class="w3-input w3-border"
+                               value="${company.phone}">
+                    </p>
+                    <p>
+                        <label><b>E-mail</b></label>
+                        <input type="text" name="email" placeholder="email" class="w3-input w3-border"
+                               value="${company.email}">
+                    </p>
+                    <p>
+                        <label><b>Numer NIP</b></label>
+                        <input type="text" name="taxNumber" placeholder="numer NIP" class="w3-input w3-border"
+                               value="${company.taxNumber}">
+                    </p>
+                    <p>
+                        <label><b>Numer konta bankowego</b></label>
+                        <input type="text" name="accountNumber" placeholder="numer konta" class="w3-input w3-border"
+                               value="${company.accountNumber}">
                     </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/panels/data/makingTechniques/">
+                <a href="${pageContext.request.contextPath}/panels/data/companies/">
                     <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
                 </a>
 

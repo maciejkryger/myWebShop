@@ -39,7 +39,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">superPanel</p>
+        <%@include file='panelsHeader.jsp' %>
         <%@include file='../header.jsp' %>
     </header>
 
@@ -47,11 +47,16 @@
     <div class="w3-container">
 
         <h2>Tabela regulaminów i zasad współpracy</h2>
+        <a href="${pageContext.request.contextPath}/panels/data/rule/new">
+           <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
+        </a>
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
                 <thead>
                 <tr class="w3-light-grey ">
                     <th>id</th>
+                    <th>nazwa ENG</th>
+                    <th>nazwa PL</th>
                     <th>opis ENG</th>
                     <th>opis PL</th>
 
@@ -61,11 +66,13 @@
                 <c:forEach var="item" items="${rules}">
                     <tr>
                         <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.namePl}</td>
                         <td>${item.description}</td>
                         <td>${item.descriptionPl}</td>
 
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}">
+                            <a href="${pageContext.request.contextPath}/panels/data/rule/${item.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
                         </td>

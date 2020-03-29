@@ -39,7 +39,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">superPanel</p>
+        <%@include file='panelsHeader.jsp' %>
         <%@include file='../header.jsp' %>
     </header>
 
@@ -47,7 +47,7 @@
     <div class="w3-container">
 
         <h2>Tabela produktów</h2>
-        <a href="${pageContext.request.contextPath}/panels/data/product/add">
+        <a href="${pageContext.request.contextPath}/panels/data/product/new">
             <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
         </a>
 
@@ -73,7 +73,7 @@
                 <c:forEach var="item" items="${products}">
                     <tr>
                         <td>${item.id}</td>
-                        <td>${item.name}</td>
+                        <td>${item.namePl}</td>
                         <td>${item.type.namePl}</td>
                         <td>${item.makingTechnique.namePl}</td>
                         <td>${item.material.namePl}</td>
@@ -83,7 +83,7 @@
                         <td>${item.length}</td>
                         <td>${item.width}</td>
                         <td>${item.price}</td>
-                        <td>${item.description}</td>
+                        <td>${item.descriptionPl}</td>
                         <td>
                             <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>

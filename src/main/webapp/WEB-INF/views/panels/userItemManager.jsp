@@ -46,46 +46,57 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela użytkowników</h2>
-        <a href="${pageContext.request.contextPath}/panels/data/user/new">
-           <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
-        </a>
+        <h2>Edycja asortymentu</h2>
         <div class="w3-responsive">
+            <a href="${pageContext.request.contextPath}/panels/data/users/">
+                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+            </a>
             <table class="w3-table-all w3-hoverable">
-                <thead>
-                <tr class="w3-light-grey ">
-                    <th>username</th>
-                    <th>imię</th>
-                    <th>nazwisko</th>
-                    <th>email</th>
-                    <th>uprawnienia</th>
-                    <th>data utworzenia</th>
-                    <th>aktywny</th>
-                    <th>data aktywacji</th>
-                    <th>wykasowany</th>
-                    <th>data wykasowania</th>
-                    <th>opcje</th>
-                </tr>
-                </thead>
-                <c:forEach var="item" items="${users}">
-                    <tr>
-                        <td>${item.username}</td>
-                        <td>${item.firstName}</td>
-                        <td>${item.lastName}</td>
-                        <td>${item.email}</td>
-                        <td>${item.role.authority}</td>
-                        <td>${item.creationDate}</td>
-                        <td>${item.active}</td>
-                        <td>${item.activationDate}</td>
-                        <td>${item.deleted}</td>
-                        <td>${item.deletingDate}</td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/${item.username}">
-                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/user/save"
+                      modelAttribute="user">
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+
+
+                    <p>
+                        <label><b>username: ${user.username}</b></label>
+                        <input type="text" name="username" placeholder="username" class="w3-input w3-border"
+                               value="${user.username}">
+                    </p>
+                    <p>
+                        <label><b>Imię</b></label>
+                        <input type="text" name="firstName" placeholder="imię" class="w3-input w3-border"
+                               value="${user.firstName}">
+                    </p>
+                    <p>
+                        <label><b>Nazwisko</b></label>
+                        <input type="text" name="lastName" placeholder="nazwisko" class="w3-input w3-border"
+                               value="${user.lastName}">
+                    </p>
+                    <p>
+                        <label><b>Email</b></label>
+                        <input type="text" name="email" placeholder="email" class="w3-input w3-border"
+                           value="${user.email}">
+                    </p>
+                    <p>
+                        <label><b>Uprawnienia</b></label>
+                        <select class="w3-input w3-border" name="roleId">
+                             <option selected="selected" value="${user.role.id}">${user.role.authority}</option>
+                                  <c:forEach var="item" items="${roles}">
+                              <option value="${item.id}">${item.authority}</option>
+                                  </c:forEach>
+                        </select>
+                    </p>
+                    <p>
+                          <label><b>Czy aktywny</b></label>
+                          <input type="boolean" name="active" value="${user.active}" class="w3-input w3-border">
+                    </p>
+
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                </form>
+                <a href="${pageContext.request.contextPath}/panels/data/users/">
+                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+                </a>
+
             </table>
         </div>
 

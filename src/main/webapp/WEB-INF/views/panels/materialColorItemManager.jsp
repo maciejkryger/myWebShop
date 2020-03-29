@@ -39,7 +39,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">superPanel</p>
+        <%@include file='panelsHeader.jsp' %>
         <%@include file='../header.jsp' %>
     </header>
 
@@ -53,8 +53,8 @@
             </a>
             <table class="w3-table-all w3-hoverable">
                 <form method="post"
-                      action="${pageContext.request.contextPath}/panels/data/materialColors/save/${materialColor.id}"
-                      modelAttribute="product">
+                      action="${pageContext.request.contextPath}/panels/data/materialColor/save"
+                      modelAttribute="materialColor">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
 
@@ -69,7 +69,7 @@
                                value="${materialColor.name}">
                     </p>
                     <p>
-                        <label><b>sNazwa PL</b></label>
+                        <label><b>Nazwa PL</b></label>
                         <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
                                value="${materialColor.namePl}">
                     </p>

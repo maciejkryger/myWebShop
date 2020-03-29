@@ -46,41 +46,48 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela danych firmy</h2>
+        <h2>Edycja regulaminów</h2>
         <div class="w3-responsive">
+            <a href="${pageContext.request.contextPath}/panels/data/rules/">
+                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+            </a>
             <table class="w3-table-all w3-hoverable">
-                <thead>
-                <tr class="w3-light-grey ">
-                    <th>id</th>
-                    <th>nazwa</th>
-                    <th>adres</th>
-                    <th>kod pocztowy</th>
-                    <th>miasto</th>
-                    <th>telefon</th>
-                    <th>email</th>
-                    <th>NIP</th>
-                    <th>numer konta</th>
-                    <th>opcje</th>
-                </tr>
-                </thead>
-                <c:forEach var="item" items="${companies}">
-                    <tr>
-                        <td>${item.id}</td>
-                        <td>${item.name}</td>
-                        <td>${item.address}</td>
-                        <td>${item.postCode}</td>
-                        <td>${item.city}</td>
-                        <td>${item.phone}</td>
-                        <td>${item.email}</td>
-                        <td>${item.taxNumber}</td>
-                        <td>${item.accountNumber}</td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/company/">
-                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/rule/save"
+                      modelAttribute="rule">
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+
+
+                    <p>
+                        <label><b>id: ${rule.id}</b></label>
+                        <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
+                               value="${rule.id}">
+                    </p>
+                    <p>
+                        <label><b>Nazwa ENG</b></label>
+                        <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
+                               value="${rule.name}">
+                    </p>
+                    <p>
+                        <label><b>Nazwa PL</b></label>
+                        <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
+                               value="${rule.namePl}">
+                    </p>
+                   <p>
+                        <label><b>Nazwa ENG</b></label>
+                       <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
+                            value="${rule.description}">
+                   </p>
+                   <p>
+                       <label><b>Nazwa PL</b></label>
+                       <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
+                                value="${rule.descriptionPl}">
+                       </p>
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                </form>
+                <a href="${pageContext.request.contextPath}/panels/data/rules/">
+                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
+                </a>
+
             </table>
         </div>
 
@@ -105,7 +112,7 @@
         }
     }
 
-    // Click on the "Products" link on page load to open the accordion for demo purposes
+    // Click on the "Jeans" link on page load to open the accordion for demo purposes
     document.getElementById("myBtn").click();
 
 

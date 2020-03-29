@@ -26,6 +26,7 @@ public class Type {
     public Type() {
     }
 
+
     public int getId() {
         return id;
     }
