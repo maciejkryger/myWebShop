@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @ManyToOne(targetEntity = Role.class)
     private Role role;
     @Nullable
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd mm:ss")
     private Date creationDate;
     private boolean active;
     @Nullable

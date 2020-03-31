@@ -60,10 +60,10 @@ public class FasteningTypeController {
     @PostMapping("/save")
     public String saveFasteningTypeIdItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningType fasteningType;
-        if(id==null){
-            fasteningType = new FasteningType();
-        } else {
+        if(id!=null && id!=0){
             fasteningType = fasteningTypeService.getFasteningTypeById(id);
+        } else {
+            fasteningType = new FasteningType();
         }
         fasteningType.setName(name);
         fasteningType.setNamePl(namePl);

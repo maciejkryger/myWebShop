@@ -63,10 +63,10 @@ public class MakingTechniqueController {
     @PostMapping("/save")
     public String saveMakingTechniqueIdItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MakingTechnique makingTechnique;
-        if(id==null){
-            makingTechnique = new MakingTechnique();
-        }else {
+        if(id!=null && id !=0){
             makingTechnique = makingTechniqueService.getMakingTechniqueById(id);
+        }else {
+            makingTechnique = new MakingTechnique();
         }
         makingTechnique.setName(name);
         makingTechnique.setNamePl(namePl);

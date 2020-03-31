@@ -64,10 +64,10 @@ public class RoleController {
     @PostMapping("/save")
     public String saveRoleItem(@PathVariable (required = false) Integer id, @RequestParam String authority) {
         Role role;
-        if (id==null){
-            role=new Role();
-        } else {
+        if (id!=null && id !=0){
             role = roleService.getRoleById(id);
+        } else {
+            role=new Role();
         }
         role.setAuthority(authority);
         roleService.save(role);

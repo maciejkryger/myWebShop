@@ -82,61 +82,61 @@ INSERT INTO material (id, name, name_pl)
 values (nextval('material_seq'), 'others', 'inne');
 
 INSERT INTO material_color (id, name, name_pl)
-values (1, 'white', 'biały');
+values (nextval('material_color_seq'), 'white', 'biały');
 INSERT INTO material_color (id, name, name_pl)
-values (2, 'beige', 'beżowy');
+values (nextval('material_color_seq'), 'beige', 'beżowy');
 INSERT INTO material_color (id, name, name_pl)
-values (3, 'blue', 'błękitny');
+values (nextval('material_color_seq'), 'blue', 'błękitny');
 INSERT INTO material_color (id, name, name_pl)
-values (4, 'cosmos', 'benzynowy (albo cosmos albo nebula)');
+values (nextval('material_color_seq'), 'cosmos', 'benzynowy (albo cosmos albo nebula)');
 INSERT INTO material_color (id, name, name_pl)
-values (5, 'brown', 'brązowy');
+values (nextval('material_color_seq'), 'brown', 'brązowy');
 INSERT INTO material_color (id, name, name_pl)
-values (6, 'red', 'czerwony');
+values (nextval('material_color_seq'), 'red', 'czerwony');
 INSERT INTO material_color (id, name, name_pl)
-values (7, 'black', 'czarny');
+values (nextval('material_color_seq'), 'black', 'czarny');
 INSERT INTO material_color (id, name, name_pl)
-values (8, 'violet', 'fioletowy');
+values (nextval('material_color_seq'), 'violet', 'fioletowy');
 INSERT INTO material_color (id, name, name_pl)
-values (9, 'graphite', 'grafitowy');
+values (nextval('material_color_seq'), 'graphite', 'grafitowy');
 INSERT INTO material_color (id, name, name_pl)
-values (10, 'navy blue', 'granatowy');
+values (nextval('material_color_seq'), 'navy blue', 'granatowy');
 INSERT INTO material_color (id, name, name_pl)
-values (11, 'jeans', 'jeansowy');
+values (nextval('material_color_seq'), 'jeans', 'jeansowy');
 INSERT INTO material_color (id, name, name_pl)
-values (12, 'inky', 'atramentowy (modrakowy)');
+values (nextval('material_color_seq'), 'inky', 'atramentowy (modrakowy)');
 INSERT INTO material_color (id, name, name_pl)
-values (13, 'heavenly', 'niebieski');
+values (nextval('material_color_seq'), 'heavenly', 'niebieski');
 INSERT INTO material_color (id, name, name_pl)
-values (14, 'pink', 'różowy');
+values (nextval('material_color_seq'), 'pink', 'różowy');
 INSERT INTO material_color (id, name, name_pl)
-values (15, 'silver', 'srebrny');
+values (nextval('material_color_seq'), 'silver', 'srebrny');
 INSERT INTO material_color (id, name, name_pl)
-values (16, 'gray', 'szary');
+values (nextval('material_color_seq'), 'gray', 'szary');
 INSERT INTO material_color (id, name, name_pl)
-values (17, 'green', 'zielony');
+values (nextval('material_color_seq'), 'green', 'zielony');
 INSERT INTO material_color (id, name, name_pl)
-values (18, 'golden', 'złoty');
+values (nextval('material_color_seq'), 'golden', 'złoty');
 INSERT INTO material_color (id, name, name_pl)
-values (19, 'yellow', 'żółty');
+values (nextval('material_color_seq'), 'yellow', 'żółty');
 INSERT INTO material_color (id, name, name_pl)
-values (20, 'transparent', 'przejrzysty ( lub transparentny)');
+values (nextval('material_color_seq'), 'transparent', 'przejrzysty ( lub transparentny)');
 INSERT INTO material_color (id, name, name_pl)
-values (21, 'mint', 'miętowy');
+values (nextval('material_color_seq'), 'mint', 'miętowy');
 INSERT INTO material_color (id, name, name_pl)
-values (22, 'metallic gold', 'metaliczne złoto');
+values (nextval('material_color_seq'), 'metallic gold', 'metaliczne złoto');
 INSERT INTO material_color (id, name, name_pl)
-values (23, 'metallic silver', 'metaliczne srebro');
+values (nextval('material_color_seq'), 'metallic silver', 'metaliczne srebro');
 INSERT INTO material_color (id, name, name_pl)
-values (24, 'metallic bronze', 'metaliczny brąz');
+values (nextval('material_color_seq'), 'metallic bronze', 'metaliczny brąz');
 INSERT INTO material_color (id, name, name_pl)
-values (25, 'mix', 'mix');
+values (nextval('material_color_seq'), 'mix', 'mix');
 INSERT INTO material_color (id, name, name_pl)
-values (26, 'metallic ink', 'metaliczny atramentowy');
+values (nextval('material_color_seq'), 'metallic ink', 'metaliczny atramentowy');
 INSERT INTO material_color (id, name, name_pl)
-values (27, 'metallic purple', 'metaliczny fioletowy');
+values (nextval('material_color_seq'), 'metallic purple', 'metaliczny fioletowy');
 INSERT INTO material_color (id, name, name_pl)
-values (28, 'metallic navy blue', 'metaliczny granatowy');
+values (nextval('material_color_seq'), 'metallic navy blue', 'metaliczny granatowy');
 
 INSERT INTO color_per_material (id, material_color_id, material_id, active, availability)
 values (nextval('color_per_material_seq'), 1, 1, true, '24h');

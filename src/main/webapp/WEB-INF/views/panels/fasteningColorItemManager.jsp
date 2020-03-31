@@ -53,7 +53,7 @@
             </a>
             <table class="w3-table-all w3-hoverable">
                 <form method="post"
-                      action="${pageContext.request.contextPath}/panels/data/fasteningColor/save}"
+                      action="${pageContext.request.contextPath}/panels/data/fasteningColor/save"
                       modelAttribute="fasteningColor">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 

@@ -17,7 +17,7 @@ import pl.javarun.mywebshop.service.*;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/panels/data/rule")
+@RequestMapping("/panels/data/rule/")
 public class RuleController {
 
     ModelAndView modelAndView;
@@ -61,10 +61,18 @@ public class RuleController {
     }
 
     @PostMapping("/save")
-    public String saveRuleItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
-        Rule rule = ruleService.getRuleById(id);
+    public String saveRuleItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
+                               @RequestParam String description, @RequestParam String descriptionPl) {
+        Rule rule;
+        if(id != null & id!=0){
+            rule = ruleService.getRuleById(id);
+        } else {
+            rule = new Rule();
+        }
         rule.setName(name);
         rule.setNamePl(namePl);
+        rule.setDescription(description);
+        rule.setDescriptionPl(descriptionPl);
         ruleService.save(rule);
         return "redirect:/panels/data/rules";
     }

@@ -60,10 +60,10 @@ public class MaterialController {
     @PostMapping("/save")
     public String saveMaterialItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         Material material;
-        if(id==null){
-            material = new Material();
-        }else {
+        if(id!=null && id !=0){
             material = materialService.getMaterialById(id);
+        }else {
+            material = new Material();
         }
         material.setName(name);
         material.setNamePl(namePl);

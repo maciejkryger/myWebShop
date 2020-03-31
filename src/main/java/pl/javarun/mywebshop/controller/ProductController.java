@@ -81,44 +81,24 @@ public class ProductController {
     {
         Product product;
         if(id!=null && id !=0){
-            System.out.println("produkt z bazy od id "+id);
             product = productService.getProductById(id);
         }else{
-            System.out.println("nowy produkt");
-//            System.out.println(name+namePl+typeId+materialId+materialColorId+fasteningTypeId+fasteningColorId+length+width+price+description+descriptionPl);
             product = new Product();
-            id = productService.getAllProducts().size();
-            product.setId(id+1);
         }
-        System.out.println("przed setterami");
         product.setName(name);
-        System.out.println("po set name");
         product.setNamePl(namePl);
-        System.out.println("po set namePL");
         product.setType(typeService.getTypeById(typeId));
-        System.out.println("po set type");
         product.setMakingTechnique(makingTechniqueService.getMakingTechniqueById(makingTechniqueId));
-        System.out.println("po set technika");
         product.setMaterial(materialService.getMaterialById(materialId));
-        System.out.println("po set material");
         product.setMaterialColor(materialColorService.getMaterialColorsById(materialColorId));
-        System.out.println("po set material color");
         product.setFasteningType(fasteningTypeService.getFasteningTypeById(fasteningTypeId));
-        System.out.println("po set typ zapiecia");
         product.setFasteningColor(fasteningColorService.getFasteningColorById(fasteningColorId));
-        System.out.println("po set kolor zapiecia");
         product.setLength(length);
-        System.out.println("po set length");
         product.setWidth(width);
-        System.out.println("po set width");
         product.setPrice(price);
-        System.out.println("po setPice");
         product.setDescription(description);
-        System.out.println("po set descripton");
         product.setDescriptionPl(descriptionPl);
-        System.out.println("po wszystkich setterach przed zapisem");
         productService.saveProduct(product);
-        System.out.println("po zapisie");
         return "redirect:/panels/data/products";
     }
 }

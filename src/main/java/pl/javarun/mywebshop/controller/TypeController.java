@@ -61,12 +61,10 @@ public class TypeController {
     @PostMapping("/save")
     public String saveTypeItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         Type type;
-        if(id==null){
-            type = new Type();
-            id = typeService.getAllTypes().size();
-            type.setId(id+1);
-        } else {
+        if(id!=null && id !=0){
             type = typeService.getTypeById(id);
+        } else {
+            type = new Type();
         }
         type.setName(name);
         type.setNamePl(namePl);

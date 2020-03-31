@@ -73,13 +73,13 @@
                                value="${rule.namePl}">
                     </p>
                    <p>
-                        <label><b>Nazwa ENG</b></label>
-                       <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
+                        <label><b>Wpis ENG</b></label>
+                       <input type="text" name="description" placeholder="treść wpisu po angielsku" class="w3-input w3-border"
                             value="${rule.description}">
                    </p>
                    <p>
-                       <label><b>Nazwa PL</b></label>
-                       <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
+                       <label><b>Wpis PL</b></label>
+                       <input type="text" name="descriptionPl" placeholder="treść wpisu po polsku" class="w3-input w3-border"
                                 value="${rule.descriptionPl}">
                        </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>

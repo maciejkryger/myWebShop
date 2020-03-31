@@ -7,6 +7,11 @@ import pl.javarun.mywebshop.model.Type;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
+
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
  * @date : 29.03.2020 20:38
@@ -64,15 +69,21 @@ public class UserController {
 
     @PostMapping("/save")
     public String saveUserItem(@RequestParam (required = false) String username, @RequestParam String firstName,
-                               @RequestParam String lastName, @RequestParam Boolean active) {
+                               @RequestParam String lastName, @RequestParam String email,
+                               @RequestParam Integer roleId,  @RequestParam Boolean active) {
         User user;
-        if(username==null){
+        if(userService.getUserByUsername(username)==null){
+            System.out.println("is null, new user");
             user = new User();
+            user.setUsername(username);
         } else {
+            System.out.println("existing user, !=null");
             user = userService.getUserByUsername(username);
         }
         user.setFirstName(firstName);
         user.setLastName(lastName);
+        user.setEmail(email);
+        user.setRole(roleService.getRoleById(roleId));
         user.setActive(active);
         userService.saveUser(user);
         return "redirect:/panels/data/users";

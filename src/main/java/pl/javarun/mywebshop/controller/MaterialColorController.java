@@ -61,12 +61,10 @@ public class MaterialColorController {
     @PostMapping("/save")
     public String saveMaterialColorsIdItem(@PathVariable(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MaterialColor materialColor;
-        if(id == null){
-            materialColor = new MaterialColor();
-            id = materialColorService.getAllMaterialColors().size()+1;
-            materialColor.setId(id);
-        } else {
+        if(id != null && id !=0){
             materialColor = materialColorService.getMaterialColorsById(id);
+        } else {
+            materialColor = new MaterialColor();
         }
         materialColor.setName(name);
         materialColor.setNamePl(namePl);

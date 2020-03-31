@@ -1,6 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +15,7 @@ import pl.javarun.mywebshop.service.*;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/panels/data/fasteningColor")
+@RequestMapping("/panels/data/fasteningColor/")
 public class FasteningColorController {
 
     ModelAndView modelAndView;
@@ -62,12 +61,10 @@ public class FasteningColorController {
     @PostMapping("/save")
     public String saveFasteningColorIdItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningColor fasteningColor;
-        if (id==null){
-          fasteningColor = new FasteningColor();
-          id = fasteningColorService.getAllFasteningColors().size()+1;
-          fasteningColor.setId(id);
+        if (id!=null && id!=0){
+            fasteningColor = fasteningColorService.getFasteningColorById(id);
         } else {
-          fasteningColor = fasteningColorService.getFasteningColorById(id);
+            fasteningColor = new FasteningColor();
         }
         fasteningColor.setName(name);
         fasteningColor.setNamePl(namePl);
