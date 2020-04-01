@@ -46,47 +46,37 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela użytkowników</h2>
-
+        <h2>Wymuszenie zmiany hasła dla użytkownika ${username}</h2>
         <div class="w3-responsive">
+
             <table class="w3-table-all w3-hoverable">
-                <thead>
-                <tr class="w3-light-grey ">
-                    <th>username</th>
-                    <th>imię</th>
-                    <th>nazwisko</th>
-                    <th>email</th>
-                    <th>uprawnienia</th>
-                    <th>data utworzenia</th>
-                    <th>aktywny</th>
-                    <th>data aktywacji</th>
-                    <th>wykasowany</th>
-                    <th>data wykasowania</th>
-                    <th>opcje</th>
-                </tr>
-                </thead>
-                <c:forEach var="item" items="${users}">
-                    <tr>
-                        <td>${item.username}</td>
-                        <td>${item.firstName}</td>
-                        <td>${item.lastName}</td>
-                        <td>${item.email}</td>
-                        <td>${item.role.authority}</td>
-                        <td>${item.creationDate}</td>
-                        <td>${item.active}</td>
-                        <td>${item.activationDate}</td>
-                        <td>${item.deleted}</td>
-                        <td>${item.deletingDate}</td>
-                        <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/${item.username}">
-                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
-                            </a>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/changePassword/${item.username}">
-                                 <button class="w3-button w3-white w3-border w3-round-large">zmień hasło</button>
-                            </a>
-                        </td>
-                    </tr>
-                </c:forEach>
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/user/changePassword">
+
+                <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'oba hasła muszą być równe!!!' :''}</a>
+                    <p>
+                        <label><b>Nazwa użytkownika: ${username}</b></label>
+                        <input type="hidden" name="username" class="w3-input w3-border"
+                                                       value="${username}">
+                    <p>
+                        <label><b>wpisz nowe hasło</b></label>
+                        <input type="text" name="newPassword" placeholder="nowe hasło" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label><b>wpisz nowe hasło ponownie</b></label>
+                        <input type="text" name="newPassword2" placeholder="nowe hasło" class="w3-input w3-border">
+                    </p>
+
+
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                </form>
+                 <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
+                        <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>
+                        <script>
+                           function goBack() {
+                            window.history.back();
+                           }
+                        </script>
+
             </table>
         </div>
 

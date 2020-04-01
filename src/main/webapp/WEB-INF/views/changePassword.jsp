@@ -68,28 +68,50 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">biżuteria ręcznie robiona</p>
+        <p class="w3-left">zmiana hasła</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <!-- Change password form -->
+        <h2>Zmień hasło</h2>
 
-        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
-            <p class="w3-xlarge">Logowanie</p>
-            <p>zaloguj się</p>
-            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
-            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
-            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
-                    onclick="document.getElementById('login').style.display='none'">Zaloguj
-            </button>
-        </form>
+        <div class="w3-responsive">
 
-                    <a href="${pageContext.request.contextPath}/changePassword"
-                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Zmiana hasła</a>
+            <table class="w3-table-all w3-hoverable">
+                <form method="post" action="${pageContext.request.contextPath}/changePassword">
 
-    </div>
+                    <a class="w3-bar-item w3-padding" style="color: blue">${passwordChanged ?  'Hasło zostało poprawnie zmienione' :''}</a>
+                    <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
+                    <p>
+                        <label><b>Nazwa użytkownika:</b></label>
+                        <input type="text" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border"
+                                                       value="${username}">
+                    <p>
+                        <label><b>stare hasło</b></label>
+                        <input type="password" name="oldPassword" placeholder="wpisz stare hasło" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label><b>wpisz nowe hasło</b></label>
+                        <input type="password" name="newPassword" placeholder="nowe hasło" class="w3-input w3-border">
+                    </p>
+                    <p>
+                        <label><b>wpisz nowe hasło ponownie</b></label>
+                        <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
+                    </p>
+                    <a class="w3-bar-item w3-padding" style="color: crimson">${newPasswordsNoTheSame ?  'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
+
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                </form>
+                  <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
+                 <!--       <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>-->
+                        <script>
+                           function goBack() {
+                            window.history.back();
+                           }
+                        </script>
+
+            </table>
+        </div>
 
     <br>
 

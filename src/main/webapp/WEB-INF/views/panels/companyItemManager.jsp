@@ -53,7 +53,7 @@
             </a>
             <table class="w3-table-all w3-hoverable">
                 <form method="post"
-                      action="${pageContext.request.contextPath}/panels/data/company/save}"
+                      action="${pageContext.request.contextPath}/panels/data/company/save"
                       modelAttribute="company">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 

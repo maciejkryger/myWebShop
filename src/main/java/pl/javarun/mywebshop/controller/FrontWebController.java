@@ -1,9 +1,12 @@
 package pl.javarun.mywebshop.controller;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
 /**
@@ -56,6 +59,47 @@ public class FrontWebController {
 //        return "redirect:/panels/superpanel";
 //        else return "redirect:/";
 //    }
+
+    @GetMapping("/changePassword")
+    public ModelAndView changePasswordView(){
+        modelAndView = new ModelAndView("changePassword");
+        modelAndView.addObject("company", companyService.getCompanyData());
+        modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("rules", ruleService.getAllRules());
+        return modelAndView;
+    }
+
+    @PostMapping("/changePassword")
+    public String changePassword(@RequestParam String username, @RequestParam String oldPassword,
+                                 @RequestParam String newPassword, @RequestParam String newPassword2){
+
+        System.out.println("username: "+username);
+        System.out.println("old password: "+oldPassword);
+        System.out.println("new password: "+newPassword);
+        System.out.println("repeated new password: "+newPassword2);
+        User user = userService.getUserByUsername(username);
+        PasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(newPassword);
+        System.out.println(hashedPassword);
+        System.out.println(user.getPassword());
+        if (userService.getUserByUsername(username)==null || userService.getUserByUsername(username).equals(null)){
+            System.out.println("błędny użytkownik");
+            return "redirect:/changePassword?error";
+        } if(!newPassword.equals(newPassword2)){
+            System.out.println("nowe hasla nie sa takie same");
+            return "redirect:/changePassword?newPasswordsNoTheSame";
+        } else if (newPassword.equals(newPassword2) && user.getPassword().equals(hashedPassword)){
+            System.out.println("zmiana hasła");
+            System.out.println(hashedPassword);
+            user.setPassword(hashedPassword);
+            userService.saveUser(user);
+            return "redirect:/changePassword?passwordChanged";
+        } else {
+            System.out.println("else");
+            return "redirect:/changePassword?error";
+        }
+    }
+
 
     @GetMapping(value = {"", "/{id}"})
     public ModelAndView getIndexPage(@PathVariable(required = false) String id) {

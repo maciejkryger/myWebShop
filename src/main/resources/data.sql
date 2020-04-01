@@ -19,7 +19,7 @@ values ('superuser', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0
         '2020-02-15', true, '2020-02-15', false, null, null);
 INSERT INTO user (username, password, first_name, last_name, email, role_id, creation_date, active, activation_date,
                   deleted, deleting_date, token)
-values ('user', '$2a$10$KvxPudrieuxpEgxw3e4yPOuYK59PgfQshx3RaVUTCpbKB82DC/0RC', 'Agnieszka', 'Walc', 'test@wp.pl', 3,
+values ('user', '$2a$10$qbTMXJNSEgCBTTgLJzU9Iu.mWlwRMFwh12cCkBDdPhUc4HJJmfFku', 'Agnieszka', 'Walc', 'test@wp.pl', 3,
         '2020-02-15', true, '2020-02-15', false, null, null);
 
 INSERT INTO type (id, name, name_pl)
