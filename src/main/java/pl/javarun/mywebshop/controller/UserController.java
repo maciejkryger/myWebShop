@@ -1,6 +1,7 @@
 package pl.javarun.mywebshop.controller;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -74,9 +75,16 @@ public class UserController {
                                @RequestParam String lastName, @RequestParam String email,
                                @RequestParam Integer roleId,  @RequestParam Boolean active) {
         User user;
-
-        user = userService.getUserByUsername(username);
-
+        if(userService.getUserByUsername(username)==null){
+            user= new User();
+            PasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(username);
+            user.setPassword(hashedPassword);
+            user.setDeleted(false);
+            user.setToken("addedByAdmin");
+        }else {
+            user = userService.getUserByUsername(username);
+        }
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
@@ -86,10 +94,17 @@ public class UserController {
         return "redirect:/panels/data/users";
     }
 
-    @GetMapping("/changePassword/{username}")
-    public ModelAndView changePasswordView(@PathVariable String username){
+    @GetMapping("/changePassword")
+    public ModelAndView changePasswordView(@PathParam("username") String username,
+                                           @PathParam("passwordChanged") boolean passwordChanged,
+                                           @PathParam("newPasswordsNotTheSame") boolean newPasswordsNotTheSame){
         modelAndView = new ModelAndView("panels/userChangePassword");
         modelAndView.addObject("username", username);
+        if (newPasswordsNotTheSame) {
+            modelAndView.addObject("newPasswordsNotTheSame", true);
+        } else if(passwordChanged){
+            modelAndView.addObject("passwordChanged",true);
+        }
         return modelAndView;
     }
 
@@ -100,14 +115,15 @@ public class UserController {
         System.out.println("new password: "+newPassword);
         System.out.println("repeated new password: "+newPassword2);
         if (!newPassword.equals(newPassword2)){
-            return "redirect:/panels/data/user/changePassword/{"+username+"}?error";
-        }
+            return "redirect:/panels/data/user/changePassword?username="+username+"&newPasswordsNotTheSame=true";
+        } else {
         User user = userService.getUserByUsername(username);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(newPassword);
         user.setPassword(hashedPassword);
         userService.saveUser(user);
-        return "redirect:/panels/data/users";
+            return "redirect:/panels/data/user/changePassword?username="+username+"&passwordChanged=true";
+        }
     }
 }
 

@@ -8,6 +8,9 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
+import pl.javarun.mywebshop.util.PasswordUtil;
+
+import javax.websocket.server.PathParam;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -61,42 +64,57 @@ public class FrontWebController {
 //    }
 
     @GetMapping("/changePassword")
-    public ModelAndView changePasswordView(){
+    public ModelAndView changePasswordView(@PathParam("wrongPassword") boolean wrongPassword, @PathParam("passwordChanged") boolean passwordChanged,
+                                           @PathParam("newPasswordsNotTheSame") boolean newPasswordsNotTheSame,
+                                           @PathParam("userNotExist") boolean userNotExist){
         modelAndView = new ModelAndView("changePassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        if(userNotExist){
+            modelAndView.addObject("userNotExist",userNotExist);
+        } else if (newPasswordsNotTheSame) {
+            modelAndView.addObject("newPasswordsNotTheSame", true);
+        }else if (wrongPassword){
+            modelAndView.addObject("wrongPassword",true);
+        }else if(passwordChanged){
+            modelAndView.addObject("passwordChanged",true);
+        }
         return modelAndView;
     }
 
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam String username, @RequestParam String oldPassword,
                                  @RequestParam String newPassword, @RequestParam String newPassword2){
-
         System.out.println("username: "+username);
         System.out.println("old password: "+oldPassword);
         System.out.println("new password: "+newPassword);
         System.out.println("repeated new password: "+newPassword2);
-        User user = userService.getUserByUsername(username);
+        User user;
         PasswordEncoder passwordEncoder  = new BCryptPasswordEncoder();
         String hashedPassword = passwordEncoder.encode(newPassword);
-        System.out.println(hashedPassword);
-        System.out.println(user.getPassword());
-        if (userService.getUserByUsername(username)==null || userService.getUserByUsername(username).equals(null)){
-            System.out.println("błędny użytkownik");
-            return "redirect:/changePassword?error";
+        PasswordUtil passwordUtil = new PasswordUtil();
+
+
+
+        if (userService.getUserByUsername(username)==null){
+            System.out.println("bledny uzytkownik");
+            return "redirect:/changePassword?userNotExist=true";
         } if(!newPassword.equals(newPassword2)){
             System.out.println("nowe hasla nie sa takie same");
-            return "redirect:/changePassword?newPasswordsNoTheSame";
-        } else if (newPassword.equals(newPassword2) && user.getPassword().equals(hashedPassword)){
+            return "redirect:/changePassword?newPasswordsNotTheSame=true";
+        } else if (newPassword.equals(newPassword2) && passwordUtil.checkPassword(oldPassword,userService.getUserByUsername(username).getPassword())){
             System.out.println("zmiana hasła");
             System.out.println(hashedPassword);
+            user=userService.getUserByUsername(username);
             user.setPassword(hashedPassword);
             userService.saveUser(user);
-            return "redirect:/changePassword?passwordChanged";
+            return "redirect:/changePassword?passwordChanged=true";
         } else {
-            System.out.println("else");
-            return "redirect:/changePassword?error";
+            System.out.println(hashedPassword);
+            System.out.println(userService.getUserById(username).getPassword());
+            System.out.println("bledne haslo");
+            return "redirect:/changePassword?wrongPassword=true";
         }
     }
 

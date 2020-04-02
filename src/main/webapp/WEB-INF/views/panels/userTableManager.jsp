@@ -48,6 +48,10 @@
 
         <h2>Tabela użytkowników</h2>
 
+                <a href="${pageContext.request.contextPath}/panels/data/user/new">
+                    <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
+                </a>
+
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
                 <thead>
@@ -81,7 +85,7 @@
                             <a href="${pageContext.request.contextPath}/panels/data/user/${item.username}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/changePassword/${item.username}">
+                            <a href="${pageContext.request.contextPath}/panels/data/user/changePassword?username=${item.username}">
                                  <button class="w3-button w3-white w3-border w3-round-large">zmień hasło</button>
                             </a>
                         </td>

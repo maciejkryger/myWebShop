@@ -31,7 +31,8 @@ public class UserService implements UserDetailsService {
 
 
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findByUsernameIgnoreCase(s).orElseThrow(() -> new UsernameNotFoundException("" + s));
+        return userRepository.findByUsernameIgnoreCase(s);
+//                .orElseThrow(() -> new UsernameNotFoundException("" + s));
     }
 
     public User saveUser(User user) {
@@ -46,8 +47,13 @@ public class UserService implements UserDetailsService {
         user.setDeletingDate(date);
     }
 
+    public User getUserById(String username){
+        return userRepository.findById(username).orElseThrow(()->new UserNotExistException("username: "+username+" not exist"));
+    }
+
     public User getUserByUsername(String username) {
-        return userRepository.findByUsernameIgnoreCase(username).orElseThrow(() -> new UserNotExistException("username: " + username + " not exist"));
+        return userRepository.findByUsernameIgnoreCase(username);
+//                .orElseThrow(() -> new UserNotExistException("username: " + username + " not exist"));
     }
 
     public Set<User> getAllUsers() {

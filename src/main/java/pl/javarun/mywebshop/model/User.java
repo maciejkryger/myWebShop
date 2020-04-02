@@ -43,14 +43,17 @@ public class User implements UserDetails {
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd mm:ss")
     private Date creationDate;
+    @NotNull
     private boolean active;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date activationDate;
+    @NotNull
     private boolean deleted;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deletingDate;
+    @Nullable
     private String token;
 
     public User() {

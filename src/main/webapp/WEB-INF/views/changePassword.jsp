@@ -80,8 +80,10 @@
             <table class="w3-table-all w3-hoverable">
                 <form method="post" action="${pageContext.request.contextPath}/changePassword">
 
-                    <a class="w3-bar-item w3-padding" style="color: blue">${passwordChanged ?  'Hasło zostało poprawnie zmienione' :''}</a>
-                    <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
+                    <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
+                    <a class="w3-bar-item" style="color: crimson">${wrongPassword ? 'Błędne stare hasło!!!' :''}</a>
+                    <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Użytkownik którego podałeś nie istnieje w naszej bazie!!!' :''}</a>
+                    <a class="w3-bar-item" style="color: crimson">${newPasswordsNotTheSame ? 'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
                     <p>
                         <label><b>Nazwa użytkownika:</b></label>
                         <input type="text" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border"
@@ -98,7 +100,6 @@
                         <label><b>wpisz nowe hasło ponownie</b></label>
                         <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
                     </p>
-                    <a class="w3-bar-item w3-padding" style="color: crimson">${newPasswordsNoTheSame ?  'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
 
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>

@@ -49,10 +49,11 @@
         <h2>Wymuszenie zmiany hasła dla użytkownika ${username}</h2>
         <div class="w3-responsive">
 
+                <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
+                <a class="w3-bar-item w3-padding" style="color: crimson">${newPasswordsNotTheSame ?  'Hasło w drugim polu nie jest identyczne jak w pierwszym !!!' :''}</a>
+
             <table class="w3-table-all w3-hoverable">
                 <form method="post" action="${pageContext.request.contextPath}/panels/data/user/changePassword">
-
-                <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'oba hasła muszą być równe!!!' :''}</a>
                     <p>
                         <label><b>Nazwa użytkownika: ${username}</b></label>
                         <input type="hidden" name="username" class="w3-input w3-border"
@@ -69,13 +70,10 @@
 
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
-                 <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
-                        <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>
-                        <script>
-                           function goBack() {
-                            window.history.back();
-                           }
-                        </script>
+                 <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-button w3-white w3-border w3-round-large" >cofnij</button>
+
+                 <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>
+
 
             </table>
         </div>
