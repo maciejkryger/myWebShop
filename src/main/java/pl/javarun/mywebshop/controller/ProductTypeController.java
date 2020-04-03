@@ -9,39 +9,38 @@ import pl.javarun.mywebshop.service.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 03.04.2020 13:43
+ * @date : 03.04.2020 13:57
  * *
- * @className: RuleController
+ * @className: ProductTypeController
  * *
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/rules")
-public class RuleController {
+@RequestMapping("/types")
+public class ProductTypeController {
 
     private final UserService userService;
+    private final ProductService productService;
     private final TypeService typeService;
     private final CompanyService companyService;
+    private final ColorPerMaterialService colorPerMaterialService;
     private final RuleService ruleService;
 
-    public RuleController(UserService userService, TypeService typeService,
-                          CompanyService companyService, RuleService ruleService) {
+    public ProductTypeController(UserService userService, ProductService productService, TypeService typeService, CompanyService companyService, ColorPerMaterialService colorPerMaterialService, RuleService ruleService) {
         this.userService = userService;
+        this.productService = productService;
         this.typeService = typeService;
         this.companyService = companyService;
+        this.colorPerMaterialService = colorPerMaterialService;
         this.ruleService = ruleService;
     }
 
-    @GetMapping("/{subject}")
-    public ModelAndView showRegulationPage(@PathVariable String subject) {
-        ModelAndView modelAndView;
-        if (ruleService.getRuleByName(subject) == null) {
-            modelAndView = new ModelAndView("index");
-        } else {
-            modelAndView = new ModelAndView("rules");
-            modelAndView.addObject("rule", ruleService.getRuleByName(subject));
-            modelAndView.addObject("text", ruleService.getRuleByName(subject).getDescriptionPl());
-        }
+    @GetMapping("/{productType}")
+    public ModelAndView getProductsListPage(@PathVariable String productType) {
+        ModelAndView modelAndView = new ModelAndView("productsList");
+        modelAndView.addObject("productType", typeService.getTypeByName(productType));
+        modelAndView.addObject("productsCounter", productService.getProductsByTypeName(productType).size());
+        modelAndView.addObject("products", productService.getProductsByTypeName(productType));
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

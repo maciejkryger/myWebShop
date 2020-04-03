@@ -10,6 +10,7 @@ import pl.javarun.mywebshop.repository.UserRepository;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -31,8 +32,7 @@ public class UserService implements UserDetailsService {
 
 
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return userRepository.findByUsernameIgnoreCase(s);
-//                .orElseThrow(() -> new UsernameNotFoundException("" + s));
+        return userRepository.findByUsernameIgnoreCase(s).orElseThrow(() -> new UsernameNotFoundException("" + s));
     }
 
     public User saveUser(User user) {
@@ -52,8 +52,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User getUserByUsername(String username) {
-        return userRepository.findByUsernameIgnoreCase(username);
-//                .orElseThrow(() -> new UserNotExistException("username: " + username + " not exist"));
+        return userRepository.findByUsernameIgnoreCase(username).orElseThrow(() -> new UserNotExistException("username: " + username + " not exist"));
     }
 
     public Set<User> getAllUsers() {

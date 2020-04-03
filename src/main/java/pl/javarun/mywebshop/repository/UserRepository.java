@@ -17,7 +17,7 @@ import java.util.Set;
  ******************************************************/
 public interface UserRepository extends JpaRepository<User, String> {
 
-    User findByUsernameIgnoreCase(String username);
+    Optional<User> findByUsernameIgnoreCase(String username);
 
     Set<User> findByFirstNameContainsIgnoreCase(String firstName);
 

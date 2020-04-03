@@ -15,8 +15,8 @@ import java.util.List;
 public class MaterialColor {
 
     @Id
-    @GeneratedValue(generator = "materialColorSeq")
-    @SequenceGenerator(name = "materialColorSeq", sequenceName = "material_color_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "materialColorSeq")
+//    @SequenceGenerator(name = "materialColorSeq", sequenceName = "material_color_seq", allocationSize = 1)
     private int id;
     private String name;
     private String namePl;

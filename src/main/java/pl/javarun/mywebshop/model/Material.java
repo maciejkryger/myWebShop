@@ -15,8 +15,8 @@ import java.util.List;
 public class Material {
 
     @Id
-    @GeneratedValue(generator = "materialSeq")
-    @SequenceGenerator(name = "materialSeq", sequenceName = "material_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "materialSeq")
+//    @SequenceGenerator(name = "materialSeq", sequenceName = "material_seq", allocationSize = 1)
     private int id;
 
     private String name;

@@ -16,6 +16,7 @@
                     <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button">superPanel</a>
                 </c:if>
                 <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button">wyloguj</a>
+                 <a href="${pageContext.request.contextPath}/changePassword" class="w3-bar-item w3-button">zmień hasło</a>
             </c:if>
             <c:if test="${!sessionScope.user.enabled}">
                 <h2 class="w3-wide">Logowanie</h2>
@@ -27,6 +28,9 @@
                             onclick="document.getElementById('login').style.display='none'">Zaloguj
                     </button>
                 </form>
+                  <a href="${pageContext.request.contextPath}/register"
+                                         style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Rejestracja</a>
+
             </c:if>
         </div>
     </div>

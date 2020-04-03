@@ -17,8 +17,8 @@ import javax.persistence.SequenceGenerator;
 public class Type {
 
     @Id
-    @GeneratedValue(generator = "typeSeq")
-    @SequenceGenerator(name = "typeSeq",sequenceName = "type_seq",allocationSize = 1)
+//    @GeneratedValue(generator = "typeSeq")
+//    @SequenceGenerator(name = "typeSeq",sequenceName = "type_seq",allocationSize = 1)
     private int id;
     private String name;
     private String namePl;

@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.panels;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import pl.javarun.mywebshop.service.*;
 
 @Controller
 @RequestMapping("/panels/data/product")
-public class ProductController {
+public class ProductManageController {
 
     ModelAndView modelAndView;
     ProductService productService;
@@ -32,10 +32,10 @@ public class ProductController {
     RuleService ruleService;
 
 
-    public ProductController(ProductService productService, TypeService typeService, MaterialService materialService,
-                                MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
-                                FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
-                                UserService userService, CompanyService companyService, RuleService ruleService) {
+    public ProductManageController(ProductService productService, TypeService typeService, MaterialService materialService,
+                                   MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
+                                   FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
+                                   UserService userService, CompanyService companyService, RuleService ruleService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;

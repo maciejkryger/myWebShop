@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.panels;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

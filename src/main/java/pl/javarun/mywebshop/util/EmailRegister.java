@@ -33,13 +33,13 @@ public class EmailRegister {
 
         Message message = new MimeMessage(session);
         try {
-            message.setFrom(new InternetAddress("javarun.pl@gmail.com"));
+            message.setFrom(new InternetAddress("no.replyl@javarun.pl"));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(username));
             message.setSubject("Register new user: "+username);
 
 
-            String msg = "Hi "+username+" click here to confirm register <a href=\"http://localhost:8080/JavaPOZ16blog_war/?action=activate&regId="+token+"\">click me</a>";
+            String msg = "Hi "+username+" click here to confirm register <a href=\"http://localhost:8080/qunsztowna/?action=activate&regId="+token+"\">click me</a>";
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html");

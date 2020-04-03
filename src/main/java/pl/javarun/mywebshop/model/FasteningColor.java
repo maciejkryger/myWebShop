@@ -17,8 +17,8 @@ import javax.persistence.SequenceGenerator;
 public class FasteningColor {
 
     @Id
-    @GeneratedValue(generator = "fasteningColorSeq")
-    @SequenceGenerator(name = "fasteningcClorSeq", sequenceName = "fastening_color_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "fasteningColorSeq")
+//    @SequenceGenerator(name = "fasteningcClorSeq", sequenceName = "fastening_color_seq", allocationSize = 1)
     private int id;
     private String name;
     private String namePl;

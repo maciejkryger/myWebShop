@@ -9,41 +9,46 @@ import pl.javarun.mywebshop.service.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 03.04.2020 13:43
+ * @date : 03.04.2020 13:52
  * *
- * @className: RuleController
+ * @className: ProductDetailsController
  * *
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/rules")
-public class RuleController {
+@RequestMapping("/details")
+public class ProductDetailsController {
 
     private final UserService userService;
+    private final ProductService productService;
+    private final ColorPerMaterialService colorPerMaterialService;
     private final TypeService typeService;
     private final CompanyService companyService;
     private final RuleService ruleService;
 
-    public RuleController(UserService userService, TypeService typeService,
-                          CompanyService companyService, RuleService ruleService) {
+    public ProductDetailsController(UserService userService, ProductService productService, ColorPerMaterialService colorPerMaterialService,
+                                    TypeService typeService, CompanyService companyService, RuleService ruleService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
+        this.productService = productService;
+        this.colorPerMaterialService = colorPerMaterialService;
     }
 
-    @GetMapping("/{subject}")
-    public ModelAndView showRegulationPage(@PathVariable String subject) {
+    @GetMapping("/{id}")
+    public ModelAndView getProductDetailPage(@PathVariable int id) {
         ModelAndView modelAndView;
-        if (ruleService.getRuleByName(subject) == null) {
+        if (productService.getProductById(id) == null) {
             modelAndView = new ModelAndView("index");
         } else {
-            modelAndView = new ModelAndView("rules");
-            modelAndView.addObject("rule", ruleService.getRuleByName(subject));
-            modelAndView.addObject("text", ruleService.getRuleByName(subject).getDescriptionPl());
+            modelAndView = new ModelAndView("productDetail");
+            modelAndView.addObject("product", productService.getProductById(id));
+            modelAndView.addObject("colors", colorPerMaterialService.getMaterialColorsByMaterialId(productService.getProductById(id).getMaterial().getId()));
         }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("productType",typeService.getTypeById(productService.getProductById(id).getType().getId()));
         modelAndView.addObject("rules", ruleService.getAllRules());
         return modelAndView;
     }

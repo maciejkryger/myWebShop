@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.panels;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +25,7 @@ import java.time.LocalTime;
  ******************************************************/
 @Controller
 @RequestMapping("/panels/data/user/")
-public class UserController {
+public class UserManageController {
 
     ModelAndView modelAndView;
     ProductService productService;
@@ -41,10 +41,10 @@ public class UserController {
     RoleService roleService;
 
 
-    public UserController(ProductService productService, TypeService typeService, MaterialService materialService,
-                          MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
-                          FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
-                          UserService userService, CompanyService companyService, RuleService ruleService, RoleService roleService) {
+    public UserManageController(ProductService productService, TypeService typeService, MaterialService materialService,
+                                MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
+                                FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
+                                UserService userService, CompanyService companyService, RuleService ruleService, RoleService roleService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;

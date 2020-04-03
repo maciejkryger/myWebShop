@@ -14,8 +14,8 @@ import javax.persistence.*;
 public class Rule {
 
     @Id
-    @GeneratedValue(generator = "ruleSeq")
-    @SequenceGenerator(name = "ruleSeq", sequenceName = "rule_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "ruleSeq")
+//    @SequenceGenerator(name = "ruleSeq", sequenceName = "rule_seq", allocationSize = 1)
     private int id;
     private String name;
     private String namePl;
