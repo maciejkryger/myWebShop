@@ -47,27 +47,27 @@ public class RoleManageController {
         this.userService = userService;
         this.companyService = companyService;
         this.ruleService = ruleService;
-        this.roleService=roleService;
+        this.roleService = roleService;
     }
 
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editRoleItem(@PathVariable (required = false) Integer id) {
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editRoleItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/roleItemManager");
-        if(id == null){
+        if (id == null) {
             modelAndView.addObject("role", new Role());
-        }else {
+        } else {
             modelAndView.addObject("role", roleService.getRoleById(id));
         }
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public String saveRoleItem(@PathVariable (required = false) Integer id, @RequestParam String authority) {
+    public String saveRoleItem(@RequestParam(required = false) Integer id, @RequestParam String authority) {
         Role role;
-        if (id!=null && id !=0){
+        if (id != null && id != 0) {
             role = roleService.getRoleById(id);
         } else {
-            role=new Role();
+            role = new Role();
         }
         role.setAuthority(authority);
         roleService.save(role);

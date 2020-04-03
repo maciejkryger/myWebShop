@@ -29,7 +29,7 @@
                     </button>
                 </form>
                   <a href="${pageContext.request.contextPath}/register"
-                                         style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Rejestracja</a>
+                                         style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-center w3-padding-large">Rejestracja</a>
 
             </c:if>
         </div>

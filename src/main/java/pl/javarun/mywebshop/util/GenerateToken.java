@@ -8,7 +8,7 @@ public class GenerateToken {
 
         Random random = new Random();
         String token="";
-        for (int i=0; i<10; i++){
+        for (int i=0; i<30; i++){
             token+=random.nextInt(10);
             token+=String.valueOf(random.nextInt(10));
         }

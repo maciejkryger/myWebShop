@@ -47,7 +47,7 @@ public class SuperPanelController {
         this.userService = userService;
         this.companyService = companyService;
         this.ruleService = ruleService;
-        this.roleService=roleService;
+        this.roleService = roleService;
     }
 
 

@@ -5,4 +5,4 @@
   Time: 22:51
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<p class="w3-left"><a href="/panels/superpanel">superPanel</a></p>
+<p class="w3-left"><a href="${pageContext.request.contextPath}/panels/superpanel">superPanel</a></p>

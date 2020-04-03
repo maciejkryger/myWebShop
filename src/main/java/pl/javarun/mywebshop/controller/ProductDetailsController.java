@@ -48,7 +48,7 @@ public class ProductDetailsController {
         }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
-        modelAndView.addObject("productType",typeService.getTypeById(productService.getProductById(id).getType().getId()));
+        modelAndView.addObject("productType", typeService.getTypeById(productService.getProductById(id).getType().getId()));
         modelAndView.addObject("rules", ruleService.getAllRules());
         return modelAndView;
     }

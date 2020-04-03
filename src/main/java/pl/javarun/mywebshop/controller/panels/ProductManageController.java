@@ -49,23 +49,22 @@ public class ProductManageController {
     }
 
 
-
     @GetMapping({"/{id}", "/new"})
-    public ModelAndView editProductItem(@PathVariable (required = false) Integer id) {
+    public ModelAndView editProductItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/productItemManager");
-        if (id==null){
+        if (id == null) {
             System.out.println("petla z nullem");
             modelAndView.addObject("product", new Product());
-        } else  {
+        } else {
             System.out.println("petla bez nulla");
             modelAndView.addObject("product", productService.getProductById(id));
         }
-        modelAndView.addObject("types",typeService.getAllTypes());
-        modelAndView.addObject("makingTechniques",makingTechniqueService.getAllMakingTechniques());
-        modelAndView.addObject("materials",materialService.getAllMaterials());
-        modelAndView.addObject("materialColors",materialColorService.getAllMaterialColors());
-        modelAndView.addObject("fasteningTypes",fasteningTypeService.getAllFasteningTypes());
-        modelAndView.addObject("fasteningColors",fasteningColorService.getAllFasteningColors());
+        modelAndView.addObject("types", typeService.getAllTypes());
+        modelAndView.addObject("makingTechniques", makingTechniqueService.getAllMakingTechniques());
+        modelAndView.addObject("materials", materialService.getAllMaterials());
+        modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
+        modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
+        modelAndView.addObject("fasteningColors", fasteningColorService.getAllFasteningColors());
         return modelAndView;
     }
 
@@ -77,12 +76,11 @@ public class ProductManageController {
             @RequestParam Integer materialId, @RequestParam Integer materialColorId,
             @RequestParam Integer fasteningTypeId, @RequestParam Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
-            @RequestParam String description, @RequestParam String descriptionPl)
-    {
+            @RequestParam String description, @RequestParam String descriptionPl) {
         Product product;
-        if(id!=null && id !=0){
+        if (id != null && id != 0) {
             product = productService.getProductById(id);
-        }else{
+        } else {
             product = new Product();
         }
         product.setName(name);

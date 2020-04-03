@@ -1,11 +1,20 @@
 package pl.javarun.mywebshop.controller;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.UserNotExistException;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
+import pl.javarun.mywebshop.util.GenerateToken;
+import pl.javarun.mywebshop.util.PasswordUtil;
+
+import javax.websocket.server.PathParam;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -23,29 +32,107 @@ public class RegisterController {
     private final TypeService typeService;
     private final CompanyService companyService;
     private final RuleService ruleService;
+    private final RoleService roleService;
 
-    public RegisterController(UserService userService, TypeService typeService, CompanyService companyService, RuleService ruleService) {
+    public RegisterController(UserService userService, TypeService typeService, CompanyService companyService,
+                              RuleService ruleService, RoleService roleService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
+        this.roleService = roleService;
     }
 
 
     @GetMapping()
-    public ModelAndView registerPage() {
+    public ModelAndView registerPage(@PathParam("success") boolean success, @PathParam("userExist") boolean userExist,
+                                     @PathParam("noUsername") boolean noUsername, @PathParam("username") String username,
+                                     @PathParam("noPassword") boolean noPassword,
+                                     @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
+                                     @PathParam("noLastName") boolean noLastName, @PathParam("lastName") String lastName,
+                                     @PathParam("noEmail") boolean noEmail, @PathParam("email") String email) {
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        if (success) modelAndView.addObject("success", true);
+        if (userExist) modelAndView.addObject("userExist", true);
+        if (noUsername) modelAndView.addObject("noUsername", true);
+        if (noPassword) modelAndView.addObject("noPassword", true);
+        if (noFirstName) modelAndView.addObject("noFirstName", true);
+        if (noLastName) modelAndView.addObject("noLastName", true);
+        if (noEmail) modelAndView.addObject("noEmail", true);
+        if (username!=null) modelAndView.addObject("username", username);
+        if (firstName!=null) modelAndView.addObject("firstName", firstName);
+        if (lastName!=null) modelAndView.addObject("lastName", lastName);
+        if (email!=null) modelAndView.addObject("email", email);
         return modelAndView;
     }
 
     @PostMapping()
-    public String registerUser(){
-        return "redirect:/register?success=true";
+    public String registerUser(@RequestParam(required = false) String username, @RequestParam(required = false) String password,
+                               @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
+                               @RequestParam(required = false) String email) {
+        System.out.println("Dane rejestracyjne: " + username + ": " + password + " : " + firstName + " " + lastName + ", " + email);
+        if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
+            System.out.println("if z nullem");
+            String usernameAnswer;
+            String passwordAnswer;
+            String firstNameAnswer;
+            String lastNameAnswer;
+            String emailAnswer;
+            if (username == "") {
+                usernameAnswer = "noUsername=true";
+            } else {
+                usernameAnswer = "username="+username;
+            }
+            if (password == "") {
+                passwordAnswer = "noPassword=true";
+            } else {
+                passwordAnswer = "";
+            }
+            if (firstName == "") {
+                firstNameAnswer = "noFirstName=true";
+            } else {
+                firstNameAnswer = "firstName="+firstName;
+            }
+            if (lastName == "") {
+                lastNameAnswer = "noLastName=true";
+            } else {
+                lastNameAnswer = "lastName="+lastName;
+            }
+            if (email == "") {
+                emailAnswer = "noEmail=true";
+            } else {
+                emailAnswer = "email="+email;
+            }
+            return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" + lastNameAnswer + "&" + emailAnswer;
+        }
+        System.out.println("przed try catch");
+
+        try {
+            User user = userService.getUserByUsername(username);
+            return "redirect:/register?userExist=true";
+        } catch (UserNotExistException ex) {
+            PasswordUtil passwordUtil = new PasswordUtil();
+            String hashedPassword = passwordUtil.hashPassword(password);
+            GenerateToken generateToken = new GenerateToken();
+            String token = generateToken.startGenerateToken();
+            User user = new User();
+            user.setUsername(username);
+            user.setPassword(hashedPassword);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            user.setRole(roleService.getRoleById(3));
+            user.setActive(false);
+            user.setDeleted(false);
+            user.setCreationDate(null);
+            user.setDeletingDate(null);
+            user.setToken(token);
+            userService.saveUser(user);
+            return "redirect:/register?success=true";
+        }
     }
-
-
 
 }

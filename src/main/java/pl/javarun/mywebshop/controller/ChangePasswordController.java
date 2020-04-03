@@ -1,7 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +15,6 @@ import pl.javarun.mywebshop.service.UserService;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
-
 
 
 /**
@@ -48,19 +45,19 @@ public class ChangePasswordController {
     @GetMapping()
     public ModelAndView changePasswordView(@PathParam("wrongPassword") boolean wrongPassword, @PathParam("passwordChanged") boolean passwordChanged,
                                            @PathParam("newPasswordsNotTheSame") boolean newPasswordsNotTheSame,
-                                           @PathParam("userNotExist") boolean userNotExist){
+                                           @PathParam("userNotExist") boolean userNotExist) {
         ModelAndView modelAndView = new ModelAndView("changePassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        if(userNotExist){
-            modelAndView.addObject("userNotExist",userNotExist);
+        if (userNotExist) {
+            modelAndView.addObject("userNotExist", userNotExist);
         } else if (newPasswordsNotTheSame) {
             modelAndView.addObject("newPasswordsNotTheSame", true);
-        }else if (wrongPassword){
-            modelAndView.addObject("wrongPassword",true);
-        }else if(passwordChanged){
-            modelAndView.addObject("passwordChanged",true);
+        } else if (wrongPassword) {
+            modelAndView.addObject("wrongPassword", true);
+        } else if (passwordChanged) {
+            modelAndView.addObject("passwordChanged", true);
         }
         return modelAndView;
     }
@@ -72,9 +69,9 @@ public class ChangePasswordController {
         System.out.println("old password: " + oldPassword);
         System.out.println("new password: " + newPassword);
         System.out.println("repeated new password: " + newPassword2);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(newPassword);
         PasswordUtil passwordUtil = new PasswordUtil();
+        String hashedPassword = passwordUtil.hashPassword(newPassword);
+
 
         try {
             User user = userService.getUserByUsername(username);

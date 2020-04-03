@@ -59,9 +59,9 @@ public class MaterialColorManageController {
     }
 
     @PostMapping("/save")
-    public String saveMaterialColorsIdItem(@PathVariable(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+    public String saveMaterialColorsIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MaterialColor materialColor;
-        if(id != null && id !=0){
+        if (id != null && id != 0) {
             materialColor = materialColorService.getMaterialColorsById(id);
         } else {
             materialColor = new MaterialColor();

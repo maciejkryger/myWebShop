@@ -48,12 +48,11 @@ public class MakingTechniqueManageController {
     }
 
 
-
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editMakingTechniqueItem(@PathVariable (required = false) Integer id) {
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editMakingTechniqueItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/makingTechniqueItemManager");
-        if(id==null){
-            modelAndView.addObject("makingTechnique",new MakingTechnique());
+        if (id == null) {
+            modelAndView.addObject("makingTechnique", new MakingTechnique());
         } else {
             modelAndView.addObject("makingTechnique", makingTechniqueService.getMakingTechniqueById(id));
         }
@@ -61,11 +60,11 @@ public class MakingTechniqueManageController {
     }
 
     @PostMapping("/save")
-    public String saveMakingTechniqueIdItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+    public String saveMakingTechniqueIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MakingTechnique makingTechnique;
-        if(id!=null && id !=0){
+        if (id != null && id != 0) {
             makingTechnique = makingTechniqueService.getMakingTechniqueById(id);
-        }else {
+        } else {
             makingTechnique = new MakingTechnique();
         }
         makingTechnique.setName(name);

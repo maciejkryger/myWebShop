@@ -35,12 +35,12 @@ public class LoginController {
     }
 
     @GetMapping()
-    public ModelAndView loginUsername(@RequestParam(required = false) String error){
-        ModelAndView modelAndView=new ModelAndView("login");
+    public ModelAndView loginUsername(@RequestParam(required = false) String error) {
+        ModelAndView modelAndView = new ModelAndView("login");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        if(error != null) {
+        if (error != null) {
             modelAndView.addObject("error", true);
         }
         return modelAndView;

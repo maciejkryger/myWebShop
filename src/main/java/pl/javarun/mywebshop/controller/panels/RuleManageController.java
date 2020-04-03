@@ -49,22 +49,22 @@ public class RuleManageController {
         this.ruleService = ruleService;
     }
 
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editRuleItem(@PathVariable (required = false) Integer id) {
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editRuleItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/ruleItemManager");
-        if(id == null){
+        if (id == null) {
             modelAndView.addObject("rule", new Rule());
-        }else {
+        } else {
             modelAndView.addObject("rule", ruleService.getRuleById(id));
         }
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public String saveRuleItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
+    public String saveRuleItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
                                @RequestParam String description, @RequestParam String descriptionPl) {
         Rule rule;
-        if(id != null & id!=0){
+        if (id != null & id != 0) {
             rule = ruleService.getRuleById(id);
         } else {
             rule = new Rule();

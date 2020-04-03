@@ -60,7 +60,7 @@ public class CompanyManageController {
                                   @RequestParam String name, @RequestParam String address,
                                   @RequestParam String postCode, @RequestParam String city,
                                   @RequestParam String email, @RequestParam String phone,
-                                  @RequestParam String taxNumber, @RequestParam String accountNumber){
+                                  @RequestParam String taxNumber, @RequestParam String accountNumber) {
         Company company = companyService.getCompanyData();
         company.setName(name);
         company.setAddress(address);

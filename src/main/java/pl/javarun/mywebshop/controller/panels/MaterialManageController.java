@@ -46,23 +46,24 @@ public class MaterialManageController {
         this.companyService = companyService;
         this.ruleService = ruleService;
     }
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editMaterialItem(@PathVariable (required = false) Integer id) {
+
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editMaterialItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/materialItemManager");
-        if(id==null){
-            modelAndView.addObject("material",new Material());
-        }else {
+        if (id == null) {
+            modelAndView.addObject("material", new Material());
+        } else {
             modelAndView.addObject("material", materialService.getMaterialById(id));
         }
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public String saveMaterialItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+    public String saveMaterialItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         Material material;
-        if(id!=null && id !=0){
+        if (id != null && id != 0) {
             material = materialService.getMaterialById(id);
-        }else {
+        } else {
             material = new Material();
         }
         material.setName(name);

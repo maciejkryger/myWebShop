@@ -32,22 +32,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
-    <div class="w3-container w3-display-container w3-padding-16">
-        <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
-        <a href="${pageContext.request.contextPath}/"><h3 class="w3-wide"><b>QUNSZTOWNA</b></h3></a>
-    </div>
-    <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
-        <c:forEach var="productType" items="${productTypesList}">
-            <a href="${pageContext.request.contextPath}/types/${productType.name}"
-               class="w3-bar-item w3-button">${productType.namePl}</a>
-        </c:forEach>
-    </div>
-    <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
-<%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"--%>
-<%--       onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>--%>
-    <%--    <a href="#footer"  class="w3-bar-item w3-button w3-padding">Subskrybuj</a>--%>
-</nav>
+<%@include file='menu.jsp' %>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
@@ -75,20 +60,25 @@
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
-            <p class="w3-xlarge">Logowanie</p>
-            <p>zaloguj się</p>
-            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
-            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
+        <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Rejestracja zakończyła się pomyślnie, sprawdż pocztę by aktywować swojego użytkownia' :''}</a>
+        <a class="w3-bar-item w3-padding" style="color: crimson">${userExist ? 'Użytkownik już w naszej bazie istnieje, skorzystać z przypomnienia hasła' :''}</a>
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/register' />">
+            <p class="w3-xlarge">Rejestracja nowego użytkownika</p>
+            <p>zarejestruj się</p>
+            <a class="w3-bar-item" style="color: crimson">${noUsername ?  'Pole loginu nie może być puste' :''}</a>
+            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login" value="${username}"></p>
+            <a class="w3-bar-item" style="color: crimson">${noPassword ?  'Pole na hasło nie może być puste' :''}</a>
+            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło" ></p>
+            <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
+            <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${firstName}"></p>
+            <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
+            <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${lastName}"></p>
+            <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
+            <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${email}"></p>
             <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
-                    onclick="document.getElementById('login').style.display='none'">Zaloguj
+                    onclick="document.getElementById('login').style.display='none'">zarejestruj
             </button>
         </form>
-
-                    <a href="${pageContext.request.contextPath}/changePassword"
-                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Zmiana hasła</a>
-
     </div>
 
     <br>

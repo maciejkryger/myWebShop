@@ -1,11 +1,11 @@
 package pl.javarun.mywebshop.util;
 
-//import org.mindrot.jbcrypt.BCrypt;
+
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 /**
  * Author: Ian Gallagher <igallagher@securityinnovation.com>
- *
+ * <p>
  * This code utilizes jBCrypt, which you need installed to use.
  * jBCrypt: http://www.mindrot.org/projects/jBCrypt/
  */
@@ -25,12 +25,12 @@ public class PasswordUtil {
     public static boolean checkPassword(String password_plaintext, String stored_hash) {
         boolean password_verified;
 
-        if(null == stored_hash || !stored_hash.startsWith("$2a$"))
+        if (null == stored_hash || !stored_hash.startsWith("$2a$"))
             throw new IllegalArgumentException("Invalid hash provided for comparison");
 
         password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
-        return(password_verified);
+        return (password_verified);
     }
 }
 

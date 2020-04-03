@@ -47,10 +47,10 @@ public class FasteningColorManageController {
         this.ruleService = ruleService;
     }
 
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editFasteningColorItem(@PathVariable (required = false) Integer id) {
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editFasteningColorItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/fasteningColorItemManager");
-        if(id==null){
+        if (id == null) {
             modelAndView.addObject("fasteningColor", new FasteningColor());
         } else {
             modelAndView.addObject("fasteningColor", fasteningColorService.getFasteningColorById(id));
@@ -59,9 +59,9 @@ public class FasteningColorManageController {
     }
 
     @PostMapping("/save")
-    public String saveFasteningColorIdItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+    public String saveFasteningColorIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningColor fasteningColor;
-        if (id!=null && id!=0){
+        if (id != null && id != 0) {
             fasteningColor = fasteningColorService.getFasteningColorById(id);
         } else {
             fasteningColor = new FasteningColor();

@@ -46,11 +46,12 @@ public class FasteningTypeManageController {
         this.companyService = companyService;
         this.ruleService = ruleService;
     }
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editFasteningTypeItem(@PathVariable (required = false) Integer id) {
+
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editFasteningTypeItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/fasteningTypeItemManager");
-        if(id==null){
-            modelAndView.addObject("fasteningType",new FasteningType());
+        if (id == null) {
+            modelAndView.addObject("fasteningType", new FasteningType());
         } else {
             modelAndView.addObject("fasteningType", makingTechniqueService.getMakingTechniqueById(id));
         }
@@ -58,9 +59,9 @@ public class FasteningTypeManageController {
     }
 
     @PostMapping("/save")
-    public String saveFasteningTypeIdItem(@PathVariable (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+    public String saveFasteningTypeIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningType fasteningType;
-        if(id!=null && id!=0){
+        if (id != null && id != 0) {
             fasteningType = fasteningTypeService.getFasteningTypeById(id);
         } else {
             fasteningType = new FasteningType();
