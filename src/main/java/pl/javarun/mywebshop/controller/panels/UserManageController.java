@@ -111,9 +111,7 @@ public class UserManageController {
     @PostMapping("/changePassword")
     public String changePassword(@RequestParam String username,
                                  @RequestParam String newPassword, @RequestParam String newPassword2) {
-        System.out.println("username: " + username);
-        System.out.println("new password: " + newPassword);
-        System.out.println("repeated new password: " + newPassword2);
+
         if (!newPassword.equals(newPassword2)) {
             return "redirect:/panels/data/user/changePassword?username=" + username + "&newPasswordsNotTheSame=true";
         } else {

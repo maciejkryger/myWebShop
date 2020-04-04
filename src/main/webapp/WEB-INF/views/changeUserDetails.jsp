@@ -75,7 +75,7 @@
             <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left">zapisz
             </button>
         </form>
-                    <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" >anuluj</button>
+                    <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" >anuluj</a>
 
     </div>
 

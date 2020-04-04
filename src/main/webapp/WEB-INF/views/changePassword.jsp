@@ -92,7 +92,7 @@
                         <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
                     </p>
 
-                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                    <input type="submit" class="w3-button w3-red w3-border w3-round-large" value="zapisz"/>
                 </form>
                   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
                  <!--       <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>-->

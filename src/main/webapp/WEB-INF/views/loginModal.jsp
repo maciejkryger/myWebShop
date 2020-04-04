@@ -25,7 +25,7 @@
                 <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
                     <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
                     <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
-                    <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom"
+                    <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large"
                             onclick="document.getElementById('login').style.display='none'">Zaloguj
                     </button>
                 </form>

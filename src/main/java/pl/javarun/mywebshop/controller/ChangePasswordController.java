@@ -65,37 +65,25 @@ public class ChangePasswordController {
     @PostMapping()
     public String changePassword(@RequestParam String username, @RequestParam String oldPassword,
                                  @RequestParam String newPassword, @RequestParam String newPassword2) {
-        System.out.println("username: " + username);
-        System.out.println("old password: " + oldPassword);
-        System.out.println("new password: " + newPassword);
-        System.out.println("repeated new password: " + newPassword2);
         PasswordUtil passwordUtil = new PasswordUtil();
         String hashedPassword = passwordUtil.hashPassword(newPassword);
-
 
         try {
             User user = userService.getUserByUsername(username);
 
             if (!newPassword.equals(newPassword2)) {
-                System.out.println("nowe hasla nie sa takie same");
                 return "redirect:/changePassword?newPasswordsNotTheSame=true";
             }
 
             if (passwordUtil.checkPassword(oldPassword, user.getPassword())) {
-                System.out.println("zmiana hasła");
-                System.out.println(hashedPassword);
                 user = userService.getUserByUsername(username);
                 user.setPassword(hashedPassword);
                 userService.saveUser(user);
                 return "redirect:/changePassword?passwordChanged=true";
             }
-            System.out.println(hashedPassword);
-            System.out.println(user.getPassword());
-            System.out.println("bledne haslo");
             return "redirect:/changePassword?wrongPassword=true";
 
         } catch (UserNotExistException ex) {
-            System.out.println("bledny uzytkownik");
             return "redirect:/changePassword?userNotExist=true";
         }
     }

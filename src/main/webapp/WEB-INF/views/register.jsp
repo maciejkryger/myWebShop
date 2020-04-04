@@ -59,26 +59,27 @@
 
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
-
-        <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Rejestracja zakończyła się pomyślnie, sprawdż pocztę by aktywować swojego użytkownia' :''}</a>
-        <a class="w3-bar-item w3-padding" style="color: crimson">${userExist ? 'Użytkownik już w naszej bazie istnieje, skorzystać z przypomnienia hasła' :''}</a>
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/register' />">
-            <p class="w3-xlarge">Rejestracja nowego użytkownika</p>
-            <p>zarejestruj się</p>
-            <a class="w3-bar-item" style="color: crimson">${noUsername ?  'Pole loginu nie może być puste' :''}</a>
-            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login" value="${username}"></p>
-            <a class="w3-bar-item" style="color: crimson">${noPassword ?  'Pole na hasło nie może być puste' :''}</a>
-            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło" ></p>
-            <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
-            <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${firstName}"></p>
-            <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
-            <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${lastName}"></p>
-            <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
-            <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${email}"></p>
-            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
-                    onclick="document.getElementById('login').style.display='none'">zarejestruj
-            </button>
-        </form>
+        <table class="w3-table-all w3-hoverable">
+            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Rejestracja zakończyła się pomyślnie, sprawdż pocztę by aktywować swojego użytkownia' :''}</a>
+            <a class="w3-bar-item w3-padding" style="color: crimson">${userExist ? 'Użytkownik już w naszej bazie istnieje, skorzystać z przypomnienia hasła' :''}</a>
+            <form method="post" action="<c:url value='${pageContext.request.contextPath}/register' />">
+                <p class="w3-xlarge">Rejestracja nowego użytkownika</p>
+                <p>zarejestruj się</p>
+                <a class="w3-bar-item" style="color: crimson">${noUsername ?  'Pole loginu nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login" value="${username}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noPassword ?  'Pole na hasło nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło" ></p>
+                <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${firstName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${lastName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
+                <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${email}"></p>
+                <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
+                        onclick="document.getElementById('login').style.display='none'">zarejestruj
+                </button>
+            </form>
+        </table>
     </div>
 
     <br>

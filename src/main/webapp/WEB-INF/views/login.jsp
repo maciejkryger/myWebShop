@@ -59,7 +59,7 @@
 
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
-
+        <table class="w3-table-all w3-hoverable">
         <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
         <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
             <p class="w3-xlarge">Logowanie</p>
@@ -72,8 +72,8 @@
         </form>
 
                     <a href="${pageContext.request.contextPath}/changePassword"
-                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Zmiana hasła</a>
-
+                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large w3-left">Zmiana hasła</a>
+        </table>
     </div>
 
     <br>

@@ -59,12 +59,12 @@
     <%--    </div>--%>
 
         <!-- Product grid -->
-        <div class="w3-row w3-grayscale">
-            <div class="w3-col l3 s6">
+        <div class="w3-row w3-grayscale w3-padding-64 w3-small">
+
                 <div class="w3-container">
-                    <h3 class="w3-wide"><b>${rule.descriptionPl}</b></h3>
+                    <h4>${rule.descriptionPl}</h4>
                 </div>
-            </div>
+
         </div>
 
 <%--        <!-- Subscribe section -->--%>
