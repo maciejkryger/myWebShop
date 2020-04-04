@@ -27,36 +27,39 @@ import java.util.Date;
 public class User implements UserDetails {
 
     @Id
-    @NotNull
+    @GeneratedValue(generator = "userSeq")
+    @SequenceGenerator(name = "userSeq", sequenceName = "user_seq", allocationSize = 1)
+    private int id;
     private String username;
-    @NotNull
     private String password;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
     @Email
-    @NotNull
     private String email;
     @ManyToOne(targetEntity = Role.class)
     private Role role;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd mm:ss")
     private Date creationDate;
-    @NotNull
     private boolean active;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date activationDate;
-    @NotNull
     private boolean deleted;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deletingDate;
-    @Nullable
     private String token;
 
     public User() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -86,7 +89,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
 
 
     @Override

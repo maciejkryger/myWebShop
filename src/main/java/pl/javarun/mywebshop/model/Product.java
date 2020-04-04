@@ -16,8 +16,8 @@ import javax.persistence.*;
 public class Product {
 
     @Id
-//    @GeneratedValue(generator = "productSeq")
-//    @SequenceGenerator(name = "productSeq", sequenceName = "product_seq", allocationSize = 1)
+    @GeneratedValue(generator = "productSeq")
+    @SequenceGenerator(name = "productSeq", sequenceName = "product_seq", allocationSize = 1)
     private int id;
 
     private String name;

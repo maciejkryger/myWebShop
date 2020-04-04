@@ -71,9 +71,14 @@
                     <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Użytkownik którego podałeś nie istnieje w naszej bazie!!!' :''}</a>
                     <a class="w3-bar-item" style="color: crimson">${newPasswordsNotTheSame ? 'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
                     <p>
+                    <c:if test="${sessionScope.user.username!=null}">
+                        <label><b>Nazwa użytkownika: </b>${sessionScope.user.username}</label>
+                        <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
+                    </c:if>
+                    <c:if test="${sessionScope.user.username==null}">
                         <label><b>Nazwa użytkownika:</b></label>
-                        <input type="text" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border"
-                                                       value="${username}">
+                        <input type="text" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border">
+                     </c:if>
                     <p>
                         <label><b>stare hasło</b></label>
                         <input type="password" name="oldPassword" placeholder="wpisz stare hasło" class="w3-input w3-border">

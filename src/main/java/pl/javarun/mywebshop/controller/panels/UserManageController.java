@@ -59,14 +59,14 @@ public class UserManageController {
         this.roleService = roleService;
     }
 
-    @GetMapping({"/{username}", "/new"})
-    public ModelAndView editUserItem(@PathVariable(required = false) String username) {
+    @GetMapping({"/{id}", "/new"})
+    public ModelAndView editUserItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/userItemManager");
         modelAndView.addObject("roles", roleService.getAllRoles());
-        if (username == null) {
+        if (id == null) {
             modelAndView.addObject("user", new User());
         } else {
-            modelAndView.addObject("user", userService.getUserByUsername(username));
+            modelAndView.addObject("user", userService.getUserById(id));
         }
         return modelAndView;
     }
@@ -81,7 +81,6 @@ public class UserManageController {
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPassword = passwordEncoder.encode(username);
             user.setPassword(hashedPassword);
-            user.setDeleted(false);
             user.setToken("addedByAdmin");
         } else {
             user = userService.getUserByUsername(username);

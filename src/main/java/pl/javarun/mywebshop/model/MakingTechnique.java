@@ -17,8 +17,8 @@ import javax.persistence.SequenceGenerator;
 public class MakingTechnique {
 
     @Id
-//    @GeneratedValue(generator = "makingTechniqueSeq")
-//    @SequenceGenerator(name = "makingTechniqueSeq", sequenceName ="making_technique_seq" , allocationSize = 1)
+    @GeneratedValue(generator = "makingTechniqueSeq")
+    @SequenceGenerator(name = "makingTechniqueSeq", sequenceName ="making_technique_seq" , allocationSize = 1)
     private int id;
     private String name;
     private String namePl;

@@ -15,6 +15,7 @@
                 <c:if test="${sessionScope.user.role.id<='2'}">
                     <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button">superPanel</a>
                 </c:if>
+                <a href="${pageContext.request.contextPath}/changeUserDetails" class="w3-bar-item w3-button">edycja danych</a>
                 <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button">wyloguj</a>
                  <a href="${pageContext.request.contextPath}/changePassword" class="w3-bar-item w3-button">zmień hasło</a>
             </c:if>

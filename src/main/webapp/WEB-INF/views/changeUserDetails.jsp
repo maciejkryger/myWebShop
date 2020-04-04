@@ -53,31 +53,33 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">biżuteria ręcznie robiona</p>
+        <p class="w3-left">profil użytkownika</p>
         <%@include file='header.jsp' %>
     </header>
 
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
-            <p class="w3-xlarge">Logowanie</p>
-            <p>zaloguj się</p>
-            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
-            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
-            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
-                    onclick="document.getElementById('login').style.display='none'">Zaloguj
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserDetails' />">
+            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
+
+            <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
+            <p>Twoje dane:</p>
+                <p><input class="w3-input w3-border" type="hidden" name="username" value="${user.username}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${user.firstName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${user.lastName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
+                <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
+            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left">zapisz
             </button>
         </form>
-
-                    <a href="${pageContext.request.contextPath}/changePassword"
-                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Zmiana hasła</a>
+                    <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" >anuluj</button>
 
     </div>
 
     <br>
-
 
     <!-- Footer -->
     <%@include file='footer.jsp' %>

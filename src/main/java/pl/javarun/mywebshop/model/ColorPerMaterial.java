@@ -15,8 +15,8 @@ import java.util.List;
 public class ColorPerMaterial {
 
     @Id
-//    @GeneratedValue(generator = "colorPerMaterialSeq")
-//    @SequenceGenerator(name = "colorPerMaterialSeq", sequenceName = "color_per_material_seq", allocationSize = 1)
+    @GeneratedValue(generator = "colorPerMaterialSeq")
+    @SequenceGenerator(name = "colorPerMaterialSeq", sequenceName = "color_per_material_seq", allocationSize = 1)
     private int id;
     @ManyToOne(targetEntity = MaterialColor.class)
     private MaterialColor materialColor;

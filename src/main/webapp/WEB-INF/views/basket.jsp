@@ -34,6 +34,7 @@
 <!-- Sidebar/menu -->
 <%@include file='menu.jsp' %>
 
+
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
     <div class="w3-bar-item w3-padding-24 w3-wide">QUNSZTOWNA</div>
@@ -53,28 +54,29 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">biżuteria ręcznie robiona</p>
+        <p class="w3-left">koszyk</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <!-- Change password form -->
+        <h2>Twój koszyk z zakupami</h2>
 
-        <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">
-            <p class="w3-xlarge">Logowanie</p>
-            <p>zaloguj się</p>
-            <p><input class="w3-input w3-border" type="text" name="username" placeholder="Wpisz login"></p>
-            <p><input class="w3-input w3-border" type="password" name="password" placeholder="Wpisz hasło"></p>
-            <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
-                    onclick="document.getElementById('login').style.display='none'">Zaloguj
-            </button>
-        </form>
+        <div class="w3-responsive">
 
-                    <a href="${pageContext.request.contextPath}/changePassword"
-                        style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large">Zmiana hasła</a>
+            <table class="w3-table-all w3-hoverable">
 
-    </div>
+                    <p>
+                    <c:if test="${sessionScope.user.username!=null}">
+                        <label><b>Koszyk użytkownika: </b>${sessionScope.user.username}</label>
+                        <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
+                    </c:if>
+                    </p>
+
+                 <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>
+
+
+            </table>
+        </div>
 
     <br>
 

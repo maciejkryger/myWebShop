@@ -75,7 +75,6 @@ public class RegisterController {
                                @RequestParam(required = false) String email) {
         System.out.println("Dane rejestracyjne: " + username + ": " + password + " : " + firstName + " " + lastName + ", " + email);
         if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
-            System.out.println("if z nullem");
             String usernameAnswer;
             String passwordAnswer;
             String firstNameAnswer;
@@ -108,7 +107,6 @@ public class RegisterController {
             }
             return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" + lastNameAnswer + "&" + emailAnswer;
         }
-        System.out.println("przed try catch");
 
         try {
             User user = userService.getUserByUsername(username);
@@ -125,9 +123,10 @@ public class RegisterController {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setRole(roleService.getRoleById(3));
+//            user.setCreationDate(null);
             user.setActive(false);
+            user.setActivationDate(null);
             user.setDeleted(false);
-            user.setCreationDate(null);
             user.setDeletingDate(null);
             user.setToken(token);
             userService.saveUser(user);

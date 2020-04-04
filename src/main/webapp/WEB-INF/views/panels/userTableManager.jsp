@@ -56,6 +56,7 @@
             <table class="w3-table-all w3-hoverable">
                 <thead>
                 <tr class="w3-light-grey ">
+                    <th>id</th>
                     <th>username</th>
                     <th>imię</th>
                     <th>nazwisko</th>
@@ -71,6 +72,7 @@
                 </thead>
                 <c:forEach var="item" items="${users}">
                     <tr>
+                        <td>${item.id}</td>
                         <td>${item.username}</td>
                         <td>${item.firstName}</td>
                         <td>${item.lastName}</td>
@@ -82,7 +84,7 @@
                         <td>${item.deleted}</td>
                         <td>${item.deletingDate}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/user/${item.username}">
+                            <a href="${pageContext.request.contextPath}/panels/data/user/${item.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
                             <a href="${pageContext.request.contextPath}/panels/data/user/changePassword?username=${item.username}">
