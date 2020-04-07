@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.*;
+import pl.javarun.mywebshop.search.SearchColorPerMaterialModelOption;
+import pl.javarun.mywebshop.search.SearchProductModelOption;
 import pl.javarun.mywebshop.service.*;
 
 /**
@@ -30,13 +32,14 @@ public class SuperPanelController {
     CompanyService companyService;
     RuleService ruleService;
     RoleService roleService;
+    ColorPerMaterialService colorPerMaterialService;
 
 
     public SuperPanelController(ProductService productService, TypeService typeService, MaterialService materialService,
                                 MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
                                 FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
                                 UserService userService, CompanyService companyService, RuleService ruleService,
-                                RoleService roleService) {
+                                RoleService roleService, ColorPerMaterialService colorPerMaterialService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;
@@ -48,6 +51,7 @@ public class SuperPanelController {
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.roleService = roleService;
+        this.colorPerMaterialService = colorPerMaterialService;
     }
 
 
@@ -58,10 +62,20 @@ public class SuperPanelController {
     }
 
     @GetMapping("/data/{table}")
-    public ModelAndView openProductsDatabase(@PathVariable(required = true) String table) {
+    public ModelAndView openProductsDatabase(@PathVariable(required = true) String table,
+                                             @RequestParam(required = false) String searchWhat,
+                                             @RequestParam(required = false) String searchBy) {
         if (table.equals("products")) {
             modelAndView = new ModelAndView("panels/productTableManager");
-            modelAndView.addObject("products", productService.getAllProducts());
+            modelAndView.addObject("searchByOptions", SearchProductModelOption.values());
+            if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                modelAndView.addObject("isFiltered", false);
+                modelAndView.addObject("products", productService.getAllProducts());
+            } else {
+                modelAndView.addObject("isFiltered", true);
+                modelAndView.addObject("products", productService.searchProducts(searchWhat, SearchProductModelOption.valueOf(searchBy)));
+            }
+            modelAndView.addObject("tableURL","panels/data/product");
         } else if (table.equals("types")) {
             modelAndView = new ModelAndView("panels/typeTableManager");
             modelAndView.addObject("types", typeService.getAllTypes());
@@ -92,10 +106,43 @@ public class SuperPanelController {
         } else if (table.equals("roles")) {
             modelAndView = new ModelAndView("panels/roleTableManager");
             modelAndView.addObject("roles", roleService.getAllRoles());
+        } else if (table.equals("colorPerMaterials")) {
+            modelAndView = new ModelAndView("panels/colorPerMaterialTableManager");
+            modelAndView.addObject("searchByOptions", SearchColorPerMaterialModelOption.values());
+            if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                modelAndView.addObject("isFiltered", false);
+                modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.getAllColorPerMaterial());
+            } else {
+                modelAndView.addObject("isFiltered", true);
+                modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.searchColorPerMaterial(searchWhat, SearchColorPerMaterialModelOption.valueOf(searchBy)));
+            }
+            modelAndView.addObject("tableURL","panels/data/colorPerMaterial");
         } else {
             modelAndView = new ModelAndView("panels/superPanel");
         }
         return modelAndView;
     }
+
+    @PostMapping("data/colorPerMaterials")
+    public String changeActiveC(@RequestParam Integer id, @RequestParam boolean active, @RequestParam(required = false) String searchWhat,
+                               @RequestParam(required = false) String searchBy) {
+
+        ColorPerMaterial colorPerMaterial = colorPerMaterialService.getColorPerMaterialById(id);
+        colorPerMaterial.setActive(active);
+        colorPerMaterialService.save(colorPerMaterial);
+        if(searchWhat == null || searchBy == null){return  "redirect:/panels/data/colorPerMaterials"; }
+    return  "redirect:/panels/data/colorPerMaterials/?searchWhat="+searchWhat+"&searchBy="+searchBy;
+    }
+
+    @PostMapping("data/products")
+    public String changeActiveP(@RequestParam Integer id, @RequestParam boolean active, @RequestParam(required = false) String searchWhat,
+                               @RequestParam(required = false) String searchBy) {
+        Product product = productService.getProductById(id);
+        product.setActive(active);
+        productService.save(product);
+        if(searchWhat == null || searchBy == null){return  "redirect:/panels/data/products"; }
+        return  "redirect:/panels/data/products/?searchWhat="+searchWhat+"&searchBy="+searchBy;
+    }
+
 
 }

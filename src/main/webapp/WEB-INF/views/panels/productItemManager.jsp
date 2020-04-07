@@ -106,8 +106,8 @@
                         <select class="w3-input w3-border" name="materialColorId">
                             <option selected="selected" placeholder="kolor"
                                     value="${product.materialColor.id}">${product.materialColor.namePl}</option>
-                            <c:forEach var="item" items="${materialColors}">
-                                <option value="${item.id}">${item.namePl}</option>
+                            <c:forEach var="materialColor" items="${materialColors}">
+                                <option value="${materialColor.id}">${materialColor.namePl}</option>
                             </c:forEach>
                         </select>
                     </p>
@@ -155,6 +155,13 @@
                         <label><b>opis po angielsku</b></label>
                         <input type="text" name="description" placeholder="opis opis po angielski" class="w3-input w3-border"
                             value="${product.description}">
+                    </p>
+                    <p>
+                        <label><b>Czy aktywny</b></label>
+                        <select class="w3-input w3-border" name="active">
+                          <option selected="selected" value="${product.active}">${product.active}</option>
+                          <option value="${product.active}">${!product.active}</option>
+                        </select>
                     </p>
 
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>

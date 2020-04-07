@@ -1,10 +1,12 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.ColorPerMaterialNotExistException;
 import pl.javarun.mywebshop.model.ColorPerMaterial;
-import pl.javarun.mywebshop.model.MaterialColor;
+import pl.javarun.mywebshop.search.SearchColorPerMaterialModelOption;
 import pl.javarun.mywebshop.repository.ColorPerMaterialRepository;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +27,28 @@ public class ColorPerMaterialService {
     }
 
     public List<ColorPerMaterial> getMaterialColorsByMaterialId(int id){
-        return colorPerMaterialRepository.findColorPerMaterialsById(id);}
+        return colorPerMaterialRepository.findColorsPerMaterialsByIdAndActive(id);}
 
+    public ColorPerMaterial getColorPerMaterialById(int id){
+        return colorPerMaterialRepository.findById(id).orElseThrow(()->new ColorPerMaterialNotExistException("ColorPerMaterial "+id));
+    }
+
+    public void save(ColorPerMaterial colorPerMaterial) {
+        colorPerMaterialRepository.save(colorPerMaterial);
+    }
+
+    public List<ColorPerMaterial> getAllColorPerMaterial() {
+        return colorPerMaterialRepository.findAll();
+    }
+
+    public List<ColorPerMaterial> searchColorPerMaterial(String searchWhat, SearchColorPerMaterialModelOption findBy) {
+        switch (findBy) {
+            case BY_MATERIAL_NAME:
+                return colorPerMaterialRepository.findByMaterialNamePlContainsIgnoreCase(searchWhat);
+            case BY_MATERIAL_COLOR:
+                return colorPerMaterialRepository.findByMaterialColorNamePlContainsIgnoreCase(searchWhat);
+            default:
+                return Collections.emptyList();
+        }
+    }
 }

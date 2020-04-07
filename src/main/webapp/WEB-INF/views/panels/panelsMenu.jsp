@@ -22,6 +22,8 @@
             zapięć</a>
         <a href="${pageContext.request.contextPath}/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki
             wykonania</a>
+        <a href="${pageContext.request.contextPath}/panels/data/colorPerMaterials" class="w3-bar-item w3-button">Tabela
+                        dostępności kolorów materiału</a>
         ------------------------------------
         <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
         <a href="${pageContext.request.contextPath}/panels/data/roles" class="w3-bar-item w3-button">Grupy uprawnień</a>

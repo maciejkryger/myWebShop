@@ -53,10 +53,10 @@ public class ProductManageController {
     public ModelAndView editProductItem(@PathVariable(required = false) Integer id) {
         modelAndView = new ModelAndView("panels/productItemManager");
         if (id == null) {
-            System.out.println("petla z nullem");
-            modelAndView.addObject("product", new Product());
+            Product product = new Product();
+            product.setActive(true);
+            modelAndView.addObject("product", product);
         } else {
-            System.out.println("petla bez nulla");
             modelAndView.addObject("product", productService.getProductById(id));
         }
         modelAndView.addObject("types", typeService.getAllTypes());
@@ -76,7 +76,9 @@ public class ProductManageController {
             @RequestParam Integer materialId, @RequestParam Integer materialColorId,
             @RequestParam Integer fasteningTypeId, @RequestParam Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
-            @RequestParam String description, @RequestParam String descriptionPl) {
+            @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active) {
+
+        System.out.println("material color id : "+materialColorId);
         Product product;
         if (id != null && id != 0) {
             product = productService.getProductById(id);
@@ -96,7 +98,8 @@ public class ProductManageController {
         product.setPrice(price);
         product.setDescription(description);
         product.setDescriptionPl(descriptionPl);
-        productService.saveProduct(product);
+        product.setActive(active);
+        productService.save(product);
         return "redirect:/panels/data/products";
     }
 }

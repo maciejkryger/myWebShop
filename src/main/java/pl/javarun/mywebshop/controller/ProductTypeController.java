@@ -39,8 +39,8 @@ public class ProductTypeController {
     public ModelAndView getProductsListPage(@PathVariable String productType) {
         ModelAndView modelAndView = new ModelAndView("productsList");
         modelAndView.addObject("productType", typeService.getTypeByName(productType));
-        modelAndView.addObject("productsCounter", productService.getProductsByTypeName(productType).size());
-        modelAndView.addObject("products", productService.getProductsByTypeName(productType));
+        modelAndView.addObject("productsCounter", productService.getActiveProductsByTypeName(productType).size());
+        modelAndView.addObject("products", productService.getActiveProductsByTypeName(productType));
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

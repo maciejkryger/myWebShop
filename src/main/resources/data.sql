@@ -600,146 +600,146 @@ values (nextval('rule_seq'), 'return rules', 'zasady zwrotu','Please send me mes
 -- bransoletki
 INSERT INTO product (id, name, name_pl,type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description, description_pl)
+                     making_technique_id, price, description, description_pl, active)
 values (nextval('product_seq'), '','Bransoletka Caprice', 1, 23, 190, 40, 1, 2, 1, 1, 40, '',
-        'Bransoletka z koralików TOHO w połączeniu z kryształkami. Możliwe zapięcie na karabinek, zapięcie magnesowe lub wsuwana na rękę ( tutaj należy zmierzyć szerokość dłoni). Dostępne różne kombinacje kolorystyczne. Tutaj eleganckie połączenie kryształków w 3 kolorach: czarny, srebrny i biały.');
+        'Bransoletka z koralików TOHO w połączeniu z kryształkami. Możliwe zapięcie na karabinek, zapięcie magnesowe lub wsuwana na rękę ( tutaj należy zmierzyć szerokość dłoni). Dostępne różne kombinacje kolorystyczne. Tutaj eleganckie połączenie kryształków w 3 kolorach: czarny, srebrny i biały.', true);
 INSERT INTO product (id, name,name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description, description_pl)
+                     making_technique_id, price, description, description_pl, active)
 values (nextval('product_seq'),'', 'Bransoletka Jeżyk', 1, 15, 190, 15, 1, 2, 1, 2, 25,'',
-        'Ręcznie robiona bransoletka techniką szydełkową. Wykonana z wysokiej jakości japońskich koralików TOHO oraz RISO. Bransoletka jest lekka i wygodna w noszeniu.Długość 18-20 cm, możliwość wykonania bransoletki w dowolnym rozmiarze. Szerokość bransoletki ok 1,5cm. Wykończona metalowymi elementami w kolorze srebrnym, zapięcie na karabinek. Bransoletki dostępne są rónież w innych kolorach.');
+        'Ręcznie robiona bransoletka techniką szydełkową. Wykonana z wysokiej jakości japońskich koralików TOHO oraz RISO. Bransoletka jest lekka i wygodna w noszeniu.Długość 18-20 cm, możliwość wykonania bransoletki w dowolnym rozmiarze. Szerokość bransoletki ok 1,5cm. Wykończona metalowymi elementami w kolorze srebrnym, zapięcie na karabinek. Bransoletki dostępne są rónież w innych kolorach.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Elegancka bransoletka z kryształków i koralików Toho', 1, 15, 190, 10, 1, 2, 2, 2, 25,
-        'Bransoletka wykonana z koralików TOHO połączonych ze szklanymi kryształkami. Koraliki TOHO uważane są za najrówniejsze na świecie co w przypadku ręcznie robionej biżuterii niejednokrotnie ma olbrzymie znaczenie. Dzięki użytej metodzie bransoletka jest niezwykle estetyczna i elegancka. Bardzo ładnie prezentują się i w codziennym noszeniu i jest również pięknym prezentem, z możliwością domówienia naszyjnika. W obecnej ofercie mogę zaproponować kilkanaście kolorów w zależności od upodobania. Wykończone metalowymi elementami w kolorze srebrnym z zapięciem na karabinek.');
+        'Bransoletka wykonana z koralików TOHO połączonych ze szklanymi kryształkami. Koraliki TOHO uważane są za najrówniejsze na świecie co w przypadku ręcznie robionej biżuterii niejednokrotnie ma olbrzymie znaczenie. Dzięki użytej metodzie bransoletka jest niezwykle estetyczna i elegancka. Bardzo ładnie prezentują się i w codziennym noszeniu i jest również pięknym prezentem, z możliwością domówienia naszyjnika. W obecnej ofercie mogę zaproponować kilkanaście kolorów w zależności od upodobania. Wykończone metalowymi elementami w kolorze srebrnym z zapięciem na karabinek.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka z kryształków', 1, 26, 190, 10, 1, 2, 1, 2, 20,
-        'Ręcznie robiona bransoletka z maleńkich szklanych, szlifowanych kryształków w kolorze atrametowym (metalicznym).  Okrągłe metalowe zapięcie z karabinkiem. Bransoletka bardzo ładnie się prezentuje. Wykonana metodą szydełkową. Długość 19 cm lub na zamówienie, szerokość ok 1cm.');
+        'Ręcznie robiona bransoletka z maleńkich szklanych, szlifowanych kryształków w kolorze atrametowym (metalicznym).  Okrągłe metalowe zapięcie z karabinkiem. Bransoletka bardzo ładnie się prezentuje. Wykonana metodą szydełkową. Długość 19 cm lub na zamówienie, szerokość ok 1cm.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka sznur turecki', 1, 1, 190, 9, 1, 2, 1, 3, 20,
-        'Bransoletka wykonana techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie bransoletki w dowolnym kolorze.');
+        'Bransoletka wykonana techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie bransoletki w dowolnym kolorze.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Delikatna bransoletka z Toho i kryształków', 1, 9, 190, 7, 1, 2, 1, 2, 15,
-        'Delikatna bransoleta z koralików TOHO w połączeniu ze szklanymi kryształkami w kolorze srebrnym, baza bransoletki z koralików w kolorze grafitowym. Zapięcie na karabinek w kolorze srebrnym.');
+        'Delikatna bransoleta z koralików TOHO w połączeniu ze szklanymi kryształkami w kolorze srebrnym, baza bransoletki z koralików w kolorze grafitowym. Zapięcie na karabinek w kolorze srebrnym.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka w kwiaty', 1, 1, 190, 7, 1, 2, 1, 2, 15,
-        'Bransoletka wykonana metodą szydełkową z koralików Toho.');
+        'Bransoletka wykonana metodą szydełkową z koralików Toho.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'),'Bransoletka z zapięciem Shamballa', 1, 7, 190, 7, 1, 2, 1, 2, 15,
-        'Delikatna bransoletka z koralików TOHO. Grubość ok 7mm. Zapięcie na magnes - Shamballa. Biżuteria wykonana z koralików TOHO jest delikatna i wygodna w noszeniu. Bransoletka dostępna w różnych wersjach kolorystycznych');
+        'Delikatna bransoletka z koralików TOHO. Grubość ok 7mm. Zapięcie na magnes - Shamballa. Biżuteria wykonana z koralików TOHO jest delikatna i wygodna w noszeniu. Bransoletka dostępna w różnych wersjach kolorystycznych',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka wężyk', 1, 7, 190, 15, 1, 2, 1, 2, 15,
-        'Bransoletka z koralików TOHO, użyte zostały dwie wielkości koralików.Bransoletka jest lekka, delikatna i wygodna w noszeniu');
+        'Bransoletka z koralików TOHO, użyte zostały dwie wielkości koralików.Bransoletka jest lekka, delikatna i wygodna w noszeniu',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka TOHO', 1, 7, 190, 15, 1, 2, 1, 2, 15,
-        'Bransoletka z koralików Toho wykonana techniką szydełkową. Użyte są dwa kolory. Dostępne są inne opcje kolorystyczne.');
+        'Bransoletka z koralików Toho wykonana techniką szydełkową. Użyte są dwa kolory. Dostępne są inne opcje kolorystyczne.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Szeroka bransoletka Superduo', 1, 25, 190, 30, 1, 2, 1, 2, 20,
-        'Bransoeltka wykonana w koralików Superduo w połączeniu z koralikami Toho. Możliwość wykonia bransoletki w innym zestawie kolorów.');
+        'Bransoeltka wykonana w koralików Superduo w połączeniu z koralikami Toho. Możliwość wykonia bransoletki w innym zestawie kolorów.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka z perełek, Toho i kryształków', 1, 25, 190, 10, 1, 2, 1, 1, 20,
-        'Bransoletka wykonana z perełek w połączeniu z koralikami Toho i kryształkami. Możliwość wykonania bransoletki w innym zestawie kolorów.');
+        'Bransoletka wykonana z perełek w połączeniu z koralikami Toho i kryształkami. Możliwość wykonania bransoletki w innym zestawie kolorów.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka z zapięciem magnetycznym', 1, 25, 190, 8, 1, 1, 1, 2, 20,
-        'Bransoletka wykonana z koralików Toho, rozmiar 8o. Zapięcie magnetyczne, możliwe zrobienie bransoletki w innym kolorze.');
+        'Bransoletka wykonana z koralików Toho, rozmiar 8o. Zapięcie magnetyczne, możliwe zrobienie bransoletki w innym kolorze.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Bransoletka gąsienica', 1, 25, 190, 10, 1, 2, 1, 2, 20,
-        'Dwustronna, płaska bransoletka wykonana z wysokiej jakości koralików TOHO oraz Magatama.  Bransoletka wykonana w kolorze jasno złotym i srebrnym. Boki w kolorze metalicznego brązu. Elementy wykończeniowe w kolorze złotym.  Metoda wykonania daje możliwość noszenia jej w zależności od potrzeb kolorystycznych. Bardzo wygodna w noszeniu. Nadaje się i do pracy i na imprezę. Do kompletu możliwe jest wykonanie naszyjnika ( cena 60 pln). ');
+        'Dwustronna, płaska bransoletka wykonana z wysokiej jakości koralików TOHO oraz Magatama.  Bransoletka wykonana w kolorze jasno złotym i srebrnym. Boki w kolorze metalicznego brązu. Elementy wykończeniowe w kolorze złotym.  Metoda wykonania daje możliwość noszenia jej w zależności od potrzeb kolorystycznych. Bardzo wygodna w noszeniu. Nadaje się i do pracy i na imprezę. Do kompletu możliwe jest wykonanie naszyjnika ( cena 60 pln). ',true);
 
 -- komplety
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Komplet naszyjnik i bransoletka sznur turecki', 3, 1, 25, 0, 1, 2, 1, 3, 55,
-        'Komplet naszyjnik i bransoletka wykonane techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie kompletu w dowolnym  kolorze. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia');
+        'Komplet naszyjnik i bransoletka wykonane techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie kompletu w dowolnym  kolorze. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Komplet naszyjnik i bransoletka Toho', 3, 25, 0, 0, 1, 2, 1, 2, 35,
-        'Komplet naszyjnik i bransoletka z koralików Toho wykonane techniką szydełkową. Użyte są dwa kolory. Dostępne są inne opcje kolorystyczne. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia');
+        'Komplet naszyjnik i bransoletka z koralików Toho wykonane techniką szydełkową. Użyte są dwa kolory. Dostępne są inne opcje kolorystyczne. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'komplet naszyjnik i bransoletka kwiaty', 3, 25, 0, 0, 1, 2, 1, 2, 60,
-        'Naszyjnik i bransoletka wykonane metodą szydełkową z koralików Toho. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia');
+        'Naszyjnik i bransoletka wykonane metodą szydełkową z koralików Toho. Długość naszyjnika ok 47 cm, długość bransoletki ok 19cm. Długość do uzgodnienia',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'komplet naszyjnik i kolczyki', 3, 25, 0, 0, 1, 2, 1, 1, 35,
-        'Naszyjnik i kolczyki wykonane z Toho i kryształków. Długość naszynika ok 47 cm, kolczyki ok 5cm.');
+        'Naszyjnik i kolczyki wykonane z Toho i kryształków. Długość naszynika ok 47 cm, kolczyki ok 5cm.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'komplet bransoletka i kolczyki', 3, 25, 0, 0, 1, 2, 1, 1, 25,
-        'Bransoletka i kolczyki wykonane z Toho i kryształków, bransoletka długość ok 19 cm, kolczyki ok 5cm');
+        'Bransoletka i kolczyki wykonane z Toho i kryształków, bransoletka długość ok 19 cm, kolczyki ok 5cm',true);
 
 -- naszyjniki
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Naszyjnik w kwiaty', 2, 25, 470, 15, 1, 2, 1, 2, 45,
-        'Naszyjnik z koralików Toho, wzór maki');
+        'Naszyjnik z koralików Toho, wzór maki',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Naszyjnik muszelki', 2, 25, 470, 25, 1, 2, 1, 2, 60,
-        'Ręcznie wykonany naszyjnik z trzech wielkości koralików TOHO daje efekt muszelek. Możliwość wykonania dowolnego zestawu kolorystycznego. Długość ok 47 cm, szerokość 2,5 - 3cm.');
+        'Ręcznie wykonany naszyjnik z trzech wielkości koralików TOHO daje efekt muszelek. Możliwość wykonania dowolnego zestawu kolorystycznego. Długość ok 47 cm, szerokość 2,5 - 3cm.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Naszyjnik sznur turecki', 2, 25, 470, 9, 1, 2, 1, 3, 40,
-        'Naszyjnik wykonana techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie naszyjnika w dowolnym kolorze.');
+        'Naszyjnik wykonana techniką sznur turecki, użyte koraliki Toho i szklane kryształki. Możliwe wykonanie naszyjnika w dowolnym kolorze.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Naszyjnik TOHO', 2, 25, 470, 7, 1, 2, 1, 2, 30,
-        'Naszyjnik wykonany metodą szydełkową, możliwość wykonania w innym kolorze, lub w połączeniu z innym kolorem w paski lub kropki.');
+        'Naszyjnik wykonany metodą szydełkową, możliwość wykonania w innym kolorze, lub w połączeniu z innym kolorem w paski lub kropki.',true);
 
 -- wisiorki
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Wisiorek', 4, 25, 0, 0, 3, 2, 1, 2, 19,
-        'Ręcznie wykonany wisior z koralików TOHO - japońskich szklanych koralików uważanych za jedne z najrówniejszych. Długość wisiora ok 10 cm ( z uwzględnieniem końcówki z krawatką). Polecam serdecznie do noszenia na rzemyku lub łańcuszku. Istnieje możliwość domówienia naszyjnika w kolorze wisiora. Kolor czarno biały. Na zamówienie mogę wykonać dowolną długość oraz zestaw kolorów. Na chwilę obecną jbardziej popularne zestawienia to czarno biały, czarno srebrny, grafitowy :)');
+        'Ręcznie wykonany wisior z koralików TOHO - japońskich szklanych koralików uważanych za jedne z najrówniejszych. Długość wisiora ok 10 cm ( z uwzględnieniem końcówki z krawatką). Polecam serdecznie do noszenia na rzemyku lub łańcuszku. Istnieje możliwość domówienia naszyjnika w kolorze wisiora. Kolor czarno biały. Na zamówienie mogę wykonać dowolną długość oraz zestaw kolorów. Na chwilę obecną jbardziej popularne zestawienia to czarno biały, czarno srebrny, grafitowy :)',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Wisiorek', 4, 25, 0, 0, 3, 2, 1, 1, 15,
-        'Wisiorek wykonanay z koralików Toho, Rulla i kryształków, Średnica ok 3 cm.');
+        'Wisiorek wykonanay z koralików Toho, Rulla i kryształków, Średnica ok 3 cm.',true);
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Wisiorek', 4, 25, 0, 0, 3, 2, 1, 1, 15,
-        'Wisiorek to kaboszon obszyty koralikami Toho, ok 3,5 cm x 2cm');
+        'Wisiorek to kaboszon obszyty koralikami Toho, ok 3,5 cm x 2cm',true);
 
 -- broszki
 INSERT INTO product (id, name_pl, type_id, material_color_id, length, width, fastening_type_id, fastening_color_id,
                      material_id,
-                     making_technique_id, price, description_pl)
+                     making_technique_id, price, description_pl, active)
 values (nextval('product_seq'), 'Broszka', 6, 25, 0, 0, 3, 2, 1, 1, 15,
-        'Broszka to kaboszon obszyty koralikami Toho. Wysokość ok 3 cm. ');
+        'Broszka to kaboszon obszyty koralikami Toho. Wysokość ok 3 cm. ',true);
 
 commit;

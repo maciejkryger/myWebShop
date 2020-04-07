@@ -44,6 +44,7 @@ public class Product {
     private String description;
     @Column(length = 1000)
     private String descriptionPl;
+    private boolean active;
 
     public Product() {
     }
@@ -108,7 +109,7 @@ public class Product {
         return materialColor;
     }
 
-    public void setMaterialColor(MaterialColor color) {
+    public void setMaterialColor(MaterialColor materialColor) {
         this.materialColor = materialColor;
     }
 
@@ -175,5 +176,13 @@ public class Product {
 
     public void setDescriptionPl(String descriptionPl) {
         this.descriptionPl = descriptionPl;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

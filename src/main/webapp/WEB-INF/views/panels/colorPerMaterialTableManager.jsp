@@ -46,7 +46,7 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela produktów</h2>
+        <h2>Tabela dostępności kolorów materiałów</h2>
 
         <%@include file='panelsSearchBy.jsp' %>
 
@@ -56,40 +56,25 @@
                 <thead>
                 <tr class="w3-light-grey ">
                     <th>id</th>
-                    <th>nazwa</th>
-                    <th>typ</th>
-                    <th>technika</th>
+                    <th>kolor materiał</th>
                     <th>materiał</th>
-                    <th>kolor</th>
-                    <th>zapięcie</th>
-                    <th>kolor zapięcia</th>
-                    <th>długość</th>
-                    <th>szerokość</th>
-                    <th>cena</th>
-                    <th>opis</th>
                     <th>czy aktywny</th>
-                    <th>opcje</th>
+                    <th>dostępność</th>
+                    <th>Opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="item" items="${products}">
+                <c:forEach var="item" items="${colorPerMaterialList}">
                     <tr>
                         <td>${item.id}</td>
-                        <td>${item.namePl}</td>
-                        <td>${item.type.namePl}</td>
-                        <td>${item.makingTechnique.namePl}</td>
-                        <td>${item.material.namePl}</td>
                         <td>${item.materialColor.namePl}</td>
-                        <td>${item.fasteningType.namePl}</td>
-                        <td>${item.fasteningColor.namePl}</td>
-                        <td>${item.length}</td>
-                        <td>${item.width}</td>
-                        <td>${item.price}</td>
-                        <td>${item.descriptionPl}</td>
+                        <td>${item.material.namePl}</td>
                         <td><i class="${item.active ? 'far fa-eye' : 'far fa-eye-slash'}"></i></td>
+                        <td>${item.availability}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}">
+                            <a href="${pageContext.request.contextPath}/panels/data/colorPerMaterial/${item.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
+
                             <form method="post" >
                                 <input type="hidden" name="id" value="${item.id}">
                                 <input type="hidden" name="active" value="${!item.active}">

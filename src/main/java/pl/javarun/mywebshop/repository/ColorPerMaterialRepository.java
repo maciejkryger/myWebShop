@@ -19,6 +19,10 @@ public interface ColorPerMaterialRepository extends JpaRepository<ColorPerMateri
     @Query(value = "select distinct cpm.* from material_color mc" +
             " join color_per_material cpm on cpm.material_color_id=mc.id" +
             " join material m on m.id=cpm.material_id " +
-            " where UPPER(m.id) = UPPER(:id)", nativeQuery = true)
-    List<ColorPerMaterial> findColorPerMaterialsById(int id);
+            " where UPPER(m.id) = UPPER(:id) and cpm.active=true", nativeQuery = true)
+    List<ColorPerMaterial> findColorsPerMaterialsByIdAndActive(int id);
+
+    List<ColorPerMaterial> findByMaterialNamePlContainsIgnoreCase(String name);
+
+    List<ColorPerMaterial> findByMaterialColorNamePlContainsIgnoreCase(String name);
 }
