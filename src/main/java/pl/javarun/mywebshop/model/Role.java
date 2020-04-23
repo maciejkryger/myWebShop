@@ -18,8 +18,8 @@ import java.util.Objects;
 public class Role implements GrantedAuthority {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleSeq")
-    @SequenceGenerator(name = "roleSeq", sequenceName = "role_seq", allocationSize = 1)
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roleSeq")
+//    @SequenceGenerator(name = "roleSeq", sequenceName = "role_seq", allocationSize = 1)
     private int id;
     private String authority;
 

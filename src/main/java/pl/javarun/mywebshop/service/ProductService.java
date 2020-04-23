@@ -38,6 +38,10 @@ public class ProductService {
         return productRepository.findAllByType_NameAndActiveIsTrue(typeName);
     }
 
+    public List<Product> getActiveProductsByTypeNamePl(String typeName) {
+        return productRepository.findAllByType_NamePlContainsIgnoreCase(typeName);
+    }
+
     public Product getProductById(int id) {
         return productRepository.findById(id).orElseThrow(() -> new ProductNotExistException("product " + id));
     }
@@ -51,7 +55,7 @@ public class ProductService {
             case BY_PRODUCT_NAME:
                 return productRepository.findByNamePlContainsIgnoreCase(searchWhat);
             case BY_TYPE:
-                return productRepository.findAllByType_Name(searchWhat);
+                return productRepository.findAllByType_NamePlContainsIgnoreCase(searchWhat);
             case BY_MAKING_TECHNIQUE:
                 return productRepository.findByMakingTechnique_NamePlContainsIgnoreCase(searchWhat);
             case BY_MATERIAL:

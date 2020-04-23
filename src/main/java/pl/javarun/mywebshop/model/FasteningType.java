@@ -17,8 +17,8 @@ import javax.persistence.SequenceGenerator;
 public class FasteningType {
 
     @Id
-    @GeneratedValue(generator = "fasteningTypeSeq")
-    @SequenceGenerator(name = "fasteningTypeSeq", sequenceName = "fastening_type_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "fasteningTypeSeq")
+//    @SequenceGenerator(name = "fasteningTypeSeq", sequenceName = "fastening_type_seq", allocationSize = 1)
     private int id;
 
     private String name;

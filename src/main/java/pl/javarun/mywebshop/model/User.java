@@ -27,8 +27,8 @@ import java.util.Date;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(generator = "userSeq")
-    @SequenceGenerator(name = "userSeq", sequenceName = "user_seq", allocationSize = 1)
+//    @GeneratedValue(generator = "userSeq")
+//    @SequenceGenerator(name = "userSeq", sequenceName = "user_seq", allocationSize = 1)
     private int id;
     private String username;
     private String password;

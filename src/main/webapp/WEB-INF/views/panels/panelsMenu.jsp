@@ -25,9 +25,11 @@
         <a href="${pageContext.request.contextPath}/panels/data/colorPerMaterials" class="w3-bar-item w3-button">Tabela
                         dostępności kolorów materiału</a>
         ------------------------------------
-        <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
-        <a href="${pageContext.request.contextPath}/panels/data/roles" class="w3-bar-item w3-button">Grupy uprawnień</a>
         <a href="${pageContext.request.contextPath}/panels/data/companies" class="w3-bar-item w3-button">Dane firmy</a>
         <a href="${pageContext.request.contextPath}/panels/data/rules" class="w3-bar-item w3-button">Regulaminy</a>
+        <c:if test="${sessionScope.user.role.id<='1'}">
+         <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
+         <a href="${pageContext.request.contextPath}/panels/data/roles" class="w3-bar-item w3-button">Grupy uprawnień</a>
+        </c:if>
     </div>
 </nav>
