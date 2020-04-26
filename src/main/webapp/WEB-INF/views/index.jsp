@@ -65,8 +65,11 @@
         <%@include file='header.jsp' %>
     </header>
 
+    <div>
+    <a class="w3-bar-item" style="color: blue">${userIsActive ? 'Użytkownik został właśnie aktywowany, możesz się już logować!' :''}</a>
+              <a class="w3-bar-item" style="color: red">${userWasActive ? 'Użytkownik był już wcześniej aktywowany! Nie można tego zrobić ponownie.' :''}</a>
+    </div>
     <!-- Image header -->
-
     <%--    <div class="w3-display-container w3-container">--%>
     <%--        <img src="${pageContext.request.contextPath}/images/1.webp" alt="mainPage" style="width:100%">--%>
     <%--        <div class="w3-display-topleft w3-text-black" style="padding:24px 48px">--%>
@@ -75,8 +78,9 @@
     <%--            <h1 class="w3-hide-small">Sylwia</h1>--%>
     <%--        </div>--%>
     <%--    </div>--%>
+
     <div class="w3-content w3-display-container w3-responsive" style="max-width:100%">
-        <img class="mySlides" src="${pageContext.request.contextPath}/images/start1.jpg" style="width:100%">
+          <img class="mySlides" src="${pageContext.request.contextPath}/images/start1.jpg" style="width:100%">
         <img class="mySlides" src="${pageContext.request.contextPath}/images/start2.jpg" style="width:100%">
         <img class="mySlides" src="${pageContext.request.contextPath}/images/start3.jpg" style="width:100%">
         <div class="w3-center w3-container w3-section w3-large w3-text-black w3-display-bottommiddle"

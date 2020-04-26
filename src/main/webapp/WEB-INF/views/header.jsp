@@ -10,8 +10,9 @@
         <a class="w3-bar-item w3-margin-right">Witaj <b>${sessionScope.user.firstName}</b>!!!</a>
     </c:if>
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"
-       onclick="document.getElementById('login').style.display='block'"><i
-            class="fa fa-user"></i></a>
+       onclick="document.getElementById('login').style.display='block'">
+       <i class="fa fa-user"></i>
+    </a>
     <!--<i class="fa fa-search"></i>-->
-    <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-cart"></i></a>
+    <!--<a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-cart"></i></a>-->
 </p>

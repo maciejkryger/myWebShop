@@ -1,7 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,10 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
-import pl.javarun.mywebshop.util.GenerateToken;
+import pl.javarun.mywebshop.util.EmailRegister;
+import pl.javarun.mywebshop.util.TokenAlgorithm;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
+import java.sql.Timestamp;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -114,8 +114,8 @@ public class RegisterController {
         } catch (UserNotExistException ex) {
             PasswordUtil passwordUtil = new PasswordUtil();
             String hashedPassword = passwordUtil.hashPassword(password);
-            GenerateToken generateToken = new GenerateToken();
-            String token = generateToken.startGenerateToken();
+            TokenAlgorithm tokenAlgorithm = new TokenAlgorithm();
+            String token = tokenAlgorithm.generate();
             User user = new User();
             user.setUsername(username);
             user.setPassword(hashedPassword);
@@ -123,13 +123,15 @@ public class RegisterController {
             user.setLastName(lastName);
             user.setEmail(email);
             user.setRole(roleService.getRoleById(3));
-//            user.setCreationDate(null);
+            user.setCreationDate(new Timestamp(System.currentTimeMillis()));
             user.setActive(false);
             user.setActivationDate(null);
             user.setDeleted(false);
             user.setDeletingDate(null);
             user.setToken(token);
             userService.saveUser(user);
+            EmailRegister emailRegister = new EmailRegister();
+            emailRegister.send(username,firstName, email,token);
             return "redirect:/register?success=true";
         }
     }

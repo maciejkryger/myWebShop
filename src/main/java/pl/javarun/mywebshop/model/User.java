@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -39,8 +40,8 @@ public class User implements UserDetails {
     @ManyToOne(targetEntity = Role.class)
     private Role role;
     @Nullable
-    @DateTimeFormat(pattern = "yyyy-MM-dd mm:ss")
-    private Date creationDate;
+//    @DateTimeFormat(pattern = "yyyy-MM-dd mm:ss:")
+    private Timestamp creationDate;
     private boolean active;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -137,11 +138,11 @@ public class User implements UserDetails {
     }
 
     @Nullable
-    public Date getCreationDate() {
+    public Timestamp getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(@Nullable Date creationDate) {
+    public void setCreationDate(@Nullable Timestamp creationDate) {
         this.creationDate = creationDate;
     }
 

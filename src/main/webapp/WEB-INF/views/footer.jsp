@@ -11,11 +11,11 @@
         <div class="w3-col s4">
             <h4>Kontakt</h4>
             <p>Masz pytania? Napisz do mnie.</p>
-            <form action="/action_page.php" target="_blank">
-                <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="Imię" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="Email" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Temat" name="Temat" required></p>
-                <p><input class="w3-input w3-border" type="text" placeholder="Wiadomość" name="Treść wiadomości"
+            <form method="post" action="${pageContext.request.contextPath}/contactMessage">
+                <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="name" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Email" name="email" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Temat" name="subject" required></p>
+                <p><input class="w3-input w3-border" type="text" placeholder="Wiadomość" name="content"
                           required></p>
                 <button type="submit" class="w3-button w3-block w3-black">Wyślij</button>
             </form>

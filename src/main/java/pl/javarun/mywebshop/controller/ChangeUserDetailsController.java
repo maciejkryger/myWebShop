@@ -2,13 +2,9 @@ package pl.javarun.mywebshop.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
-import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
-import pl.javarun.mywebshop.util.GenerateToken;
-import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
 

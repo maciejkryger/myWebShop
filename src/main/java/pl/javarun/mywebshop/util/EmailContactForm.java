@@ -1,6 +1,8 @@
 package pl.javarun.mywebshop.util;
 
-import pl.javarun.mywebshop.service.UserService;
+import pl.javarun.mywebshop.model.Company;
+import pl.javarun.mywebshop.repository.CompanyRepository;
+import pl.javarun.mywebshop.service.CompanyService;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -11,14 +13,15 @@ import java.util.Properties;
 
 import static pl.javarun.mywebshop.util.SecretData.*;
 
-public class EmailRegister {
+public class EmailContactForm {
 
 
+    public EmailContactForm() {
 
-    public EmailRegister() {
     }
 
-    public void send(String username, String name, String email, String token){
+    public void send(String companyEmail, String senderName, String senderMail, String messageSubject, String messageContent){
+
 
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
@@ -37,14 +40,16 @@ public class EmailRegister {
         Message message = new MimeMessage(session);
         try {
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-            message.setFrom(new InternetAddress("rejestracja@qunsztowna.pl"));
+            message.setFrom(new InternetAddress("formularz_kontaktowy@qunsztowna.pl"));
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("QUNSZTOWNA.pl - rejestracja użytkownika: "+username);
+                    Message.RecipientType.TO, InternetAddress.parse(companyEmail));
+            message.setSubject(messageSubject);
 
 
-            String msg = "Dzień dobry <B>"+name+"</B>,<BR><BR> dziękujemy za rejestrację w sklepie QUNSZTOWNA.<BR>" +
-                    "By aktywować użytkownika i potwierdzić rejestrację <a href=\"http://qunsztowna.javarun.pl/activation?username="+username+"&regId="+token+"\">kliknij tutaj</a>";
+            String msg = "<B>Masz wiadomość z formularza kontaktowego qunsztowna.pl</B><BR>"+
+                    "<B>Imię: </B>"+senderName+"<BR>"+ "<B>Email: </B>"+senderMail+"<BR>"+
+                    "<B>Temat wiadomości: </B>"+messageSubject+"<BR>"+
+                    "<B>Wiadomość: </B>"+messageContent;
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=UTF-8");

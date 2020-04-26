@@ -42,11 +42,19 @@ public class HomePageController {
     }
 
     @GetMapping(value = {"", "/{id}"})
-    public ModelAndView getIndexPage(@PathVariable(required = false) String id) {
+    public ModelAndView getIndexPage(@PathVariable(required = false) String id,
+                                     @PathParam("userIsActive") Boolean userIsActive,
+                                     @PathParam("userWasActive") Boolean userWasActive) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        if(userIsActive!=null){
+            modelAndView.addObject("userIsActive",userIsActive);
+        }
+        if(userWasActive!=null){
+            modelAndView.addObject("userWasActive",userWasActive);
+        }
         return modelAndView;
     }
 }
