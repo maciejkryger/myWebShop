@@ -65,10 +65,16 @@
         <%@include file='header.jsp' %>
     </header>
 
+    <!-- Info section  -->
     <div>
-    <a class="w3-bar-item" style="color: blue">${userIsActive ? 'Użytkownik został właśnie aktywowany, możesz się już logować!' :''}</a>
-              <a class="w3-bar-item" style="color: red">${userWasActive ? 'Użytkownik był już wcześniej aktywowany! Nie można tego zrobić ponownie.' :''}</a>
+    <a class="w3-bar-item" style="color: blue">${activationFailed ? 'Błędny link aktywacyjny. Aktywacja się nie powiodła.' :''}</a>
+    <a class="w3-bar-item" style="color: green">${userIsActive ? 'Użytkownik został właśnie aktywowany, możesz się już logować!' :''}</a>
+    <a class="w3-bar-item" style="color: blue">${userWasActive ? 'Użytkownik był już wcześniej aktywowany! Nie można tego zrobić ponownie.' :''}</a>
+    <a class="w3-bar-item" style="color: red">
+     ${userNotExist ? 'Próbujesz aktywować użytkownika ' :''}<b>${username!=null ? username :''}</b>${userNotExist ? ', który nie istnieje!' :''}
+    </a>
     </div>
+
     <!-- Image header -->
     <%--    <div class="w3-display-container w3-container">--%>
     <%--        <img src="${pageContext.request.contextPath}/images/1.webp" alt="mainPage" style="width:100%">--%>

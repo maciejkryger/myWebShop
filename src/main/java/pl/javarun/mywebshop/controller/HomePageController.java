@@ -44,7 +44,9 @@ public class HomePageController {
     @GetMapping(value = {"", "/{id}"})
     public ModelAndView getIndexPage(@PathVariable(required = false) String id,
                                      @PathParam("userIsActive") Boolean userIsActive,
-                                     @PathParam("userWasActive") Boolean userWasActive) {
+                                     @PathParam("userWasActive") Boolean userWasActive,
+                                     @PathParam("userNotExist") Boolean userNotExist,
+                                     @PathParam("username") String username) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -54,6 +56,12 @@ public class HomePageController {
         }
         if(userWasActive!=null){
             modelAndView.addObject("userWasActive",userWasActive);
+        }
+        if(userNotExist!=null){
+            modelAndView.addObject("userNotExist",userNotExist);
+        }
+        if(username!=null){
+            modelAndView.addObject("username",username);
         }
         return modelAndView;
     }

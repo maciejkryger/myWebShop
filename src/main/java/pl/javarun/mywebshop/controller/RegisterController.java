@@ -13,8 +13,11 @@ import pl.javarun.mywebshop.util.EmailRegister;
 import pl.javarun.mywebshop.util.TokenAlgorithm;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
+import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
+
+
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -27,6 +30,7 @@ import java.sql.Timestamp;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
+
 
     private final UserService userService;
     private final TypeService typeService;
@@ -45,12 +49,12 @@ public class RegisterController {
 
 
     @GetMapping()
-    public ModelAndView registerPage(@PathParam("success") boolean success, @PathParam("userExist") boolean userExist,
-                                     @PathParam("noUsername") boolean noUsername, @PathParam("username") String username,
-                                     @PathParam("noPassword") boolean noPassword,
-                                     @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
-                                     @PathParam("noLastName") boolean noLastName, @PathParam("lastName") String lastName,
-                                     @PathParam("noEmail") boolean noEmail, @PathParam("email") String email) {
+    public ModelAndView showRegisterPage(@PathParam("success") boolean success, @PathParam("userExist") boolean userExist,
+                                         @PathParam("noUsername") boolean noUsername, @PathParam("username") String username,
+                                         @PathParam("noPassword") boolean noPassword,
+                                         @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
+                                         @PathParam("noLastName") boolean noLastName, @PathParam("lastName") String lastName,
+                                         @PathParam("noEmail") boolean noEmail, @PathParam("email") String email) {
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -72,8 +76,9 @@ public class RegisterController {
     @PostMapping()
     public String registerUser(@RequestParam(required = false) String username, @RequestParam(required = false) String password,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                               @RequestParam(required = false) String email) {
+                               @RequestParam(required = false) String email, @RequestParam(required = false) String contextPath) {
         System.out.println("Dane rejestracyjne: " + username + ": " + password + " : " + firstName + " " + lastName + ", " + email);
+        System.out.println(contextPath);
         if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
             String usernameAnswer;
             String passwordAnswer;

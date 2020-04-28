@@ -83,6 +83,6 @@ public class ColorPerMaterialManageController {
         colorPerMaterial.setActive(active);
         colorPerMaterial.setAvailability(availability);
         colorPerMaterialService.save(colorPerMaterial);
-        return "redirect:/panels/data/colorPerMaterialList";
+        return "redirect:/panels/data/colorPerMaterials";
     }
 }

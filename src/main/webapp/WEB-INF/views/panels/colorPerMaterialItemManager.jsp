@@ -92,7 +92,7 @@
 
                     <p>
                          <label><b>Czy aktywny</b></label>
-                         <select class="w3-input w3-border">
+                         <select class="w3-input w3-border" name="active">
                             <option selected="selected" value="${colorPerMaterial.active}">${colorPerMaterial.active}</option>
                             <option value="${colorPerMaterial.active}">${!colorPerMaterial.active}
                             </option>

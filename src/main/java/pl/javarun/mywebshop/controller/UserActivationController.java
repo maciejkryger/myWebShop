@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.UserService;
 import pl.javarun.mywebshop.util.EmailContactForm;
@@ -33,18 +34,22 @@ public class UserActivationController {
     public String activeUser(@PathParam("regId") String regId, @PathParam("username") String username){
         System.out.println(username);
         System.out.println(regId);
-        User user = userService.getUserByUsername(username);
-        if(user.isActive()==true){
-            return "redirect:/?userWasActive=true";
+        try {
+            User user = userService.getUserByUsername(username);
+            if (user.isActive()) {
+                return "redirect:/?userWasActive=true";
+            }
+            if (user.getToken().equals(regId)) {
+                user.setActive(true);
+                user.setActivationDate(new Timestamp(System.currentTimeMillis()));
+                userService.saveUser(user);
+                return "redirect:/?userIsActive=true";
+            } else
+                return "redirect:/?activationFailed=true";
         }
-        if(user.getToken().equals(regId)){
-            user.setActive(true);
-            user.setActivationDate(new Timestamp(System.currentTimeMillis()));
-            userService.saveUser(user);
-            return "redirect:/?userIsActive=true";
+        catch (UserNotExistException ex){
+            return "redirect:/?username="+username+"&userNotExist=true";
         }
-        else
-            return "redirect:/";
     }
 
 

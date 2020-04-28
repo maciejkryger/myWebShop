@@ -75,6 +75,7 @@
                 <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${lastName}"></p>
                 <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
                 <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${email}"></p>
+                <input type="hidden" name="contextPath" value="${pageContext.request.contextPath}">
                 <button type="submit" class="w3-button w3-padding-large w3-red w3-margin-bottom w3-round-large w3-left"
                         onclick="document.getElementById('login').style.display='none'">zarejestruj
                 </button>

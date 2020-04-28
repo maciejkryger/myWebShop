@@ -78,7 +78,6 @@ public class ProductManageController {
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
             @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active) {
 
-        System.out.println("material color id : "+materialColorId);
         Product product;
         if (id != null && id != 0) {
             product = productService.getProductById(id);
