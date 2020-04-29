@@ -62,6 +62,7 @@
         <table class="w3-table-all w3-hoverable">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Rejestracja zakończyła się pomyślnie, sprawdż pocztę by aktywować swojego użytkownia' :''}</a>
             <a class="w3-bar-item w3-padding" style="color: crimson">${userExist ? 'Użytkownik już w naszej bazie istnieje, skorzystać z przypomnienia hasła' :''}</a>
+            <a class="w3-bar-item w3-padding" style="color: red">${userExistButNotActive ? 'Użytkownik już w naszej bazie istnieje, ale nie został aktywowany, odszukaj maila z linkiem aktywacyjnym' :''}</a>
             <form method="post" action="<c:url value='${pageContext.request.contextPath}/register' />">
                 <p class="w3-xlarge">Rejestracja nowego użytkownika</p>
                 <p>zarejestruj się</p>

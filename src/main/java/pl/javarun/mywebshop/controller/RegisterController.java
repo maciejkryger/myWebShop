@@ -50,6 +50,7 @@ public class RegisterController {
 
     @GetMapping()
     public ModelAndView showRegisterPage(@PathParam("success") boolean success, @PathParam("userExist") boolean userExist,
+                                         @RequestParam("userExistButNotActive") boolean userExistButNotActive,
                                          @PathParam("noUsername") boolean noUsername, @PathParam("username") String username,
                                          @PathParam("noPassword") boolean noPassword,
                                          @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
@@ -61,6 +62,7 @@ public class RegisterController {
         modelAndView.addObject("rules", ruleService.getAllRules());
         if (success) modelAndView.addObject("success", true);
         if (userExist) modelAndView.addObject("userExist", true);
+        if(userExistButNotActive) modelAndView.addObject("userExistButNotActive",true);
         if (noUsername) modelAndView.addObject("noUsername", true);
         if (noPassword) modelAndView.addObject("noPassword", true);
         if (noFirstName) modelAndView.addObject("noFirstName", true);
@@ -115,6 +117,9 @@ public class RegisterController {
 
         try {
             User user = userService.getUserByUsername(username);
+            if(!user.isActive()){
+                return "redirect:/register?userExistButNotActive=true";
+            }
             return "redirect:/register?userExist=true";
         } catch (UserNotExistException ex) {
             PasswordUtil passwordUtil = new PasswordUtil();
