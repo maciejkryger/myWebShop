@@ -50,6 +50,10 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<Product> getAllActiveProducts() {
+        return productRepository.findAllByActiveIsTrue();
+    }
+
     public List<Product> searchProducts(String searchWhat, SearchProductModelOption findBy) {
         switch (findBy) {
             case BY_PRODUCT_NAME:
@@ -67,7 +71,7 @@ public class ProductService {
             case BY_FASTENING_COLOR:
                 return productRepository.findByFasteningColor_NamePlContainsIgnoreCase(searchWhat);
             case BY_LENGTH:
-                    return productRepository.findByLength(Double.valueOf(searchWhat));
+                return productRepository.findByLength(Double.valueOf(searchWhat));
             case BY_WIGHT:
                 return productRepository.findByWidth(Double.valueOf(searchWhat));
             case BY_PRICE:
@@ -77,5 +81,113 @@ public class ProductService {
             default:
                 return Collections.emptyList();
         }
+    }
+
+    public List getActiveProductsByMaterialId(Integer materialId) {
+        return productRepository.findAllByMaterial_IdAndActiveIsTrue(materialId);
+    }
+
+    public List getActiveProductsByMaterialColorId(Integer materialColorId) {
+        return productRepository.findAllByMaterialColor_IdAndActiveIsTrue(materialColorId);
+    }
+
+    public List getActiveProductsByTypeId(Integer typeId) {
+        return productRepository.findAllByType_IdAndActiveIsTrue(typeId);
+    }
+
+    public List getActiveProductsByFasteningTypeId(Integer fasteningTypeId) {
+        return productRepository.findAllByFasteningType_IdAndActiveIsTrue(fasteningTypeId);
+    }
+
+    public List getActiveProductsByPriceBetween(Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByPriceBetweenAndActiveIsTrue(priceFrom, priceTo);
+    }
+
+    public List getActiveProductsByMaterialIdAndMaterialColorId(Integer materialId, Integer materialColorId) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndActiveIsTrue(materialId, materialColorId);
+    }
+
+    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeId(Integer materialId, Integer materialColorId, Integer typeId) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndActiveIsTrue(materialId, materialColorId, typeId);
+    }
+
+    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeId(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId);
+    }
+
+    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceBetween(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndPriceBetweenAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId, priceFrom, priceTo);
+    }
+
+    public List<Product> getActiveProductsByPriceAbove(Integer priceFrom) {
+        return productRepository.findAllByPriceGreaterThanEqualAndActiveIsTrue(priceFrom);
+    }
+
+    public List<Product> getActiveProductsByPriceUpTo(Integer priceTo) {
+        return productRepository.findAllByPriceLessThanEqualAndActiveIsTrue(priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceAbove(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceFrom) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndPriceGreaterThanEqualAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId, priceFrom);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceUpTo(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndPriceLessThanEqualAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId, priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeId(Integer materialId, Integer materialColorId, Integer fasteningTypeId) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndFasteningType_IdAndActiveTrue(materialId, materialColorId, fasteningTypeId);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceBetween(Integer materialId, Integer materialColorId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndFasteningType_IdAndPriceBetweenAndActiveTrue(materialId, materialColorId, fasteningTypeId, priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceUpTo(Integer materialId, Integer materialColorId, Integer fasteningTypeId, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndFasteningType_IdAndPriceLessThanEqualAndActiveTrue(materialId, materialColorId, fasteningTypeId, priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceAbove(Integer materialId, Integer materialColorId, Integer fasteningTypeId, Integer priceFrom) {
+        return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndFasteningType_IdAndPriceGreaterThanEqualAndActiveTrue(materialId, materialColorId, fasteningTypeId, priceFrom);
+    }
+
+    public List<Product> getActiveProductsByTypeIdAndFasteningId(Integer typeId, Integer fasteningTypeId) {
+        return productRepository.findAllByType_IdAndFasteningType_IdAndActiveTrue(typeId,fasteningTypeId);
+    }
+
+    public List<Product> getActiveProductsByTypeIdAndFasteningIdAndPriceAbove(Integer typeId, Integer fasteningTypeId, Integer priceFrom) {
+        return productRepository.findAllByType_IdAndFasteningType_IdAndPriceGreaterThanEqualAndActiveTrue(typeId,fasteningTypeId,priceFrom);
+    }
+
+    public List<Product> getActiveProductsByTypeIdAndFasteningIdAndPriceUpTo(Integer typeId, Integer fasteningTypeId, Integer priceTo) {
+        return productRepository.findAllByType_IdAndFasteningType_IdAndPriceLessThanEqualAndActiveTrue(typeId,fasteningTypeId,priceTo);
+    }
+
+    public List<Product> getActiveProductsByTypeIdAndFasteningIdAndPriceBetween(Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByType_IdAndFasteningType_IdAndPriceBetweenAndActiveTrue(typeId,fasteningTypeId,priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialColorIdAndTypeIdAndFasteningIdAndPriceBetween(Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterialColor_IdAndType_IdAndFasteningType_IdAndPriceBetweenAndActiveTrue(materialColorId,typeId,fasteningTypeId,priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndTypeIdAndFasteningIdAndPriceBetween(Integer materialId, Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndType_IdAndFasteningType_IdAndPriceBetweenAndActiveTrue(materialId,typeId,fasteningTypeId,priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndFasteningIdAndPriceBetween(Integer materialId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndFasteningType_IdAndPriceBetweenAndActiveTrue(materialId,fasteningTypeId,priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndPriceBetween(Integer materialId, Integer priceFrom, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndPriceBetweenAndActiveTrue(materialId,priceFrom,priceTo);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndPriceAbove(Integer materialId, Integer priceFrom) {
+        return productRepository.findAllByMaterial_IdAndPriceGreaterThanEqualAndActiveTrue(materialId,priceFrom);
+    }
+
+    public List<Product> getActiveProductsByMaterialIdAndPriceUpTo(Integer materialId, Integer priceTo) {
+        return productRepository.findAllByMaterial_IdAndPriceLessThanEqualAndActiveTrue(materialId,priceTo);
     }
 }

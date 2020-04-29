@@ -13,6 +13,6 @@
        onclick="document.getElementById('login').style.display='block'">
        <i class="fa fa-user"></i>
     </a>
-    <!--<i class="fa fa-search"></i>-->
+    <a href="${pageContext.request.contextPath}/search" class="w3-bar-item w3-button w3-padding"><i class="fa fa-search"></i></a>
     <!--<a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-cart"></i></a>-->
 </p>
