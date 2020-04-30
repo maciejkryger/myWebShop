@@ -34,4 +34,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     Set<User> findByRoleAuthorityContainsIgnoreCase(String authority);
 
     Optional<User> findById(int id);
+
+
+
 }

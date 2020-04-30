@@ -1,5 +1,6 @@
 package pl.javarun.mywebshop.controller;
 
+import org.hibernate.query.criteria.internal.expression.function.TrimFunction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
 
+import static pl.javarun.mywebshop.util.InputValidator.*;
 
 
 /**
@@ -50,28 +52,38 @@ public class RegisterController {
 
     @GetMapping()
     public ModelAndView showRegisterPage(@PathParam("success") boolean success, @PathParam("userExist") boolean userExist,
-                                         @RequestParam("userExistButNotActive") boolean userExistButNotActive,
+                                         @PathParam("userExistButNotActive") boolean userExistButNotActive,
                                          @PathParam("noUsername") boolean noUsername, @PathParam("username") String username,
                                          @PathParam("noPassword") boolean noPassword,
                                          @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
                                          @PathParam("noLastName") boolean noLastName, @PathParam("lastName") String lastName,
-                                         @PathParam("noEmail") boolean noEmail, @PathParam("email") String email) {
+                                         @PathParam("noEmail") boolean noEmail, @PathParam("email") String email,
+                                         @PathParam("wrongUsernameChar") boolean wrongUsernameChar,
+                                         @PathParam("wrongPasswordChar") boolean wrongPasswordChar,
+                                         @PathParam("wrongFirstNameChar") boolean wrongFirstNameChar,
+                                         @PathParam("wrongLastNameChar") boolean wrongLastNameChar,
+                                         @PathParam("wrongEmailChar") boolean wrongEmailChar) {
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         if (success) modelAndView.addObject("success", true);
         if (userExist) modelAndView.addObject("userExist", true);
-        if(userExistButNotActive) modelAndView.addObject("userExistButNotActive",true);
+        if (userExistButNotActive) modelAndView.addObject("userExistButNotActive", true);
         if (noUsername) modelAndView.addObject("noUsername", true);
         if (noPassword) modelAndView.addObject("noPassword", true);
         if (noFirstName) modelAndView.addObject("noFirstName", true);
         if (noLastName) modelAndView.addObject("noLastName", true);
         if (noEmail) modelAndView.addObject("noEmail", true);
-        if (username!=null) modelAndView.addObject("username", username);
-        if (firstName!=null) modelAndView.addObject("firstName", firstName);
-        if (lastName!=null) modelAndView.addObject("lastName", lastName);
-        if (email!=null) modelAndView.addObject("email", email);
+        if (username != null) modelAndView.addObject("username", username);
+        if (firstName != null) modelAndView.addObject("firstName", firstName);
+        if (lastName != null) modelAndView.addObject("lastName", lastName);
+        if (email != null) modelAndView.addObject("email", email);
+        if (wrongUsernameChar) modelAndView.addObject("wrongUsernameChar", true);
+        if (wrongPasswordChar) modelAndView.addObject("wrongPasswordChar", true);
+        if (wrongFirstNameChar) modelAndView.addObject("wrongFirstNameChar", true);
+        if (wrongLastNameChar) modelAndView.addObject("wrongLastNameChar", true);
+        if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
         return modelAndView;
     }
 
@@ -79,18 +91,51 @@ public class RegisterController {
     public String registerUser(@RequestParam(required = false) String username, @RequestParam(required = false) String password,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
                                @RequestParam(required = false) String email, @RequestParam(required = false) String contextPath) {
-        System.out.println("Dane rejestracyjne: " + username + ": " + password + " : " + firstName + " " + lastName + ", " + email);
-        System.out.println(contextPath);
-        if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
+        System.out.println("Dane rejestracyjne: " + username + ", " + password + " , " + firstName + ", " + lastName + ", " + email);
+
+        if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
+                || !nameValidator(firstName) || !nameValidator(lastName) || !nameValidator(username)
+                || !passwordValidator(password) || !emailValidator(email)) {
+
             String usernameAnswer;
             String passwordAnswer;
             String firstNameAnswer;
             String lastNameAnswer;
             String emailAnswer;
-            if (username == "") {
+            String wrongFirstNameAnswer;
+            String wrongLastNameAnswer;
+            String wrongUsernameAnswer;
+            String wrongPasswordAnswer;
+            String wrongEmailAnswer;
+            if (!nameValidator(firstName)) {
+                wrongFirstNameAnswer = "wrongFirstNameChar=true";
+            } else {
+                wrongFirstNameAnswer = "";
+            }
+            if (!nameValidator(lastName)) {
+                wrongLastNameAnswer="wrongLastNameChar=true";
+            } else {
+                wrongLastNameAnswer="";
+            }
+            if (!nameValidator(username)) {
+                wrongUsernameAnswer="wrongUsernameChar=true";
+            } else {
+                wrongUsernameAnswer="";
+            }
+            if (!passwordValidator(password)) {
+                wrongPasswordAnswer="wrongPasswordChar=true";
+            } else {
+                wrongPasswordAnswer="";
+            }
+            if (!emailValidator(email)) {
+                wrongEmailAnswer="wrongEmailChar=true";
+            } else {
+                wrongEmailAnswer="";
+            }
+            if (username.isEmpty()) {
                 usernameAnswer = "noUsername=true";
             } else {
-                usernameAnswer = "username="+username;
+                usernameAnswer = "username=" + username;
             }
             if (password == "") {
                 passwordAnswer = "noPassword=true";
@@ -100,24 +145,26 @@ public class RegisterController {
             if (firstName == "") {
                 firstNameAnswer = "noFirstName=true";
             } else {
-                firstNameAnswer = "firstName="+firstName;
+                firstNameAnswer = "firstName=" + firstName;
             }
             if (lastName == "") {
                 lastNameAnswer = "noLastName=true";
             } else {
-                lastNameAnswer = "lastName="+lastName;
+                lastNameAnswer = "lastName=" + lastName;
             }
             if (email == "") {
                 emailAnswer = "noEmail=true";
             } else {
-                emailAnswer = "email="+email;
+                emailAnswer = "email=" + email;
             }
-            return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" + lastNameAnswer + "&" + emailAnswer;
+            return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" +
+                    lastNameAnswer + "&" + emailAnswer+ "&" + wrongUsernameAnswer+ "&" +wrongPasswordAnswer+ "&" +
+                    wrongFirstNameAnswer+ "&" +wrongLastNameAnswer+ "&" +wrongEmailAnswer;
         }
 
         try {
             User user = userService.getUserByUsername(username);
-            if(!user.isActive()){
+            if (!user.isActive()) {
                 return "redirect:/register?userExistButNotActive=true";
             }
             return "redirect:/register?userExist=true";
@@ -141,7 +188,7 @@ public class RegisterController {
             user.setToken(token);
             userService.saveUser(user);
             EmailRegister emailRegister = new EmailRegister();
-            emailRegister.send(username,firstName, email,token);
+            emailRegister.send(username, firstName, email, token);
             return "redirect:/register?success=true";
         }
     }
