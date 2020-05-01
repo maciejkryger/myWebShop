@@ -13,7 +13,7 @@ public class InputValidator {
                 if (letters[i] == wrongCharTable[j]) {
                     return false;
                 }
-                if (letters.length < 4) {
+                if (letters.length < 3) {
                     return false;
                 }
             }

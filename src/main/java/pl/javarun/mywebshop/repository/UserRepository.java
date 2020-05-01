@@ -23,7 +23,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Set<User> findByLastNameContains(String lastName);
 
-    Set<User> findByToken(String token);
+    Optional<User> findByToken(String token);
 
     Set<User> findAllByActiveTrue();
 
@@ -36,5 +36,5 @@ public interface UserRepository extends JpaRepository<User, String> {
     Optional<User> findById(int id);
 
 
-
+    Optional <User> findByEmailContainsIgnoreCase(String email);
 }

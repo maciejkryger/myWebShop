@@ -64,28 +64,18 @@
         <div class="w3-responsive">
 
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/changePassword">
-
+                <form method="post" action="${pageContext.request.contextPath}/changePasswordByToken">
+                    <input type="hidden" name="token" value="${token}">
                     <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPassword ? 'Błędne stare hasło!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Użytkownik którego podałeś nie istnieje w naszej bazie!!!' :''}</a>
                     <a class="w3-bar-item" style="color: crimson">${newPasswordsNotTheSame ? 'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
+                     <a class="w3-bar-item" style="color: crimson">${noPassword ?  'Pole na hasło nie może być puste' :''}</a>
+                                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
                     <p>
-                       <label><b>Nazwa użytkownika: </b>${sessionScope.user.username}</label>
-                       <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
                     <p>
-                    <a class="w3-bar-item" style="color: crimson">${noOldPassword ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>stare hasło</b></label>
-                        <input type="password" name="oldPassword" placeholder="wpisz stare hasło" class="w3-input w3-border">
-                    </p>
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword ?  'Pole na hasło nie może być puste' :''}</a>
                         <label><b>wpisz nowe hasło</b></label>
                         <input type="password" name="newPassword" placeholder="nowe hasło" class="w3-input w3-border">
                     </p>
                     <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword2 ?  'Pole na hasło nie może być puste' :''}</a>
                         <label><b>wpisz nowe hasło ponownie</b></label>
                         <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
                     </p>

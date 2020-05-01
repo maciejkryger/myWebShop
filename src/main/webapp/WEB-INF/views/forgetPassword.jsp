@@ -59,38 +59,21 @@
     </header>
 
     <!-- Change password form -->
-        <h2>Zmień hasło</h2>
+        <h2>Zapomniałeś hasła:</h2>
 
         <div class="w3-responsive">
 
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/changePassword">
-
-                    <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPassword ? 'Błędne stare hasło!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Użytkownik którego podałeś nie istnieje w naszej bazie!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${newPasswordsNotTheSame ? 'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
-                    <p>
-                       <label><b>Nazwa użytkownika: </b>${sessionScope.user.username}</label>
-                       <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noOldPassword ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>stare hasło</b></label>
-                        <input type="password" name="oldPassword" placeholder="wpisz stare hasło" class="w3-input w3-border">
-                    </p>
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>wpisz nowe hasło</b></label>
-                        <input type="password" name="newPassword" placeholder="nowe hasło" class="w3-input w3-border">
-                    </p>
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword2 ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>wpisz nowe hasło ponownie</b></label>
-                        <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
-                    </p>
-
-                    <input type="submit" class="w3-button w3-red w3-border w3-round-large" value="zapisz"/>
+                <form method="post" action="${pageContext.request.contextPath}/forgetPassword">
+                   <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Email, który podałeś nie istnieje w naszej bazie!!!' :''}</a>
+                   <a class="w3-bar-item" style="color: green">${emailSent ? 'Link do zmiany hasła został wysłany na podany adres mailowy.' :''}</a>
+                   <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może zostać puste!' :''} </a>
+                   <a class="w3-bar-item" style="color: crimson">${wrongEmailChar ?  'Nieprawidłowy format maila, lub wykorzystano niedozwolone znaki specjalne.' :''}</a>
+                   <p>
+                        <label><b>Podaj adres email, który podawałeś podczas rejestracji:</b></label>
+                        <input type="text" name="email" placeholder="wpisz email" class="w3-input w3-border" value="${email}">
+                   </p>
+                    <input type="submit" class="w3-button w3-red w3-border w3-round-large" value="zatwierdź"/>
                 </form>
                   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
                  <!--       <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>-->

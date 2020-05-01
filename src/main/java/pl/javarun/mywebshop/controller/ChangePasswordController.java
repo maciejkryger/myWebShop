@@ -16,6 +16,8 @@ import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
 
+import static pl.javarun.mywebshop.util.InputValidator.passwordValidator;
+
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -43,28 +45,66 @@ public class ChangePasswordController {
 
 
     @GetMapping()
-    public ModelAndView changePasswordView(@PathParam("wrongPassword") boolean wrongPassword, @PathParam("passwordChanged") boolean passwordChanged,
+    public ModelAndView changePasswordView(@PathParam("wrongPassword") boolean wrongPassword,
+                                           @PathParam("passwordChanged") boolean passwordChanged,
                                            @PathParam("newPasswordsNotTheSame") boolean newPasswordsNotTheSame,
-                                           @PathParam("userNotExist") boolean userNotExist) {
+                                           @PathParam("userNotExist") boolean userNotExist,
+                                           @PathParam("wrongPasswordChar") boolean wrongPasswordChar,
+                                           @PathParam("noOldPassword") boolean noOldPassword,
+                                           @PathParam("noNewPassword") boolean noNewPassword,
+                                           @PathParam("noNewPassword2") boolean noNewPassword2) {
         ModelAndView modelAndView = new ModelAndView("changePassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        if (userNotExist) {
-            modelAndView.addObject("userNotExist", userNotExist);
-        } else if (newPasswordsNotTheSame) {
-            modelAndView.addObject("newPasswordsNotTheSame", true);
-        } else if (wrongPassword) {
-            modelAndView.addObject("wrongPassword", true);
-        } else if (passwordChanged) {
-            modelAndView.addObject("passwordChanged", true);
-        }
+        if (userNotExist) modelAndView.addObject("userNotExist", userNotExist);
+        if (newPasswordsNotTheSame) modelAndView.addObject("newPasswordsNotTheSame", true);
+        if (wrongPassword) modelAndView.addObject("wrongPassword", true);
+        if (passwordChanged) modelAndView.addObject("passwordChanged", true);
+        if (wrongPasswordChar) modelAndView.addObject("wrongPasswordChar", true);
+        if (noOldPassword) modelAndView.addObject("noOldPassword", true);
+        if (noNewPassword) modelAndView.addObject("noNewPassword", true);
+        if (noNewPassword2) modelAndView.addObject("noNewPassword2", true);
         return modelAndView;
     }
 
     @PostMapping()
     public String changePassword(@RequestParam String username, @RequestParam String oldPassword,
                                  @RequestParam String newPassword, @RequestParam String newPassword2) {
+        if (oldPassword.isEmpty() || newPassword.isEmpty() || newPassword2.isEmpty()|| !passwordValidator(newPassword)) {
+            String wrongPasswordAnswer;
+            String oldPasswordAnswer;
+            String newPasswordAnswer;
+            String newPasswordAnswer2;
+            if (!passwordValidator(newPassword)) {
+                wrongPasswordAnswer = "wrongPasswordChar=true";
+            } else {
+                wrongPasswordAnswer = "";
+            }
+            if (oldPassword.isEmpty()) {
+                oldPasswordAnswer = "noOldPassword=true";
+            } else {
+                oldPasswordAnswer = "";
+            }
+            if (newPassword.isEmpty()) {
+                newPasswordAnswer = "noNewPassword=true";
+            } else {
+                newPasswordAnswer = "";
+            }
+            if (newPassword2.isEmpty()) {
+                newPasswordAnswer2 = "noNewPassword2=true";
+            } else {
+                newPasswordAnswer2 = "";
+            }
+            return "redirect:/changePassword?"+ oldPasswordAnswer + "&" + newPasswordAnswer + "&" + newPasswordAnswer2 + "&" + wrongPasswordAnswer;
+    }
+        if (!newPassword.equals(newPassword2)) {
+            return "redirect:/changePassword?newPasswordsNotTheSame=true";
+        }
+
+
+
+
         PasswordUtil passwordUtil = new PasswordUtil();
         String hashedPassword = passwordUtil.hashPassword(newPassword);
 
@@ -87,4 +127,6 @@ public class ChangePasswordController {
             return "redirect:/changePassword?userNotExist=true";
         }
     }
+
+
 }

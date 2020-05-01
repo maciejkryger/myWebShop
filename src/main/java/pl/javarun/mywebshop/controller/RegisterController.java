@@ -62,7 +62,8 @@ public class RegisterController {
                                          @PathParam("wrongPasswordChar") boolean wrongPasswordChar,
                                          @PathParam("wrongFirstNameChar") boolean wrongFirstNameChar,
                                          @PathParam("wrongLastNameChar") boolean wrongLastNameChar,
-                                         @PathParam("wrongEmailChar") boolean wrongEmailChar) {
+                                         @PathParam("wrongEmailChar") boolean wrongEmailChar,
+                                         @PathParam("emailExist") boolean emailExist) {
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -84,113 +85,124 @@ public class RegisterController {
         if (wrongFirstNameChar) modelAndView.addObject("wrongFirstNameChar", true);
         if (wrongLastNameChar) modelAndView.addObject("wrongLastNameChar", true);
         if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
+        if (emailExist) modelAndView.addObject("emailExist", true);
         return modelAndView;
     }
 
     @PostMapping()
     public String registerUser(@RequestParam(required = false) String username, @RequestParam(required = false) String password,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                               @RequestParam(required = false) String email, @RequestParam(required = false) String contextPath) {
-        System.out.println("Dane rejestracyjne: " + username + ", " + password + " , " + firstName + ", " + lastName + ", " + email);
+                               @RequestParam(required = false) String email) {
 
-        if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
-                || !nameValidator(firstName) || !nameValidator(lastName) || !nameValidator(username)
-                || !passwordValidator(password) || !emailValidator(email)) {
+            if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
+                    || !nameValidator(firstName) || !nameValidator(lastName) || !nameValidator(username)
+                    || !passwordValidator(password) || !emailValidator(email))  {
+                String usernameAnswer;
+                String passwordAnswer;
+                String firstNameAnswer;
+                String lastNameAnswer;
+                String emailAnswer;
+                String wrongFirstNameAnswer;
+                String wrongLastNameAnswer;
+                String wrongUsernameAnswer;
+                String wrongPasswordAnswer;
+                String wrongEmailAnswer;
 
-            String usernameAnswer;
-            String passwordAnswer;
-            String firstNameAnswer;
-            String lastNameAnswer;
-            String emailAnswer;
-            String wrongFirstNameAnswer;
-            String wrongLastNameAnswer;
-            String wrongUsernameAnswer;
-            String wrongPasswordAnswer;
-            String wrongEmailAnswer;
-            if (!nameValidator(firstName)) {
-                wrongFirstNameAnswer = "wrongFirstNameChar=true";
-            } else {
-                wrongFirstNameAnswer = "";
-            }
-            if (!nameValidator(lastName)) {
-                wrongLastNameAnswer="wrongLastNameChar=true";
-            } else {
-                wrongLastNameAnswer="";
-            }
-            if (!nameValidator(username)) {
-                wrongUsernameAnswer="wrongUsernameChar=true";
-            } else {
-                wrongUsernameAnswer="";
-            }
-            if (!passwordValidator(password)) {
-                wrongPasswordAnswer="wrongPasswordChar=true";
-            } else {
-                wrongPasswordAnswer="";
-            }
-            if (!emailValidator(email)) {
-                wrongEmailAnswer="wrongEmailChar=true";
-            } else {
-                wrongEmailAnswer="";
-            }
-            if (username.isEmpty()) {
-                usernameAnswer = "noUsername=true";
-            } else {
-                usernameAnswer = "username=" + username;
-            }
-            if (password == "") {
-                passwordAnswer = "noPassword=true";
-            } else {
-                passwordAnswer = "";
-            }
-            if (firstName == "") {
-                firstNameAnswer = "noFirstName=true";
-            } else {
-                firstNameAnswer = "firstName=" + firstName;
-            }
-            if (lastName == "") {
-                lastNameAnswer = "noLastName=true";
-            } else {
-                lastNameAnswer = "lastName=" + lastName;
-            }
-            if (email == "") {
-                emailAnswer = "noEmail=true";
-            } else {
-                emailAnswer = "email=" + email;
-            }
-            return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" +
-                    lastNameAnswer + "&" + emailAnswer+ "&" + wrongUsernameAnswer+ "&" +wrongPasswordAnswer+ "&" +
-                    wrongFirstNameAnswer+ "&" +wrongLastNameAnswer+ "&" +wrongEmailAnswer;
-        }
+                if (!nameValidator(firstName)) {
+                    wrongFirstNameAnswer = "wrongFirstNameChar=true";
+                } else {
+                    wrongFirstNameAnswer = "";
+                }
+                if (!nameValidator(lastName)) {
+                    wrongLastNameAnswer = "wrongLastNameChar=true";
+                } else {
+                    wrongLastNameAnswer = "";
+                }
+                if (!nameValidator(username)) {
+                    wrongUsernameAnswer = "wrongUsernameChar=true";
+                } else {
+                    wrongUsernameAnswer = "";
+                }
+                if (!passwordValidator(password)) {
+                    wrongPasswordAnswer = "wrongPasswordChar=true";
+                } else {
+                    wrongPasswordAnswer = "";
+                }
+                if (!emailValidator(email)) {
+                    wrongEmailAnswer = "wrongEmailChar=true";
+                } else {
+                    wrongEmailAnswer = "";
+                }
+                if (username.isEmpty()) {
+                    usernameAnswer = "noUsername=true";
+                } else {
+                    usernameAnswer = "username=" + username;
+                }
+                if (password == "") {
+                    passwordAnswer = "noPassword=true";
+                } else {
+                    passwordAnswer = "";
+                }
+                if (firstName == "") {
+                    firstNameAnswer = "noFirstName=true";
+                } else {
+                    firstNameAnswer = "firstName=" + firstName;
+                }
+                if (lastName == "") {
+                    lastNameAnswer = "noLastName=true";
+                } else {
+                    lastNameAnswer = "lastName=" + lastName;
+                }
+                if (email == "") {
+                    emailAnswer = "noEmail=true";
+                } else {
+                    emailAnswer = "email=" + email;
+                }
 
-        try {
-            User user = userService.getUserByUsername(username);
-            if (!user.isActive()) {
-                return "redirect:/register?userExistButNotActive=true";
+                return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" +
+                        lastNameAnswer + "&" + emailAnswer + "&" + wrongUsernameAnswer + "&" + wrongPasswordAnswer + "&" +
+                        wrongFirstNameAnswer + "&" + wrongLastNameAnswer + "&" + wrongEmailAnswer;
             }
-            return "redirect:/register?userExist=true";
-        } catch (UserNotExistException ex) {
-            PasswordUtil passwordUtil = new PasswordUtil();
-            String hashedPassword = passwordUtil.hashPassword(password);
-            TokenAlgorithm tokenAlgorithm = new TokenAlgorithm();
-            String token = tokenAlgorithm.generate();
-            User user = new User();
-            user.setUsername(username);
-            user.setPassword(hashedPassword);
-            user.setFirstName(firstName);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            user.setRole(roleService.getRoleById(3));
-            user.setCreationDate(new Timestamp(System.currentTimeMillis()));
-            user.setActive(false);
-            user.setActivationDate(null);
-            user.setDeleted(false);
-            user.setDeletingDate(null);
-            user.setToken(token);
-            userService.saveUser(user);
-            EmailRegister emailRegister = new EmailRegister();
-            emailRegister.send(username, firstName, email, token);
-            return "redirect:/register?success=true";
-        }
+
+
+            try {
+                try {
+                    User user = userService.getUserByEmail(email);
+                    if (user != null) {
+                        return "redirect:/register?username="+username+"&firstName="+firstName+"&lastName="+lastName+"&email="+email+"&emailExist=true";
+                    }
+                } catch (UserNotExistException ex){
+                User user = userService.getUserByUsername(username);
+                if (!user.isActive()) {
+                    return "redirect:/register?userExistButNotActive=true";
+                }
+                return "redirect:/register?userExist=true";}
+            } catch (UserNotExistException ex1) {
+                PasswordUtil passwordUtil = new PasswordUtil();
+                String hashedPassword = passwordUtil.hashPassword(password);
+                TokenAlgorithm tokenAlgorithm = new TokenAlgorithm();
+                String token = tokenAlgorithm.generate();
+                User user = new User();
+                user.setUsername(username);
+                user.setPassword(hashedPassword);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setEmail(email);
+                user.setRole(roleService.getRoleById(3));
+                user.setCreationDate(new Timestamp(System.currentTimeMillis()));
+                user.setActive(false);
+                user.setActivationDate(null);
+                user.setDeleted(false);
+                user.setDeletingDate(null);
+                user.setToken(token);
+                userService.saveUser(user);
+                EmailRegister emailRegister = new EmailRegister();
+                emailRegister.send(username, firstName, email, token);
+
+            }
+
+
+        return "redirect:/register?success=true";
     }
 
 }

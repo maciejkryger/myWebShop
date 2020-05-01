@@ -47,8 +47,8 @@ public class UserService implements UserDetailsService {
         user.setDeletingDate(date);
     }
 
-    public User getUserById(int id){
-        return userRepository.findById(id).orElseThrow(()->new UserNotExistException("id: "+id+" not exist"));
+    public User getUserById(int id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotExistException("id: " + id + " not exist"));
     }
 
     public User getUserByUsername(String username) {
@@ -71,8 +71,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByRoleAuthorityContainsIgnoreCase(authority);
     }
 
-    public Set<User> getUserByToken(String token) {
-        return userRepository.findByToken(token);
+    public User getUserByToken(String token) {
+        return userRepository.findByToken(token).orElseThrow(() -> new UserNotExistException("user with token: " + token + " not exist"));
     }
 
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmailContainsIgnoreCase(email).orElseThrow(() -> new UserNotExistException("user with email: " + email + " not exist"));
+    }
 }
