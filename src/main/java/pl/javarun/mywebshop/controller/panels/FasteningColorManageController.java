@@ -18,17 +18,17 @@ import pl.javarun.mywebshop.service.*;
 @RequestMapping("/panels/data/fasteningColor/")
 public class FasteningColorManageController {
 
-    ModelAndView modelAndView;
-    ProductService productService;
-    TypeService typeService;
-    MaterialService materialService;
-    MaterialColorService materialColorService;
-    FasteningTypeService fasteningTypeService;
-    FasteningColorService fasteningColorService;
-    MakingTechniqueService makingTechniqueService;
-    UserService userService;
-    CompanyService companyService;
-    RuleService ruleService;
+    private ModelAndView modelAndView;
+    private final ProductService productService;
+    private final TypeService typeService;
+    private final MaterialService materialService;
+    private final MaterialColorService materialColorService;
+    private final FasteningTypeService fasteningTypeService;
+    private final FasteningColorService fasteningColorService;
+    private final MakingTechniqueService makingTechniqueService;
+    private final UserService userService;
+    private final CompanyService companyService;
+    private final RuleService ruleService;
 
 
     public FasteningColorManageController(ProductService productService, TypeService typeService, MaterialService materialService,

@@ -18,21 +18,20 @@ import pl.javarun.mywebshop.util.EmailContactForm;
 @RequestMapping("/contactMessage")
 public class ContactController {
 
-    CompanyService companyService;
+    private final CompanyService companyService;
+    private final EmailContactForm emailContactForm;
 
-
-    public ContactController(CompanyService companyService) {
-        this.companyService= companyService;
+    public ContactController(CompanyService companyService, EmailContactForm emailContactForm) {
+        this.companyService = companyService;
+        this.emailContactForm=emailContactForm;
     }
 
     @PostMapping()
     public String contactMail(@RequestParam String name, @RequestParam String email,
-                              @RequestParam String subject, @RequestParam String content){
-        EmailContactForm emailContactForm = new EmailContactForm();
-        emailContactForm.send(companyService.getCompanyData().getEmail(), name,email,subject,content);
+                              @RequestParam String subject, @RequestParam String content) {
+        emailContactForm.send(companyService.getCompanyData().getEmail(), name, email, subject, content);
         return "redirect:/";
     }
-
 
 
 }

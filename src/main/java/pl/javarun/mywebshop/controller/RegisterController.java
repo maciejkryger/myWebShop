@@ -1,6 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import org.hibernate.query.criteria.internal.expression.function.TrimFunction;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,6 @@ import pl.javarun.mywebshop.util.EmailRegister;
 import pl.javarun.mywebshop.util.TokenAlgorithm;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
-import javax.security.auth.message.callback.PrivateKeyCallback;
 import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
 
@@ -39,14 +37,16 @@ public class RegisterController {
     private final CompanyService companyService;
     private final RuleService ruleService;
     private final RoleService roleService;
+    private final EmailRegister emailRegister;
 
     public RegisterController(UserService userService, TypeService typeService, CompanyService companyService,
-                              RuleService ruleService, RoleService roleService) {
+                              RuleService ruleService, RoleService roleService, EmailRegister emailRegister) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.roleService = roleService;
+        this.emailRegister=emailRegister;
     }
 
 
@@ -138,22 +138,22 @@ public class RegisterController {
                 } else {
                     usernameAnswer = "username=" + username;
                 }
-                if (password == "") {
+                if (password.isEmpty()) {
                     passwordAnswer = "noPassword=true";
                 } else {
                     passwordAnswer = "";
                 }
-                if (firstName == "") {
+                if (firstName.isEmpty()) {
                     firstNameAnswer = "noFirstName=true";
                 } else {
                     firstNameAnswer = "firstName=" + firstName;
                 }
-                if (lastName == "") {
+                if (lastName.isEmpty()) {
                     lastNameAnswer = "noLastName=true";
                 } else {
                     lastNameAnswer = "lastName=" + lastName;
                 }
-                if (email == "") {
+                if (email.isEmpty()) {
                     emailAnswer = "noEmail=true";
                 } else {
                     emailAnswer = "email=" + email;
@@ -178,10 +178,8 @@ public class RegisterController {
                 }
                 return "redirect:/register?userExist=true";}
             } catch (UserNotExistException ex1) {
-                PasswordUtil passwordUtil = new PasswordUtil();
-                String hashedPassword = passwordUtil.hashPassword(password);
-                TokenAlgorithm tokenAlgorithm = new TokenAlgorithm();
-                String token = tokenAlgorithm.generate();
+                String hashedPassword = PasswordUtil.hashPassword(password);
+                String token = TokenAlgorithm.generate();
                 User user = new User();
                 user.setUsername(username);
                 user.setPassword(hashedPassword);
@@ -196,7 +194,7 @@ public class RegisterController {
                 user.setDeletingDate(null);
                 user.setToken(token);
                 userService.saveUser(user);
-                EmailRegister emailRegister = new EmailRegister();
+                System.out.println("register mail is sending...");
                 emailRegister.send(username, firstName, email, token);
 
             }

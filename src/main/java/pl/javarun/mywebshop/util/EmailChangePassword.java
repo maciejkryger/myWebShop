@@ -1,5 +1,8 @@
 package pl.javarun.mywebshop.util;
 
+import org.springframework.stereotype.Controller;
+import pl.javarun.mywebshop.service.ConfigDataService;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -7,13 +10,16 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.Properties;
 
-import static pl.javarun.mywebshop.util.SecretData.*;
+import static pl.javarun.mywebshop.util.MailTrapConfig.*;
 
+@Controller
 public class EmailChangePassword {
 
+    private ConfigDataService configDataService;
 
 
-    public EmailChangePassword() {
+    public EmailChangePassword(ConfigDataService configDataService) {
+        this.configDataService=configDataService;
     }
 
     public void send(String username, String name, String email, String token){
@@ -21,14 +27,17 @@ public class EmailChangePassword {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.host", mailSmtpHost);
-        prop.put("mail.smtp.port", mailSmtpPort);
-        prop.put("mail.smtp.ssl.trust", mailSmtpHostSslTrust);
+        prop.put("mail.smtp.host", configDataService.getConfigDataByName("mailSmtpHost").getValue());
+        prop.put("mail.smtp.port", configDataService.getConfigDataByName("mailSmtpPort").getValue());
+        prop.put("mail.smtp.ssl.trust", configDataService.getConfigDataByName("mailSmtpHostSslTrust"));
 
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(mailUser, mailPassword);
+                return new PasswordAuthentication(
+                        configDataService.getConfigDataByName("mailUser").getValue(),
+                        configDataService.getConfigDataByName("mailPassword").getValue()
+                );
             }
         });
 

@@ -20,19 +20,19 @@ import pl.javarun.mywebshop.service.*;
 @RequestMapping("/panels/")
 public class SuperPanelController {
 
-    ModelAndView modelAndView;
-    ProductService productService;
-    TypeService typeService;
-    MaterialService materialService;
-    MaterialColorService materialColorService;
-    FasteningTypeService fasteningTypeService;
-    FasteningColorService fasteningColorService;
-    MakingTechniqueService makingTechniqueService;
-    UserService userService;
-    CompanyService companyService;
-    RuleService ruleService;
-    RoleService roleService;
-    ColorPerMaterialService colorPerMaterialService;
+    private ModelAndView modelAndView;
+    private final ProductService productService;
+    private final TypeService typeService;
+    private final MaterialService materialService;
+    private final MaterialColorService materialColorService;
+    private final FasteningTypeService fasteningTypeService;
+    private final FasteningColorService fasteningColorService;
+    private final MakingTechniqueService makingTechniqueService;
+    private final UserService userService;
+    private final CompanyService companyService;
+    private final RuleService ruleService;
+    private final RoleService roleService;
+    private final ColorPerMaterialService colorPerMaterialService;
 
 
     public SuperPanelController(ProductService productService, TypeService typeService, MaterialService materialService,
@@ -62,63 +62,77 @@ public class SuperPanelController {
     }
 
     @GetMapping("/data/{table}")
-    public ModelAndView openProductsDatabase(@PathVariable(required = true) String table,
+    public ModelAndView openProductsDatabase(@PathVariable String table,
                                              @RequestParam(required = false) String searchWhat,
                                              @RequestParam(required = false) String searchBy) {
-        if (table.equals("products")) {
-            modelAndView = new ModelAndView("panels/productTableManager");
-            modelAndView.addObject("searchByOptions", SearchProductModelOption.values());
-            if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
-                modelAndView.addObject("isFiltered", false);
-                modelAndView.addObject("products", productService.getAllProducts());
-            } else {
-                modelAndView.addObject("isFiltered", true);
-                modelAndView.addObject("products", productService.searchProducts(searchWhat, SearchProductModelOption.valueOf(searchBy)));
-            }
-            modelAndView.addObject("tableURL","panels/data/product");
-        } else if (table.equals("types")) {
-            modelAndView = new ModelAndView("panels/typeTableManager");
-            modelAndView.addObject("types", typeService.getAllTypes());
-        } else if (table.equals("materials")) {
-            modelAndView = new ModelAndView("panels/materialTableManager");
-            modelAndView.addObject("materials", materialService.getAllMaterials());
-        } else if (table.equals("materialColors")) {
-            modelAndView = new ModelAndView("panels/materialColorTableManager");
-            modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
-        } else if (table.equals("fasteningTypes")) {
-            modelAndView = new ModelAndView("panels/fasteningTypeTableManager");
-            modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
-        } else if (table.equals("fasteningColors")) {
-            modelAndView = new ModelAndView("panels/fasteningColorTableManager");
-            modelAndView.addObject("fasteningColors", fasteningColorService.getAllFasteningColors());
-        } else if (table.equals("makingTechniques")) {
-            modelAndView = new ModelAndView("panels/makingTechniqueTableManager");
-            modelAndView.addObject("makingTechniques", makingTechniqueService.getAllMakingTechniques());
-        } else if (table.equals("users")) {
-            modelAndView = new ModelAndView("panels/userTableManager");
-            modelAndView.addObject("users", userService.getAllUsers());
-        } else if (table.equals("companies")) {
-            modelAndView = new ModelAndView("panels/companyTableManager");
-            modelAndView.addObject("companies", companyService.getAllCompanies());
-        } else if (table.equals("rules")) {
-            modelAndView = new ModelAndView("panels/ruleTableManager");
-            modelAndView.addObject("rules", ruleService.getAllRules());
-        } else if (table.equals("roles")) {
-            modelAndView = new ModelAndView("panels/roleTableManager");
-            modelAndView.addObject("roles", roleService.getAllRoles());
-        } else if (table.equals("colorPerMaterials")) {
-            modelAndView = new ModelAndView("panels/colorPerMaterialTableManager");
-            modelAndView.addObject("searchByOptions", SearchColorPerMaterialModelOption.values());
-            if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
-                modelAndView.addObject("isFiltered", false);
-                modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.getAllColorPerMaterial());
-            } else {
-                modelAndView.addObject("isFiltered", true);
-                modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.searchColorPerMaterial(searchWhat, SearchColorPerMaterialModelOption.valueOf(searchBy)));
-            }
-            modelAndView.addObject("tableURL","panels/data/colorPerMaterial");
-        } else {
-            modelAndView = new ModelAndView("panels/superPanel");
+        switch (table) {
+            case "products":
+                modelAndView = new ModelAndView("panels/productTableManager");
+                modelAndView.addObject("searchByOptions", SearchProductModelOption.values());
+                if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                    modelAndView.addObject("isFiltered", false);
+                    modelAndView.addObject("products", productService.getAllProducts());
+                } else {
+                    modelAndView.addObject("isFiltered", true);
+                    modelAndView.addObject("products", productService.searchProducts(searchWhat, SearchProductModelOption.valueOf(searchBy)));
+                }
+                modelAndView.addObject("tableURL", "panels/data/product");
+                break;
+            case "types":
+                modelAndView = new ModelAndView("panels/typeTableManager");
+                modelAndView.addObject("types", typeService.getAllTypes());
+                break;
+            case "materials":
+                modelAndView = new ModelAndView("panels/materialTableManager");
+                modelAndView.addObject("materials", materialService.getAllMaterials());
+                break;
+            case "materialColors":
+                modelAndView = new ModelAndView("panels/materialColorTableManager");
+                modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
+                break;
+            case "fasteningTypes":
+                modelAndView = new ModelAndView("panels/fasteningTypeTableManager");
+                modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
+                break;
+            case "fasteningColors":
+                modelAndView = new ModelAndView("panels/fasteningColorTableManager");
+                modelAndView.addObject("fasteningColors", fasteningColorService.getAllFasteningColors());
+                break;
+            case "makingTechniques":
+                modelAndView = new ModelAndView("panels/makingTechniqueTableManager");
+                modelAndView.addObject("makingTechniques", makingTechniqueService.getAllMakingTechniques());
+                break;
+            case "users":
+                modelAndView = new ModelAndView("panels/userTableManager");
+                modelAndView.addObject("users", userService.getAllUsers());
+                break;
+            case "companies":
+                modelAndView = new ModelAndView("panels/companyTableManager");
+                modelAndView.addObject("companies", companyService.getAllCompanies());
+                break;
+            case "rules":
+                modelAndView = new ModelAndView("panels/ruleTableManager");
+                modelAndView.addObject("rules", ruleService.getAllRules());
+                break;
+            case "roles":
+                modelAndView = new ModelAndView("panels/roleTableManager");
+                modelAndView.addObject("roles", roleService.getAllRoles());
+                break;
+            case "colorPerMaterials":
+                modelAndView = new ModelAndView("panels/colorPerMaterialTableManager");
+                modelAndView.addObject("searchByOptions", SearchColorPerMaterialModelOption.values());
+                if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                    modelAndView.addObject("isFiltered", false);
+                    modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.getAllColorPerMaterial());
+                } else {
+                    modelAndView.addObject("isFiltered", true);
+                    modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.searchColorPerMaterial(searchWhat, SearchColorPerMaterialModelOption.valueOf(searchBy)));
+                }
+                modelAndView.addObject("tableURL", "panels/data/colorPerMaterial");
+                break;
+            default:
+                modelAndView = new ModelAndView("panels/superPanel");
+                break;
         }
         return modelAndView;
     }

@@ -28,18 +28,18 @@ import java.time.LocalTime;
 @RequestMapping("/panels/data/user/")
 public class UserManageController {
 
-    ModelAndView modelAndView;
-    ProductService productService;
-    TypeService typeService;
-    MaterialService materialService;
-    MaterialColorService materialColorService;
-    FasteningTypeService fasteningTypeService;
-    FasteningColorService fasteningColorService;
-    MakingTechniqueService makingTechniqueService;
-    UserService userService;
-    CompanyService companyService;
-    RuleService ruleService;
-    RoleService roleService;
+    private ModelAndView modelAndView;
+    private final ProductService productService;
+    private final TypeService typeService;
+    private final MaterialService materialService;
+    private final MaterialColorService materialColorService;
+    private final FasteningTypeService fasteningTypeService;
+    private final FasteningColorService fasteningColorService;
+    private final MakingTechniqueService makingTechniqueService;
+    private final UserService userService;
+    private final CompanyService companyService;
+    private final RuleService ruleService;
+    private final RoleService roleService;
 
 
     public UserManageController(ProductService productService, TypeService typeService, MaterialService materialService,
@@ -116,8 +116,7 @@ public class UserManageController {
             return "redirect:/panels/data/user/changePassword?username=" + username + "&newPasswordsNotTheSame=true";
         } else {
             User user = userService.getUserByUsername(username);
-            PasswordUtil passwordUtil = new PasswordUtil();
-            String hashedPassword = passwordUtil.hashPassword(newPassword);
+            String hashedPassword = PasswordUtil.hashPassword(newPassword);
             user.setPassword(hashedPassword);
             userService.saveUser(user);
             return "redirect:/panels/data/user/changePassword?username=" + username + "&passwordChanged=true";

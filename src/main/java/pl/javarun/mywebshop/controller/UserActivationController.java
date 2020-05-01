@@ -24,7 +24,7 @@ import java.sql.Timestamp;
 @RequestMapping("/activation")
 public class UserActivationController {
 
-    UserService userService;
+    private final UserService userService;
 
     public UserActivationController(UserService userService) {
         this.userService = userService;

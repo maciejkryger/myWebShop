@@ -37,12 +37,15 @@ public class ForgetPasswordController {
     private final TypeService typeService;
     private final CompanyService companyService;
     private final RuleService ruleService;
+    private final EmailChangePassword emailChangePassword;
 
-    public ForgetPasswordController(UserService userService, TypeService typeService, CompanyService companyService, RuleService ruleService) {
+    public ForgetPasswordController(UserService userService, TypeService typeService, CompanyService companyService,
+                                    RuleService ruleService, EmailChangePassword emailChangePassword) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
+        this.emailChangePassword=emailChangePassword;
     }
 
     @GetMapping()
@@ -50,23 +53,23 @@ public class ForgetPasswordController {
                                            @PathParam("emailSent") boolean emailSent,
                                            @PathParam("noEmail") boolean noEmail,
                                            @PathParam("wrongEmailChar") boolean wrongEmailChar,
-                                           @PathParam("email") String email){
+                                           @PathParam("email") String email) {
         ModelAndView modelAndView = new ModelAndView("forgetPassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        if (userNotExist) modelAndView.addObject("userNotExist",true);
-        if (emailSent) modelAndView.addObject("emailSent",true);
-        if (noEmail) modelAndView.addObject("noEmail",true);
-        if (wrongEmailChar) modelAndView.addObject("wrongEmailChar",true);
-        modelAndView.addObject("email",email);
+        if (userNotExist) modelAndView.addObject("userNotExist", true);
+        if (emailSent) modelAndView.addObject("emailSent", true);
+        if (noEmail) modelAndView.addObject("noEmail", true);
+        if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
+        modelAndView.addObject("email", email);
 
         return modelAndView;
     }
 
 
     @PostMapping()
-    public String forgetPasswordMethod(@RequestParam(required = false) String email){
+    public String forgetPasswordMethod(@RequestParam(required = false) String email) {
         if (email.isEmpty() || !emailValidator(email)) {
             String emailAnswer;
             String wrongEmailAnswer;
@@ -82,17 +85,14 @@ public class ForgetPasswordController {
             }
             return "redirect:/forgetPassword?" + emailAnswer + "&" + wrongEmailAnswer;
         }
-        try{
+        try {
             User user = userService.getUserByEmail(email);
-            EmailChangePassword emailChangePassword = new EmailChangePassword();
-            emailChangePassword.send(user.getUsername(),user.getFirstName(),email, user.getToken());
-        }catch (UserNotExistException ex){
-            return "redirect:/forgetPassword?email="+email+"&userNotExist=true";
+            emailChangePassword.send(user.getUsername(), user.getFirstName(), email, user.getToken());
+        } catch (UserNotExistException ex) {
+            return "redirect:/forgetPassword?email=" + email + "&userNotExist=true";
         }
-        return  "redirect:/forgetPassword?emailSent=true";
+        return "redirect:/forgetPassword?emailSent=true";
     }
-
-
 
 
 }

@@ -20,17 +20,17 @@ import pl.javarun.mywebshop.service.*;
 @RequestMapping("/panels/data/rule/")
 public class RuleManageController {
 
-    ModelAndView modelAndView;
-    ProductService productService;
-    TypeService typeService;
-    MaterialService materialService;
-    MaterialColorService materialColorService;
-    FasteningTypeService fasteningTypeService;
-    FasteningColorService fasteningColorService;
-    MakingTechniqueService makingTechniqueService;
-    UserService userService;
-    CompanyService companyService;
-    RuleService ruleService;
+    private ModelAndView modelAndView;
+    private final ProductService productService;
+    private final TypeService typeService;
+    private final MaterialService materialService;
+    private final MaterialColorService materialColorService;
+    private final FasteningTypeService fasteningTypeService;
+    private final FasteningColorService fasteningColorService;
+    private final MakingTechniqueService makingTechniqueService;
+    private final UserService userService;
+    private final CompanyService companyService;
+    private final RuleService ruleService;
 
 
     public RuleManageController(ProductService productService, TypeService typeService, MaterialService materialService,
@@ -64,9 +64,9 @@ public class RuleManageController {
     public String saveRuleItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
                                @RequestParam String description, @RequestParam String descriptionPl) {
         Rule rule;
-        if (id != null & id != 0) {
+        try{
             rule = ruleService.getRuleById(id);
-        } else {
+        } catch (Exception ex){
             rule = new Rule();
         }
         rule.setName(name);
