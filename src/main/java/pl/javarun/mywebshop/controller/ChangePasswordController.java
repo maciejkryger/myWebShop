@@ -102,11 +102,7 @@ public class ChangePasswordController {
             return "redirect:/changePassword?newPasswordsNotTheSame=true";
         }
 
-
-
-
-        PasswordUtil passwordUtil = new PasswordUtil();
-        String hashedPassword = passwordUtil.hashPassword(newPassword);
+        String hashedPassword = PasswordUtil.hashPassword(newPassword);
 
         try {
             User user = userService.getUserByUsername(username);
@@ -115,7 +111,7 @@ public class ChangePasswordController {
                 return "redirect:/changePassword?newPasswordsNotTheSame=true";
             }
 
-            if (passwordUtil.checkPassword(oldPassword, user.getPassword())) {
+            if (PasswordUtil.checkPassword(oldPassword, user.getPassword())) {
                 user = userService.getUserByUsername(username);
                 user.setPassword(hashedPassword);
                 userService.saveUser(user);

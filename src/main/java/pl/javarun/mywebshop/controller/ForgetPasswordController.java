@@ -1,6 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,7 @@ import pl.javarun.mywebshop.service.RuleService;
 import pl.javarun.mywebshop.service.TypeService;
 import pl.javarun.mywebshop.service.UserService;
 import pl.javarun.mywebshop.util.EmailChangePassword;
-import pl.javarun.mywebshop.util.PasswordUtil;
+
 
 import javax.websocket.server.PathParam;
 
