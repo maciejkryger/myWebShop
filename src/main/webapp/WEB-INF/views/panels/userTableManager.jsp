@@ -48,9 +48,7 @@
 
         <h2>Tabela użytkowników</h2>
 
-                <a href="${pageContext.request.contextPath}/panels/data/user/new">
-                    <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
-                </a>
+                <%@include file='panelsSearchBy.jsp' %>
 
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">

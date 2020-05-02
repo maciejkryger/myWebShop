@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.search.SearchColorPerMaterialModelOption;
 import pl.javarun.mywebshop.search.SearchProductModelOption;
+import pl.javarun.mywebshop.search.SearchUserModelOption;
 import pl.javarun.mywebshop.service.*;
 
 /**
@@ -65,11 +66,12 @@ public class SuperPanelController {
     public ModelAndView openProductsDatabase(@PathVariable String table,
                                              @RequestParam(required = false) String searchWhat,
                                              @RequestParam(required = false) String searchBy) {
+        boolean searchNullEmptyChecker = searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty();
         switch (table) {
             case "products":
                 modelAndView = new ModelAndView("panels/productTableManager");
                 modelAndView.addObject("searchByOptions", SearchProductModelOption.values());
-                if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                if (searchNullEmptyChecker) {
                     modelAndView.addObject("isFiltered", false);
                     modelAndView.addObject("products", productService.getAllProducts());
                 } else {
@@ -104,7 +106,15 @@ public class SuperPanelController {
                 break;
             case "users":
                 modelAndView = new ModelAndView("panels/userTableManager");
-                modelAndView.addObject("users", userService.getAllUsers());
+                modelAndView.addObject("searchByOptions", SearchUserModelOption.values());
+                if (searchNullEmptyChecker) {
+                    modelAndView.addObject("isFiltered", false);
+                    modelAndView.addObject("users", userService.getAllUsers());
+                } else {
+                    modelAndView.addObject("isFiltered", true);
+                    modelAndView.addObject("users", userService.searchUser(searchWhat, SearchUserModelOption.valueOf(searchBy)));
+                }
+                modelAndView.addObject("tableURL", "panels/data/user");
                 break;
             case "companies":
                 modelAndView = new ModelAndView("panels/companyTableManager");
@@ -121,7 +131,7 @@ public class SuperPanelController {
             case "colorPerMaterials":
                 modelAndView = new ModelAndView("panels/colorPerMaterialTableManager");
                 modelAndView.addObject("searchByOptions", SearchColorPerMaterialModelOption.values());
-                if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+                if (searchNullEmptyChecker) {
                     modelAndView.addObject("isFiltered", false);
                     modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.getAllColorPerMaterial());
                 } else {
@@ -139,23 +149,27 @@ public class SuperPanelController {
 
     @PostMapping("data/colorPerMaterials")
     public String changeActiveC(@RequestParam Integer id, @RequestParam boolean active, @RequestParam(required = false) String searchWhat,
-                               @RequestParam(required = false) String searchBy) {
+                                @RequestParam(required = false) String searchBy) {
 
         ColorPerMaterial colorPerMaterial = colorPerMaterialService.getColorPerMaterialById(id);
         colorPerMaterial.setActive(active);
         colorPerMaterialService.save(colorPerMaterial);
-        if(searchWhat == null || searchBy == null){return  "redirect:/panels/data/colorPerMaterials"; }
-    return  "redirect:/panels/data/colorPerMaterials/?searchWhat="+searchWhat+"&searchBy="+searchBy;
+        if (searchWhat == null || searchBy == null) {
+            return "redirect:/panels/data/colorPerMaterials";
+        }
+        return "redirect:/panels/data/colorPerMaterials/?searchWhat=" + searchWhat + "&searchBy=" + searchBy;
     }
 
     @PostMapping("data/products")
     public String changeActiveP(@RequestParam Integer id, @RequestParam boolean active, @RequestParam(required = false) String searchWhat,
-                               @RequestParam(required = false) String searchBy) {
+                                @RequestParam(required = false) String searchBy) {
         Product product = productService.getProductById(id);
         product.setActive(active);
         productService.save(product);
-        if(searchWhat == null || searchBy == null){return  "redirect:/panels/data/products"; }
-        return  "redirect:/panels/data/products/?searchWhat="+searchWhat+"&searchBy="+searchBy;
+        if (searchWhat == null || searchBy == null) {
+            return "redirect:/panels/data/products";
+        }
+        return "redirect:/panels/data/products/?searchWhat=" + searchWhat + "&searchBy=" + searchBy;
     }
 
 

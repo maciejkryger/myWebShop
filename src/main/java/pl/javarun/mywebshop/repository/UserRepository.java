@@ -3,9 +3,7 @@ package pl.javarun.mywebshop.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.javarun.mywebshop.model.User;
 
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -19,9 +17,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     Optional<User> findByUsernameIgnoreCase(String username);
 
-    Set<User> findByFirstNameContainsIgnoreCase(String firstName);
+    List<User> findAllByUsernameContainsIgnoreCase(String username);
 
-    Set<User> findByLastNameContains(String lastName);
+    List<User> findAllByFirstNameContainsIgnoreCase(String firstName);
+
+    List<User> findAllByLastNameContainsIgnoreCase(String lastName);
 
     Optional<User> findByToken(String token);
 
@@ -37,4 +37,11 @@ public interface UserRepository extends JpaRepository<User, String> {
 
 
     Optional <User> findByEmailContainsIgnoreCase(String email);
+
+    List<User> findAllByEmailContainsIgnoreCase(String email);
+
+
+    List<User> findAllByRole_AuthorityContainsIgnoreCase(String authority);
+
+    List<User> findAllByActive(Boolean active);
 }

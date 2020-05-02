@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.repository.UserRepository;
+import pl.javarun.mywebshop.search.SearchUserModelOption;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -77,5 +75,26 @@ public class UserService implements UserDetailsService {
 
     public User getUserByEmail(String email) {
         return userRepository.findByEmailContainsIgnoreCase(email).orElseThrow(() -> new UserNotExistException("user with email: " + email + " not exist"));
+    }
+
+    public Collection<User> searchUser(String searchWhat, SearchUserModelOption findBy) {
+        switch (findBy) {
+            case BY_USERNAME:
+                return userRepository.findAllByUsernameContainsIgnoreCase(searchWhat);
+            case BY_FIRSTNAME:
+                return userRepository.findAllByFirstNameContainsIgnoreCase(searchWhat);
+            case BY_LASTNAME:
+                return userRepository.findAllByLastNameContainsIgnoreCase(searchWhat);
+            case BY_EMAIL:
+                return userRepository.findAllByEmailContainsIgnoreCase(searchWhat);
+            case BY_ROLE:
+                return userRepository.findAllByRole_AuthorityContainsIgnoreCase(searchWhat);
+            case BY_ACTIVE:
+                return userRepository.findAllByActive(Boolean.valueOf(searchWhat));
+            case BY_CREATIONDATE:
+                return userRepository.findAllByCreationDateGreaterThan(java.sql.Date.valueOf(searchWhat));
+            default:
+                return Collections.emptyList();
+        }
     }
 }
