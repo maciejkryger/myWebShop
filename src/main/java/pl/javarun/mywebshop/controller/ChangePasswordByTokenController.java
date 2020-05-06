@@ -56,13 +56,14 @@ public class ChangePasswordByTokenController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        modelAndView.addObject("email", email);
         modelAndView.addObject("token", regId);
         if (newPasswordsNotTheSame) modelAndView.addObject("newPasswordsNotTheSame", true);
         if (passwordChanged) modelAndView.addObject("passwordChanged", true);
         if (noPassword) modelAndView.addObject("noPassword", true);
         if (wrongPasswordChar) modelAndView.addObject("wrongPasswordChar", true);
-        if (userNotExist) modelAndView.addObject("userNotExist",true);
-        if (noSuccess) modelAndView.addObject("noSuccess",true);
+        if (userNotExist) modelAndView.addObject("userNotExist", true);
+        if (noSuccess) modelAndView.addObject("noSuccess", true);
         return modelAndView;
     }
 
@@ -82,16 +83,16 @@ public class ChangePasswordByTokenController {
             } else {
                 passwordAnswer = "";
             }
-            return "redirect:/changePasswordByToken?regId=" + token+ "&email=" + email + "&" + passwordAnswer + "&" + wrongPasswordAnswer;
+            return "redirect:/changePasswordByToken?regId=" + token + "&email=" + email + "&" + passwordAnswer + "&" + wrongPasswordAnswer;
         }
         if (!newPassword.equals(newPassword2)) {
-            return "redirect:/changePasswordByToken?regId=" + token + "&newPasswordsNotTheSame=true";
+            return "redirect:/changePasswordByToken?regId=" + token + "&email=" + email + "&newPasswordsNotTheSame=true";
         }
 
         String hashedPassword = PasswordUtil.hashPassword(newPassword);
         try {
             User user = userService.getUserByToken(token);
-            if(!user.getEmail().equals(email)){
+            if (!user.getEmail().equals(email)) {
                 return "redirect:/changePasswordByToken?noSuccess=true";
             }
             user.setPassword(hashedPassword);

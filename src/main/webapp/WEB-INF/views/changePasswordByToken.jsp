@@ -72,7 +72,7 @@
                     <a class="w3-bar-item" style="color: crimson">${noPassword ?  'Pole na hasło nie może być puste' :''}</a>
                     <a class="w3-bar-item" style="color: crimson">${userNotExist ?  'Uwaga! Próbujesz wykorzystać błędny token. Hasło nie zostało zmienione.' :''}</a>
                     <a class="w3-bar-item" style="color: crimson">${noSuccess ?  'Uwaga! Token i email do siebie nie pasują. Hasło nie zostało zmienione.' :''}</a>
-                                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
+                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
                     <p>
                     <p>
                         <label><b>wpisz nowe hasło</b></label>

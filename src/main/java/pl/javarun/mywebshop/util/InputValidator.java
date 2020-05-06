@@ -30,7 +30,7 @@ public class InputValidator {
                 if (letters[i] == wrongCharTable[j]) {
                     return false;
                 }
-                if (letters.length < 9) {
+                if (letters.length < 8) {
                     return false;
                 }
             }
@@ -42,7 +42,7 @@ public class InputValidator {
     public static Boolean emailValidator(String email) {
         char[] letters = email.toCharArray();
         char[] wrongCharTable = {'"', ':', ';', '!', '?', '+', '-', ',', '#', '$', '%', '^', '*', '(', ')', '=', '<', '>', '/', '~',
-                '`', '{', '}', '|',' '};
+                '`', '{', '}', '|', ' '};
         int pointCounter = 0;
         int emailCharCounter = 0;
         for (int i = 0; i < letters.length; i++) {
@@ -59,7 +59,7 @@ public class InputValidator {
                 emailCharCounter++;
             }
         }
-        if (emailCharCounter != 1  || pointCounter < 1 || letters.length < 6) {
+        if (emailCharCounter != 1 || pointCounter < 1 || letters.length < 6) {
             System.out.println("counter if");
             return false;
         }
