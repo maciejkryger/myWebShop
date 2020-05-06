@@ -1,5 +1,6 @@
 package pl.javarun.mywebshop.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import pl.javarun.mywebshop.service.ConfigDataService;
 
@@ -16,26 +17,27 @@ import static pl.javarun.mywebshop.util.MailTrapConfig.*;
 public class EmailRegister {
 
     private ConfigDataService configDataService;
-
+    @Value("${mail_href}")
+    private String href;
 
 
     public EmailRegister(ConfigDataService configDataService) {
-        this.configDataService=configDataService;
+        this.configDataService = configDataService;
     }
 
-    public void send(String username, String name, String email, String token){
-        System.out.println("register mail is sending... step2...");
+    public void send(String username, String name, String email, String token) {
+
+        System.out.println("link do maila: " + href);
         Properties prop = new Properties();
         prop.put("mail.smtp.auth", true);
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", configDataService.getConfigDataByName("mailSmtpHost").getValue());
         prop.put("mail.smtp.port", configDataService.getConfigDataByName("mailSmtpPort").getValue());
-        prop.put("mail.smtp.ssl.trust", configDataService.getConfigDataByName("mailSmtpHostSslTrust"));
+        prop.put("mail.smtp.ssl.trust", configDataService.getConfigDataByName("mailSmtpHostSslTrust").getValue());
 
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                System.out.println("register mail in progress...password authentication");
                 return new PasswordAuthentication(
                         configDataService.getConfigDataByName("mailUser").getValue(),
                         configDataService.getConfigDataByName("mailPassword").getValue()
@@ -45,16 +47,16 @@ public class EmailRegister {
 
         Message message = new MimeMessage(session);
         try {
+
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-            message.setFrom(new InternetAddress("rejestracja@qunsztowna.pl"));
+            message.setFrom(new InternetAddress(configDataService.getConfigDataByName("mailRegisterSenderName").getValue()));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(email));
-            String subject = "QUNSZTOWNA.pl - rejestracja użytkownika: ";
+
+            String subject = String.format(configDataService.getConfigDataByName("mailRegisterSubject").getValue(), username);
             message.setSubject(subject);
 
-
-            String msg = "Dzień dobry <B>"+name+"</B>,<BR><BR> dziękujemy za rejestrację w sklepie QUNSZTOWNA.<BR>" +
-                    "By aktywować użytkownika i potwierdzić rejestrację <a href=\"http://qunsztowna.javarun.pl/activation?username="+username+"&regId="+token+"\">kliknij tutaj</a>";
+            String msg = String.format(configDataService.getConfigDataByName("mailRegisterMessage").getValue(), name, href, username, token);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=UTF-8");

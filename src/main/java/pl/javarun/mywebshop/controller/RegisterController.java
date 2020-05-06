@@ -194,7 +194,6 @@ public class RegisterController {
                 user.setDeletingDate(null);
                 user.setToken(token);
                 userService.saveUser(user);
-                System.out.println("register mail is sending...");
                 emailRegister.send(username, firstName, email, token);
 
             }

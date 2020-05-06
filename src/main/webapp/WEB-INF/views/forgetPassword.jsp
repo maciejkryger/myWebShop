@@ -59,7 +59,8 @@
     </header>
 
     <!-- Change password form -->
-        <h2>Zapomniałeś hasła:</h2>
+        <h2>Zapomniałeś hasła?</h2>
+        <h4>Wprowadź swój adres e-mail podany przy rejestracji. <br> Wyślemy Ci link umożliwiający zmianę hasła.</h4>
 
         <div class="w3-responsive">
 
@@ -70,7 +71,7 @@
                    <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może zostać puste!' :''} </a>
                    <a class="w3-bar-item" style="color: crimson">${wrongEmailChar ?  'Nieprawidłowy format maila, lub wykorzystano niedozwolone znaki specjalne.' :''}</a>
                    <p>
-                        <label><b>Podaj adres email, który podawałeś podczas rejestracji:</b></label>
+                        <label><b>Adres email podany podczas rejestracji:</b></label>
                         <input type="text" name="email" placeholder="wpisz email" class="w3-input w3-border" value="${email}">
                    </p>
                     <input type="submit" class="w3-button w3-red w3-border w3-round-large" value="zatwierdź"/>

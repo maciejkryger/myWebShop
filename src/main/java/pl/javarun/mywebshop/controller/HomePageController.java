@@ -46,7 +46,8 @@ public class HomePageController {
                                      @PathParam("userIsActive") Boolean userIsActive,
                                      @PathParam("userWasActive") Boolean userWasActive,
                                      @PathParam("userNotExist") Boolean userNotExist,
-                                     @PathParam("username") String username) {
+                                     @PathParam("username") String username,
+                                     @PathParam("mailSentWithSuccess") Boolean mailSentWithSuccess) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -62,6 +63,9 @@ public class HomePageController {
         }
         if(username!=null){
             modelAndView.addObject("username",username);
+        }
+        if(mailSentWithSuccess!=null){
+            modelAndView.addObject("mailSentWithSuccess",mailSentWithSuccess);
         }
         return modelAndView;
     }

@@ -30,7 +30,7 @@ public class EmailContactForm {
         prop.put("mail.smtp.starttls.enable", "true");
         prop.put("mail.smtp.host", configDataService.getConfigDataByName("mailSmtpHost").getValue());
         prop.put("mail.smtp.port", configDataService.getConfigDataByName("mailSmtpPort").getValue());
-        prop.put("mail.smtp.ssl.trust", configDataService.getConfigDataByName("mailSmtpHostSslTrust"));
+        prop.put("mail.smtp.ssl.trust", configDataService.getConfigDataByName("mailSmtpHostSslTrust").getValue());
 
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
@@ -45,16 +45,14 @@ public class EmailContactForm {
         Message message = new MimeMessage(session);
         try {
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-            message.setFrom(new InternetAddress("formularz_kontaktowy@qunsztowna.pl"));
+            message.setFrom(new InternetAddress(configDataService.getConfigDataByName("mailContactFormSenderName").getValue()));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(companyEmail));
-            message.setSubject(messageSubject);
+            String subject = String.format(configDataService.getConfigDataByName("mailContactFormSubject").getValue(), messageSubject);
+            message.setSubject(subject);
 
 
-            String msg = "<B>Masz wiadomość z formularza kontaktowego qunsztowna.pl</B><BR>" +
-                    "<B>Imię: </B>" + senderName + "<BR>" + "<B>Email: </B>" + senderMail + "<BR>" +
-                    "<B>Temat wiadomości: </B>" + messageSubject + "<BR>" +
-                    "<B>Wiadomość: </B>" + messageContent;
+            String msg =String.format(configDataService.getConfigDataByName("mailContactFormMessage").getValue(), senderName, senderMail, messageSubject, messageContent);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=UTF-8");

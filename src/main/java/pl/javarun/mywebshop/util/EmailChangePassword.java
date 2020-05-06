@@ -1,5 +1,6 @@
 package pl.javarun.mywebshop.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import pl.javarun.mywebshop.service.ConfigDataService;
 
@@ -16,7 +17,8 @@ import static pl.javarun.mywebshop.util.MailTrapConfig.*;
 public class EmailChangePassword {
 
     private ConfigDataService configDataService;
-
+    @Value("${mail_href}")
+    private String href;
 
     public EmailChangePassword(ConfigDataService configDataService) {
         this.configDataService=configDataService;
@@ -44,15 +46,14 @@ public class EmailChangePassword {
         Message message = new MimeMessage(session);
         try {
             message.setHeader("Content-Type", "text/plain; charset=UTF-8");
-            message.setFrom(new InternetAddress("zmiana_hasla@qunsztowna.pl"));
+            message.setFrom(new InternetAddress(configDataService.getConfigDataByName("mailChangePasswordSenderName").getValue()));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(email));
-            message.setSubject("QUNSZTOWNA.pl - zmiana hasła dla: "+username);
+            String subject = String.format(configDataService.getConfigDataByName("mailChangePasswordSubject").getValue(), username);
+            message.setSubject(subject);
 
 
-            String msg = "Dzień dobry <B>"+name+"</B>,<BR><BR> skorzystałeś/aś z opcji przypominania hasła w sklepie QUNSZTOWNA.<BR>" +
-                    "By zmienić hasło: <a href=\"http://qunsztowna.javarun.pl/changePasswordByToken?regId="+token+"\">kliknij tutaj</a>"+
-                    "<BR>Jeżeli to nie byłeś/aś Ty zignoruj tego maila, a Twoje hasło zostanie niezmienione.";
+            String msg = String.format(configDataService.getConfigDataByName("mailChangePasswordMessage").getValue(), name, href, token,email);
 
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=UTF-8");

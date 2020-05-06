@@ -32,8 +32,6 @@ public class UserActivationController {
 
     @GetMapping()
     public String activeUser(@PathParam("regId") String regId, @PathParam("username") String username){
-        System.out.println(username);
-        System.out.println(regId);
         try {
             User user = userService.getUserByUsername(username);
             if (user.isActive()) {

@@ -11,6 +11,8 @@
         <div class="w3-col s4">
             <h4>Kontakt</h4>
             <p>Masz pytania? Napisz do mnie.</p>
+                   <a class="w3-bar-item" style="color: green">${mailSentWithSuccess ? 'Wiadomość została wysłana.' :''}</a>
+
             <form method="post" action="${pageContext.request.contextPath}/contactMessage">
                 <p><input class="w3-input w3-border" type="text" placeholder="Imię" name="name" required></p>
                 <p><input class="w3-input w3-border" type="text" placeholder="Email" name="email" required></p>

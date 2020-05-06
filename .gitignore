@@ -29,3 +29,7 @@ build/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/application-sandbox.properties
+/src/main/resources/application-production.properties
+/src/main/resources/application-local.properties
+/src/main/java/pl/javarun/mywebshop/util/MailTrapConfig.java

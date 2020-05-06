@@ -45,11 +45,13 @@ public class ChangePasswordByTokenController {
 
 
     @GetMapping()
-    public ModelAndView changePasswordView(@PathParam("regId") String regId,
+    public ModelAndView changePasswordView(@PathParam("regId") String regId, @PathParam("email") String email,
                                            @PathParam("passwordChanged") boolean passwordChanged,
                                            @PathParam("newPasswordsNotTheSame") boolean newPasswordsNotTheSame,
                                            @PathParam("wrongPasswordChar") boolean wrongPasswordChar,
-                                           @PathParam("noPassword") boolean noPassword) {
+                                           @PathParam("noPassword") boolean noPassword,
+                                           @PathParam("userNotExist") boolean userNotExist,
+                                           @PathParam("noSuccess") boolean noSuccess) {
         ModelAndView modelAndView = new ModelAndView("changePasswordByToken");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -59,12 +61,14 @@ public class ChangePasswordByTokenController {
         if (passwordChanged) modelAndView.addObject("passwordChanged", true);
         if (noPassword) modelAndView.addObject("noPassword", true);
         if (wrongPasswordChar) modelAndView.addObject("wrongPasswordChar", true);
+        if (userNotExist) modelAndView.addObject("userNotExist",true);
+        if (noSuccess) modelAndView.addObject("noSuccess",true);
         return modelAndView;
     }
 
     @PostMapping()
     public String changePassword(@RequestParam String newPassword, @RequestParam String newPassword2,
-                                 @RequestParam String token) {
+                                 @RequestParam String token, @RequestParam String email) {
         if (newPassword.isEmpty() || !passwordValidator(newPassword)) {
             String wrongPasswordAnswer;
             String passwordAnswer;
@@ -78,15 +82,18 @@ public class ChangePasswordByTokenController {
             } else {
                 passwordAnswer = "";
             }
-            return "redirect:/changePasswordByToken?regId=" + token + "&" + passwordAnswer + "&" + wrongPasswordAnswer;
+            return "redirect:/changePasswordByToken?regId=" + token+ "&email=" + email + "&" + passwordAnswer + "&" + wrongPasswordAnswer;
         }
         if (!newPassword.equals(newPassword2)) {
             return "redirect:/changePasswordByToken?regId=" + token + "&newPasswordsNotTheSame=true";
         }
-        PasswordUtil passwordUtil = new PasswordUtil();
-        String hashedPassword = passwordUtil.hashPassword(newPassword);
+
+        String hashedPassword = PasswordUtil.hashPassword(newPassword);
         try {
             User user = userService.getUserByToken(token);
+            if(!user.getEmail().equals(email)){
+                return "redirect:/changePasswordByToken?noSuccess=true";
+            }
             user.setPassword(hashedPassword);
             userService.saveUser(user);
             return "redirect:/changePasswordByToken?passwordChanged=true";

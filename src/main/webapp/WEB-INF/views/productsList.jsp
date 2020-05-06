@@ -58,7 +58,13 @@
         <c:if test="${productsCounter==1}">
             <p>${productsCounter} pozycja</p>
         </c:if>
-        <c:if test="${productsCounter>1} && ${productsCounter<=4}">
+        <c:if test="${productsCounter==2}">
+            <p>${productsCounter} pozycje</p>
+        </c:if>
+        <c:if test="${productsCounter==3}">
+            <p>${productsCounter} pozycje</p>
+        </c:if>
+        <c:if test="${productsCounter==4}">
             <p>${productsCounter} pozycje</p>
         </c:if>
         <c:if test="${productsCounter>4}">
@@ -73,7 +79,7 @@
                 <div class="w3-container">
                     <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
                     <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
-                </div>
+               </div>
             </div>
         </c:forEach>
     </div>

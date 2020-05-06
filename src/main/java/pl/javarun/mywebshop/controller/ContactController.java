@@ -30,7 +30,7 @@ public class ContactController {
     public String contactMail(@RequestParam String name, @RequestParam String email,
                               @RequestParam String subject, @RequestParam String content) {
         emailContactForm.send(companyService.getCompanyData().getEmail(), name, email, subject, content);
-        return "redirect:/";
+        return "redirect:/?mailSentWithSuccess=true#footer";
     }
 
 
