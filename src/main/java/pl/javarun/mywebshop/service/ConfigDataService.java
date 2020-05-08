@@ -35,4 +35,8 @@ public class ConfigDataService {
     public ConfigData getConfigDataByName(String name){
         return configDataRepository.findByName(name);
     }
+
+    public void save(ConfigData configData) {
+        configDataRepository.save(configData);
+    }
 }

@@ -1,5 +1,6 @@
 package pl.javarun.mywebshop.controller;
 
+import com.fasterxml.jackson.core.JsonPointer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,13 +41,21 @@ public class ProductDetailsController {
     @GetMapping("/{id}")
     public ModelAndView getProductDetailPage(@PathVariable int id) {
         ModelAndView modelAndView;
+        int groupId;
         if (productService.getProductById(id) == null) {
             modelAndView = new ModelAndView("index");
         } else {
             modelAndView = new ModelAndView("productDetail");
             modelAndView.addObject("product", productService.getProductById(id));
             modelAndView.addObject("colors", colorPerMaterialService.getMaterialColorsByMaterialId(productService.getProductById(id).getMaterial().getId()));
+            try{
+                groupId = productService.getProductById(id).getMainProduct().getId();
+                modelAndView.addObject("productsGroup",productService.getActiveProductsGroupByMainId(groupId));
+            } catch (Exception ex){
+                modelAndView.addObject("productsGroup",productService.getActiveProductsGroupByMainId(id));
+            }
         }
+
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("productType", typeService.getTypeById(productService.getProductById(id).getType().getId()));

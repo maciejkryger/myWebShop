@@ -1,11 +1,11 @@
 package pl.javarun.mywebshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import pl.javarun.mywebshop.model.Product;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -18,7 +18,7 @@ import java.util.Set;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Override
-    Optional<Product> findById(Integer integer);
+    Optional<Product> findById(Integer id);
 
     List<Product> findAllByActiveIsTrue();
 
@@ -99,4 +99,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByMaterial_IdAndPriceGreaterThanEqualAndActiveTrue(Integer materialId, Integer priceFrom);
 
     List<Product> findAllByMaterial_IdAndPriceLessThanEqualAndActiveTrue(Integer materialId, Integer priceTo);
+
+    List<Product> findAllByMainProduct(Object o);
+
+    @Query(value = "select distinct p.* from product p where (p.id = :id or p.main_product_id= :id ) and p.active=true",
+            nativeQuery = true)
+    List<Product> findAllByFamilyAndActive(int id);
+
 }

@@ -34,13 +34,15 @@ public class SuperPanelController {
     private final RuleService ruleService;
     private final RoleService roleService;
     private final ColorPerMaterialService colorPerMaterialService;
+    private final ConfigDataService configDataService;
 
 
     public SuperPanelController(ProductService productService, TypeService typeService, MaterialService materialService,
                                 MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
                                 FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
                                 UserService userService, CompanyService companyService, RuleService ruleService,
-                                RoleService roleService, ColorPerMaterialService colorPerMaterialService) {
+                                RoleService roleService, ColorPerMaterialService colorPerMaterialService,
+                                ConfigDataService configDataService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;
@@ -53,6 +55,7 @@ public class SuperPanelController {
         this.ruleService = ruleService;
         this.roleService = roleService;
         this.colorPerMaterialService = colorPerMaterialService;
+        this.configDataService=configDataService;
     }
 
 
@@ -139,6 +142,10 @@ public class SuperPanelController {
                     modelAndView.addObject("colorPerMaterialList", colorPerMaterialService.searchColorPerMaterial(searchWhat, SearchColorPerMaterialModelOption.valueOf(searchBy)));
                 }
                 modelAndView.addObject("tableURL", "panels/data/colorPerMaterial");
+                break;
+            case "config":
+                modelAndView = new ModelAndView("panels/configManager");
+                modelAndView.addObject("configs", configDataService.getAllConfigs());
                 break;
             default:
                 modelAndView = new ModelAndView("panels/superPanel");

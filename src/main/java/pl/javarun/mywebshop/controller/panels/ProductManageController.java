@@ -65,6 +65,7 @@ public class ProductManageController {
         modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
         modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
         modelAndView.addObject("fasteningColors", fasteningColorService.getAllFasteningColors());
+        modelAndView.addObject("mainProducts",productService.getAllMainProducts());
         return modelAndView;
     }
 
@@ -76,7 +77,8 @@ public class ProductManageController {
             @RequestParam Integer materialId, @RequestParam Integer materialColorId,
             @RequestParam Integer fasteningTypeId, @RequestParam Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
-            @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active) {
+            @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active,
+            @RequestParam Integer mainProductId) {
 
         Product product;
         if (id != null && id != 0) {
@@ -98,6 +100,9 @@ public class ProductManageController {
         product.setDescription(description);
         product.setDescriptionPl(descriptionPl);
         product.setActive(active);
+        if(mainProductId!=null){
+            product.setMainProduct(productService.getProductById(mainProductId));
+        }
         productService.save(product);
         return "redirect:/panels/data/products";
     }

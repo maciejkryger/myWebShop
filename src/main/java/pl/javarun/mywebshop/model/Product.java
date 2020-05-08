@@ -45,25 +45,12 @@ public class Product {
     @Column(length = 1000)
     private String descriptionPl;
     private boolean active;
+    @ManyToOne(targetEntity = Product.class)
+    private Product mainProduct;
 
     public Product() {
     }
 
-    public Product(String name, String namePl, Type type, Material material, @Nullable MaterialColor materialColor, double length, double width, FasteningType fasteningType, FasteningColor fasteningColor, MakingTechnique makingTechnique, int price, String description, String descriptionPl) {
-        this.name = name;
-        this.namePl = namePl;
-        this.type = type;
-        this.material = material;
-        this.materialColor = materialColor;
-        this.length = length;
-        this.width = width;
-        this.fasteningType = fasteningType;
-        this.fasteningColor = fasteningColor;
-        this.makingTechnique = makingTechnique;
-        this.price = price;
-        this.description = description;
-        this.descriptionPl = descriptionPl;
-    }
 
     public int getId() {
         return id;
@@ -184,5 +171,13 @@ public class Product {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public Product getMainProduct() {
+        return mainProduct;
+    }
+
+    public void setMainProduct(Product mainProduct) {
+        this.mainProduct = mainProduct;
     }
 }

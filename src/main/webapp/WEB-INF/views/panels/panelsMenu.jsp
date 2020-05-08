@@ -30,6 +30,7 @@
         <c:if test="${sessionScope.user.role.id<='1'}">
          <a href="${pageContext.request.contextPath}/panels/data/users" class="w3-bar-item w3-button">Użytkownicy</a>
          <a href="${pageContext.request.contextPath}/panels/data/roles" class="w3-bar-item w3-button">Grupy uprawnień</a>
+         <a href="${pageContext.request.contextPath}/panels/data/config" class="w3-bar-item w3-button">Konfiguracja</a>
         </c:if>
     </div>
 </nav>

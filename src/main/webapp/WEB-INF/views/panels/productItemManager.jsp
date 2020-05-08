@@ -163,7 +163,16 @@
                           <option value="${product.active}">${!product.active}</option>
                         </select>
                     </p>
-
+                    <p>
+                        <label><b>Produkt główny</b></label>
+                        <select class="w3-input w3-border" name="mainProductId">
+                             <option selected="selected" placeholder="główny produkt"
+                                     value="${product.mainProduct.id}">${product.mainProduct.id}</option>
+                             <c:forEach var="item" items="${mainProducts}">
+                                 <option value="${item.id}">${item.id}. ${item.namePl}</option>
+                             </c:forEach>
+                         </select>
+                    </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
                 <a href="${pageContext.request.contextPath}/panels/data/products/">

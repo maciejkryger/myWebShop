@@ -69,6 +69,7 @@
                     <th>opis</th>
                     <th>czy aktywny</th>
                     <th>opcje</th>
+                    <th>produkt główny<th>
                 </tr>
                 </thead>
                 <c:forEach var="item" items="${products}">
@@ -96,6 +97,7 @@
                                 <input type="submit" value="${item.active ? 'wyłącz' : 'włącz'}" class="w3-button w3-white w3-border w3-round-large">
                             </form>
                         </td>
+                         <td>${item.mainProduct.id==null ? 'BRAK' : item.mainProduct.id}</td>
                     </tr>
                 </c:forEach>
             </table>

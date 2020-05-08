@@ -85,8 +85,8 @@
                 <p>
                     technika wykonania: <b>${product.makingTechnique.namePl}</b><br>
                     użyty materiał: <b>${product.material.namePl}</b><br>
-                    kolor materiału: <b>
-                    <select name="colorId" class="" onchange="this.form.submit()">
+                    kolor materiału: <b>${product.materialColor.namePl}</b><br>
+               <!--     <select name="colorId" class="" onchange="this.form.submit()">
                         <option selected="selected"
                                 value="${product.materialColor.id}">
                             ${product.materialColor.namePl}
@@ -95,7 +95,7 @@
                             <option value="${color.materialColor.namePl}">${color.materialColor.namePl} - dostępność
                                 w ${color.availability}</option>
                         </c:forEach>
-                    </select></b><br>
+                    </select></b><br>-->
                     zapięcie: <b>${product.fasteningType.namePl}</b><br>
                     kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br>
                     długość: <b>${product.length} mm</b><br>
@@ -104,15 +104,17 @@
                 </p>
             </div>
         </div>
-
-        <%--        <c:forEach var="color" items="${colors}">--%>
-        <%--            <div class="w3-col l3 s6">--%>
-        <%--                <div class="w3-container">--%>
-        <%--                    <img src="/images/${product.id}_${color.materialColor.id}.webp" style="width:100%">--%>
-        <%--                    <p>${color.materialColor.namePl}</p>--%>
-        <%--                </div>--%>
-        <%--            </div>--%>
-        <%--        </c:forEach>--%>
+        <div class="w3-container">
+                   <p>Product występuje w następujących kolorach:</p>
+                    <c:forEach var="item" items="${productsGroup}">
+                        <div class="w3-col l3 s6">
+                        <div class="w3-container">
+                                <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
+                                <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.materialColor.namePl}<br><b>${item.price} PLN</b></a></p>
+                            </div>
+                        </div>
+                    </c:forEach>
+         </div>
         <div class="w3-container">
             <i class="fa fa-arrow-left"></i>
             <a href="${pageContext.request.contextPath}/types/${product.type.name}">cofnij</a>

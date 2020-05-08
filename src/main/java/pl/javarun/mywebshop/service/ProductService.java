@@ -75,7 +75,7 @@ public class ProductService {
             case BY_WIGHT:
                 return productRepository.findByWidth(Double.valueOf(searchWhat));
             case BY_PRICE:
-                return productRepository.findByPrice(Integer.valueOf(searchWhat));
+                return productRepository.findByPrice(Integer.parseInt(searchWhat));
             case BY_PRODUCT_DESCRIPTION:
                 return productRepository.findByDescriptionPlContainsIgnoreCase(searchWhat);
             default:
@@ -190,4 +190,14 @@ public class ProductService {
     public List<Product> getActiveProductsByMaterialIdAndPriceUpTo(Integer materialId, Integer priceTo) {
         return productRepository.findAllByMaterial_IdAndPriceLessThanEqualAndActiveTrue(materialId,priceTo);
     }
+
+    public List<Product> getAllMainProducts() {
+        return productRepository.findAllByMainProduct(null);
+    }
+
+
+    public List<Product> getActiveProductsGroupByMainId(int id){
+        return productRepository.findAllByFamilyAndActive(id);
+    }
+
 }

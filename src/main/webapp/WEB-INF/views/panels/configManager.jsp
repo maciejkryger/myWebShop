@@ -14,6 +14,7 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+
 </style>
 <body class="w3-content" style="max-width:2200px">
 
@@ -46,49 +47,40 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Edycja regulaminów</h2>
-        <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/rules/">
-                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-            </a>
-            <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/rule/save"
-                      modelAttribute="rule">
-                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+        <h2>Konfiguracja</h2>
 
+        <a href="${pageContext.request.contextPath}/panels/superpanel/">
+                                                <button class="w3-button w3-white w3-border w3-round-large">zamknij okno</button>
+                                </a>
+        <div class="w3-responsive w3-row" style="padding-top: 10px">
+
+            <c:forEach var="config" items="${configs}">
+            <div style="padding-bottom: 50px; width: 50%" class="w3-col l3 s6 w3-container">
+            <!--<table class="w3-table-all w3-hoverable w3-border">-->
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/config/save"
+                      modelAttribute="config" class="w3-table-all ">
 
                     <p>
-                        <label><b>id: ${rule.id}</b></label>
-                        <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
-                               value='${rule.id}'>
+                        <input type="hidden" name="id" class="w3-input w3-border" value="${config.id}">
+                        <input type="hidden" name="name" class="w3-input w3-border" value="${config.name}">
+                        <label><b>Nazwa pola: ${config.name}</b></label>
                     </p>
                     <p>
-                        <label><b>Nazwa ENG</b></label>
-                        <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
-                               value='${rule.name}'>
+                         <label><b>Opis</b></label>
+                         <input type="text" name="description" placeholder="nazwa" class="w3-input w3-border"
+                                   value='${config.description}'>
                     </p>
                     <p>
-                        <label><b>Nazwa PL</b></label>
-                        <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
-                               value='${rule.namePl}'>
+                         <label><b>Wartość pola</b></label>
+                         <input type="text" name="value" placeholder="wartość pola" class="w3-input w3-border"
+                            value='${config.value}' >
                     </p>
-                   <p>
-                        <label><b>Wpis ENG</b></label>
-                       <input type="text" name="description" placeholder="treść wpisu po angielsku" class="w3-input w3-border"
-                            value='${rule.description}'>
-                   </p>
-                   <p>
-                       <label><b>Wpis PL</b></label>
-                       <input type="text" name="descriptionPl" placeholder="treść wpisu po polsku" class="w3-input w3-border"
-                                value='${rule.descriptionPl}'>
-                       </p>
-                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large w3-right" value="zapisz"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/panels/data/rules/">
-                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-                </a>
 
-            </table>
+            <!--</table>-->
+            </div>
+            </c:forEach>
         </div>
 
         <!-- Signature -->
