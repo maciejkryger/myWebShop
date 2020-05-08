@@ -106,4 +106,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
             nativeQuery = true)
     List<Product> findAllByFamilyAndActive(int id);
 
+    List<Product> findAllByMainProduct_NamePlContainsIgnoreCase(String name);
 }

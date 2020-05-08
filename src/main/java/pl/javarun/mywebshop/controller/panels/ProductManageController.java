@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.ProductNotExistException;
 import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.service.*;
 
@@ -81,11 +82,13 @@ public class ProductManageController {
             @RequestParam Integer mainProductId) {
 
         Product product;
-        if (id != null && id != 0) {
+        try{
             product = productService.getProductById(id);
-        } else {
+
+        }catch (ProductNotExistException ex){
             product = new Product();
         }
+
         product.setName(name);
         product.setNamePl(namePl);
         product.setType(typeService.getTypeById(typeId));

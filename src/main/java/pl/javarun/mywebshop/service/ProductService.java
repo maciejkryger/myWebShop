@@ -58,6 +58,8 @@ public class ProductService {
         switch (findBy) {
             case BY_PRODUCT_NAME:
                 return productRepository.findByNamePlContainsIgnoreCase(searchWhat);
+            case BY_MAIN_PRODUCT:
+                return productRepository.findAllByMainProduct_NamePlContainsIgnoreCase(searchWhat);
             case BY_TYPE:
                 return productRepository.findAllByType_NamePlContainsIgnoreCase(searchWhat);
             case BY_MAKING_TECHNIQUE:

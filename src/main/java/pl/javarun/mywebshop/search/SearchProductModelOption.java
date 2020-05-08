@@ -11,6 +11,7 @@ package pl.javarun.mywebshop.search;
 public enum SearchProductModelOption {
 
     BY_PRODUCT_NAME("po nazwie produktu"),
+    BY_MAIN_PRODUCT("po głównym produkcie"),
     BY_TYPE("po typie"),
     BY_MAKING_TECHNIQUE("po technice wykonania"),
     BY_MATERIAL("po materiale"),
@@ -21,6 +22,7 @@ public enum SearchProductModelOption {
     BY_WIGHT("po szerokości"),
     BY_PRICE("po cenie"),
     BY_PRODUCT_DESCRIPTION("po opisie");
+
 
     private String description;
 

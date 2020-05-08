@@ -97,7 +97,7 @@
                                 <input type="submit" value="${item.active ? 'wyłącz' : 'włącz'}" class="w3-button w3-white w3-border w3-round-large">
                             </form>
                         </td>
-                         <td>${item.mainProduct.id==null ? 'BRAK' : item.mainProduct.id}</td>
+                         <td>${item.mainProduct.id==null ? 'TAK' : item.mainProduct.id}</td>
                     </tr>
                 </c:forEach>
             </table>

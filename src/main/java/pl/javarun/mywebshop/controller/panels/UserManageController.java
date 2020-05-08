@@ -6,12 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -76,20 +78,26 @@ public class UserManageController {
                                @RequestParam String lastName, @RequestParam String email,
                                @RequestParam Integer roleId, @RequestParam Boolean active) {
         User user;
-        if (userService.getUserByUsername(username) == null) {
+        try{
+            user = userService.getUserByUsername(username);
+        }catch (UserNotExistException ex){
             user = new User();
+            user.setUsername(username);
             PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
             String hashedPassword = passwordEncoder.encode(username);
             user.setPassword(hashedPassword);
-            user.setToken("addedByAdmin");
-        } else {
-            user = userService.getUserByUsername(username);
+            user.setToken("addedByAdmin_"+username);
         }
+
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
         user.setRole(roleService.getRoleById(roleId));
+        user.setCreationDate(new Timestamp(System.currentTimeMillis()));
         user.setActive(active);
+        user.setActivationDate(null);
+        user.setDeleted(false);
+        user.setDeletingDate(null);
         userService.saveUser(user);
         return "redirect:/panels/data/users";
     }
