@@ -9,6 +9,7 @@ package pl.javarun.mywebshop.exception;
  * *
  ******************************************************/
 public class FasteningTypeNotExistException extends RuntimeException {
-    public FasteningTypeNotExistException(String s) {
+    public FasteningTypeNotExistException(String message) {
+        super(message);
     }
 }

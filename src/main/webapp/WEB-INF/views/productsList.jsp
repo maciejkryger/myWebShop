@@ -73,13 +73,55 @@
     </div>
 
     <!-- Product grid -->
-    <div class="w3-row w3-grayscale">
+    <div class="w3-row">
+
         <c:forEach var="item" items="${products}">
+
             <div class="w3-col l3 s6">
                 <div class="w3-container">
-                    <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
-                    <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
-               </div>
+                     <div class="w3-display-container">
+                       <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
+                       <c:if test="${item.creationDate>=newProductPeriod}">
+                         <span class="w3-tag w3-display-topleft">Nowość</span>
+                       </c:if>
+            <c:if test="${sessionScope.user.enabled}">
+                        <div class="w3-display-topright w3-display-hover">
+                            <c:if test="${userWishList.isEmpty()}">
+                                <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromList" onclick="submit">
+                                    <input type="hidden" name="productId" value="${item.id}">
+                                    <input type="hidden" name="userId"  value="${sessionScope.user.id}">
+                                    <button class="w3-button "><i class="far fa-heart"></i></button>
+                                </form>
+                            </c:if>
+
+                             <c:forEach var="userWishListItem" items="${userWishList}">
+                             <c:choose>
+                             <c:when test="${userWishListItem.product.id==item.id}">
+                                <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromList" onclick="submit">
+                                <input type="hidden" name="productId" value="${item.id}">
+                                <button class="w3-button "><i class="fas fa-heart"></i></button>
+                                </form>
+                             </c:when>
+
+                             <c:otherwise>
+                                 <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromList" onclick="submit">
+                                 <input type="hidden" name="productId" value="${item.id}">
+                                 <button class="w3-button"><i class="far fa-heart"></i></button>
+                                 </form>
+                             </c:otherwise>
+                            </c:choose>
+                            </c:forEach>
+                        </div>
+            </c:if>
+                        <div class="w3-display-middle w3-display-hover">
+                            <form method="POST" action="${pageContext.request.contextPath}/basket/addFromList" onclick="submit">
+                            <input type="hidden" name="productId" value="${item.id}">
+                            <button class="w3-button w3-black">dodaj do koszyka<i class="fa fa-shopping-cart"></i></button>
+                            </form>
+                        </div>
+                      <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
+                     </div>
+                   </div>
             </div>
         </c:forEach>
     </div>

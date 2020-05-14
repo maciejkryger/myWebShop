@@ -9,6 +9,7 @@ package pl.javarun.mywebshop.exception;
  * *
  ******************************************************/
 public class FasteningColorNotExistException extends RuntimeException {
-    public FasteningColorNotExistException(String s) {
+    public FasteningColorNotExistException(String message) {
+        super(message);
     }
 }

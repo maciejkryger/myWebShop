@@ -62,25 +62,80 @@
         <h2>Twój koszyk z zakupami</h2>
 
         <div class="w3-responsive">
-
-            <table class="w3-table-all w3-hoverable">
-
-                    <p>
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Koszyk użytkownika: </b>${sessionScope.user.username}</label>
-                        <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
                     </c:if>
-                    </p>
-
-                 <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>
-
-
-            </table>
         </div>
 
-    <br>
+<!-- Product grid -->
+    <div class="w3-row">
+         <a class="w3-container" style="padding-bottom: 200px">${productsInBasket.isEmpty() ? 'Twój koszyk jest pusty.' :''}</a>
+    </div>
 
+    <c:if test="${!productsInBasket.isEmpty()}">
+     <div class="w3-responsive">
+                <table class="w3-table-all w3-hoverable">
+                    <thead>
+                    <tr class="w3-light-grey ">
+                        <th style="width:25%">Zdjęcie</th>
+                        <th>nazwa produktu</th>
+                        <th>cena produktu</th>
+                        <th>ilość</th>
+                        <th>suma</th>
+                        <th>usuń</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${productsInBasket}">
+                        <tr>
+                            <td style="width:25%">
+                            <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                            </td>
+                            <td>${item.product.namePl}</td>
+                            <td>${item.product.price} PLN</td>
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/basket/addFromBasket" onclick="submit">
+                                    <input type="hidden" name="productId" value="${item.product.id}">
+                                    <button class="w3-button"><i class="fas fa-plus"></i></button>
+                                </form>
+                                <a style="margin: 17px">${item.quantity}</a>
+                                <form method="POST" action="${pageContext.request.contextPath}/basket/removeFromBasket" onclick="submit">
+                                   <input type="hidden" name="productId" value="${item.product.id}">
+                                   <button class="w3-button"><i class="fas fa-minus"></i></button>
+                                </form>
 
+                            </td>
+                            <td>${item.product.price*item.quantity} PLN</td>
+                            <td>
+                                   <form method="POST" action="${pageContext.request.contextPath}/basket/removeAllQuantityFromBasket" onclick="submit">
+                                        <input type="hidden" name="productId" value="${item.product.id}">
+                                        <button class="w3-button w3-hover"><i class="fas fa-trash"></i></button>
+                                    </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                    <tfoot>
+                      <tr class="w3-light-grey ">
+                        <th</th>
+                        <th></th>
+                        <th></th>
+                        <th>PODSUMOWANIE:</th>
+                        <th>${sumQuantity} szt</th>
+                        <th>${sumToPay} PLN</th>
+                        <th></th>
+                      </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+    </c:if>
+<div class="w3-container w3-responsive" style="padding: 10px">
+  <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">wróć do zakupów</a>
+  <c:if test="${!productsInBasket.isEmpty()}">
+      <a href="${pageContext.request.contextPath}/finalize" class="w3-button w3-white w3-border w3-round-large w3-right">dalej</a>
+  </c:if>
+</div>
     <!-- Footer -->
     <%@include file='footer.jsp' %>
 

@@ -9,6 +9,7 @@ package pl.javarun.mywebshop.exception;
  * *
  ******************************************************/
 public class TypeNotExistException extends RuntimeException {
-    public TypeNotExistException(String s) {
+    public TypeNotExistException(String message) {
+        super(message);
     }
 }

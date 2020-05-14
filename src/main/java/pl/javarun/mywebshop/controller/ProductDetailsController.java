@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -27,20 +31,25 @@ public class ProductDetailsController {
     private final TypeService typeService;
     private final CompanyService companyService;
     private final RuleService ruleService;
+    private final WishListService wishListService;
 
     public ProductDetailsController(UserService userService, ProductService productService, ColorPerMaterialService colorPerMaterialService,
-                                    TypeService typeService, CompanyService companyService, RuleService ruleService) {
+                                    TypeService typeService, CompanyService companyService, RuleService ruleService,
+                                    WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.productService = productService;
         this.colorPerMaterialService = colorPerMaterialService;
+        this.wishListService=wishListService;
     }
 
     @GetMapping("/{id}")
-    public ModelAndView getProductDetailPage(@PathVariable int id) {
+    public ModelAndView getProductDetailPage(@PathVariable int id, HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView;
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
         int groupId;
         if (productService.getProductById(id) == null) {
             modelAndView = new ModelAndView("index");
@@ -55,7 +64,11 @@ public class ProductDetailsController {
                 modelAndView.addObject("productsGroup",productService.getActiveProductsGroupByMainId(id));
             }
         }
-
+        if(user==null){
+            modelAndView.addObject("userWishListProduct",null);
+        }else {
+            modelAndView.addObject("userWishListProduct", wishListService.getWishListByUserIdAndProductId(user.getId(),id));
+        }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("productType", typeService.getTypeById(productService.getProductById(id).getType().getId()));

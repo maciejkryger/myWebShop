@@ -1,8 +1,10 @@
 package pl.javarun.mywebshop.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -47,6 +49,14 @@ public class Product {
     private boolean active;
     @ManyToOne(targetEntity = Product.class)
     private Product mainProduct;
+    @Nullable
+    @DateTimeFormat
+    private Timestamp creationDate;
+    @Nullable
+    @DateTimeFormat
+    private Timestamp lastUpdateDate;
+    @ManyToOne(targetEntity = User.class)
+    private User lastUpdateUser;
 
     public Product() {
     }
@@ -179,5 +189,31 @@ public class Product {
 
     public void setMainProduct(Product mainProduct) {
         this.mainProduct = mainProduct;
+    }
+
+    @Nullable
+    public Timestamp getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(@Nullable Timestamp creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Nullable
+    public Timestamp getLastUpdateDate() {
+        return lastUpdateDate;
+    }
+
+    public void setLastUpdateDate(@Nullable Timestamp lastUpdateDate) {
+        this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public User getLastUpdateUser() {
+        return lastUpdateUser;
+    }
+
+    public void setLastUpdateUser(User lastUpdateUser) {
+        this.lastUpdateUser = lastUpdateUser;
     }
 }

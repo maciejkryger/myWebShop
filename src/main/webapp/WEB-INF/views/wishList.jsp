@@ -34,6 +34,7 @@
 <!-- Sidebar/menu -->
 <%@include file='menu.jsp' %>
 
+
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
     <div class="w3-bar-item w3-padding-24 w3-wide">QUNSZTOWNA</div>
@@ -53,25 +54,80 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">biżuteria ręcznie robiona</p>
+        <p class="w3-left">ulubione</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <!-- user session  -->
+        <h2>Twoje ulubione produkty</h2>
 
-        <!--<a class="w3-bar-item w3-padding" style="color: crimson">${className}</a>-->
-        <p>${message}</p>
-        <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć na poprzednią stronę</button>
-        <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">wróć na stronę główną</a>
-        <script>
-           function goBack() {
-            window.history.back();
-           }
-        </script>
+        <div class="w3-responsive">
+
+            <table class="w3-table-all w3-hoverable">
+                    <p>
+                    <c:if test="${sessionScope.user.username!=null}">
+                        <label><b>Ulubione produkty użytkownika: </b>${sessionScope.user.username}</label>
+                        <input type="hidden" name="username"  value="${sessionScope.user.username}">
+                    </c:if>
+                    </p>
+
+    <!-- Product grid -->
+    <div class="w3-row w3-grayscale">
+        <a>${userWishList.isEmpty() ? 'Lista produktów ulubionych jest pusta.' :''}</a>
     </div>
+    <c:if test="${!userWishList.isEmpty()}">
 
-    <br>
+    <!--
+        <c:forEach var="item" items="${userWishList}">
+            <div class="w3-col l3 s6">
+                <div class="w3-display-container">
+                <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromWishList" onclick="submit">
+                   <input type="hidden" name="productId" value="${item.product.id}">
+                    <input type="hidden" name="userId"  value="${sessionScope.user.id}">
+                    <button class="w3-button w3-display-topright w3-display-hover"><i class="fas fa-trash"></i></button>
+                 </form>
+                    <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                    <p><a href="${pageContext.request.contextPath}/details/${item.product.id}">${item.product.namePl}<br><b>${item.product.price} PLN</b></a></p>
+               </div>
+            </div>
+        </c:forEach>
+    -->
+
+     <div class="w3-responsive">
+                <table class="w3-table-all w3-hoverable">
+                    <thead>
+                    <tr class="w3-light-grey ">
+                        <th style="width:25%">Zdjęcie</th>
+                        <th>nazwa produktu</th>
+                        <th>cena</th>
+                         <th>usuń</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="item" items="${userWishList}">
+                        <tr>
+                            <td style="width:25%">
+                            <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                            </td>
+                            <td>${item.product.namePl}</td>
+                            <td style="width:25%">${item.product.price} PLN</td>
+                            <td>
+                               <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromWishList" onclick="submit">
+                                  <input type="hidden" name="productId" value="${item.product.id}">
+                                  <button class="w3-button w3-hover"><i class="fas fa-trash"></i></button>
+                               </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+
+                </table>
+       </div>
+
+    </c:if>
+        <div class="w3-container w3-responsive" style="padding: 10px">
+                 <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large">wróć do zakupów</a>
+        </div>
 
 
     <!-- Footer -->

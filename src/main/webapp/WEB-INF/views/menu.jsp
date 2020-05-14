@@ -13,10 +13,10 @@
     <div class="w3-padding-64 w3-large w3-text-grey" style="font-weight:bold">
         <c:forEach var="productType" items="${productTypesList}">
             <a href="${pageContext.request.contextPath}/types/${productType.name}"
-               class="w3-bar-item w3-button">${productType.namePl}</a>
+               class="w3-bar-item w3-btn">${productType.namePl}</a>
         </c:forEach>
     </div>
-    <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
+    <a href="#footer" class="w3-bar-item w3-btn w3-padding">Kontakt</a>
 
     <%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"--%>
     <%--       onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>--%>

@@ -5,7 +5,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.ProductNotExistException;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -79,7 +85,10 @@ public class ProductManageController {
             @RequestParam Integer fasteningTypeId, @RequestParam Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
             @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active,
-            @RequestParam Integer mainProductId) {
+            @RequestParam Integer mainProductId, HttpServletRequest httpServletRequest) {
+
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
 
         Product product;
         try{
@@ -87,6 +96,7 @@ public class ProductManageController {
 
         }catch (ProductNotExistException ex){
             product = new Product();
+            product.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
         }
 
         product.setName(name);
@@ -103,6 +113,8 @@ public class ProductManageController {
         product.setDescription(description);
         product.setDescriptionPl(descriptionPl);
         product.setActive(active);
+        product.setLastUpdateUser(user);
+        product.setLastUpdateDate(Timestamp.valueOf(LocalDateTime.now()));
         if(mainProductId!=null){
             product.setMainProduct(productService.getProductById(mainProductId));
         }

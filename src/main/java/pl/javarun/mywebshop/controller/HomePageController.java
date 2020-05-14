@@ -11,6 +11,8 @@ import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 import pl.javarun.mywebshop.util.PasswordUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 /**
@@ -47,7 +49,10 @@ public class HomePageController {
                                      @PathParam("userWasActive") Boolean userWasActive,
                                      @PathParam("userNotExist") Boolean userNotExist,
                                      @PathParam("username") String username,
-                                     @PathParam("mailSentWithSuccess") Boolean mailSentWithSuccess) {
+                                     @PathParam("mailSentWithSuccess") Boolean mailSentWithSuccess,
+                                     HttpServletRequest httpServletRequest) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());

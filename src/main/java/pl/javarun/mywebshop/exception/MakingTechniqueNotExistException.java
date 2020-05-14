@@ -9,6 +9,7 @@ package pl.javarun.mywebshop.exception;
  * *
  ******************************************************/
 public class MakingTechniqueNotExistException extends RuntimeException {
-    public MakingTechniqueNotExistException(Object p0) {
+    public MakingTechniqueNotExistException(String message) {
+        super(message);
     }
 }

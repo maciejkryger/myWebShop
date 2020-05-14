@@ -9,6 +9,7 @@ package pl.javarun.mywebshop.exception;
  * *
  ******************************************************/
 public class MaterialNotExistException extends RuntimeException {
-    public MaterialNotExistException(String s) {
+    public MaterialNotExistException(String message) {
+        super(message);
     }
 }

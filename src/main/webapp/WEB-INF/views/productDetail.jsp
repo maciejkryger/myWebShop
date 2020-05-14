@@ -76,7 +76,7 @@
     </div>
 
     <!-- Product grid -->
-    <div class="w3-row w3-grayscale">
+    <div class="w3-row">
         <div class="w3-col">
             <div class="w3-container">
                 <p>
@@ -95,7 +95,7 @@
                             <option value="${color.materialColor.namePl}">${color.materialColor.namePl} - dostępność
                                 w ${color.availability}</option>
                         </c:forEach>
-                    </select></b><br>-->
+                    </select></b><br>                                      -->
                     zapięcie: <b>${product.fasteningType.namePl}</b><br>
                     kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br>
                     długość: <b>${product.length} mm</b><br>
@@ -103,9 +103,25 @@
                     <b>Opis:</b><br> ${product.descriptionPl}
                 </p>
             </div>
+            <c:if test="${userWishListProduct.product!=product}">
+            <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromDetail">
+                 <input type="hidden" name="productId" value="${product.id}">
+                 <button class="w3-button w3-border w3-white w3-left">dodaj do ulubionych <i class="far fa-heart"></i></button>
+            </form>
+            </c:if>
+            <c:if test="${userWishListProduct.product==product}">
+             <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromDetail">
+                 <input type="hidden" name="productId" value="${product.id}">
+                 <button class="w3-button w3-border w3-white w3-left">usuń z ulubionych <i class="fas fa-heart"></i></button>
+              </form>
+            </c:if>
+            <form method="POST" action="${pageContext.request.contextPath}/basket/addFromDetail">
+                <input type="hidden" name="productId" value="${product.id}">
+                <button class="w3-button w3-border w3-red">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
+            </form>
         </div>
         <div class="w3-container">
-                   <p>Product występuje w następujących kolorach:</p>
+                   <p>Produkt występuje w następujących kolorach:</p>
                     <c:forEach var="item" items="${productsGroup}">
                         <div class="w3-col l3 s6">
                         <div class="w3-container">
