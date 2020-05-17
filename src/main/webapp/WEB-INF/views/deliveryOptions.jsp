@@ -54,93 +54,48 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">koszyk</p>
+        <p class="w3-left">krok 2 - dostawa</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Change password form -->
-        <h2>Twój koszyk z zakupami</h2>
 
+<!-- Delivery grid -->
+ <h2>Wybór opcji dostawy</h2>
         <div class="w3-responsive">
                     <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Koszyk użytkownika: </b>${sessionScope.user.username}</label>
+                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
                     </c:if>
         </div>
 
-<!-- Product grid -->
-    <div class="w3-row">
-         <a class="w3-container" style="padding-bottom: 200px">${productsInBasket.isEmpty() ? 'Twój koszyk jest pusty.' :''}</a>
-    </div>
+ <div class="w3-container w3-responsive w3-margin">
+ Wartość koszyka: <strong> ${sumToPay} PLN </strong>
 
-    <c:if test="${!productsInBasket.isEmpty()}">
-     <div class="w3-responsive">
-                <table class="w3-table-all w3-hoverable">
-                    <thead>
-                    <tr class="w3-light-grey ">
-                        <th style="width:25%">Zdjęcie</th>
-                        <th>nazwa produktu</th>
-                        <th>cena produktu</th>
-                        <th>ilość</th>
-                        <th>suma</th>
-                        <th>usuń</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="item" items="${productsInBasket}">
-                        <tr>
-                            <td style="width:25%">
-                            <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
-                            </td>
-                            <td>${item.product.namePl}</td>
-                            <td>${item.product.price} PLN</td>
-                            <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/basket/addFromBasket" onclick="submit">
-                                    <input type="hidden" name="productId" value="${item.product.id}">
-                                    <button class="w3-button"><i class="fas fa-plus"></i></button>
-                                </form>
-                                <a style="margin: 17px">${item.quantity}</a>
-                                <form method="POST" action="${pageContext.request.contextPath}/basket/removeFromBasket" onclick="submit">
-                                   <input type="hidden" name="productId" value="${item.product.id}">
-                                   <button class="w3-button"><i class="fas fa-minus"></i></button>
-                                </form>
+ </div>
 
-                            </td>
-                            <td>${item.product.price*item.quantity} PLN</td>
-                            <td>
-                                   <form method="POST" action="${pageContext.request.contextPath}/basket/removeAllQuantityFromBasket" onclick="submit">
-                                        <input type="hidden" name="productId" value="${item.product.id}">
-                                        <button class="w3-button w3-hover"><i class="fas fa-trash"></i></button>
-                                    </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                    <tfoot>
-                      <tr class="w3-light-grey ">
-                        <th</th>
-                        <th></th>
-                        <th></th>
-                        <th>PODSUMOWANIE:</th>
-                        <th>${sumQuantity} szt</th>
-                        <th>${sumToPay} PLN</th>
-                        <th></th>
-                      </tr>
-                    </tfoot>
-                </table>
-            </div>
+ <div class="w3-responsive w3-container w3-padding w3-margin">
 
-    </c:if>
+     <form method="POST" action="${pageContext.request.contextPath}/delivery" id="delivery">
+      <label class="w3-row w3-large"><b>Wybierz opcję dostawy</b></label>
+      <c:forEach var="item" items="${deliveryOptions}">
+         <input type="radio"
+            <c:if test="${item.id==1}">checked</c:if>
+         class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}">${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input><br>
+      </c:forEach>
+    </form>
+</div>
+
+
 <div class="w3-container w3-responsive" style="padding: 10px">
-     <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć do zakupów</button>
 
-            <script>
-               function goBack() {
-                window.history.back();
-               }
-            </script>
-  <c:if test="${!productsInBasket.isEmpty()}">
-      <a href="${pageContext.request.contextPath}/delivery" class="w3-button w3-white w3-border w3-round-large w3-right">zamawiam</a>
-  </c:if>
+
+   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
+          <script>
+             function goBack() {
+              window.history.back();
+             }
+          </script>
+   <input type="submit" form="delivery" class="w3-button w3-white w3-border w3-round-large w3-right" value="dalej"/>
+
 </div>
     <!-- Footer -->
     <%@include file='footer.jsp' %>

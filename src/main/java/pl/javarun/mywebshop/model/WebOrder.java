@@ -3,9 +3,7 @@ package pl.javarun.mywebshop.model;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 
@@ -18,9 +16,11 @@ import java.sql.Timestamp;
  * *
  ******************************************************/
 @Entity
+//@Table(schema = "order", name = "[order]")
 public class WebOrder {
 
     @Id
+//    @Column(name = "order_id")
     private int id;
     private String orderNumber;
     @ManyToOne(targetEntity = User.class)
@@ -48,6 +48,10 @@ public class WebOrder {
     @Nullable
     @ManyToOne(targetEntity = PaymentMethod.class)
     private PaymentMethod paymentMethod;
+
+    @Nullable
+    @ManyToOne(targetEntity = DeliveryOption.class)
+    private DeliveryOption deliveryOption;
 
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -159,6 +163,15 @@ public class WebOrder {
 
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    @Nullable
+    public DeliveryOption getDeliveryOption() {
+        return deliveryOption;
+    }
+
+    public void setDeliveryOption(@Nullable DeliveryOption deliveryOption) {
+        this.deliveryOption = deliveryOption;
     }
 
     @Nullable

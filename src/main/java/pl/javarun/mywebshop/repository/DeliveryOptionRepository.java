@@ -1,21 +1,19 @@
 package pl.javarun.mywebshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.javarun.mywebshop.model.PaymentMethod;
+import pl.javarun.mywebshop.model.DeliveryOption;
 
 import java.util.List;
 
-
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 10.05.2020 12:59
+ * @date : 15.05.2020 23:24
  * *
- * @className: PaymentMethodRepository
+ * @className: DeliveryOptionRepository
  * *
  * *
  ******************************************************/
-public interface PaymentMethodRepository extends JpaRepository<PaymentMethod, Integer> {
+public interface DeliveryOptionRepository extends JpaRepository<DeliveryOption, Integer> {
 
 
-    List<PaymentMethod> findByPaymentType_Id(int id);
 }

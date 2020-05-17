@@ -37,11 +37,12 @@ public class WebOrderService {
         return webOrderRepository.findAll();
     }
 
-    public WebOrder getOrderByUser(User user){
-        return webOrderRepository.findByUser(user);
-    }
 
     public WebOrder getOrderByUserIdAndConfirmedFalse(int userId) {
         return webOrderRepository.findByUser_IdAndConfirmedFalse(userId).orElseThrow(()->new OrderNotExistException("Zamówienie w bazie dla twojego użytkownika jeszcze nie istnieje!"));
+    }
+
+    public WebOrder getOrderById(int orderId) {
+        return webOrderRepository.findById(orderId).orElseThrow(()->new OrderNotExistException("Zamówienie w bazie nie istnieje!"));
     }
 }

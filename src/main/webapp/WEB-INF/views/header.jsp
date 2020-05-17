@@ -6,14 +6,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <p class="w3-right">
-    <c:if test="${sessionScope.user.enabled}">
-        <a class="w3-margin-right">Witaj <b>${sessionScope.user.firstName}</b>!!!</a>
-    </c:if>
-    <a href="javascript:void(0)" class="w3-bar-item w3-btn"
+
+    <a href="javascript:void(0)" class="w3-bar-item w3-button"
        onclick="document.getElementById('login').style.display='block'">
        <i class="fa fa-user"></i>
     </a>
-    <a href="${pageContext.request.contextPath}/search" class="w3-bar-item w3-btn"><i class="fa fa-search"></i></a>
-    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-btn"><i class="fa fa-heart"></i></a>
-    <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-btn"><i class="fa fa-shopping-cart"></i></a>
+    <a href="${pageContext.request.contextPath}/search" class="w3-bar-item w3-button"><i class="fa fa-search"></i></a>
+    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-button"><i class="fa fa-heart"></i></a>
+    <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button"><i class="fa fa-shopping-cart"></i></a>
 </p>

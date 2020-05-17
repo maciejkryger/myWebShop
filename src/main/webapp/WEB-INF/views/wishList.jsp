@@ -100,14 +100,15 @@
                         <th style="width:25%">Zdjęcie</th>
                         <th>nazwa produktu</th>
                         <th>cena</th>
-                         <th>usuń</th>
+                        <th>usuń</th>
+                        <th>kup</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach var="item" items="${userWishList}">
                         <tr>
                             <td style="width:25%">
-                            <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                                <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
                             </td>
                             <td>${item.product.namePl}</td>
                             <td style="width:25%">${item.product.price} PLN</td>
@@ -116,6 +117,12 @@
                                   <input type="hidden" name="productId" value="${item.product.id}">
                                   <button class="w3-button w3-hover"><i class="fas fa-trash"></i></button>
                                </form>
+                            </td>
+                            <td>
+                                <form method="POST" action="${pageContext.request.contextPath}/basket/addFromWishList">
+                                   <input type="hidden" name="productId" value="${item.product.id}">
+                                   <button class="w3-button w3-hover"><i class="fa fa-shopping-cart"></i></button>
+                                </form>
                             </td>
                         </tr>
                     </c:forEach>

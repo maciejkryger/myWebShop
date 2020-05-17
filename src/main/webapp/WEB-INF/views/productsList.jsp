@@ -84,7 +84,7 @@
                        <c:if test="${item.creationDate>=newProductPeriod}">
                          <span class="w3-tag w3-display-topleft">Nowość</span>
                        </c:if>
-            <c:if test="${sessionScope.user.enabled}">
+         <!--   <c:if test="${sessionScope.user.enabled}">
                         <div class="w3-display-topright w3-display-hover">
                             <c:if test="${userWishList.isEmpty()}">
                                 <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromList" onclick="submit">
@@ -95,24 +95,24 @@
                             </c:if>
 
                              <c:forEach var="userWishListItem" items="${userWishList}">
-                             <c:choose>
-                             <c:when test="${userWishListItem.product.id==item.id}">
+
+                             <c:if test="${userWishListItem.product.id==item.id}">
                                 <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromList" onclick="submit">
                                 <input type="hidden" name="productId" value="${item.id}">
                                 <button class="w3-button "><i class="fas fa-heart"></i></button>
                                 </form>
-                             </c:when>
+                             </c:if>
 
-                             <c:otherwise>
+                             <c:if test="${userWishListItem.product.id!=item.id}">
                                  <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromList" onclick="submit">
                                  <input type="hidden" name="productId" value="${item.id}">
                                  <button class="w3-button"><i class="far fa-heart"></i></button>
                                  </form>
-                             </c:otherwise>
-                            </c:choose>
+                             </c:if>
+
                             </c:forEach>
                         </div>
-            </c:if>
+            </c:if> -->
                         <div class="w3-display-middle w3-display-hover">
                             <form method="POST" action="${pageContext.request.contextPath}/basket/addFromList" onclick="submit">
                             <input type="hidden" name="productId" value="${item.id}">

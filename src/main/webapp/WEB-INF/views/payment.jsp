@@ -54,93 +54,50 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">koszyk</p>
+        <p class="w3-left">krok 3 - metoda płatności</p>
         <%@include file='header.jsp' %>
     </header>
 
-    <!-- Change password form -->
-        <h2>Twój koszyk z zakupami</h2>
 
-        <div class="w3-responsive">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Koszyk użytkownika: </b>${sessionScope.user.username}</label>
-                    </c:if>
-        </div>
+<!-- Delivery grid -->
+ <h2>Wybierz metodę płatności</h2>
+         <div class="w3-responsive">
+                     <c:if test="${sessionScope.user.username!=null}">
+                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
+                     </c:if>
+         </div>
 
-<!-- Product grid -->
-    <div class="w3-row">
-         <a class="w3-container" style="padding-bottom: 200px">${productsInBasket.isEmpty() ? 'Twój koszyk jest pusty.' :''}</a>
-    </div>
+  <div class="w3-container w3-responsive w3-margin">
+  <p>Wartość koszyka: <strong> ${sumToPay} PLN </strong></p>
+  <p>Koszty dostawy: <strong> ${deliveryCostsToPay} PLN </strong></p>
+  <p>-------------------------------------------------</p>
+  <p>Łącznie do zapłaty: <strong> ${sumToPay+deliveryCostsToPay} PLN </strong></p>
+  </div>
 
-    <c:if test="${!productsInBasket.isEmpty()}">
-     <div class="w3-responsive">
-                <table class="w3-table-all w3-hoverable">
-                    <thead>
-                    <tr class="w3-light-grey ">
-                        <th style="width:25%">Zdjęcie</th>
-                        <th>nazwa produktu</th>
-                        <th>cena produktu</th>
-                        <th>ilość</th>
-                        <th>suma</th>
-                        <th>usuń</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="item" items="${productsInBasket}">
-                        <tr>
-                            <td style="width:25%">
-                            <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
-                            </td>
-                            <td>${item.product.namePl}</td>
-                            <td>${item.product.price} PLN</td>
-                            <td>
-                                <form method="POST" action="${pageContext.request.contextPath}/basket/addFromBasket" onclick="submit">
-                                    <input type="hidden" name="productId" value="${item.product.id}">
-                                    <button class="w3-button"><i class="fas fa-plus"></i></button>
-                                </form>
-                                <a style="margin: 17px">${item.quantity}</a>
-                                <form method="POST" action="${pageContext.request.contextPath}/basket/removeFromBasket" onclick="submit">
-                                   <input type="hidden" name="productId" value="${item.product.id}">
-                                   <button class="w3-button"><i class="fas fa-minus"></i></button>
-                                </form>
+ <div class="w3-responsive w3-container w3-padding w3-margin">
 
-                            </td>
-                            <td>${item.product.price*item.quantity} PLN</td>
-                            <td>
-                                   <form method="POST" action="${pageContext.request.contextPath}/basket/removeAllQuantityFromBasket" onclick="submit">
-                                        <input type="hidden" name="productId" value="${item.product.id}">
-                                        <button class="w3-button w3-hover"><i class="fas fa-trash"></i></button>
-                                    </form>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                    <tfoot>
-                      <tr class="w3-light-grey ">
-                        <th</th>
-                        <th></th>
-                        <th></th>
-                        <th>PODSUMOWANIE:</th>
-                        <th>${sumQuantity} szt</th>
-                        <th>${sumToPay} PLN</th>
-                        <th></th>
-                      </tr>
-                    </tfoot>
-                </table>
-            </div>
+     <form method="POST" action="${pageContext.request.contextPath}/payment" id="payment">
+      <label class="w3-row w3-large"><b>Wybierz metodę płatności</b></label>
+      <c:forEach var="item" items="${paymentMethods}">
+         <input type="radio"
+            <c:if test="${item.id==1}">checked</c:if>
+         class="w3-radio w3-margin" name="paymentMethodId" value="${item.id}">${item.namePl}</input><br>
+      </c:forEach>
+    </form>
+</div>
 
-    </c:if>
+
 <div class="w3-container w3-responsive" style="padding: 10px">
-     <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć do zakupów</button>
 
-            <script>
-               function goBack() {
-                window.history.back();
-               }
-            </script>
-  <c:if test="${!productsInBasket.isEmpty()}">
-      <a href="${pageContext.request.contextPath}/delivery" class="w3-button w3-white w3-border w3-round-large w3-right">zamawiam</a>
-  </c:if>
+
+   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
+          <script>
+             function goBack() {
+              window.history.back();
+             }
+          </script>
+   <input type="submit" form="payment" class="w3-button w3-white w3-border w3-round-large w3-right" value="dalej"/>
+
 </div>
     <!-- Footer -->
     <%@include file='footer.jsp' %>

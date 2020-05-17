@@ -2,14 +2,14 @@ package pl.javarun.mywebshop.exception;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 16.04.2020 22:28
+ * @date : 17.05.2020 09:58
  * *
- * @className: AddressNotExistException
+ * @className: PaymentMethodNotExistException
  * *
  * *
  ******************************************************/
-public class ColorPerMaterialNotExistException extends RuntimeException {
-    public ColorPerMaterialNotExistException(String message) {
+public class PaymentMethodNotExistException extends RuntimeException {
+    public PaymentMethodNotExistException(String message) {
         super(message);
     }
 }

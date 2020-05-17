@@ -1,8 +1,11 @@
 package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
+import pl.javarun.mywebshop.exception.PaymentMethodNotExistException;
 import pl.javarun.mywebshop.model.PaymentMethod;
 import pl.javarun.mywebshop.repository.PaymentMethodRepository;
+
+import java.util.List;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -27,5 +30,13 @@ public class PaymentMethodService {
 
     public void delete(PaymentMethod paymentMethod) {
         paymentMethodRepository.delete(paymentMethod);
+    }
+
+    public List<PaymentMethod> getByPaymentTypeId(int id) {
+        return paymentMethodRepository.findByPaymentType_Id(id);
+    }
+
+    public PaymentMethod getById(int paymentMethodId) {
+        return paymentMethodRepository.findById(paymentMethodId).orElseThrow(()->new PaymentMethodNotExistException("wybrana metoda płatności nie istnieje"));
     }
 }

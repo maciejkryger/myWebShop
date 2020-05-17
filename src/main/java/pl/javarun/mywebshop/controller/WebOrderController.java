@@ -77,7 +77,6 @@ public class WebOrderController {
 
     @PostMapping("/addFromList")
     public String addToBasketFromList(@RequestParam(required = false) Integer productId, HttpServletRequest httpServletRequest) {
-        System.out.println("productId "+productId);
         addProductToBasket(httpServletRequest, productId);
         String typeName = productService.getProductById(productId).getType().getName();
         return "redirect:/types/" + typeName + "#products";
@@ -96,6 +95,13 @@ public class WebOrderController {
                                         HttpServletRequest httpServletRequest) {
         addProductToBasket(httpServletRequest, productId);
         return "redirect:/basket/";
+    }
+
+    @PostMapping("/addFromWishList")
+    public String addToBasketFromWishList(@RequestParam(required = false) Integer productId,
+                                        HttpServletRequest httpServletRequest) {
+        addProductToBasket(httpServletRequest, productId);
+        return "redirect:/wishList/";
     }
 
 
@@ -155,6 +161,7 @@ public class WebOrderController {
         int userId = user.getId();
         WebOrder webOrder;
         WebOrderItem webOrderItem;
+        System.out.println("productId: "+productId);
         Product product = productService.getProductById(productId);
         System.out.println("step2");
         try {

@@ -1,24 +1,19 @@
 package pl.javarun.mywebshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.javarun.mywebshop.model.WebOrder;
+import pl.javarun.mywebshop.model.Address;
 import pl.javarun.mywebshop.model.User;
 
 import java.util.Optional;
 
-
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 10.05.2020 12:
+ * @date : 16.05.2020 22:26
  * *
- * @className: OrderRepository
+ * @className: AddressRepository
  * *
  * *
  ******************************************************/
-public interface WebOrderRepository extends JpaRepository<WebOrder, Integer> {
-
-
-    Optional<WebOrder> findByUser_IdAndConfirmedFalse(int usersId);
-
-    WebOrder findByUser(User user);
+public interface AddressRepository extends JpaRepository<Address,Integer> {
+    Optional<Address> findByUser(User user);
 }
