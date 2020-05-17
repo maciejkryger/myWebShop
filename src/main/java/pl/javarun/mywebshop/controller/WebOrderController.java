@@ -139,8 +139,8 @@ public class WebOrderController {
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += items.get(i).getQuantity();
+        for (WebOrderItem item : items) {
+            result += item.getQuantity();
         }
         return result;
     }
@@ -148,61 +148,45 @@ public class WebOrderController {
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += (items.get(i).getQuantity() * items.get(i).getProductPrice());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
         }
         return result;
     }
 
     private void addProductToBasket(HttpServletRequest httpServletRequest, Integer productId) {
-        System.out.println("step1");
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
         WebOrder webOrder;
         WebOrderItem webOrderItem;
-        System.out.println("productId: "+productId);
         Product product = productService.getProductById(productId);
-        System.out.println("step2");
         try {
             webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         } catch (OrderNotExistException ex) {
             webOrder = new WebOrder();
             webOrder.setCreationDate(Timestamp.valueOf(LocalDateTime.now()));
             webOrder.setUser(user);
-            System.out.println("dodaje orders...");
             webOrderService.save(webOrder);
-            System.out.println("koniec dodawania orders");
         }
         webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         int orderId = webOrder.getId();
-        System.out.println("step3 - numer orders="+orderId);
         try {
-            System.out.println("step4");
             webOrderItem = webOrderItemService.getOrderItemOrderIdAndProductId(orderId, productId);
-            System.out.println("step5");
             int quantity = webOrderItem.getQuantity();
             quantity++;
             webOrderItem.setQuantity(quantity);
             webOrderItem.setProductPrice(product.getPrice());
-            System.out.println("koniec try");
         } catch (OrderItemNotExistException ex) {
-            System.out.println("step6");
             webOrderItem = new WebOrderItem();
-            System.out.println("step7");
             webOrderItem.setWebOrder(webOrder);
-            System.out.println("step8");
             webOrderItem.setProduct(product);
-            System.out.println("step9");
             webOrderItem.setProductPrice(product.getPrice());
-            System.out.println("step10");
             webOrderItem.setQuantity(1);
 
 
         }
-        System.out.println("step11 - zapisywanie ordersItem");
         webOrderItemService.save(webOrderItem);
-        System.out.println("koniec");
     }
 
 }
