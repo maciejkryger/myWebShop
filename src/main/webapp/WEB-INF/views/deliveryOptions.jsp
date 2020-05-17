@@ -74,12 +74,12 @@
 
  <div class="w3-responsive w3-container w3-padding w3-margin">
 
-     <form method="POST" action="${pageContext.request.contextPath}/delivery" id="delivery">
+      <form method="POST" action="${pageContext.request.contextPath}/delivery" id="delivery">
       <label class="w3-row w3-large"><b>Wybierz opcję dostawy</b></label>
       <c:forEach var="item" items="${deliveryOptions}">
          <input type="radio"
-            <c:if test="${item.id==1}">checked</c:if>
-         class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}">${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input><br>
+            ${item.checked ? 'checked' :''}
+         class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}" required>${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input><br>
       </c:forEach>
     </form>
 </div>

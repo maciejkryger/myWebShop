@@ -91,8 +91,7 @@ public class AddressController {
         address.setUser(user);
         address.setStreet(street);
         address.setHouseNo(houseNo);
-        if(!flatNo.isEmpty()){
-        address.setFlatNo(flatNo);}
+        address.setFlatNo(flatNo);
         address.setPostCode(postCode);
         address.setCity(city);
         addressService.save(address);
@@ -103,8 +102,8 @@ public class AddressController {
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += (items.get(i).getQuantity() * items.get(i).getProductPrice());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
         }
         return result;
     }

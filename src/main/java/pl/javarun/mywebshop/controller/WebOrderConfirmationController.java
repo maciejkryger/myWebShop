@@ -12,6 +12,7 @@ import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
 import pl.javarun.mywebshop.service.*;
+import pl.javarun.mywebshop.util.EmailOrderConfirmation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -41,12 +42,15 @@ public class WebOrderConfirmationController {
     private final DeliveryOptionService deliveryOptionService;
     private final PaymentTypeService paymentTypeService;
     private final AddressService addressService;
-
+    private final EmailOrderConfirmation emailOrderConfirmation;
+    private int sumToPay;
+    private int sumQuantity;
+    private int deliveryCostsToPay;
 
     public WebOrderConfirmationController(UserService userService, TypeService typeService, CompanyService companyService,
                                           RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                           ProductService productService, DeliveryOptionService deliveryOptionService,
-                                          PaymentTypeService paymentTypeService, AddressService addressService) {
+                                          PaymentTypeService paymentTypeService, AddressService addressService, EmailOrderConfirmation emailOrderConfirmation) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -57,6 +61,7 @@ public class WebOrderConfirmationController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
+        this.emailOrderConfirmation=emailOrderConfirmation;
     }
 
     @GetMapping()
@@ -68,9 +73,9 @@ public class WebOrderConfirmationController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        int sumToPay = calculateActualSumToPayInUserBasket(userId);
-        int sumQuantity = calculateActualQuantityInUserBasket(userId);
-        int deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
+        sumToPay = calculateActualSumToPayInUserBasket(userId);
+        sumQuantity = calculateActualQuantityInUserBasket(userId);
+        deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("sumQuantity", sumQuantity);
@@ -84,6 +89,9 @@ public class WebOrderConfirmationController {
     @PostMapping
     public ModelAndView saveDeliveryOption(HttpServletRequest httpServletRequest, @RequestParam int orderId) {
         ModelAndView modelAndView = new ModelAndView("confirmationWithOrderNumber");
+        modelAndView.addObject("company", companyService.getCompanyData());
+        modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("rules", ruleService.getAllRules());
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
@@ -93,6 +101,8 @@ public class WebOrderConfirmationController {
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
         modelAndView.addObject("orderNumber",webOrder.getOrderNumber());
+        emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemOrderId(webOrder.getId()),
+                sumToPay,sumQuantity,deliveryCostsToPay);
         return modelAndView;
     }
 
@@ -100,8 +110,8 @@ public class WebOrderConfirmationController {
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += (items.get(i).getQuantity() * items.get(i).getProductPrice());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
         }
         return result;
     }
@@ -109,8 +119,8 @@ public class WebOrderConfirmationController {
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += items.get(i).getQuantity();
+        for (WebOrderItem item : items) {
+            result += item.getQuantity();
         }
         return result;
     }

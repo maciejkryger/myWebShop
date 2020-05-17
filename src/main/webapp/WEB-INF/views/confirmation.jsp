@@ -139,7 +139,7 @@
   <div class="w3-responsive w3-margin">
   <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
   <p>${user.firstName} ${user.lastName}</p>
-  <p>${address.street} ${address.houseNo} <c:if test="${address.flatNo==null}">/${address.flatNo}</c:if></p>
+  <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
   <p>${address.postCode} ${address.city}</p>
   </div>
 
@@ -152,7 +152,7 @@
 <div class="w3-container w3-responsive" style="padding: 10px">
 
 
-   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
+   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
           <script>
              function goBack() {
               window.history.back();

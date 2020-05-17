@@ -53,7 +53,7 @@ public class FasteningTypeManageController {
         if (id == null) {
             modelAndView.addObject("fasteningType", new FasteningType());
         } else {
-            modelAndView.addObject("fasteningType", makingTechniqueService.getMakingTechniqueById(id));
+            modelAndView.addObject("fasteningType", fasteningTypeService.getFasteningTypeById(id));
         }
         return modelAndView;
     }

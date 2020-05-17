@@ -73,6 +73,7 @@ public class DeliveryOptionsController {
         modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("sumToPay", sumToPay);
+        modelAndView.addObject("webOrder", webOrderService.getOrderByUserIdAndConfirmedFalse(userId));
         return modelAndView;
     }
 
@@ -102,8 +103,8 @@ public class DeliveryOptionsController {
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += items.get(i).getQuantity();
+        for (WebOrderItem item : items) {
+            result += item.getQuantity();
         }
         return result;
     }
@@ -111,8 +112,8 @@ public class DeliveryOptionsController {
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += (items.get(i).getQuantity() * items.get(i).getProductPrice());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
         }
         return result;
     }

@@ -16,4 +16,5 @@ import java.util.List;
 public interface DeliveryOptionRepository extends JpaRepository<DeliveryOption, Integer> {
 
 
+    List<DeliveryOption> findAllByActiveIsTrue();
 }

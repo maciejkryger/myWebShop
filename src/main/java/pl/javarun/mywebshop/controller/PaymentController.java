@@ -81,6 +81,9 @@ public class PaymentController {
         WebOrder order = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         order.setPaymentMethod(paymentMethod);
         webOrderService.save(order);
+        if (order.getDeliveryOption().getPaymentType() == paymentTypeService.getById(1)) {
+            return "redirect:/address";
+        }
         return "redirect:/confirmation";
     }
 
@@ -88,8 +91,8 @@ public class PaymentController {
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += items.get(i).getQuantity();
+        for (WebOrderItem item : items) {
+            result += item.getQuantity();
         }
         return result;
     }
@@ -97,8 +100,8 @@ public class PaymentController {
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
         List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (int i = 0; i < items.size(); i++) {
-            result += (items.get(i).getQuantity() * items.get(i).getProductPrice());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
         }
         return result;
     }

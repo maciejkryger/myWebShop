@@ -23,6 +23,7 @@ public class DeliveryOption {
     private PaymentType paymentType;
     private int price;
     private boolean active;
+    private boolean checked;
 
     public DeliveryOption() {
     }
@@ -73,5 +74,13 @@ public class DeliveryOption {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }

@@ -26,7 +26,7 @@ public class DeliveryOptionService {
 
 
     public List<DeliveryOption> getAllActiveDeliveryOptions() {
-        return deliveryOptionRepository.findAll();
+        return deliveryOptionRepository.findAllByActiveIsTrue();
     }
 
     public DeliveryOption getById(int deliveryOptionId) {
