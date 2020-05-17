@@ -82,7 +82,7 @@ public class ProductManageController {
             @RequestParam String name, @RequestParam String namePl,
             @RequestParam Integer typeId, @RequestParam Integer makingTechniqueId,
             @RequestParam Integer materialId, @RequestParam Integer materialColorId,
-            @RequestParam Integer fasteningTypeId, @RequestParam Integer fasteningColorId,
+            @RequestParam Integer fasteningTypeId, @RequestParam(required = false) Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
             @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active,
             @RequestParam Integer mainProductId, HttpServletRequest httpServletRequest) {
@@ -106,7 +106,7 @@ public class ProductManageController {
         product.setMaterial(materialService.getMaterialById(materialId));
         product.setMaterialColor(materialColorService.getMaterialColorsById(materialColorId));
         product.setFasteningType(fasteningTypeService.getFasteningTypeById(fasteningTypeId));
-        product.setFasteningColor(fasteningColorService.getFasteningColorById(fasteningColorId));
+//        product.setFasteningColor(fasteningColorService.getFasteningColorById(fasteningColorId));
         product.setLength(length);
         product.setWidth(width);
         product.setPrice(price);

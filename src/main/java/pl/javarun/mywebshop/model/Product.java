@@ -37,6 +37,7 @@ public class Product {
     private double width;
     @ManyToOne(targetEntity = FasteningType.class)
     private FasteningType fasteningType;  //zapięcie
+    @Nullable
     @ManyToOne(targetEntity = FasteningColor.class)
     private FasteningColor fasteningColor;
     @ManyToOne(targetEntity = MakingTechnique.class)

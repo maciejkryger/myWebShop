@@ -18,8 +18,8 @@
             materiałów</a>
         <a href="${pageContext.request.contextPath}/panels/data/fasteningTypes"
            class="w3-bar-item w3-button">Zapięcia</a>
-        <a href="${pageContext.request.contextPath}/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory
-            zapięć</a>
+  <!--  <a href="${pageContext.request.contextPath}/panels/data/fasteningColors" class="w3-bar-item w3-button">Kolory
+            zapięć</a> -->
         <a href="${pageContext.request.contextPath}/panels/data/makingTechniques" class="w3-bar-item w3-button">Techniki
             wykonania</a>
         <!--<a href="${pageContext.request.contextPath}/panels/data/colorPerMaterials" class="w3-bar-item w3-button">Tabela

@@ -70,8 +70,8 @@ public class ProductService {
                 return productRepository.findByMaterialColor_NamePlContainsIgnoreCase(searchWhat);
             case BY_FASTENING_TYPE:
                 return productRepository.findByFasteningType_NamePlContainsIgnoreCase(searchWhat);
-            case BY_FASTENING_COLOR:
-                return productRepository.findByFasteningColor_NamePlContainsIgnoreCase(searchWhat);
+//            case BY_FASTENING_COLOR:
+//                return productRepository.findByFasteningColor_NamePlContainsIgnoreCase(searchWhat);
             case BY_LENGTH:
                 return productRepository.findByLength(Double.valueOf(searchWhat));
             case BY_WIGHT:

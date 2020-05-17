@@ -55,6 +55,7 @@
             <table class="w3-table-all w3-hoverable">
                 <thead>
                 <tr class="w3-light-grey ">
+                    <th style="width:7%">Zdjęcie</th>
                     <th>id</th>
                     <th>nazwa</th>
                     <th>typ</th>
@@ -62,7 +63,7 @@
                     <th>materiał</th>
                     <th>kolor</th>
                     <th>zapięcie</th>
-                    <th>kolor zapięcia</th>
+                 <!--   <th>kolor zapięcia</th> -->
                     <th>długość</th>
                     <th>szerokość</th>
                     <th>cena</th>
@@ -74,6 +75,9 @@
                 </thead>
                 <c:forEach var="item" items="${products}">
                     <tr>
+                        <td style="width:7%">
+                           <img src="${pageContext.request.contextPath}/images/${item.type.id}/${item.id}.jpg" style="width:100%">
+                        </td>
                         <td>${item.id}</td>
                         <td>${item.namePl}</td>
                         <td>${item.type.namePl}</td>
@@ -81,7 +85,7 @@
                         <td>${item.material.namePl}</td>
                         <td>${item.materialColor.namePl}</td>
                         <td>${item.fasteningType.namePl}</td>
-                        <td>${item.fasteningColor.namePl}</td>
+                    <!--    <td>${item.fasteningColor.namePl}</td> -->
                         <td>${item.length}</td>
                         <td>${item.width}</td>
                         <td>${item.price}</td>
@@ -96,6 +100,9 @@
                                 <input type="hidden" name="active" value="${!item.active}">
                                 <input type="submit" value="${item.active ? 'wyłącz' : 'włącz'}" class="w3-button w3-white w3-border w3-round-large">
                             </form>
+                            <a href="${pageContext.request.contextPath}/details/${item.id}">
+                                <button class="w3-button w3-white w3-border w3-round-large">podgląd</button>
+                            </a>
                         </td>
                          <td>${item.mainProduct.id==null ? 'TAK' : item.mainProduct.id}</td>
                     </tr>

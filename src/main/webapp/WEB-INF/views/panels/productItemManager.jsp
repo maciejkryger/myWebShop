@@ -121,7 +121,7 @@
                             </c:forEach>
                         </select>
                     </p>
-                    <p>
+        <!--            <p>
                         <label><b>kolor zapięcia</b></label>
                         <select class="w3-input w3-border" name="fasteningColorId">
                             <option selected="selected" placeholder="kolor zapięcia"
@@ -130,7 +130,7 @@
                                 <option value="${item.id}">${item.namePl}</option>
                             </c:forEach>
                         </select>
-                    </p>
+                    </p> -->
                     <p>
                         <label><b>długość [mm]</b></label>
                         <input type="text" name="length" placeholder="długość" class="w3-input w3-border"

@@ -17,7 +17,7 @@ public enum SearchProductModelOption {
     BY_MATERIAL("po materiale"),
     BY_MATERIAL_COLOR("po kolorze"),
     BY_FASTENING_TYPE("po zapięciu"),
-    BY_FASTENING_COLOR("po kolorze zapięcia"),
+//    BY_FASTENING_COLOR("po kolorze zapięcia"),
     BY_LENGTH("po długości"),
     BY_WIGHT("po szerokości"),
     BY_PRICE("po cenie"),

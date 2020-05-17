@@ -80,9 +80,12 @@ public class WebOrderConfirmationController {
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
-        modelAndView.addObject("address", addressService.getByUser(user));
         modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
         modelAndView.addObject("webOrder",webOrder);
+        try{
+            modelAndView.addObject("address", addressService.getByUser(user));
+        }catch (AddressNotExistException ignored){}
+
         return modelAndView;
     }
 

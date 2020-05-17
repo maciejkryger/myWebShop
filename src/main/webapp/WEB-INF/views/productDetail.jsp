@@ -97,7 +97,7 @@
                         </c:forEach>
                     </select></b><br>                                      -->
                     zapięcie: <b>${product.fasteningType.namePl}</b><br>
-                    kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br>
+            <!--    kolor zapięcia: <b>${product.fasteningColor.namePl}</b><br> -->
                     długość: <b>${product.length} mm</b><br>
                     szerokość: <b>${product.width} mm</b><br>
                     <b>Opis:</b><br> ${product.descriptionPl}
@@ -117,8 +117,13 @@
             </c:if>
             <form method="POST" action="${pageContext.request.contextPath}/basket/addFromDetail">
                 <input type="hidden" name="productId" value="${product.id}">
-                <button class="w3-button w3-border w3-red">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
+                <button class="w3-button w3-border w3-red w3-left">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
             </form>
+          <c:if test="${sessionScope.user.role.id<='2'}">
+             <a href="${pageContext.request.contextPath}/panels/data/product/${product.id}">
+                    <button class="w3-button w3-green w3-border w3-round-large">edytuj <i class="far fa-edit"></i></button>
+             </a>
+          </c:if>
         </div>
         <div class="w3-container">
                    <p>Produkt występuje w następujących kolorach:</p>
@@ -126,7 +131,7 @@
                         <div class="w3-col l3 s6">
                         <div class="w3-container">
                                 <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
-                                <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.materialColor.namePl}<br><b>${item.price} PLN</b></a></p>
+                                <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
                             </div>
                         </div>
                     </c:forEach>

@@ -2,6 +2,8 @@ package pl.javarun.mywebshop.util;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import pl.javarun.mywebshop.exception.AddressNotExistException;
+import pl.javarun.mywebshop.model.Address;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
@@ -29,12 +31,12 @@ public class EmailOrderConfirmation {
     public EmailOrderConfirmation(ConfigDataService configDataService, AddressService addressService,
                                   CompanyService companyService) {
         this.configDataService = configDataService;
-        this.addressService=addressService;
-        this.companyService=companyService;
+        this.addressService = addressService;
+        this.companyService = companyService;
     }
 
-    public void send(User user, WebOrder webOrder, List<WebOrderItem> productsInBasket,int sumToPay,
-                     int sumQuantity,int deliveryCostsToPay) {
+    public void send(User user, WebOrder webOrder, List<WebOrderItem> productsInBasket, int sumToPay,
+                     int sumQuantity, int deliveryCostsToPay) {
 
 
         Properties prop = new Properties();
@@ -61,32 +63,38 @@ public class EmailOrderConfirmation {
             message.setFrom(new InternetAddress("potwierdzenie@qunsztowna.pl"));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(user.getEmail()));
-            String subject = "Qunsztowna.pl - informacja o złożonym zamówieniu nr "+webOrder.getOrderNumber();
+            String subject = "Qunsztowna.pl - informacja o złożonym zamówieniu nr " + webOrder.getOrderNumber();
             message.setSubject(subject);
+            Address address;
+            StringBuilder builder = new StringBuilder();
+            builder.append("Cześć <B>").append(user.getFirstName()).append("!</B><BR><BR>").
+                    append("Twoje zamówienie zostało przyjęte i zarejestrowane pod numerem: <B>").append(webOrder.getOrderNumber()).
+                    append("</B><BR>").append("<BR><BR><B>PODSUMOWANIE</B><BR>").
+                    append("------------------------------------------------------------<BR>").
+                    append("- Ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
+                    append("- Wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
+                    append("- Koszty tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
+                    append("------------------------------------------------------------<BR>").
+                    append("łącznie do  zapłatow: ").append(sumToPay + deliveryCostsToPay).append(" PLN<BR><BR><BR>").
+                    append("<strong>Twoje dane:</strong><BR>").
+                    append("------------------------------------------------------------<BR>").
+                    append(user.getFirstName()).append(" ").append(user.getLastName()).append("<BR>");
+            try {
+                address = addressService.getByUser(user);
+                builder.append(address.getStreet()).append(" ").append(address.getHouseNo()).append("/").append(address.getFlatNo()).
+                        append("<BR>").append(address.getPostCode()).append(" ").append(address.getCity()).append("<BR>");
+            } catch (AddressNotExistException ignored) {
+            }
+            builder.append("-------------------------------------------------------------<BR>").
+                    append("wybrana forma płatności: <B>").append(webOrder.getPaymentMethod().getNamePl()).append("</B><BR>").
+                    append("wybrana forma dostawy: <B>").append(webOrder.getDeliveryOption().getNamePl()).append("</B><BR>").
+                    append("-------------------------------------------------------------<BR><BR>").
+                    append("Jeżeli wybrałeś metodę płatności w formie przedpłaty, pieniądze należy przelać:<BR>").
+                    append("- w przypadku przelewu tradycyjnego na konto: <B>").append(companyService.getCompanyData().getAccountNumber()).append("</B><BR>").
+                    append("- w przypadku przelewu BLIK na nr telefonu: <B>").append(companyService.getCompanyData().getPhone()).append("</B><BR><BR><BR>").
+                    append("Dziękuję Ci za dokonane zakupy i zapraszam ponownie<BR><B>Sylwia</B>");
 
-            System.out.println("email is sending...");
-            String msg = "Cześć <B>" +user.getFirstName()+"!</B><BR><BR>"+
-                    "Twoje zamówienie zostało przyjęte i zarejestrowane pod numerem: <B>"+webOrder.getOrderNumber()+"</B><BR>"+
-                    "<BR><BR><B>PODSUMOWANIE</B><BR>" +
-                    "------------------------------------------------------------<BR>"+
-                    "- Ilość zamówionych produktów: "+sumQuantity+" szt.<BR>"+
-                    "- Wartość zamówienia: "+sumToPay+" PLN<BR>"+
-                    "- Koszty tranportu: "+deliveryCostsToPay+" PLN<BR>"+
-                    "------------------------------------------------------------<BR>" +
-                    "łącznie do  zapłatow: "+(sumToPay+deliveryCostsToPay)+" PLN<BR><BR><BR>" +
-                    "<strong>Dane do wysyłki:</strong><BR>" +
-                    "------------------------------------------------------------<BR>"+
-                    user.getFirstName()+" "+user.getLastName()+"<BR>" +
-                    addressService.getByUser(user).getStreet()+" "+ addressService.getByUser(user).getHouseNo()+"/"+addressService.getByUser(user).getFlatNo()+"<BR>"+
-                    addressService.getByUser(user).getPostCode()+" "+addressService.getByUser(user).getCity()+"<BR>" +
-                    "-------------------------------------------------------------<BR>" +
-                    "wybrana forma płatności: <B>" + webOrder.getPaymentMethod().getNamePl()+ "</B><BR>"+
-                    "wybrana forma dostawy: <B>" + webOrder.getDeliveryOption().getNamePl()+"</B><BR>" +
-                    "-------------------------------------------------------------<BR><BR>" +
-                    "Jeżeli wybrałeś metodę płatności w formie przedpłaty, pieniądze należy przelać:<BR>" +
-                    "- w przypadku przelewu tradycyjnego na konto: <B>" +companyService.getCompanyData().getAccountNumber()+"</B><BR>"+
-                    "- w przypadku przelewu BLIK na nr telefonu: <B>"+companyService.getCompanyData().getPhone()+"</B><BR><BR><BR>" +
-                    "Dziękuję Ci za dokonane zakupy i zapraszam ponownie<BR><B>Sylwia</B>";
+            String msg = builder.toString();
 
 //            String msg ="<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">" +
 //                    "<html xmlns='http://www.w3.org/1999/xhtml'>"+
@@ -184,7 +192,6 @@ public class EmailOrderConfirmation {
             message.setContent(multipart);
 
             Transport.send(message);
-            System.out.println("email sent !");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

@@ -87,20 +87,8 @@
                              </td>
                              <td>${item.product.namePl}</td>
                              <td>${item.product.price} PLN</td>
-                             <td>
-                                 <form method="POST" action="${pageContext.request.contextPath}/basket/addFromBasket" onclick="submit">
-                                     <input type="hidden" name="productId" value="${item.product.id}">
-                                     <button class="w3-button"><i class="fas fa-plus"></i></button>
-                                 </form>
-                                 <a style="margin: 17px">${item.quantity}</a>
-                                 <form method="POST" action="${pageContext.request.contextPath}/basket/removeFromBasket" onclick="submit">
-                                    <input type="hidden" name="productId" value="${item.product.id}">
-                                    <button class="w3-button"><i class="fas fa-minus"></i></button>
-                                 </form>
-
-                             </td>
+                             <td>${item.quantity}</td>
                              <td>${item.product.price*item.quantity} PLN</td>
-
                          </tr>
                      </c:forEach>
                      </tbody>
