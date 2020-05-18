@@ -37,6 +37,10 @@ public class User implements UserDetails {
     private String lastName;
     @Email
     private String email;
+
+    @Nullable
+    private String phone;
+
     @ManyToOne(targetEntity = Role.class)
     private Role role;
     @Nullable
@@ -127,6 +131,16 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+
+    @Nullable
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(@Nullable String phone) {
+        this.phone = phone;
     }
 
     public Role getRole() {

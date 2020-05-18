@@ -78,6 +78,11 @@
                            value="${user.email}">
                     </p>
                     <p>
+                        <label><b>Numer telefonu</b></label>
+                        <input type="text" name="phone" placeholder="phone" class="w3-input w3-border"
+                           value="${user.phone}">
+                    </p>
+                    <p>
                         <label><b>Uprawnienia</b></label>
                         <select class="w3-input w3-border" name="roleId">
                              <option selected="selected" value="${user.role.id}">${user.role.authority}</option>

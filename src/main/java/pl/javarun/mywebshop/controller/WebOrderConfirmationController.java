@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.AddressNotExistException;
-import pl.javarun.mywebshop.model.Address;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
@@ -100,7 +99,7 @@ public class WebOrderConfirmationController {
         int userId = user.getId();
         WebOrder webOrder = webOrderService.getOrderById(orderId);
         webOrder.setConfirmed(true);
-        webOrder.setConfirmedDate(Timestamp.valueOf(LocalDateTime.now()));
+        webOrder.setConfirmDate(Timestamp.valueOf(LocalDateTime.now()));
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
         modelAndView.addObject("orderNumber",webOrder.getOrderNumber());

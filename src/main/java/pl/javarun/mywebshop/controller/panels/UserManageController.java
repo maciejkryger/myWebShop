@@ -76,7 +76,8 @@ public class UserManageController {
     @PostMapping("/save")
     public String saveUserItem(@RequestParam String username, @RequestParam String firstName,
                                @RequestParam String lastName, @RequestParam String email,
-                               @RequestParam Integer roleId, @RequestParam Boolean active) {
+                               @RequestParam Integer roleId, @RequestParam Boolean active,
+                               @RequestParam (required = false) String phone) {
         User user;
         try{
             user = userService.getUserByUsername(username);
@@ -92,6 +93,9 @@ public class UserManageController {
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEmail(email);
+        if(phone!=null){
+            user.setPhone(phone);
+        }
         user.setRole(roleService.getRoleById(roleId));
         user.setCreationDate(new Timestamp(System.currentTimeMillis()));
         user.setActive(active);

@@ -77,11 +77,11 @@
                        <input type="text" name="description" placeholder="treść wpisu po angielsku" class="w3-input w3-border"
                             value='${rule.description}'>
                    </p>
+
                    <p>
                        <label><b>Wpis PL</b></label>
-                       <input type="text" name="descriptionPl" placeholder="treść wpisu po polsku" class="w3-input w3-border"
-                                value='${rule.descriptionPl}'>
-                       </p>
+                       <textarea rows = "5" cols = "60" name="descriptionPl" placeholder="treść wpisu po polsku" class="w3-input w3-border">${rule.descriptionPl}</textarea>
+                    </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
                 <a href="${pageContext.request.contextPath}/panels/data/rules/">

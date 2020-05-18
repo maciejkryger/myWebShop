@@ -31,20 +31,22 @@ public class WebOrder {
 
     private boolean confirmed;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp confirmedDate;
+    private Timestamp confirmDate;
 
     private boolean accepted;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp acceptedDate;
+    private Timestamp acceptDate;
+    @ManyToOne(targetEntity = User.class)
+    private User acceptUser;
 
     @Nullable
     private boolean paid;
     @Nullable
-    private int paidAmount;
+    private int paymentAmount;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp paidDate;
+    private Timestamp paymentDate;
     @Nullable
     @ManyToOne(targetEntity = PaymentMethod.class)
     private PaymentMethod paymentMethod;
@@ -56,12 +58,39 @@ public class WebOrder {
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Timestamp shipmentDate;
+    @Nullable
+    private String shipmentNumber;
+    @Nullable
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Timestamp shipmentDeliveryDate;
+
 
     @Nullable
     private boolean completed;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp completedDate;
+    private Timestamp completeDate;
+
+    @Nullable
+    private boolean canceled;
+    @Nullable
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Timestamp cancelDate;
+    @ManyToOne(targetEntity = User.class)
+    private User cancelUser;
+
+    @Nullable
+    private boolean returned;
+    @Nullable
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Timestamp returnDate;
+    @Nullable
+    private boolean returnPaid;
+    @Nullable
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Timestamp returnPaymentDate;
+
+    private String comment;
 
     public WebOrder() {
     }
@@ -103,12 +132,12 @@ public class WebOrder {
         this.confirmed = confirmed;
     }
 
-    public Timestamp getConfirmedDate() {
-        return confirmedDate;
+    public Timestamp getConfirmDate() {
+        return confirmDate;
     }
 
-    public void setConfirmedDate(Timestamp confirmedDate) {
-        this.confirmedDate = confirmedDate;
+    public void setConfirmDate(Timestamp confirmDate) {
+        this.confirmDate = confirmDate;
     }
 
     public void setCreationDate(@Nullable Timestamp creationDate) {
@@ -124,12 +153,20 @@ public class WebOrder {
     }
 
     @Nullable
-    public Timestamp getAcceptedDate() {
-        return acceptedDate;
+    public Timestamp getAcceptDate() {
+        return acceptDate;
     }
 
-    public void setAcceptedDate(@Nullable Timestamp acceptedDate) {
-        this.acceptedDate = acceptedDate;
+    public void setAcceptDate(@Nullable Timestamp acceptDate) {
+        this.acceptDate = acceptDate;
+    }
+
+    public User getAcceptUser() {
+        return acceptUser;
+    }
+
+    public void setAcceptUser(User acceptUser) {
+        this.acceptUser = acceptUser;
     }
 
     public boolean isPaid() {
@@ -140,21 +177,21 @@ public class WebOrder {
         this.paid = paid;
     }
 
-    public int getPaidAmount() {
-        return paidAmount;
+    public int getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setPaidAmount(int paidAmount) {
-        this.paidAmount = paidAmount;
+    public void setPaymentAmount(int paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     @Nullable
-    public Timestamp getPaidDate() {
-        return paidDate;
+    public Timestamp getPaymentDate() {
+        return paymentDate;
     }
 
-    public void setPaidDate(@Nullable Timestamp paidDate) {
-        this.paidDate = paidDate;
+    public void setPaymentDate(@Nullable Timestamp paymentDate) {
+        this.paymentDate = paymentDate;
     }
 
     public PaymentMethod getPaymentMethod() {
@@ -175,6 +212,24 @@ public class WebOrder {
     }
 
     @Nullable
+    public Timestamp getShipmentDeliveryDate() {
+        return shipmentDeliveryDate;
+    }
+
+    public void setShipmentDeliveryDate(@Nullable Timestamp shipmentDeliveryDate) {
+        this.shipmentDeliveryDate = shipmentDeliveryDate;
+    }
+
+    @Nullable
+    public String getShipmentNumber() {
+        return shipmentNumber;
+    }
+
+    public void setShipmentNumber(@Nullable String shipmentNumber) {
+        this.shipmentNumber = shipmentNumber;
+    }
+
+    @Nullable
     public Timestamp getShipmentDate() {
         return shipmentDate;
     }
@@ -192,11 +247,80 @@ public class WebOrder {
     }
 
     @Nullable
-    public Timestamp getCompletedDate() {
-        return completedDate;
+    public Timestamp getCompleteDate() {
+        return completeDate;
     }
 
-    public void setCompletedDate(@Nullable Timestamp completedDate) {
-        this.completedDate = completedDate;
+    public void setCompleteDate(@Nullable Timestamp completeDate) {
+        this.completeDate = completeDate;
+    }
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    @Nullable
+    public Timestamp getCancelDate() {
+        return cancelDate;
+    }
+
+    public void setCancelDate(@Nullable Timestamp cancelDate) {
+        this.cancelDate = cancelDate;
+    }
+
+    public User getCancelUser() {
+        return cancelUser;
+    }
+
+    public void setCancelUser(User cancelUser) {
+        this.cancelUser = cancelUser;
+    }
+
+
+    public boolean isReturned() {
+        return returned;
+    }
+
+    public void setReturned(boolean returned) {
+        this.returned = returned;
+    }
+
+    @Nullable
+    public Timestamp getReturnDate() {
+        return returnDate;
+    }
+
+    public void setReturnDate(@Nullable Timestamp returnDate) {
+        this.returnDate = returnDate;
+    }
+
+
+    public boolean isReturnPaid() {
+        return returnPaid;
+    }
+
+    public void setReturnPaid(boolean returnPaid) {
+        this.returnPaid = returnPaid;
+    }
+
+    @Nullable
+    public Timestamp getReturnPaymentDate() {
+        return returnPaymentDate;
+    }
+
+    public void setReturnPaymentDate(@Nullable Timestamp returnPaymentDate) {
+        this.returnPaymentDate = returnPaymentDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
