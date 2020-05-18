@@ -67,11 +67,13 @@
                     </c:if>
         </div>
 
- <div class="w3-responsive w3-xLarge w3-margin">
-                 Twoje zamówienie zostało przyjęte i zarejestrowane pod numerem: ${orderNumber}
+ <div class="w3-responsive w3-xLarge w3-margin w3-padding">
+                 Twoje zamówienie zostało przyjęte i zarejestrowane pod numerem: <strong>${orderNumber}</strong>
+                 <br><br>
+                 Dziękuję za dokonane zakupy.<BR> Osobne potwierdzenie przyjdzie do Ciebie drogą mailową. <BR>
+                 Życzę miłego dnia i zapraszam ponownie :)<BR>
+                 <B>Sylwia</B>
  </div>
-
-
 
 
     <!-- Footer -->

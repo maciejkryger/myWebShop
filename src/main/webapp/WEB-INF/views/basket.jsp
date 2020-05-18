@@ -139,7 +139,7 @@
                }
             </script>
   <c:if test="${!productsInBasket.isEmpty()}">
-      <a href="${pageContext.request.contextPath}/delivery" class="w3-button w3-white w3-border w3-round-large w3-right">zamawiam</a>
+      <a href="${pageContext.request.contextPath}/delivery" class="w3-button w3-green w3-border w3-round-large w3-right">zamawiam</a>
   </c:if>
 </div>
     <!-- Footer -->

@@ -94,7 +94,7 @@
               window.history.back();
              }
           </script>
-   <input type="submit" form="delivery" class="w3-button w3-white w3-border w3-round-large w3-right" value="dalej"/>
+   <input type="submit" form="delivery" class="w3-button w3-green w3-border w3-round-large w3-right" value="dalej"/>
 
 </div>
     <!-- Footer -->

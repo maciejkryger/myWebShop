@@ -148,7 +148,7 @@
           </script>
    <form method="POST" action="${pageContext.request.contextPath}/confirmation">
    <input type="hidden" name="orderId" value="${webOrder.id}">
-   <input type="submit" class="w3-button w3-white w3-border w3-round-large w3-right" value="zamów">
+   <input type="submit" class="w3-button w3-green w3-border w3-round-large w3-right" value="zamów">
    </form>
 
 
