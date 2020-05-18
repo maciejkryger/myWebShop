@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.TypeNotExistException;
 import pl.javarun.mywebshop.model.Type;
 import pl.javarun.mywebshop.service.*;
 
@@ -61,9 +62,9 @@ public class TypeManageController {
     @PostMapping("/save")
     public String saveTypeItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         Type type;
-        if(id!=null && id !=0){
+        try{
             type = typeService.getTypeById(id);
-        } else {
+        } catch (TypeNotExistException ex){
             type = new Type();
         }
         type.setName(name);

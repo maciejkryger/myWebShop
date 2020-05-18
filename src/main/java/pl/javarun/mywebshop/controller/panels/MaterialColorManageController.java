@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.MaterialColorNotExistException;
 import pl.javarun.mywebshop.model.MaterialColor;
 import pl.javarun.mywebshop.service.*;
 
@@ -61,9 +62,9 @@ public class MaterialColorManageController {
     @PostMapping("/save")
     public String saveMaterialColorsIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MaterialColor materialColor;
-        if (id != null && id != 0) {
+        try {
             materialColor = materialColorService.getMaterialColorsById(id);
-        } else {
+        } catch (MaterialColorNotExistException ex){
             materialColor = new MaterialColor();
         }
         materialColor.setName(name);

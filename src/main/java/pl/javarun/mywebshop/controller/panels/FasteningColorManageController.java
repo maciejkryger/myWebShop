@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.FasteningColorNotExistException;
 import pl.javarun.mywebshop.model.FasteningColor;
 import pl.javarun.mywebshop.service.*;
 
@@ -61,9 +62,9 @@ public class FasteningColorManageController {
     @PostMapping("/save")
     public String saveFasteningColorIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningColor fasteningColor;
-        if (id != null && id != 0) {
+        try {
             fasteningColor = fasteningColorService.getFasteningColorById(id);
-        } else {
+        } catch (FasteningColorNotExistException ex){
             fasteningColor = new FasteningColor();
         }
         fasteningColor.setName(name);

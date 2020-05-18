@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.MakingTechniqueNotExistException;
 import pl.javarun.mywebshop.model.MakingTechnique;
 import pl.javarun.mywebshop.service.*;
 
@@ -62,9 +63,9 @@ public class MakingTechniqueManageController {
     @PostMapping("/save")
     public String saveMakingTechniqueIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         MakingTechnique makingTechnique;
-        if (id != null && id != 0) {
+        try {
             makingTechnique = makingTechniqueService.getMakingTechniqueById(id);
-        } else {
+        } catch (MakingTechniqueNotExistException ex){
             makingTechnique = new MakingTechnique();
         }
         makingTechnique.setName(name);

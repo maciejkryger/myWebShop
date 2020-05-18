@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.FasteningTypeNotExistException;
 import pl.javarun.mywebshop.model.FasteningType;
 import pl.javarun.mywebshop.service.*;
 
@@ -61,9 +62,9 @@ public class FasteningTypeManageController {
     @PostMapping("/save")
     public String saveFasteningTypeIdItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         FasteningType fasteningType;
-        if (id != null && id != 0) {
+        try {
             fasteningType = fasteningTypeService.getFasteningTypeById(id);
-        } else {
+        } catch (FasteningTypeNotExistException ex){
             fasteningType = new FasteningType();
         }
         fasteningType.setName(name);

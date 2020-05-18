@@ -117,11 +117,11 @@
             </c:if>
             <form method="POST" action="${pageContext.request.contextPath}/basket/addFromDetail">
                 <input type="hidden" name="productId" value="${product.id}">
-                <button class="w3-button w3-border w3-red w3-left">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
+                <button class="w3-button w3-border w3-green w3-left">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
             </form>
           <c:if test="${sessionScope.user.role.id<='2'}">
              <a href="${pageContext.request.contextPath}/panels/data/product/${product.id}">
-                    <button class="w3-button w3-green w3-border w3-round-large">edytuj <i class="far fa-edit"></i></button>
+                    <button class="w3-button w3-red w3-border w3-round-large">edytuj <i class="far fa-edit"></i></button>
              </a>
           </c:if>
         </div>

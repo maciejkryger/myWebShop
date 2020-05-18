@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.panels;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.MaterialNotExistException;
 import pl.javarun.mywebshop.model.Material;
 import pl.javarun.mywebshop.service.*;
 
@@ -61,9 +62,9 @@ public class MaterialManageController {
     @PostMapping("/save")
     public String saveMaterialItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
         Material material;
-        if (id != null && id != 0) {
+        try {
             material = materialService.getMaterialById(id);
-        } else {
+        } catch (MaterialNotExistException ex){
             material = new Material();
         }
         material.setName(name);

@@ -116,7 +116,7 @@
                         <div class="w3-display-middle w3-display-hover">
                             <form method="POST" action="${pageContext.request.contextPath}/basket/addFromList" onclick="submit">
                             <input type="hidden" name="productId" value="${item.id}">
-                            <button class="w3-button w3-black">dodaj do koszyka<i class="fa fa-shopping-cart"></i></button>
+                            <button class="w3-button w3-green">dodaj do koszyka<i class="fa fa-shopping-cart"></i></button>
                             </form>
                         </div>
                       <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
