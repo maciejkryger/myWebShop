@@ -48,15 +48,18 @@
 
         <h2>Edycja produktu</h2>
         <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/products/">
-                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-            </a>
+
             <table class="w3-table-all w3-hoverable">
+                <form method="get" action="${pageContext.request.contextPath}/panels/data/products/">
+                      <input type="hidden" name="searchWhat" value="${param.searchWhat}">
+                      <input type="hidden" name="searchBy" value="${param.searchBy}">
+                      <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="anuluj">
+                </form>
                 <form method="post" action="${pageContext.request.contextPath}/panels/data/product/save"
                       modelAttribute="product">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
-
-
+                    <input type="hidden" name="searchWhat" value="${param.searchWhat}">
+                    <input type="hidden" name="searchBy" value="${param.searchBy}">
                     <p>
                         <label><b>id: ${product.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
@@ -175,9 +178,11 @@
                     </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/panels/data/products/">
-                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-                </a>
+                <form method="get" action="${pageContext.request.contextPath}/panels/data/products/">
+                    <input type="hidden" name="searchWhat" value="${param.searchWhat}">
+                    <input type="hidden" name="searchBy" value="${param.searchBy}">
+                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="anuluj">
+                </form>
 
             </table>
         </div>

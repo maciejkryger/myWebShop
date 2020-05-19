@@ -57,14 +57,24 @@ public class ProductManageController {
 
 
     @GetMapping({"/{id}", "/new"})
-    public ModelAndView editProductItem(@PathVariable(required = false) Integer id) {
+    public ModelAndView editProductItem(@PathVariable(required = false) Integer id,
+                                        @RequestParam(required = false) String searchWhat,
+                                        @RequestParam(required = false) String searchBy) {
         modelAndView = new ModelAndView("panels/productItemManager");
+        System.out.println("get mapping product item");
+        System.out.println("searchWhat: "+searchWhat);
+        System.out.println("searchBy:"+ searchBy);
+        System.out.println("-------------------------");
         if (id == null) {
             Product product = new Product();
             product.setActive(true);
             modelAndView.addObject("product", product);
         } else {
             modelAndView.addObject("product", productService.getProductById(id));
+        }
+        if ((searchWhat != null && searchBy != null) || (!searchWhat.isEmpty() && !searchBy.isEmpty())) {
+            modelAndView.addObject(searchWhat,searchWhat);
+            modelAndView.addObject(searchBy,searchBy);
         }
         modelAndView.addObject("types", typeService.getAllTypes());
         modelAndView.addObject("makingTechniques", makingTechniqueService.getAllMakingTechniques());
@@ -85,11 +95,16 @@ public class ProductManageController {
             @RequestParam Integer fasteningTypeId, @RequestParam(required = false) Integer fasteningColorId,
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
             @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active,
-            @RequestParam Integer mainProductId, HttpServletRequest httpServletRequest) {
+            @RequestParam Integer mainProductId, HttpServletRequest httpServletRequest,
+            @RequestParam(required = false) String searchWhat,
+            @RequestParam(required = false) String searchBy) {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-
+        System.out.println("Post mapping product item save");
+        System.out.println("searchWhat: "+searchWhat);
+        System.out.println("searchBy:"+ searchBy);
+        System.out.println("--------------------------------");
         Product product;
         try{
             product = productService.getProductById(id);
@@ -119,6 +134,12 @@ public class ProductManageController {
             product.setMainProduct(productService.getProductById(mainProductId));
         }
         productService.save(product);
-        return "redirect:/panels/data/products";
+        if (searchWhat == null || searchBy == null || searchWhat.isEmpty() || searchBy.isEmpty()) {
+            return "redirect:/panels/data/products";
+        }
+        return "redirect:/panels/data/products/?searchWhat=" + searchWhat + "&searchBy=" + searchBy;
     }
+
+
+
 }

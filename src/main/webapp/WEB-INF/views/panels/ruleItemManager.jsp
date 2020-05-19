@@ -55,8 +55,6 @@
                 <form method="post" action="${pageContext.request.contextPath}/panels/data/rule/save"
                       modelAttribute="rule">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
-
-
                     <p>
                         <label><b>id: ${rule.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
@@ -72,15 +70,13 @@
                         <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
                                value='${rule.namePl}'>
                     </p>
-                   <p>
+                    <p>
                         <label><b>Wpis ENG</b></label>
-                       <input type="text" name="description" placeholder="treść wpisu po angielsku" class="w3-input w3-border"
-                            value='${rule.description}'>
-                   </p>
-
-                   <p>
+                        <textarea name="description" rows = "4" cols = "60"  placeholder="treść wpisu po angielsku" class="w3-input w3-border">${rule.description}</textarea>
+                    </p>
+                    <p>
                        <label><b>Wpis PL</b></label>
-                       <textarea rows = "5" cols = "60" name="descriptionPl" placeholder="treść wpisu po polsku" class="w3-input w3-border">${rule.descriptionPl}</textarea>
+                       <textarea name="descriptionPl" rows = "10" cols = "60" placeholder="treść wpisu po polsku" class="w3-input w3-border">${rule.descriptionPl}</textarea>
                     </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>

@@ -92,9 +92,11 @@
                         <td>${item.descriptionPl}</td>
                         <td><i class="${item.active ? 'far fa-eye' : 'far fa-eye-slash'}"></i></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/product/${item.id}">
-                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
-                            </a>
+                            <form method="GET" action="${pageContext.request.contextPath}/panels/data/product/${item.id}">
+                                <input type="hidden" name="searchWhat" value="${param.searchWhat}">
+                                <input type="hidden" name="searchBy" value="${param.searchBy}">
+                                <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="edytuj">
+                            </form>
                             <form method="post" >
                                 <input type="hidden" name="id" value="${item.id}">
                                 <input type="hidden" name="active" value="${!item.active}">

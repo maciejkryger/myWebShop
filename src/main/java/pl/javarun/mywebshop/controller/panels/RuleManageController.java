@@ -61,8 +61,8 @@ public class RuleManageController {
     }
 
     @PostMapping("/save")
-    public String saveRuleItem(@RequestParam(required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
-                               @RequestParam String description, @RequestParam String descriptionPl) {
+    public String saveRuleItem(@RequestParam(required = false) Integer id, @RequestParam(required = false) String name, @RequestParam(required = false) String namePl,
+                               @RequestParam(required = false) String description, @RequestParam(required = false) String descriptionPl) {
         Rule rule;
         try{
             rule = ruleService.getRuleById(id);
