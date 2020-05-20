@@ -15,9 +15,12 @@ import pl.javarun.mywebshop.util.EmailOrderConfirmation;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static pl.javarun.mywebshop.util.InputValidator.phoneValidator;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -64,11 +67,14 @@ public class WebOrderConfirmationController {
     }
 
     @GetMapping()
-    public ModelAndView inputAddress(HttpServletRequest httpServletRequest) {
+    public ModelAndView confirmation(HttpServletRequest httpServletRequest, @PathParam("phoneEmpty") boolean phoneEmpty,
+                                     @PathParam("phoneWrong") boolean phoneWrong) {
         ModelAndView modelAndView = new ModelAndView("confirmation");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        if(phoneEmpty) modelAndView.addObject("phoneEmpty", true);
+        if(phoneWrong) modelAndView.addObject("phoneWrong",true);
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
@@ -89,22 +95,35 @@ public class WebOrderConfirmationController {
     }
 
     @PostMapping
-    public ModelAndView saveDeliveryOption(HttpServletRequest httpServletRequest, @RequestParam int orderId) {
-        ModelAndView modelAndView = new ModelAndView("confirmationWithOrderNumber");
-        modelAndView.addObject("company", companyService.getCompanyData());
-        modelAndView.addObject("productTypesList", typeService.getAllTypes());
-        modelAndView.addObject("rules", ruleService.getAllRules());
+    public String saveDeliveryOption(HttpServletRequest httpServletRequest, @RequestParam int orderId,
+                                           @RequestParam(required = false) String phone) {
+        if(phone==null || phone.isEmpty()){
+            return "redirect:/confirmation?phoneEmpty=true";
+        }
+        if(!phoneValidator(phone)){
+            return "redirect:/confirmation?phoneWrong=true";
+        }
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
+        user.setPhone(phone);
         int userId = user.getId();
         WebOrder webOrder = webOrderService.getOrderById(orderId);
         webOrder.setConfirmed(true);
         webOrder.setConfirmDate(Timestamp.valueOf(LocalDateTime.now()));
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
-        modelAndView.addObject("orderNumber",webOrder.getOrderNumber());
         emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemOrderId(webOrder.getId()),
                 sumToPay,sumQuantity,deliveryCostsToPay);
+        return  "redirect:/confirmation/finished?ono="+webOrder.getOrderNumber();
+    }
+
+    @GetMapping("/finished")
+    public ModelAndView showOrderNumber(@PathParam(value="ono") String ono){
+        ModelAndView modelAndView = new ModelAndView("confirmationWithOrderNumber");
+        modelAndView.addObject("company", companyService.getCompanyData());
+        modelAndView.addObject("productTypesList", typeService.getAllTypes());
+        modelAndView.addObject("rules", ruleService.getAllRules());
+        modelAndView.addObject("orderNumber",ono);
         return modelAndView;
     }
 

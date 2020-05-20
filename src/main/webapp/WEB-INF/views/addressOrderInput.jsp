@@ -78,13 +78,21 @@
 
      <form method="POST" action="${pageContext.request.contextPath}/address" id="addressForm">
       <label class="w3-row w3-large"><b>Adres dostawy:</b></label>
-      <label class="w3-row"><b>ulica, nr domu i numer mieszkania:</b></label>
+      <p><label class="w3-row"><b>ulica, nr domu i numer mieszkania:</b></label></p>
+      <p>
       <input type="text" name="street" placeholder="ulica" value=${address.street}>
       <input type="text" name="houseNo" placeholder="nr dom" maxlength="4" size="4" value=${address.houseNo}>
       <input type="text" name="flatNo" placeholder="nr m." maxlength="3" size="4" value=${address.flatNo}><br>
-      <label class="w3-row"><b>kod pocztowy(00-000) i miasto:</b></label>
-      <input type="text" name="postCode" placeholder="kod poczt." maxlength="6" size="6" pattern="[0-9]{2}-[0-9]{3}" value=${address.postCode}>
+      </p>
+      <a class="w3-bar-item w3-row" style="color: red">${streetWrong ? 'Pole ulicy posiada niedozwolone znaki.' :''} ${streetEmpty ? 'Pole ulicy nie może zostać puste.' :''}</a>
+      <a class="w3-bar-item w3-row" style="color: red">${houseNoWrong ? 'Pole numeru domu posiada niedozwolone znaki.' :''} ${houseNoEmpty ? 'Pole numeru domu  nie może zostać puste.' :''}</a>
+      <p><label class="w3-row"><b>kod pocztowy(00-000) i miasto:</b></label></p>
+      <p>
+      <input type="text" name="postCode" placeholder="kod poczt." maxlength="6" size="6"  value=${address.postCode}>
       <input type="text" name="city" placeholder="miasto" value=${address.city}>
+      </p>
+      <a class="w3-bar-item w3-row" style="color: red">${postCodeWrong ? 'Pole kodu pocztowego ma zły format' :''} ${postCodeEmpty ? ', nie może zostać puste.' :''}</a>
+            <a class="w3-bar-item w3-row" style="color: red">${cityWrong ? 'Pole miasta ma zły format.' :''} ${cityEmpty ? 'Pole miasta nie może zostać puste.' :''}</a>
     </form>
 </div>
 

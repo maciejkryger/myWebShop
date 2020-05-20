@@ -124,20 +124,27 @@
                  </table>
              </div>
 
+ <form method="POST" action="${pageContext.request.contextPath}/confirmation" id="confirmForm">
   <div class="w3-responsive w3-margin">
-  <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
+   <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
   <p>${user.firstName} ${user.lastName}</p>
   <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
   <p>${address.postCode} ${address.city}</p>
+  <a class="w3-bar-item" style="color: red">${phoneEmpty ? 'Pole numeru telefonu nie może zostać puste, wpisz 9 cyfr' :''}</a>
+  <a class="w3-bar-item" style="color: red">${phoneWrong ? 'Numer telefonu jest za krótki, powinno być 9 cyfr' :''}</a>
+  <p><label for="phone">numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'}</label>
+  <input type="text" name="phone"  nameplaceholder="podaj nr telefonu" value="${user.phone}"  maxlength="9" size="9" ></p>
   </div>
 
    <div class="w3-responsive w3-margin">
     <p class="w3-large"><strong>Metoda płatności:</strong></p>
     <p>${webOrder.paymentMethod.namePl}</p>
     </div>
+    <input type="hidden" name="orderId" value="${webOrder.id}" id="confirmForm">
 
-
+  </form>
 <div class="w3-container w3-responsive" style="padding: 10px">
+
 
 
    <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
@@ -146,10 +153,8 @@
               window.history.back();
              }
           </script>
-   <form method="POST" action="${pageContext.request.contextPath}/confirmation">
-   <input type="hidden" name="orderId" value="${webOrder.id}">
-   <input type="submit" class="w3-button w3-green w3-border w3-round-large w3-right" value="zamów">
-   </form>
+
+ <input type="submit"  form="confirmForm" class="w3-button w3-green w3-border w3-round-large w3-right" value="zamów">
 
 
 </div>

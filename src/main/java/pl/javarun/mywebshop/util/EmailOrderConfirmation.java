@@ -78,11 +78,14 @@ public class EmailOrderConfirmation {
                     append("łącznie do  zapłatow: ").append(sumToPay + deliveryCostsToPay).append(" PLN<BR><BR><BR>").
                     append("<strong>Twoje dane:</strong><BR>").
                     append("------------------------------------------------------------<BR>").
-                    append(user.getFirstName()).append(" ").append(user.getLastName()).append("<BR>");
+                    append(user.getFirstName()).append(" ").append(user.getLastName()).append("<BR>").append("nr telefonu: ").
+                    append(user.getPhone()).append("<BR>");
             try {
                 address = addressService.getByUser(user);
-                builder.append(address.getStreet()).append(" ").append(address.getHouseNo()).append("/").append(address.getFlatNo()).
-                        append("<BR>").append(address.getPostCode()).append(" ").append(address.getCity()).append("<BR>");
+                builder.append(address.getStreet()).append(" ").append(address.getHouseNo());
+                if(address.getFlatNo()!=null && !address.getFlatNo().isEmpty()){
+                builder.append("/").append(address.getFlatNo());}
+                        builder.append("<BR>").append(address.getPostCode()).append(" ").append(address.getCity()).append("<BR>");
             } catch (AddressNotExistException ignored) {
             }
             builder.append("-------------------------------------------------------------<BR>").
@@ -92,7 +95,7 @@ public class EmailOrderConfirmation {
                     append("Jeżeli wybrałeś metodę płatności w formie przedpłaty, pieniądze należy przelać:<BR>").
                     append("- w przypadku przelewu tradycyjnego na konto: <B>").append(companyService.getCompanyData().getAccountNumber()).append("</B><BR>").
                     append("- w przypadku przelewu BLIK na nr telefonu: <B>").append(companyService.getCompanyData().getPhone()).append("</B><BR><BR><BR>").
-                    append("Dziękuję Ci za dokonane zakupy i zapraszam ponownie<BR><B>Sylwia</B>");
+                    append("Dziękuję za dokonane zakupy i zapraszam ponownie<BR><B>Sylwia</B>");
 
             String msg = builder.toString();
 

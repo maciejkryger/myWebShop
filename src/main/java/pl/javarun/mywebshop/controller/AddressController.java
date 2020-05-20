@@ -12,7 +12,10 @@ import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.util.List;
+
+import static pl.javarun.mywebshop.util.InputValidator.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -55,7 +58,11 @@ public class AddressController {
     }
 
     @GetMapping()
-    public ModelAndView inputAddress(HttpServletRequest httpServletRequest) {
+    public ModelAndView inputAddress(HttpServletRequest httpServletRequest,
+                                     @PathParam("streetWrong") boolean streetWrong, @PathParam("streetEmpty") boolean streetEmpty,
+                                     @PathParam("houseNoWrong") boolean houseNoWrong, @PathParam("houseNoEmpty") boolean houseNoEmpty,
+                                     @PathParam("postCodeWrong") boolean postCodeWrong, @PathParam("postCodeEmpty") boolean postCodeEmpty,
+                                     @PathParam("cityWrong") boolean cityWrong, @PathParam("cityEmpty") boolean cityEmpty) {
         ModelAndView modelAndView = new ModelAndView("addressOrderInput");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -67,11 +74,19 @@ public class AddressController {
         int deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
-        try{
-            Address address= addressService.getByUser(user);
-            modelAndView.addObject("address",address);
-        }catch (AddressNotExistException ex){}
-
+        try {
+            Address address = addressService.getByUser(user);
+            modelAndView.addObject("address", address);
+        } catch (AddressNotExistException ignored) {
+        }
+        if (streetWrong) modelAndView.addObject("streetWrong", true);
+        if (streetEmpty) modelAndView.addObject("streetEmpty", true);
+        if (houseNoWrong) modelAndView.addObject("houseNoWrong", true);
+        if (houseNoEmpty) modelAndView.addObject("houseNoEmpty", true);
+        if (postCodeWrong) modelAndView.addObject("postCodeWrong", true);
+        if (postCodeEmpty) modelAndView.addObject("postCodeEmpty", true);
+        if (cityWrong) modelAndView.addObject("cityWrong", true);
+        if (cityEmpty) modelAndView.addObject("cityEmpty", true);
         return modelAndView;
     }
 
@@ -95,6 +110,59 @@ public class AddressController {
         address.setPostCode(postCode);
         address.setCity(city);
         addressService.save(address);
+        if (!nameValidator(street) || street == null || street.isEmpty() || !houseNoValidator(houseNo) || houseNo.isEmpty() || houseNo == null ||
+                !postCodeValidator(postCode) || postCode.isEmpty() || postCode == null || !nameValidator(city) || city.isEmpty() || city == null) {
+            String streetAnswerWrong;
+            String streetAnswerEmpty;
+            String houseNumberAnswerWrong;
+            String houseNumberAnswerEmpty;
+            String postCodeAnswerWrong;
+            String postCodeAnswerEmpty;
+            String cityAnswerWrong;
+            String cityAnswerEmpty;
+            if (!nameValidator(street)) {
+                streetAnswerWrong = "streetWrong=true";
+            } else {
+                streetAnswerWrong = "";
+            }
+            if (street == null || street.isEmpty()) {
+                streetAnswerEmpty = "streetEmpty=true";
+            } else {
+                streetAnswerEmpty = "";
+            }
+            if (!houseNoValidator(houseNo)) {
+                houseNumberAnswerWrong = "houseNoWrong=true";
+            } else {
+                houseNumberAnswerWrong = "";
+            }
+            if (houseNo == null || houseNo.isEmpty()) {
+                houseNumberAnswerEmpty = "houseNoEmpty=true";
+            } else {
+                houseNumberAnswerEmpty = "";
+            }
+            if (!postCodeValidator(postCode)) {
+                postCodeAnswerWrong = "postCodeWrong=true";
+            } else {
+                postCodeAnswerWrong = "";
+            }
+            if (postCode == null || postCode.isEmpty()) {
+                postCodeAnswerEmpty = "postCodeEmpty=true";
+            } else {
+                postCodeAnswerEmpty = "";
+            }
+            if (!nameValidator(city)) {
+                cityAnswerWrong = "cityWrong=true";
+            } else {
+                cityAnswerWrong = "";
+            }
+            if (city == null || city.isEmpty()) {
+                cityAnswerEmpty = "cityEmpty=true";
+            } else {
+                cityAnswerEmpty = "";
+            }
+            return "redirect:/address?" + streetAnswerWrong + "&" + streetAnswerEmpty + "&" + houseNumberAnswerWrong + "&" + houseNumberAnswerEmpty +
+                    "&" + postCodeAnswerWrong + "&" + postCodeAnswerEmpty + "&" + cityAnswerWrong + "&" + cityAnswerEmpty;
+        }
         return "redirect:/confirmation";
     }
 
