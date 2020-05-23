@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -21,4 +22,14 @@ public interface WebOrderRepository extends JpaRepository<WebOrder, Integer> {
     Optional<WebOrder> findByUser_IdAndConfirmedFalse(int usersId);
 
     WebOrder findByUser(User user);
+
+    List<WebOrder> findAllByConfirmedIsFalse();
+
+    List<WebOrder> findAllByAcceptedTrueAndPaidFalse();
+
+    List<WebOrder> findAllByConfirmedIsTrueAndAcceptedFalse();
+
+    List<WebOrder> getAllByPaidTrueAndCompletedFalse();
+
+    List<WebOrder> findAllByCompletedTrueAndShipmentNumberNotNull();
 }

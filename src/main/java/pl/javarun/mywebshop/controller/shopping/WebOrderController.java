@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +63,7 @@ public class WebOrderController {
         try{
             int sumQuantity = calculateActualQuantityInUserBasket(userId);
             int sumToPay = calculateActualSumToPayInUserBasket(userId);
-            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
+            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
             modelAndView.addObject("sumQuantity", sumQuantity);
             modelAndView.addObject("sumToPay", sumToPay);
         }catch (OrderNotExistException ex){
@@ -138,7 +138,7 @@ public class WebOrderController {
 
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
         for (WebOrderItem item : items) {
             result += item.getQuantity();
         }
@@ -147,7 +147,7 @@ public class WebOrderController {
 
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
         for (WebOrderItem item : items) {
             result += (item.getQuantity() * item.getProductPrice());
         }

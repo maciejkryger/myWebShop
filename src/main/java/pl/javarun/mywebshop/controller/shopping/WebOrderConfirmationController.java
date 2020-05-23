@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -85,7 +85,7 @@ public class WebOrderConfirmationController {
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
-        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
+        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
         modelAndView.addObject("webOrder",webOrder);
         try{
             modelAndView.addObject("address", addressService.getByUser(user));
@@ -112,7 +112,7 @@ public class WebOrderConfirmationController {
         webOrder.setConfirmDate(Timestamp.valueOf(LocalDateTime.now()));
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
-        emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemOrderId(webOrder.getId()),
+        emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemByOrderId(webOrder.getId()),
                 sumToPay,sumQuantity,deliveryCostsToPay);
         return  "redirect:/confirmation/finished?ono="+webOrder.getOrderNumber();
     }
@@ -130,7 +130,7 @@ public class WebOrderConfirmationController {
 
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
         for (WebOrderItem item : items) {
             result += (item.getQuantity() * item.getProductPrice());
         }
@@ -139,7 +139,7 @@ public class WebOrderConfirmationController {
 
     private int calculateActualQuantityInUserBasket(int userId) {
         int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
         for (WebOrderItem item : items) {
             result += item.getQuantity();
         }

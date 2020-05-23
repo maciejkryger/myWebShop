@@ -28,7 +28,15 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+    .myInput{
+        border: 2px solid green;
+        border-radius: 8px;
+        color: black;
+        text-align: center;
+        }
+
 </style>
+
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
@@ -133,7 +141,7 @@
   <a class="w3-bar-item" style="color: red">${phoneEmpty ? 'Pole numeru telefonu nie może zostać puste, wpisz 9 cyfr' :''}</a>
   <a class="w3-bar-item" style="color: red">${phoneWrong ? 'Numer telefonu jest za krótki, powinno być 9 cyfr' :''}</a>
   <p><label for="phone">numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'}</label>
-  <input type="text" name="phone"  nameplaceholder="podaj nr telefonu" value="${user.phone}"  maxlength="9" size="9" ></p>
+  <input type="text" name="phone"  placeholder="nr telefonu" value="${user.phone}"  maxlength="9" size="9" class="myInput"></p>
   </div>
 
    <div class="w3-responsive w3-margin">

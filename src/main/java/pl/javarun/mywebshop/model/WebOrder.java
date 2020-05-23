@@ -5,6 +5,8 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 
 
 /**
@@ -46,7 +48,7 @@ public class WebOrder {
     private int paymentAmount;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp paymentDate;
+    private LocalDate paymentDate;
     @Nullable
     @ManyToOne(targetEntity = PaymentMethod.class)
     private PaymentMethod paymentMethod;
@@ -57,12 +59,12 @@ public class WebOrder {
 
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp shipmentDate;
+    private LocalDate shipmentDate;
     @Nullable
     private String shipmentNumber;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Timestamp shipmentDeliveryDate;
+    private LocalDate shipmentDeliveryDate;
 
 
     @Nullable
@@ -186,11 +188,11 @@ public class WebOrder {
     }
 
     @Nullable
-    public Timestamp getPaymentDate() {
+    public LocalDate getPaymentDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(@Nullable Timestamp paymentDate) {
+    public void setPaymentDate(@Nullable LocalDate paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -212,11 +214,11 @@ public class WebOrder {
     }
 
     @Nullable
-    public Timestamp getShipmentDeliveryDate() {
+    public LocalDate getShipmentDeliveryDate() {
         return shipmentDeliveryDate;
     }
 
-    public void setShipmentDeliveryDate(@Nullable Timestamp shipmentDeliveryDate) {
+    public void setShipmentDeliveryDate(@Nullable LocalDate shipmentDeliveryDate) {
         this.shipmentDeliveryDate = shipmentDeliveryDate;
     }
 
@@ -230,11 +232,11 @@ public class WebOrder {
     }
 
     @Nullable
-    public Timestamp getShipmentDate() {
+    public LocalDate getShipmentDate() {
         return shipmentDate;
     }
 
-    public void setShipmentDate(@Nullable Timestamp shipmentDate) {
+    public void setShipmentDate(@Nullable LocalDate shipmentDate) {
         this.shipmentDate = shipmentDate;
     }
 

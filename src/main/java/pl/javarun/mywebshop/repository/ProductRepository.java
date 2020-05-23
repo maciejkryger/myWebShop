@@ -3,6 +3,8 @@ package pl.javarun.mywebshop.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.Type;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -107,4 +109,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByFamilyAndActive(int id);
 
     List<Product> findAllByMainProduct_NamePlContainsIgnoreCase(String name);
+
+    @Query(value = "select distinct p.* and wl.* from product p join wish_list wl on p.id=wl.product_id where (wl.user_id = :id and p.active=true and p.type.name=:type)",
+            nativeQuery = true)
+    List<Product> findAllActiveProductsWithWishListTagByProductTypeNameAndUserId(String type, int id);
+
+
 }

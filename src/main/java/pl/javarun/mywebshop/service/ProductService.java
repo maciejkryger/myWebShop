@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.service;
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.ProductNotExistException;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.Type;
 import pl.javarun.mywebshop.search.SearchProductModelOption;
 import pl.javarun.mywebshop.repository.ProductRepository;
 
@@ -202,4 +203,6 @@ public class ProductService {
         return productRepository.findAllByFamilyAndActive(id);
     }
 
+    public List<Product> getAllActiveProductsWithWishListTagByProductTypeNameAndUserId(String type, int id){
+        return productRepository.findAllActiveProductsWithWishListTagByProductTypeNameAndUserId(type,id);}
 }

@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;

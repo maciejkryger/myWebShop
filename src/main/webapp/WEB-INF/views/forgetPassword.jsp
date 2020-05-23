@@ -74,10 +74,10 @@
                         <label><b>Adres email podany podczas rejestracji:</b></label>
                         <input type="text" name="email" placeholder="wpisz email" class="w3-input w3-border" value="${email}">
                    </p>
-                    <input type="submit" class="w3-button w3-red w3-border w3-round-large" value="zatwierdź"/>
+                    <input type="submit" class="w3-button w3-green w3-border w3-round-large" value="zatwierdź"/>
                 </form>
                   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
-                 <!--       <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>-->
+
                         <script>
                            function goBack() {
                             window.history.back();

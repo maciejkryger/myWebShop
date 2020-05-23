@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.List;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -50,4 +51,5 @@ public class WishList {
     public void setProduct(Product product) {
         this.product = product;
     }
+
 }

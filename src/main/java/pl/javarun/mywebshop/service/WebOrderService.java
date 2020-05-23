@@ -3,7 +3,6 @@ package pl.javarun.mywebshop.service;
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.WebOrder;
-import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.repository.WebOrderRepository;
 
 import java.util.List;
@@ -44,5 +43,25 @@ public class WebOrderService {
 
     public WebOrder getOrderById(int orderId) {
         return webOrderRepository.findById(orderId).orElseThrow(()->new OrderNotExistException("Zamówienie w bazie nie istnieje!"));
+    }
+
+    public List<WebOrder> getAllConfirmedFalse() {
+        return webOrderRepository.findAllByConfirmedIsFalse();
+    }
+
+    public List<WebOrder> getAllAcceptedTruePaidFalse() {
+        return webOrderRepository.findAllByAcceptedTrueAndPaidFalse();
+    }
+
+    public List<WebOrder> getAllConfirmedTrueNotAccepted() {
+        return webOrderRepository.findAllByConfirmedIsTrueAndAcceptedFalse();
+    }
+
+    public List<WebOrder> getAllPaidTrueCompletedFalse() {
+    return webOrderRepository.getAllByPaidTrueAndCompletedFalse();
+    }
+
+    public List<WebOrder> getAllCompletedTrueSent() {
+        return webOrderRepository.findAllByCompletedTrueAndShipmentNumberNotNull();
     }
 }

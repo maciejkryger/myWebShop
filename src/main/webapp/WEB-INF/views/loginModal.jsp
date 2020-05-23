@@ -14,6 +14,7 @@
                 <p class="w3-bar-item w3-padding">Jesteś zalogowany jako: ${sessionScope.user.username}</p>
                 <c:if test="${sessionScope.user.role.id<='2'}">
                     <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button">superPanel</a>
+                    <a href="${pageContext.request.contextPath}/orderCenter" class="w3-bar-item w3-button">zamówienia</a>
                 </c:if>
                 <a href="${pageContext.request.contextPath}/changeUserDetails" class="w3-bar-item w3-button">edycja danych</a>
                 <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button">wyloguj</a>

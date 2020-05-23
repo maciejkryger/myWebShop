@@ -44,7 +44,7 @@ public class WebOrderItemService {
                                 " and productId " + productId + " not Extist"));
     }
 
-    public List<WebOrderItem> getOrderItemOrderId(int orderId) {
+    public List<WebOrderItem> getOrderItemByOrderId(int orderId) {
         return webOrderItemRepository.findByWebOrder_Id(orderId);
     }
 }

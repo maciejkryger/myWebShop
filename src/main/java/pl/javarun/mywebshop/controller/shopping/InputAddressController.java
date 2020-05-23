@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,33 +27,27 @@ import static pl.javarun.mywebshop.util.InputValidator.*;
  ******************************************************/
 @Controller
 @RequestMapping("/address")
-public class AddressController {
+public class InputAddressController {
 
-    private final UserService userService;
+
     private final TypeService typeService;
     private final CompanyService companyService;
     private final RuleService ruleService;
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
-    private final ProductService productService;
-    private final DeliveryOptionService deliveryOptionService;
-    private final PaymentTypeService paymentTypeService;
+
     private final AddressService addressService;
 
 
-    public AddressController(UserService userService, TypeService typeService, CompanyService companyService,
-                             RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
-                             ProductService productService, DeliveryOptionService deliveryOptionService,
-                             PaymentTypeService paymentTypeService, AddressService addressService) {
-        this.userService = userService;
+    public InputAddressController(UserService userService, TypeService typeService, CompanyService companyService,
+                                  RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
+                                  ProductService productService, DeliveryOptionService deliveryOptionService,
+                                  PaymentTypeService paymentTypeService, AddressService addressService) {
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.webOrderService = webOrderService;
         this.webOrderItemService = webOrderItemService;
-        this.productService = productService;
-        this.deliveryOptionService = deliveryOptionService;
-        this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
     }
 
@@ -169,7 +163,7 @@ public class AddressController {
 
     private int calculateActualSumToPayInUserBasket(int userId) {
         int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
         for (WebOrderItem item : items) {
             result += (item.getQuantity() * item.getProductPrice());
         }

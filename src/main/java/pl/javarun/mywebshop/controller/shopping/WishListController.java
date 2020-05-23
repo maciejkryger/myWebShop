@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 
 import org.springframework.beans.factory.annotation.Value;

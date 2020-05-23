@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -33,13 +33,40 @@
         border-radius: 8px;
         color: black;
         text-align: center;
+        }
+
+    .myButton{
+    height: 100px;
+    min-width: 400px;
+    position: relative;
+    overflow: auto;
+    text-align:center;
+    padding: 34px 50px;
+    border: 3px solid green;
     }
 
+        .shipmentInput{
+            border: 2px solid grey;
+            border-radius: 8px;
+            color: black;
+            text-align: center;
+            width: 100px;
+            }
+
+        .dataInput{
+            border: 2px solid grey;
+            border-radius: 8px;
+            color: black;
+            text-align: center;
+            width: 150px;
+            }
+
 </style>
+
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
+<%@include file='../menu.jsp' %>
 
 
 <!-- Top menu on small screens -->
@@ -61,72 +88,100 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">krok 2 - adres wysyłki</p>
-        <%@include file='header.jsp' %>
+        <p class="w3-left">centrum zamówień</p>
+        <%@include file='../header.jsp' %>
     </header>
 
 
 <!-- Delivery grid -->
- <h2>Podaj adres do wysyłki</h2>
-        <div class="w3-responsive">
+ <h2>Zamówienia zapłacone</h2>
+        <div class="w3-responsive w3-padding">
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
                     </c:if>
+         <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
         </div>
 
- <div class="w3-container w3-responsive w3-margin">
- <p>Wartość koszyka: <strong> ${sumToPay} PLN </strong></p>
- <p>Koszty dostawy: <strong> ${deliveryCostsToPay} PLN </strong></p>
- <p>-------------------------------------------------</p>
- <p>Łącznie do zapłaty: <strong> ${sumToPay+deliveryCostsToPay} PLN </strong></p>
- </div>
+<div class="w3-responsive">
+<table class="w3-table-all w3-hoverable">
+                    <thead>
+                    <tr class="w3-light-grey ">
+                        <th>data zamówienia</th>
+                        <th>numer zamówienia</th>
+                        <th>metoda płatności</th>
+                        <th>Klient</th>
+                        <th>szczegóły</th>
+                        <th>potwierdź wysłanie/wydanie</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach var="order" items="${ordersPaid}">
 
- <div class="w3-responsive w3-container w3-padding w3-margin">
+                        <tr>
+                            <td>${order.confirmDate}</td>
+                            <td>${order.orderNumber}</td>
+                            <td>${order.deliveryOption.namePl}</td>
+                            <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td>
+                            <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
+                                <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
+                            </a>
+                            </td>
+                            <td>
 
-     <form method="POST" action="${pageContext.request.contextPath}/address" id="addressForm">
-      <label class="w3-row w3-large"><b>Adres dostawy:</b></label>
-      <p><label class="w3-row"><b>ulica, nr domu i numer mieszkania:</b></label></p>
-      <p>
-      <input type="text" name="street" placeholder="ulica" value="${address.street}" class="myInput">
-      <input type="text" name="houseNo" placeholder="nr dom" maxlength="4" size="4" value="${address.houseNo}" class="myInput">
-      <input type="text" name="flatNo" placeholder="nr m." maxlength="3" size="4" value="${address.flatNo}" class="myInput"><br>
-      </p>
-      <a class="w3-bar-item w3-row" style="color: red">${streetWrong ? 'Pole ulicy posiada niedozwolone znaki.' :''} ${streetEmpty ? 'Pole ulicy nie może zostać puste.' :''}</a>
-      <a class="w3-bar-item w3-row" style="color: red">${houseNoWrong ? 'Pole numeru domu posiada niedozwolone znaki.' :''} ${houseNoEmpty ? 'Pole numeru domu  nie może zostać puste.' :''}</a>
-      <p><label class="w3-row"><b>kod pocztowy(00-000) i miasto:</b></label></p>
-      <p>
-      <input type="text" name="postCode" placeholder="kod poczt." maxlength="6" size="6"  value=${address.postCode} class="myInput">
-      <input type="text" name="city" placeholder="miasto" value="${address.city}" class="myInput">
-      </p>
-      <a class="w3-bar-item w3-row" style="color: red">${postCodeWrong ? 'Pole kodu pocztowego ma zły format' :''} ${postCodeEmpty ? ', nie może zostać puste.' :''}</a>
-            <a class="w3-bar-item w3-row" style="color: red">${cityWrong ? 'Pole miasta ma zły format.' :''} ${cityEmpty ? 'Pole miasta nie może zostać puste.' :''}</a>
-    </form>
+                            <form method="post" >
+                              <input type="hidden" name="id" value="${order.id}">
+                              <input type="hidden" name="completed" value="true">
+                              <c:if test="${order.deliveryOption.id<4}">
+                                <input type="text" name="shipmentNumber" class="shipmentInput" placeholder="nr LP">
+                                <input type="date" name="shipmentDate" class="dataInput">
+                              </c:if>
+
+                              <input type="submit" value="${order.deliveryOption.id<4 ?'potwierdź wysłanie' :'potwierdź gotowe do odbioru'}" class="w3-button w3-white w3-border w3-round-large">
+                            </form>
+                            <c:if test="${order.deliveryOption.id<4}">
+                            <form method="post" action="${pageContext.request.contextPath}/orderCenter/address">
+                            <input type="hidden" name="id" value="${order.id}">
+                            <input type="submit" value="adres wysyłki" class="w3-button w3-white w3-border w3-round-large">
+                            </form>
+                            </c:if>
+                            </td>
+
+                        </tr>
+
+
+                    </c:forEach>
+                    </tbody>
+                </table>
+
 </div>
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
 
 
-   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
+
+   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
           <script>
              function goBack() {
               window.history.back();
              }
           </script>
-   <input type="submit" form="addressForm" class="w3-button w3-green w3-border w3-round-large w3-right" value="dalej"/>
+
 
 </div>
+
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

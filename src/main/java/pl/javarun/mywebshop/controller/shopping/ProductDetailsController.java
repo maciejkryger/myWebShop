@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller;
+package pl.javarun.mywebshop.controller.shopping;
 
 import com.fasterxml.jackson.core.JsonPointer;
 import org.springframework.stereotype.Controller;
