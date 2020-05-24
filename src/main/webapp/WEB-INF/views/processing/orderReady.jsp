@@ -118,11 +118,11 @@
                         <th>opcja dostawy</th>
                         <th>Klient</th>
                         <th>szczegóły</th>
-                        <th>potwierdź wysłanie/wydanie</th>
+                        <th>potwierdź wysłanie/skompletowanie</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="order" items="${ordersPaid}">
+                    <c:forEach var="order" items="${ordersReady}">
 
                         <tr>
                             <td>${order.confirmDate}</td>

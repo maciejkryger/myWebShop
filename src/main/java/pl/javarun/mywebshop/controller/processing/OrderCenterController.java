@@ -54,8 +54,12 @@ public class OrderCenterController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-
-
+        modelAndView.addObject("notConfirmedOrdersSize",webOrderService.getAllConfirmedFalse().size());
+        modelAndView.addObject("ordersNewSize",webOrderService.getAllConfirmedTrueNotAccepted().size());
+        modelAndView.addObject("ordersAcceptedSize",webOrderService.getAllAcceptedTruePaidFalsePrepayment().size());
+        modelAndView.addObject("ordersReadySize", webOrderService.getAllReady().size());
+        modelAndView.addObject("ordersSentSize", webOrderService.getAllSentOrReadyToSelfPickUpOrders().size());
+        modelAndView.addObject("ordersDeliveredSize",webOrderService.getAllCompletedAndDeliveryDateNotNull().size());
         return modelAndView;
     }
 

@@ -53,6 +53,15 @@
       padding: 5%;
       }
 
+    .counter{
+    margin-left: 10px;
+    padding: 5px;
+    border: 3px solid black;
+    border-radius: 100%;
+    background-color: black;
+    color: white;
+    }
+
     @media only screen and (max-width: 600px) {
       /* For mobile phones: */
       .myButton {
@@ -111,12 +120,12 @@
         </div>
 
  <div class="w3-responsive w3-padding-64 myDivPosition">
-    <a href="${pageContext.request.contextPath}/orderCenter/notConfirmed" class="myButton w3-button  w3-light-grey w3-border w3-round-xlarge">porzucone  <i class="fas fa-cart-arrow-down" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/new" class="myButton w3-button  w3-red w3-border w3-round-xlarge">nowe <i class="fas fa-cart-plus" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/accepted" class="myButton w3-button  w3-yellow w3-border w3-round-xlarge">zaakceptowane z przedpłatą <i class="far fa-calendar-check" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/paid" class="myButton w3-button  w3-green w3-border w3-round-xlarge">gotowe do skompletowania <i class="fas fa-box-open" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/sent" class="myButton w3-button  w3-blue w3-border w3-round-xlarge">wysłane/OWL <i class="fas fa-box" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/delivered" class="myButton w3-button  w3-light-blue w3-border w3-round-xlarge">doręczone <i class="far fa-thumbs-up" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/notConfirmed" class="myButton w3-button  w3-light-grey w3-border w3-round-xlarge">porzucone  <i class="fas fa-cart-arrow-down" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${notConfirmedOrdersSize}</b></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/new" class="myButton w3-button  w3-red w3-border w3-round-xlarge">nowe <i class="fas fa-cart-plus" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${ordersNewSize}</b></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/accepted" class="myButton w3-button  w3-yellow w3-border w3-round-xlarge">zaakceptowane z przedpłatą <i class="far fa-calendar-check" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${ordersAcceptedSize}</b></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/paid" class="myButton w3-button  w3-green w3-border w3-round-xlarge">gotowe do skompletowania <i class="fas fa-box-open" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${ordersReadySize}</b></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/sent" class="myButton w3-button  w3-blue w3-border w3-round-xlarge">wysłane/OWL <i class="fas fa-box" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${ordersSentSize}</b></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/delivered" class="myButton w3-button  w3-light-blue w3-border w3-round-xlarge">doręczone <i class="far fa-thumbs-up" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i><b class="counter">${ordersDeliveredSize}</b></a>
  </div>
 
 

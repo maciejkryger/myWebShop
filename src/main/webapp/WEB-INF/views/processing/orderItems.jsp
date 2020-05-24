@@ -31,18 +31,19 @@
     .myInput{
         border: 2px solid green;
         border-radius: 8px;
+        width: 5000px;
         color: black;
         text-align: center;
         }
 
     .myButton{
-    height: 100px;
-    min-width: 400px;
-    position: relative;
-    overflow: auto;
-    text-align:center;
-    padding: 34px 50px;
-    border: 3px solid green;
+        height: 100px;
+        min-width: 400px;
+        position: relative;
+        overflow: auto;
+        text-align:center;
+        padding: 34px 50px;
+        border: 3px solid green;
     }
 
 </style>
@@ -89,6 +90,7 @@
 
 
 <div class="w3-responsive">
+        Numer zamówienia: ${webOrder.orderNumber}
                 <table class="w3-table-all w3-hoverable">
                     <thead>
                     <tr class="w3-light-grey ">
@@ -130,21 +132,36 @@
                        </tr>
                 </table>
 
+
             </div>
+
+<div class="w3-responsive w3-margin">
+  <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
+  <p>${user.firstName} ${user.lastName}</p>
+  <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
+  <p>${address.postCode} ${address.city}</p>
+  <p>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'} <b>${user.phone}</b></p>
+  <p>uwagi do zamówienia: <c:if test="${webOrder.comment!=null}"><b>${webOrder.comment}</b></c:if>
+  <c:if test="${webOrder.comment==null}">BRAK</c:if></p>
+</div>
+
+<div class="w3-responsive w3-margin w3-row">
+    <p class="w3-large"><strong>Metoda płatności:</strong></p>
+    <p>${webOrder.paymentMethod.namePl}</p>
+</div>
+<div class="w3-responsive w3-margin w3-row">
+    <p class="w3-large"><strong>Opcja dostawy:</strong></p>
+    <p>${webOrder.deliveryOption.namePl}</p>
+</div>
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
    <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
           <script>
              function goBack() {
               window.history.back();
              }
           </script>
-
-
 </div>
 
     <!-- Footer -->

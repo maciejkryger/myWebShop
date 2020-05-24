@@ -57,7 +57,7 @@ public class OrderReadyController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        modelAndView.addObject("ordersPaid", webOrderService.getAllReady());
+        modelAndView.addObject("ordersReady", webOrderService.getAllReady());
         if (id != null) {
             User user = webOrderService.getOrderById(id).getUser();
             modelAndView.addObject("address", addressService.getByUser(user));

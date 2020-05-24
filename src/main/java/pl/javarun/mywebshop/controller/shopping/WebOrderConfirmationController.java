@@ -96,7 +96,7 @@ public class WebOrderConfirmationController {
 
     @PostMapping
     public String saveDeliveryOption(HttpServletRequest httpServletRequest, @RequestParam int orderId,
-                                           @RequestParam(required = false) String phone) {
+                                           @RequestParam(required = false) String phone, @RequestParam(required = false) String comment) {
         if(phone==null || phone.isEmpty()){
             return "redirect:/confirmation?phoneEmpty=true";
         }
@@ -106,9 +106,10 @@ public class WebOrderConfirmationController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         user.setPhone(phone);
-        int userId = user.getId();
+        userService.saveUser(user);
         WebOrder webOrder = webOrderService.getOrderById(orderId);
         webOrder.setConfirmed(true);
+        webOrder.setComment(comment);
         webOrder.setConfirmDate(Timestamp.valueOf(LocalDateTime.now()));
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);

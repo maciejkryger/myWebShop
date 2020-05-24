@@ -28,11 +28,21 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+
     .myInput{
         border: 2px solid green;
         border-radius: 8px;
         color: black;
         text-align: center;
+    }
+
+
+    .commentInput{
+        border: 2px solid green;
+        border-radius: 8px;
+        color: black;
+        text-align: center;
+        min-width: 50%
         }
 
 </style>
@@ -140,8 +150,10 @@
   <p>${address.postCode} ${address.city}</p>
   <a class="w3-bar-item" style="color: red">${phoneEmpty ? 'Pole numeru telefonu nie może zostać puste, wpisz 9 cyfr' :''}</a>
   <a class="w3-bar-item" style="color: red">${phoneWrong ? 'Numer telefonu jest za krótki, powinno być 9 cyfr' :''}</a>
-  <p><label for="phone">numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'}</label>
+  <p><label>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'}</label>
   <input type="text" name="phone"  placeholder="nr telefonu" value="${user.phone}"  maxlength="9" size="9" class="myInput"></p>
+  <p><label>uwagi do zamówienia:</label>
+  <input type="text" name="comment"  placeholder="uwagi do zamówienia" value="${webOrder.comment}" class="commentInput"></p>
   </div>
 
    <div class="w3-responsive w3-margin">

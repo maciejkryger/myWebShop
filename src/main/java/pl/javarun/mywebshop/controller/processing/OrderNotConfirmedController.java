@@ -60,7 +60,6 @@ public class OrderNotConfirmedController {
         modelAndView.addObject("notConfirmedOrders",webOrderService.getAllConfirmedFalse());
         modelAndView.addObject("ordersValue", getOrdersValueConfirmedFalse());
         modelAndView.addObject("ordersQuantity",getOrdersQuantityConfirmedFalse());
-//        modelAndView.addObject("orderItems",getOrdersItemsConfirmedFalse());
         return modelAndView;
     }
 
@@ -92,18 +91,5 @@ public class OrderNotConfirmedController {
         return result;
     }
 
-    private List<WebOrderItem> getOrdersItemsConfirmedFalse(){
-        List<WebOrderItem> result=null;
-        List<WebOrder> orders = webOrderService.getAllConfirmedFalse();
-        List<WebOrderItem> items = webOrderItemService.getAllOrders();
-        for (WebOrder order: orders) {
-            for (WebOrderItem item: items){
-                if(order.getId()==item.getWebOrder().getId()){
-                    result.add(item);
-                }
-            }
-        }
-        return result;
-    }
 
 }

@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.AddressNotExistException;
+import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
 import pl.javarun.mywebshop.service.*;
 
@@ -60,6 +62,11 @@ public class OrderItemsController {
         modelAndView.addObject("orderItems",webOrderItemService.getOrderItemByOrderId(id));
         modelAndView.addObject("sumToPay", calculateActualSumToPayByOrderId(id));
         modelAndView.addObject("sumQuantity", calculateActualQuantityOrderId(id));
+        WebOrder webOrder = webOrderService.getOrderById(id);
+        modelAndView.addObject("webOrder",webOrder);
+        try{
+            modelAndView.addObject("address", addressService.getByUser(webOrder.getUser()));
+        }catch (AddressNotExistException ignored){}
         return modelAndView;
     }
 

@@ -97,6 +97,12 @@
                         <th>szczegóły</th>
                         <th>opcje</th>
                     </tr>
+                    <tr>
+                        <th colspan="7">
+                           uwagi do zamówienia
+                        </th>
+                    </tr>
+
                     </thead>
                     <tbody>
                     <c:forEach var="order" items="${ordersNew}">
@@ -122,8 +128,13 @@
                             </td>
 
                         </tr>
-
-
+                        <c:if test="${order.comment!=null}">
+                        <tr>
+                        <td colspan="7">
+                          uwagi: <b>${order.comment}</b>
+                        </td>
+                        </tr>
+                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>
