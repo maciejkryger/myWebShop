@@ -49,19 +49,23 @@ public class WebOrderService {
         return webOrderRepository.findAllByConfirmedIsFalse();
     }
 
-    public List<WebOrder> getAllAcceptedTruePaidFalse() {
-        return webOrderRepository.findAllByAcceptedTrueAndPaidFalse();
+    public List<WebOrder> getAllAcceptedTruePaidFalsePrepayment() {
+        return webOrderRepository.findAllByAcceptedTrueAndPaidFalseAndDeliveryOption_PaymentType_IdIs(1);
     }
 
     public List<WebOrder> getAllConfirmedTrueNotAccepted() {
         return webOrderRepository.findAllByConfirmedIsTrueAndAcceptedFalse();
     }
 
-    public List<WebOrder> getAllPaidTrueCompletedFalse() {
-    return webOrderRepository.getAllByPaidTrueAndCompletedFalse();
+    public List<WebOrder> getAllReady() {
+    return webOrderRepository.getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_Id(2);
     }
 
-    public List<WebOrder> getAllCompletedTrueSent() {
-        return webOrderRepository.findAllByCompletedTrueAndShipmentNumberNotNull();
+    public List<WebOrder> getAllSentOrReadyToSelfPickUpOrders() {
+        return webOrderRepository.findAllByCompletedTrueAndDeliveryDateIsNull();
+    }
+
+    public List<WebOrder> getAllCompletedAndDeliveryDateNotNull() {
+        return webOrderRepository.findAllByCompletedTrueAndDeliveryDateNotNull();
     }
 }

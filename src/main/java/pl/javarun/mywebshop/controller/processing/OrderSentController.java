@@ -2,11 +2,15 @@ package pl.javarun.mywebshop.controller.processing;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -49,14 +53,26 @@ public class OrderSentController {
     }
 
     @GetMapping()
-    public ModelAndView inputAddress(HttpServletRequest httpServletRequest) {
+    public ModelAndView showSentOrders(HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("processing/orderSent");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        modelAndView.addObject("ordersSent",webOrderService.getAllCompletedTrueSent());
-
+        modelAndView.addObject("ordersSent", webOrderService.getAllSentOrReadyToSelfPickUpOrders());
         return modelAndView;
+    }
+
+    @PostMapping()
+    public String confirmDeliveryDate(@RequestParam int id, @RequestParam(required = false) String deliveryDate,
+                                      @RequestParam (required = false) Integer paymentAmount) {
+        WebOrder order = webOrderService.getOrderById(id);
+        order.setDeliveryDate(LocalDate.parse(deliveryDate));
+        if(paymentAmount!=null){
+            order.setPaymentAmount(paymentAmount);
+            order.setPaid(true);
+        }
+        webOrderService.save(order);
+        return "redirect:/orderCenter/sent";
     }
 
 

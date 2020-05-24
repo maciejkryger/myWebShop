@@ -45,13 +45,13 @@
         }
 
     .myButton{
-    height: 100px;
-    min-width: 400px;
-    position: relative;
-    overflow: auto;
-    text-align:center;
-    padding: 34px 50px;
-    border: 3px solid green;
+        height: 100px;
+        min-width: 400px;
+        position: relative;
+        overflow: auto;
+        text-align:center;
+        padding: 34px 50px;
+        border: 3px solid green;
     }
 
 </style>
@@ -88,12 +88,9 @@
 
 <!-- Delivery grid -->
  <h2>Zamówienia zaakceptowane</h2>
-        <div class="w3-responsive w3-padding">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                    </c:if>
-               <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
-        </div>
+<div class="w3-responsive w3-padding">
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
+</div>
 
 <div class="w3-responsive">
  <table class="w3-table-all w3-hoverable">
@@ -142,17 +139,7 @@
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
 
     <!-- Footer -->

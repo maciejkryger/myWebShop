@@ -113,26 +113,16 @@
  <div class="w3-responsive w3-padding-64 myDivPosition">
     <a href="${pageContext.request.contextPath}/orderCenter/notConfirmed" class="myButton w3-button  w3-light-grey w3-border w3-round-xlarge">porzucone  <i class="fas fa-cart-arrow-down" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
     <a href="${pageContext.request.contextPath}/orderCenter/new" class="myButton w3-button  w3-red w3-border w3-round-xlarge">nowe <i class="fas fa-cart-plus" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/accepted" class="myButton w3-button  w3-yellow w3-border w3-round-xlarge">zaakceptowane <i class="far fa-calendar-check" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/paid" class="myButton w3-button  w3-green w3-border w3-round-xlarge">zapłacone <i class="far fa-credit-card" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
-    <a href="${pageContext.request.contextPath}/orderCenter/sent" class="myButton w3-button  w3-blue w3-border w3-round-xlarge">wysłane <i class="fas fa-box" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/accepted" class="myButton w3-button  w3-yellow w3-border w3-round-xlarge">zaakceptowane z przedpłatą <i class="far fa-calendar-check" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/paid" class="myButton w3-button  w3-green w3-border w3-round-xlarge">gotowe do skompletowania <i class="fas fa-box-open" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
+    <a href="${pageContext.request.contextPath}/orderCenter/sent" class="myButton w3-button  w3-blue w3-border w3-round-xlarge">wysłane/OWL <i class="fas fa-box" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
     <a href="${pageContext.request.contextPath}/orderCenter/delivered" class="myButton w3-button  w3-light-blue w3-border w3-round-xlarge">doręczone <i class="far fa-thumbs-up" style="font-size:24px;text-shadow:2px 2px 4px #000000;"></i></a>
  </div>
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
 
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
-
+    <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large w3-left">zamknij</a>
 </div>
 
     <!-- Footer -->

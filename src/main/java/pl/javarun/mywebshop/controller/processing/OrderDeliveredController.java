@@ -54,7 +54,7 @@ public class OrderDeliveredController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        modelAndView.addObject("ordersDelivered",webOrderService.getAllAcceptedTruePaidFalse());
+        modelAndView.addObject("ordersDelivered",webOrderService.getAllCompletedAndDeliveryDateNotNull());
 
         return modelAndView;
     }

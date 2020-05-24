@@ -79,57 +79,43 @@
 
 <!-- Delivery grid -->
  <h2>Zamówienia doręczone</h2>
-        <div class="w3-responsive w3-padding">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                    </c:if>
-           <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
-        </div>
+<div class="w3-responsive w3-padding">
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
+</div>
 
 <div class="w3-responsive">
-                <table class="w3-table-all w3-hoverable">
-                    <thead>
-                    <tr class="w3-light-grey ">
-                        <th>Numer zamówienia</th>
-                        <th>Klient</th>
-                        <th>data wysłania</th>
-                        <th>numer LP</th>
-                        <th>data doręczenia</th>
-                        <th>opcje</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="order" items="${ordersDelivered}">
+  <table class="w3-table-all w3-hoverable">
+         <thead>
+           <tr class="w3-light-grey ">
+              <th>data zamówienia</th>
+              <th>Numer zamówienia</th>
+              <th>Klient</th>
+              <th>data wysłania</th>
+              <th>numer LP</th>
+              <th>opcja wysyłki</th>
+              <th>data doręczenia/OWL</th>
+           </tr>
+         </thead>
+         <tbody>
+           <c:forEach var="order" items="${ordersDelivered}">
+            <tr>
+              <td>${order.confirmDate}</td>
+              <td>${order.orderNumber}</td>
+              <td>${order.user.firstName} ${order.user.lastName}</td>
+              <td>${order.shipmentDate}</td>
+              <td>${order.shipmentNumber}</td>
+              <td>${order.deliveryOption.namePl}</td>
+              <td>${order.deliveryDate}</td>
+            </tr>
+           </c:forEach>
+         </tbody>
+  </table>
 
-                        <tr>
-                            <td>${order.orderNumber}</td>
-                            <td>${order.user.firstName} ${item.user.lastName}</td>
-                            <td>${order.shipmentDate}</td>
-                            <td>${order.shipmentNumber}</td>
-                            <td>${order.shipmentDeliveryDate}</td>
-                            <td></td>
-                        </tr>
-
-
-                    </c:forEach>
-                    </tbody>
-                </table>
-
-            </div>
+</div>
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
 
     <!-- Footer -->

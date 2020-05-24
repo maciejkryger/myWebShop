@@ -53,13 +53,21 @@
             width: 100px;
             }
 
-        .dataInput{
+        .dateInput{
             border: 2px solid grey;
             border-radius: 8px;
             color: black;
             text-align: center;
             width: 150px;
             }
+
+           .addressInput{
+              border: 2px solid green;
+              border-radius: 8px;
+              color: black;
+              text-align: center;
+              width: 300px
+              }
 
 </style>
 
@@ -94,12 +102,9 @@
 
 
 <!-- Delivery grid -->
- <h2>Zamówienia zapłacone</h2>
+ <h2>Zamówienia gotowe do skompletowania</h2>
         <div class="w3-responsive w3-padding">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                    </c:if>
-         <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
+            <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
         </div>
 
 <div class="w3-responsive">
@@ -109,6 +114,8 @@
                         <th>data zamówienia</th>
                         <th>numer zamówienia</th>
                         <th>metoda płatności</th>
+                        <th>czy opłacone</th>
+                        <th>opcja dostawy</th>
                         <th>Klient</th>
                         <th>szczegóły</th>
                         <th>potwierdź wysłanie/wydanie</th>
@@ -120,6 +127,8 @@
                         <tr>
                             <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
+                            <td>${order.paymentMethod.namePl}</td>
+                            <td>${order.paid==true?'TAK':'NIE'}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
                             <td>
@@ -134,19 +143,25 @@
                               <input type="hidden" name="completed" value="true">
                               <c:if test="${order.deliveryOption.id<4}">
                                 <input type="text" name="shipmentNumber" class="shipmentInput" placeholder="nr LP">
-                                <input type="date" name="shipmentDate" class="dataInput">
+                                <input type="date" name="shipmentDate" class="dateInput">
                               </c:if>
 
-                              <input type="submit" value="${order.deliveryOption.id<4 ?'potwierdź wysłanie' :'potwierdź gotowe do odbioru'}" class="w3-button w3-white w3-border w3-round-large">
+                              <input type="submit" value="${order.deliveryOption.id<4 ?'potwierdź wysłanie' :'potwierdź gotowe do OWL'}" class="w3-button w3-white w3-border w3-round-large">
                             </form>
                             <c:if test="${order.deliveryOption.id<4}">
-                            <form method="post" action="${pageContext.request.contextPath}/orderCenter/address">
-                            <input type="hidden" name="id" value="${order.id}">
-                            <input type="submit" value="adres wysyłki" class="w3-button w3-white w3-border w3-round-large">
-                            </form>
+                                <c:if test="${address==null}">
+                                <a href="${pageContext.request.contextPath}/orderCenter/paid/${order.id}" class="w3-button w3-white w3-border w3-round-large">
+                                pokaż adres wysyłki</a> </c:if>
+                                <c:if test="${address!=null}">
+                                <a href="${pageContext.request.contextPath}/orderCenter/paid/" class="w3-button w3-white w3-border w3-round-large">
+                                ukryj adres wysyłki</a></c:if>
+                                <c:if test="${order.user.id==address.user.id}">
+                                    <p class="addressInput">
+                                    ${address.street} ${address.houseNo} <c:if test="address.flatNo!=null"> /${address.flatNo}</c:if>,
+                                    ${address.postCode} ${address.city}</p>
+                                </c:if>
                             </c:if>
                             </td>
-
                         </tr>
 
 
@@ -156,20 +171,10 @@
 
 </div>
 
-
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
+
 
     <!-- Footer -->
     <%@include file='../footer.jsp' %>
@@ -184,21 +189,6 @@
 <%@include file='../loginModal.jsp' %>
 
 
-<!-- Newsletter Modal -->
-<div id="newsletter" class="w3-modal">
-    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
-        <div class="w3-container w3-white w3-center">
-            <i onclick="document.getElementById('newsletter').style.display='none'"
-               class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-            <h2 class="w3-wide">NEWSLETTER</h2>
-            <p>Dołącz do mojej listy mailingowej by otrzymywać aktualności o nowościach i ofertach specjalnych.</p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Wpisz e-mail"></p>
-            <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom"
-                    onclick="document.getElementById('newsletter').style.display='none'">Subscribe
-            </button>
-        </div>
-    </div>
-</div>
 
 <script>
     // Accordion

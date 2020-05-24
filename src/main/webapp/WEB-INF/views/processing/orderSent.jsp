@@ -35,14 +35,30 @@
         text-align: center;
         }
 
+    .amountInput{
+        border: 2px solid grey;
+        border-radius: 8px;
+        color: black;
+        text-align: center;
+        width: 65px;
+        }
+
+    .dateInput{
+            border: 2px solid grey;
+            border-radius: 8px;
+            color: black;
+            text-align: center;
+            width: 150px;
+            }
+
     .myButton{
-    height: 100px;
-    min-width: 400px;
-    position: relative;
-    overflow: auto;
-    text-align:center;
-    padding: 34px 50px;
-    border: 3px solid green;
+        height: 100px;
+        min-width: 400px;
+        position: relative;
+        overflow: auto;
+        text-align:center;
+        padding: 34px 50px;
+        border: 3px solid green;
     }
 
 </style>
@@ -78,22 +94,21 @@
 
 
 <!-- Delivery grid -->
- <h2>Zamówienia wysłane</h2>
+ <h2>Zamówienia wysłane lub czekające na odbiór własny</h2>
         <div class="w3-responsive w3-padding">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                    </c:if>
-         <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
+            <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
         </div>
 
 <div class="w3-responsive">
                 <table class="w3-table-all w3-hoverable">
                     <thead>
                     <tr class="w3-light-grey ">
+                        <th>data zamówienia</th>
                         <th>Numer zamówienia</th>
                         <th>Klient</th>
-                        <th>data wysłania</th>
+                        <th>data wysłania /kompletacji</th>
                         <th>numer LP</th>
+                        <th>opcja wysyłki</th>
                         <th>Opcje</th>
                     </tr>
                     </thead>
@@ -101,11 +116,39 @@
                     <c:forEach var="order" items="${ordersSent}">
 
                         <tr>
+                            <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
-                            <td>${order.user.firstName} ${item.user.lastName}</td>
-                            <td>${order.shipmentDate}</td>
-                            <td>${order.shipmentNumber}</td>
-                            <td></td>
+                            <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td><c:if test="${order.deliveryOption.id<4}">${order.shipmentDate} (wysłano)</c:if>
+                                <c:if test="${order.deliveryOption.id==4}">${order.completeDate} (e-mail)</c:if>
+                            </td>
+                            <td>${order.shipmentNumber}
+                              <c:if test="${order.deliveryOption.id<3}">
+                                 <a href="https://sprawdz.dhl.com.pl/" onclick="this.target='_blank'" class="w3-button w3-white w3-border w3-round-large w3-center">sprawdź na DHL</a>
+                              </c:if>
+                            </td>
+                            <td>${order.deliveryOption.namePl}</td>
+                            <td>
+                            <c:if test="${order.deliveryOption.id<4}">
+                                <form method="post" >
+                                    <input type="hidden" name="id" value="${order.id}">
+                                    <input type="date" name="deliveryDate" class="dataInput">
+                                    <input type="submit" value="potwierdź doręczenie" class="w3-button w3-white w3-border w3-round-large">
+                                </form>
+                            </c:if>
+                            <c:if test="${order.deliveryOption.id==4}">
+                                <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
+                                   <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
+                                </a>
+                                <form method="post" >
+                                    <input type="hidden" name="id" value="${order.id}">
+                                    <input type="number" name="paymentAmount" class="amountInput">
+                                    <input type="date" name="deliveryDate" class="dateInput">
+                                    <input type="submit" value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
+                                </form>
+                            </c:if>
+
+                            </td>
                         </tr>
 
 
@@ -117,17 +160,7 @@
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
 
     <!-- Footer -->

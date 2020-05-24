@@ -80,12 +80,9 @@
 <!-- Delivery grid -->
  <h2>Nowe zamówienia</h2>
 
-        <div class="w3-responsive w3-padding">
-                    <c:if test="${sessionScope.user.username!=null}">
-                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                    </c:if>
-                    <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
-        </div>
+<div class="w3-responsive w3-padding">
+      <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
+</div>
 
 
 <div class="w3-responsive">
@@ -95,6 +92,8 @@
                         <th>data zamówienia</th>
                         <th>numer zamówienia</th>
                         <th>Klient</th>
+                        <th>Metoda płatności</th>
+                        <th>Opcja doręczenia</th>
                         <th>szczegóły</th>
                         <th>opcje</th>
                     </tr>
@@ -106,6 +105,8 @@
                             <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td>${order.paymentMethod.namePl}</td>
+                            <td>${order.deliveryOption.namePl}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
@@ -131,17 +132,7 @@
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-
-
-
-   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-
-
+    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
 
     <!-- Footer -->

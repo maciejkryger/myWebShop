@@ -6,7 +6,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.Date;
 
 
 /**
@@ -64,7 +63,7 @@ public class WebOrder {
     private String shipmentNumber;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate shipmentDeliveryDate;
+    private LocalDate deliveryDate;
 
 
     @Nullable
@@ -214,12 +213,12 @@ public class WebOrder {
     }
 
     @Nullable
-    public LocalDate getShipmentDeliveryDate() {
-        return shipmentDeliveryDate;
+    public LocalDate getDeliveryDate() {
+        return deliveryDate;
     }
 
-    public void setShipmentDeliveryDate(@Nullable LocalDate shipmentDeliveryDate) {
-        this.shipmentDeliveryDate = shipmentDeliveryDate;
+    public void setDeliveryDate(@Nullable LocalDate deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     @Nullable

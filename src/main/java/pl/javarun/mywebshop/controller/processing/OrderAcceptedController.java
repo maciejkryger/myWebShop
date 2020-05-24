@@ -58,7 +58,7 @@ public class OrderAcceptedController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        modelAndView.addObject("ordersAccepted",webOrderService.getAllAcceptedTruePaidFalse());
+        modelAndView.addObject("ordersAccepted",webOrderService.getAllAcceptedTruePaidFalsePrepayment());
         return modelAndView;
     }
 
