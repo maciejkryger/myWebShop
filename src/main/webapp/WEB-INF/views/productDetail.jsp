@@ -14,6 +14,18 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+
+    .main-img {
+      width: 50%;
+    }
+
+    @media only screen and (max-width: 600px) {
+          /* For mobile phones: */
+              .main-img {
+                width: 100%;
+              }
+
+          }
 </style>
 <body class="w3-content" style="max-width:1200px">
 
@@ -45,34 +57,10 @@
 
     <!-- Image header -->
     <div class="w3-content" style="max-width:1200px">
-        <div class="w3-display-container w3-container">
-            <img src="${pageContext.request.contextPath}/images/${productType.id}/${product.id}.jpg" alt="${product.name}" style="width:100%">
+        <div class="w3-display-container w3-container w3-right">
+            <img src="${pageContext.request.contextPath}/images/${productType.id}/${product.id}.jpg" alt="${product.name}" class="main-img">
             <p>${product.namePl} - cena: <b>${product.price} PLN</b></p>
         </div>
-<%--        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.1.jpg"--%>
-<%--             style="width:100%">--%>
-<%--        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.2.jpg"--%>
-<%--             style="width:100%;display:none">--%>
-<%--        <img class="mySlides" src="${pageContext.request.contextPath}/images/${product.id}.3.jpg"--%>
-<%--             style="width:100%;display:none">--%>
-
-<%--        <div class="w3-row-padding w3-section">--%>
-<%--            <div class="w3-col s4">--%>
-<%--                <img class="demo w3-opacity w3-hover-opacity-off"--%>
-<%--                     src="${pageContext.request.contextPath}/images/${product.id}.1.jpg"--%>
-<%--                     style="width:100%;cursor:pointer" onclick="currentDiv(1)">--%>
-<%--            </div>--%>
-<%--            <div class="w3-col s4">--%>
-<%--                <img class="demo w3-opacity w3-hover-opacity-off"--%>
-<%--                     src="${pageContext.request.contextPath}/images/${product.id}.2.jpg"--%>
-<%--                     style="width:100%;cursor:pointer" onclick="currentDiv(2)">--%>
-<%--            </div>--%>
-<%--            <div class="w3-col s4">--%>
-<%--                <img class="demo w3-opacity w3-hover-opacity-off"--%>
-<%--                     src="${pageContext.request.contextPath}/images/${product.id}.3.jpg"--%>
-<%--                     style="width:100%;cursor:pointer" onclick="currentDiv(3)">--%>
-<%--            </div>--%>
-<%--        </div>--%>
     </div>
 
     <!-- Product grid -->

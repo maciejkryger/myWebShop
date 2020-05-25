@@ -47,4 +47,24 @@ public class WebOrderItemService {
     public List<WebOrderItem> getOrderItemByOrderId(int orderId) {
         return webOrderItemRepository.findByWebOrder_Id(orderId);
     }
+
+
+    public int calculateActualQuantityInUserBasket(WebOrderService webOrderService, int userId) {
+        int result = 0;
+        List<WebOrderItem> items = getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        for (WebOrderItem item : items) {
+            result += item.getQuantity();
+        }
+        return result;
+    }
+
+
+    public int calculateActualSumToPayInUserBasket(WebOrderService webOrderService,int userId) {
+        int result = 0;
+        List<WebOrderItem> items = getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        for (WebOrderItem item : items) {
+            result += (item.getQuantity() * item.getProductPrice());
+        }
+        return result;
+    }
 }

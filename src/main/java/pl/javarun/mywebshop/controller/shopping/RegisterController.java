@@ -86,6 +86,8 @@ public class RegisterController {
         if (wrongLastNameChar) modelAndView.addObject("wrongLastNameChar", true);
         if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
         if (emailExist) modelAndView.addObject("emailExist", true);
+        modelAndView.addObject("productsInBasketSize", 0);
+        modelAndView.addObject("userWishListSize", 0);
         return modelAndView;
     }
 

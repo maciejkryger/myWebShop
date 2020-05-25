@@ -36,11 +36,12 @@ public class WebOrderController {
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
     private final ProductService productService;
+    private final WishListService wishListService;
 
 
     public WebOrderController(UserService userService, TypeService typeService, CompanyService companyService,
                               RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
-                              ProductService productService) {
+                              ProductService productService, WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -48,6 +49,7 @@ public class WebOrderController {
         this.webOrderService = webOrderService;
         this.webOrderItemService = webOrderItemService;
         this.productService = productService;
+        this.wishListService = wishListService;
     }
 
     @GetMapping()
@@ -60,16 +62,21 @@ public class WebOrderController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        try{
-            int sumQuantity = calculateActualQuantityInUserBasket(userId);
-            int sumToPay = calculateActualSumToPayInUserBasket(userId);
+
+        try {
+            int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId);
+            int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderService, userId);
             modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
             modelAndView.addObject("sumQuantity", sumQuantity);
             modelAndView.addObject("sumToPay", sumToPay);
-        }catch (OrderNotExistException ex){
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (OrderNotExistException ex) {
             modelAndView.addObject("productsInBasket", "");
             modelAndView.addObject("sumQuantity", "");
             modelAndView.addObject("sumToPay", "");
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
         }
         return modelAndView;
     }
@@ -99,7 +106,7 @@ public class WebOrderController {
 
     @PostMapping("/addFromWishList")
     public String addToBasketFromWishList(@RequestParam(required = false) Integer productId,
-                                        HttpServletRequest httpServletRequest) {
+                                          HttpServletRequest httpServletRequest) {
         addProductToBasket(httpServletRequest, productId);
         return "redirect:/wishList/";
     }
@@ -136,23 +143,6 @@ public class WebOrderController {
         return "redirect:/basket";
     }
 
-    private int calculateActualQuantityInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += item.getQuantity();
-        }
-        return result;
-    }
-
-    private int calculateActualSumToPayInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
-    }
 
     private void addProductToBasket(HttpServletRequest httpServletRequest, Integer productId) {
         HttpSession session = httpServletRequest.getSession();

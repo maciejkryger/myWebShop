@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WishList;
 import pl.javarun.mywebshop.service.*;
@@ -36,16 +37,21 @@ public class WishListController {
     private final RuleService ruleService;
     private final WishListService wishListService;
     private final ProductService productService;
+    private final WebOrderService webOrderService;
+    private final WebOrderItemService webOrderItemService;
 
 
     public WishListController(UserService userService, TypeService typeService, CompanyService companyService,
-                              RuleService ruleService, WishListService wishListService, ProductService productService) {
+                              RuleService ruleService, WishListService wishListService, ProductService productService,
+                              WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.wishListService = wishListService;
         this.productService = productService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
     }
 
     @GetMapping()
@@ -53,8 +59,21 @@ public class WishListController {
         ModelAndView modelAndView = new ModelAndView("wishList");
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        modelAndView.addObject("userWishList", wishListService.getAllWishListByUserId(user.getId()));
-
+        if (user == null) {
+            modelAndView.addObject("userWishList", null);
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
+        } else {
+            int userId = user.getId();
+            try {
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+            } catch (OrderNotExistException ex) {
+                modelAndView.addObject("productsInBasketSize", 0);
+                modelAndView.addObject("userWishListSize", 0);
+            }
+            modelAndView.addObject("userWishList", wishListService.getAllWishListByUserId(userId));
+        }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

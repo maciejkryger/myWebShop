@@ -3,6 +3,7 @@ package pl.javarun.mywebshop.controller.shopping;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
@@ -25,14 +26,21 @@ public class ChangeUserDetailsController {
     private final CompanyService companyService;
     private final RuleService ruleService;
     private final RoleService roleService;
+    private final WebOrderService webOrderService;
+    private final WebOrderItemService webOrderItemService;
+    private final WishListService wishListService;
 
     public ChangeUserDetailsController(UserService userService, TypeService typeService, CompanyService companyService,
-                                       RuleService ruleService, RoleService roleService) {
+                                       RuleService ruleService, RoleService roleService, WishListService wishListService,
+                                       WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.roleService = roleService;
+        this.wishListService = wishListService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
     }
 
 
@@ -52,6 +60,14 @@ public class ChangeUserDetailsController {
         if (noFirstName) modelAndView.addObject("noFirstName", true);
         if (noLastName) modelAndView.addObject("noLastName", true);
         if (noEmail) modelAndView.addObject("noEmail", true);
+        int userId = user.getId();
+        try {
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService,userId));
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
 

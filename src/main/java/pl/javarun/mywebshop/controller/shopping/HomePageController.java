@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.model.User;
@@ -33,14 +34,22 @@ public class HomePageController {
     private final CompanyService companyService;
     private final ColorPerMaterialService colorPerMaterialService;
     private final RuleService ruleService;
+    private final WebOrderService webOrderService;
+    private final WebOrderItemService webOrderItemService;
+    private final WishListService wishListService;
 
-    public HomePageController(UserService userService, ProductService productService, TypeService typeService, CompanyService companyService, ColorPerMaterialService colorPerMaterialService, RuleService ruleService) {
+    public HomePageController(UserService userService, ProductService productService, TypeService typeService,
+                              CompanyService companyService, ColorPerMaterialService colorPerMaterialService, RuleService ruleService,
+                              WebOrderItemService webOrderItemService, WebOrderService webOrderService,WishListService wishListService) {
         this.userService = userService;
         this.productService = productService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.colorPerMaterialService = colorPerMaterialService;
         this.ruleService = ruleService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
+        this.wishListService=wishListService;
     }
 
     @GetMapping(value = {"", "/{id}"})
@@ -54,6 +63,19 @@ public class HomePageController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         ModelAndView modelAndView = new ModelAndView("index");
+        if (user == null) {
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
+        } else {
+            int userId = user.getId();
+            try {
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService,userId));
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+            } catch (OrderNotExistException ex) {
+                modelAndView.addObject("productsInBasketSize", 0);
+                modelAndView.addObject("userWishListSize", 0);
+            }
+        }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

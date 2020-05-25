@@ -43,6 +43,8 @@ public class LoginController {
         if (error != null) {
             modelAndView.addObject("error", true);
         }
+        modelAndView.addObject("productsInBasketSize", 0);
+        modelAndView.addObject("userWishListSize", 0);
         return modelAndView;
     }
 

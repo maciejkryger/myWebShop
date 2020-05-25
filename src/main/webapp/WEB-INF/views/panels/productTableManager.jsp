@@ -63,14 +63,15 @@
                     <th>materiał</th>
                     <th>kolor</th>
                     <th>zapięcie</th>
-                 <!--   <th>kolor zapięcia</th> -->
                     <th>długość</th>
                     <th>szerokość</th>
                     <th>cena</th>
-                    <th>opis</th>
                     <th>czy aktywny</th>
                     <th>opcje</th>
                     <th>produkt główny<th>
+                </tr>
+                <tr>
+                    <th colspan="15">opis</th>
                 </tr>
                 </thead>
                 <c:forEach var="item" items="${products}">
@@ -89,7 +90,6 @@
                         <td>${item.length}</td>
                         <td>${item.width}</td>
                         <td>${item.price}</td>
-                        <td>${item.descriptionPl}</td>
                         <td><i class="${item.active ? 'far fa-eye' : 'far fa-eye-slash'}"></i></td>
                         <td>
                             <form method="GET" action="${pageContext.request.contextPath}/panels/data/product/${item.id}">
@@ -107,6 +107,9 @@
                             </a>
                         </td>
                          <td>${item.mainProduct.id==null ? 'TAK' : item.mainProduct.id}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="15">${item.descriptionPl}</td>
                     </tr>
                 </c:forEach>
             </table>

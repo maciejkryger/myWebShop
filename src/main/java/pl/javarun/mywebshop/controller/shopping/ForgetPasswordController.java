@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.UserNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.CompanyService;
@@ -44,7 +45,7 @@ public class ForgetPasswordController {
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
-        this.emailChangePassword=emailChangePassword;
+        this.emailChangePassword = emailChangePassword;
     }
 
     @GetMapping()
@@ -62,6 +63,8 @@ public class ForgetPasswordController {
         if (noEmail) modelAndView.addObject("noEmail", true);
         if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
         modelAndView.addObject("email", email);
+        modelAndView.addObject("productsInBasketSize", 0);
+        modelAndView.addObject("userWishListSize", 0);
 
         return modelAndView;
     }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.AddressNotExistException;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
@@ -48,11 +49,13 @@ public class WebOrderConfirmationController {
     private int sumToPay;
     private int sumQuantity;
     private int deliveryCostsToPay;
+    private final WishListService wishListService;
 
     public WebOrderConfirmationController(UserService userService, TypeService typeService, CompanyService companyService,
                                           RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                           ProductService productService, DeliveryOptionService deliveryOptionService,
-                                          PaymentTypeService paymentTypeService, AddressService addressService, EmailOrderConfirmation emailOrderConfirmation) {
+                                          PaymentTypeService paymentTypeService, AddressService addressService,
+                                          EmailOrderConfirmation emailOrderConfirmation, WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -64,6 +67,7 @@ public class WebOrderConfirmationController {
         this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
         this.emailOrderConfirmation=emailOrderConfirmation;
+        this.wishListService=wishListService;
     }
 
     @GetMapping()
@@ -78,8 +82,8 @@ public class WebOrderConfirmationController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        sumToPay = calculateActualSumToPayInUserBasket(userId);
-        sumQuantity = calculateActualQuantityInUserBasket(userId);
+        sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderService,userId);
+        sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId);
         deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         modelAndView.addObject("sumToPay", sumToPay);
@@ -87,10 +91,15 @@ public class WebOrderConfirmationController {
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
         modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
         modelAndView.addObject("webOrder",webOrder);
+        modelAndView.addObject("productsInBasketSize", sumQuantity);
         try{
             modelAndView.addObject("address", addressService.getByUser(user));
         }catch (AddressNotExistException ignored){}
-
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
 
@@ -119,32 +128,21 @@ public class WebOrderConfirmationController {
     }
 
     @GetMapping("/finished")
-    public ModelAndView showOrderNumber(@PathParam(value="ono") String ono){
+    public ModelAndView showOrderNumber(HttpServletRequest httpServletRequest,@PathParam(value="ono") String ono){
         ModelAndView modelAndView = new ModelAndView("confirmationWithOrderNumber");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("orderNumber",ono);
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        int userId = user.getId();
+        modelAndView.addObject("productsInBasketSize", 0);
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
-
-
-    private int calculateActualSumToPayInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
-    }
-
-    private int calculateActualQuantityInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += item.getQuantity();
-        }
-        return result;
-    }
-
 }

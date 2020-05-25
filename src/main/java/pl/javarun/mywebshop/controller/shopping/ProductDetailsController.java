@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
@@ -32,17 +33,21 @@ public class ProductDetailsController {
     private final CompanyService companyService;
     private final RuleService ruleService;
     private final WishListService wishListService;
+    private final WebOrderService webOrderService;
+    private final WebOrderItemService webOrderItemService;
 
     public ProductDetailsController(UserService userService, ProductService productService, ColorPerMaterialService colorPerMaterialService,
                                     TypeService typeService, CompanyService companyService, RuleService ruleService,
-                                    WishListService wishListService) {
+                                    WishListService wishListService, WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.productService = productService;
         this.colorPerMaterialService = colorPerMaterialService;
-        this.wishListService=wishListService;
+        this.wishListService = wishListService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
     }
 
     @GetMapping("/{id}")
@@ -57,17 +62,27 @@ public class ProductDetailsController {
             modelAndView = new ModelAndView("productDetail");
             modelAndView.addObject("product", productService.getProductById(id));
             modelAndView.addObject("colors", colorPerMaterialService.getMaterialColorsByMaterialId(productService.getProductById(id).getMaterial().getId()));
-            try{
+            try {
                 groupId = productService.getProductById(id).getMainProduct().getId();
-                modelAndView.addObject("productsGroup",productService.getActiveProductsGroupByMainId(groupId));
-            } catch (Exception ex){
-                modelAndView.addObject("productsGroup",productService.getActiveProductsGroupByMainId(id));
+                modelAndView.addObject("productsGroup", productService.getActiveProductsGroupByMainId(groupId));
+            } catch (Exception ex) {
+                modelAndView.addObject("productsGroup", productService.getActiveProductsGroupByMainId(id));
             }
         }
-        if(user==null){
-            modelAndView.addObject("userWishListProduct",null);
-        }else {
-            modelAndView.addObject("userWishListProduct", wishListService.getWishListByUserIdAndProductId(user.getId(),id));
+        if (user == null) {
+            modelAndView.addObject("userWishListProduct", null);
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
+        } else {
+            int userId=user.getId();
+            try {
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+            } catch (OrderNotExistException ex) {
+                modelAndView.addObject("productsInBasketSize", 0);
+                modelAndView.addObject("userWishListSize", 0);
+            }
+            modelAndView.addObject("userWishListProduct", wishListService.getWishListByUserIdAndProductId(user.getId(), id));
         }
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());

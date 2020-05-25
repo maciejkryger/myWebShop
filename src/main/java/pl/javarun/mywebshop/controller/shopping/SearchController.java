@@ -6,9 +6,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -32,11 +36,15 @@ public class SearchController {
     private final FasteningTypeService fasteningTypeService;
     private final ProductService productService;
     private List<Product> products;
+    private final WishListService wishListService;
+    private final WebOrderItemService webOrderItemService;
+    private final WebOrderService webOrderService;
 
     public SearchController(UserService userService, TypeService typeService, CompanyService companyService,
                             RuleService ruleService, MaterialColorService materialColorService,
                             MaterialService materialService, FasteningTypeService fasteningTypeService,
-                            ProductService productService) {
+                            ProductService productService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
+                            WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -45,10 +53,13 @@ public class SearchController {
         this.materialService = materialService;
         this.fasteningTypeService = fasteningTypeService;
         this.productService = productService;
+        this.wishListService = wishListService;
+        this.webOrderItemService=webOrderItemService;
+        this.webOrderService=webOrderService;
     }
 
     @GetMapping()
-    public ModelAndView searchWindow() {
+    public ModelAndView searchWindow( HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("search");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -56,6 +67,16 @@ public class SearchController {
         modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
         modelAndView.addObject("materials", materialService.getAllMaterials());
         modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        int userId = user.getId();
+        try {
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
 

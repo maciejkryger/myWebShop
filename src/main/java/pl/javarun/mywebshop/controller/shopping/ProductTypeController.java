@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
@@ -32,20 +33,25 @@ public class ProductTypeController {
     private final CompanyService companyService;
     private final ColorPerMaterialService colorPerMaterialService;
     private final RuleService ruleService;
-    private final WishListService wishListService;
     private final ConfigDataService configDataService;
+    private final WishListService wishListService;
+    private final WebOrderItemService webOrderItemService;
+    private final WebOrderService webOrderService;
 
     public ProductTypeController(UserService userService, ProductService productService, TypeService typeService,
                                  CompanyService companyService, ColorPerMaterialService colorPerMaterialService,
-                                 RuleService ruleService, WishListService wishListService, ConfigDataService configDataService) {
+                                 RuleService ruleService, WishListService wishListService, ConfigDataService configDataService,
+                                 WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
         this.userService = userService;
         this.productService = productService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.colorPerMaterialService = colorPerMaterialService;
         this.ruleService = ruleService;
-        this.wishListService = wishListService;
         this.configDataService=configDataService;
+        this.wishListService = wishListService;
+        this.webOrderItemService=webOrderItemService;
+        this.webOrderService=webOrderService;
     }
 
     @GetMapping("/{productType}")
@@ -55,8 +61,18 @@ public class ProductTypeController {
         User user = (User) session.getAttribute("user");
         if (user == null) {
             modelAndView.addObject("products", productService.getActiveProductsByTypeName(productType));
+            modelAndView.addObject("productsInBasketSize", 0);
+            modelAndView.addObject("userWishListSize", 0);
         } else {
+            int userId = user.getId();
             modelAndView.addObject("products", productService.getActiveProductsByTypeName(productType));
+            try {
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService,userId));
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+            }catch (OrderNotExistException ex){
+                modelAndView.addObject("productsInBasketSize", 0);
+                modelAndView.addObject("userWishListSize", 0);
+            }
         }
         int newProductPeriod = Integer.valueOf(configDataService.getConfigDataByName("newProductPeriod").getValue());
         modelAndView.addObject("productType", typeService.getTypeByName(productType));

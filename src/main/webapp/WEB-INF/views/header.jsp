@@ -12,6 +12,6 @@
        <i class="fa fa-user"></i>
     </a>
     <a href="${pageContext.request.contextPath}/search" class="w3-bar-item w3-button"><i class="fa fa-search"></i></a>
-    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-button"><i class="fa fa-heart"></i></a>
-    <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button"><i class="fa fa-shopping-cart"></i></a>
+    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-button"><i class="fa fa-heart"></i><span class="w3-bar-item w3-medium w3-">${userWishListSize}</span></a>
+    <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button w3-display-container"><i class="fa fa-shopping-cart"></i><span class="w3-bar-item w3-medium ">${productsInBasketSize}</span></a>
 </p>
