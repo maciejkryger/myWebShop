@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.service.*;
 
@@ -35,12 +37,14 @@ public class DeliveryOptionsController {
     private final DeliveryOptionService deliveryOptionService;
     private final PaymentTypeService paymentTypeService;
     private final PaymentMethodService paymentMethodService;
+    private final WishListService wishListService;
 
 
     public DeliveryOptionsController(UserService userService, TypeService typeService, CompanyService companyService,
                                      RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                      ProductService productService, DeliveryOptionService deliveryOptionService,
-                                     PaymentTypeService paymentTypeService, PaymentMethodService paymentMethodService) {
+                                     PaymentTypeService paymentTypeService, PaymentMethodService paymentMethodService,
+                                     WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -51,6 +55,7 @@ public class DeliveryOptionsController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.paymentMethodService=paymentMethodService;
+        this.wishListService=wishListService;
     }
 
     @GetMapping()
@@ -65,6 +70,16 @@ public class DeliveryOptionsController {
         int userId = user.getId();
         int sumQuantity = calculateActualQuantityInUserBasket(userId);
         int sumToPay = calculateActualSumToPayInUserBasket(userId);
+        try {
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
+        }
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (WishListNotExistException ex) {
+            modelAndView.addObject("userWishListSize", 0);
+        }
         modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("sumToPay", sumToPay);

@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.service.*;
 
@@ -35,12 +37,14 @@ public class PaymentController {
     private final DeliveryOptionService deliveryOptionService;
     private final PaymentTypeService paymentTypeService;
     private final PaymentMethodService paymentMethodService;
+    private final WishListService wishListService;
 
 
     public PaymentController(UserService userService, TypeService typeService, CompanyService companyService,
                              RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                              ProductService productService, DeliveryOptionService deliveryOptionService,
-                             PaymentTypeService paymentTypeService, PaymentMethodService paymentMethodService) {
+                             PaymentTypeService paymentTypeService, PaymentMethodService paymentMethodService,
+                             WishListService wishListService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -51,10 +55,11 @@ public class PaymentController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.paymentMethodService = paymentMethodService;
+        this.wishListService=wishListService;
     }
 
     @GetMapping()
-    public ModelAndView showDeliveryInBasket(HttpServletRequest httpServletRequest) {
+    public ModelAndView showPaymentInBasket(HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("payment");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -69,11 +74,21 @@ public class PaymentController {
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
+        try {
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
+        }
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (WishListNotExistException ex) {
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
 
     @PostMapping
-    public String saveDeliveryOption(HttpServletRequest httpServletRequest, @RequestParam int paymentMethodId) {
+    public String savePaymentOption(HttpServletRequest httpServletRequest, @RequestParam int paymentMethodId) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();

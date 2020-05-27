@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderItemNotExistException;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.service.*;
 
@@ -64,18 +65,21 @@ public class WebOrderController {
         int userId = user.getId();
 
         try {
+            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
             int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId);
             int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderService, userId);
-            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
             modelAndView.addObject("sumQuantity", sumQuantity);
             modelAndView.addObject("sumToPay", sumToPay);
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
-            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
-        } catch (OrderNotExistException ex) {
+            } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
             modelAndView.addObject("productsInBasket", "");
             modelAndView.addObject("sumQuantity", "");
             modelAndView.addObject("sumToPay", "");
-            modelAndView.addObject("productsInBasketSize", 0);
+          }
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        }catch (WishListNotExistException ex){
             modelAndView.addObject("userWishListSize", 0);
         }
         return modelAndView;

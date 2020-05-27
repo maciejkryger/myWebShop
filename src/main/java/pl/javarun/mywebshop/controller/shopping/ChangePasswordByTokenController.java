@@ -64,6 +64,8 @@ public class ChangePasswordByTokenController {
         if (wrongPasswordChar) modelAndView.addObject("wrongPasswordChar", true);
         if (userNotExist) modelAndView.addObject("userNotExist", true);
         if (noSuccess) modelAndView.addObject("noSuccess", true);
+        modelAndView.addObject("productsInBasketSize", 0);
+        modelAndView.addObject("userWishListSize", 0);
         return modelAndView;
     }
 

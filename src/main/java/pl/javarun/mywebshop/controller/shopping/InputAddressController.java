@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.AddressNotExistException;
+import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.service.*;
 
@@ -35,20 +37,22 @@ public class InputAddressController {
     private final RuleService ruleService;
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
-
     private final AddressService addressService;
+    private final WishListService wishListService;
 
 
     public InputAddressController(UserService userService, TypeService typeService, CompanyService companyService,
                                   RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                   ProductService productService, DeliveryOptionService deliveryOptionService,
-                                  PaymentTypeService paymentTypeService, AddressService addressService) {
+                                  PaymentTypeService paymentTypeService, AddressService addressService,
+                                  WishListService wishListService) {
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.webOrderService = webOrderService;
         this.webOrderItemService = webOrderItemService;
         this.addressService = addressService;
+        this.wishListService=wishListService;
     }
 
     @GetMapping()
@@ -81,6 +85,16 @@ public class InputAddressController {
         if (postCodeEmpty) modelAndView.addObject("postCodeEmpty", true);
         if (cityWrong) modelAndView.addObject("cityWrong", true);
         if (cityEmpty) modelAndView.addObject("cityEmpty", true);
+        try {
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+        } catch (OrderNotExistException ex) {
+            modelAndView.addObject("productsInBasketSize", 0);
+        }
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
+        } catch (WishListNotExistException ex) {
+            modelAndView.addObject("userWishListSize", 0);
+        }
         return modelAndView;
     }
 

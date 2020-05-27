@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.UserNotExistException;
+import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 import pl.javarun.mywebshop.util.PasswordUtil;
@@ -79,9 +80,12 @@ public class ChangePasswordController {
         int userId = user.getId();
         try {
             modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
-            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
         } catch (OrderNotExistException ex) {
             modelAndView.addObject("productsInBasketSize", 0);
+        }
+        try {
+            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(userId).size());
+        } catch (WishListNotExistException ex) {
             modelAndView.addObject("userWishListSize", 0);
         }
         return modelAndView;
