@@ -29,7 +29,7 @@ public interface WebOrderRepository extends JpaRepository<WebOrder, Integer> {
 
     List<WebOrder> findAllByConfirmedIsTrueAndAcceptedFalse();
 
-    List<WebOrder> getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_Id(int paymentTypeId);
+    List<WebOrder> getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_IdAndCompletedFalse(int paymentTypeId);
 
     List<WebOrder> findAllByCompletedTrueAndDeliveryDateIsNull();
 

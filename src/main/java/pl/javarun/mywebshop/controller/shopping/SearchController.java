@@ -55,12 +55,12 @@ public class SearchController {
         this.fasteningTypeService = fasteningTypeService;
         this.productService = productService;
         this.wishListService = wishListService;
-        this.webOrderItemService=webOrderItemService;
-        this.webOrderService=webOrderService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
     }
 
     @GetMapping()
-    public ModelAndView searchWindow( HttpServletRequest httpServletRequest) {
+    public ModelAndView searchWindow(HttpServletRequest httpServletRequest) {
         ModelAndView modelAndView = new ModelAndView("search");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
@@ -68,19 +68,27 @@ public class SearchController {
         modelAndView.addObject("materialColors", materialColorService.getAllMaterialColors());
         modelAndView.addObject("materials", materialService.getAllMaterials());
         modelAndView.addObject("fasteningTypes", fasteningTypeService.getAllFasteningTypes());
+        int userId = 0;
+        int webOrderId = 0;
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        int userId = user.getId();
-        try {
-            int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
-        } catch (OrderNotExistException ex) {
+        if (user == null) {
             modelAndView.addObject("productsInBasketSize", 0);
-        }
-        try {
-            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
-        }catch (WishListNotExistException ex){
             modelAndView.addObject("userWishListSize", 0);
+        } else {
+            userId = user.getId();
+            webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+            try {
+
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
+            } catch (OrderNotExistException ex) {
+                modelAndView.addObject("productsInBasketSize", 0);
+            }
+            try {
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(userId).size());
+            } catch (WishListNotExistException ex) {
+                modelAndView.addObject("userWishListSize", 0);
+            }
         }
         return modelAndView;
     }
@@ -93,14 +101,14 @@ public class SearchController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        products = getSearchProducts(materialId,materialColorId,typeId, fasteningTypeId, priceFrom, priceTo);
+        products = getSearchProducts(materialId, materialColorId, typeId, fasteningTypeId, priceFrom, priceTo);
         modelAndView.addObject("products", products);
         return modelAndView;
     }
 
-    private List<Product> getSearchProducts(Integer materialId,Integer materialColorId, Integer typeId,
-                                            Integer fasteningTypeId, Integer priceFrom, Integer priceTo){
-        products=null;
+    private List<Product> getSearchProducts(Integer materialId, Integer materialColorId, Integer typeId,
+                                            Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+        products = null;
         if (materialId == null && materialColorId == null && typeId == null && fasteningTypeId == null && priceFrom == null && priceTo == null) {
             products = productService.getAllActiveProducts();
         }
@@ -123,71 +131,71 @@ public class SearchController {
             products = productService.getActiveProductsByPriceUpTo(priceTo);
         }
         if (materialId == null && materialColorId == null && typeId == null && fasteningTypeId == null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByPriceBetween(priceFrom,priceTo);
+            products = productService.getActiveProductsByPriceBetween(priceFrom, priceTo);
         }
         //-------------------------------------------------------------------------------------
         if (materialId != null && materialColorId != null && typeId == null && fasteningTypeId == null && priceFrom == null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorId(materialId,materialColorId);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorId(materialId, materialColorId);
         }
         if (materialId != null && materialColorId != null && typeId != null && fasteningTypeId == null && priceFrom == null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeId(materialId,materialColorId,typeId);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeId(materialId, materialColorId, typeId);
         }
         if (materialId != null && materialColorId != null && typeId != null && fasteningTypeId != null && priceFrom == null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeId(materialId,materialColorId,typeId, fasteningTypeId);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeId(materialId, materialColorId, typeId, fasteningTypeId);
         }
         if (materialId != null && materialColorId != null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceAbove(materialId,materialColorId,typeId, fasteningTypeId, priceFrom);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceAbove(materialId, materialColorId, typeId, fasteningTypeId, priceFrom);
         }
         if (materialId != null && materialColorId != null && typeId != null && fasteningTypeId != null && priceFrom == null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceUpTo(materialId,materialColorId,typeId, fasteningTypeId, priceTo);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceUpTo(materialId, materialColorId, typeId, fasteningTypeId, priceTo);
         }
         if (materialId != null && materialColorId != null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceBetween(materialId,materialColorId,typeId, fasteningTypeId,priceFrom,priceTo);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceBetween(materialId, materialColorId, typeId, fasteningTypeId, priceFrom, priceTo);
         }
         //---------------------------------------------------------------------------------------------
         if (materialId != null && materialColorId != null && typeId == null && fasteningTypeId != null && priceFrom == null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeId(materialId,materialColorId,fasteningTypeId);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeId(materialId, materialColorId, fasteningTypeId);
         }
         if (materialId != null && materialColorId != null && typeId == null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceBetween(materialId,materialColorId,fasteningTypeId, priceFrom, priceTo);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceBetween(materialId, materialColorId, fasteningTypeId, priceFrom, priceTo);
         }
         if (materialId != null && materialColorId != null && typeId == null && fasteningTypeId != null && priceFrom == null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceUpTo(materialId,materialColorId,fasteningTypeId, priceTo);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceUpTo(materialId, materialColorId, fasteningTypeId, priceTo);
         }
         if (materialId != null && materialColorId != null && typeId == null && fasteningTypeId != null && priceFrom != null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceAbove(materialId,materialColorId,fasteningTypeId,priceFrom);
+            products = productService.getActiveProductsByMaterialIdAndMaterialColorIdAndFasteningTypeIdAndPriceAbove(materialId, materialColorId, fasteningTypeId, priceFrom);
         }
         //------------------------------------------------------------------------------------------------
         if (materialId == null && materialColorId == null && typeId != null && fasteningTypeId != null && priceFrom == null && priceTo == null) {
-            products = productService.getActiveProductsByTypeIdAndFasteningId(typeId,fasteningTypeId);
+            products = productService.getActiveProductsByTypeIdAndFasteningId(typeId, fasteningTypeId);
         }
         if (materialId == null && materialColorId == null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo == null) {
-            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceAbove(typeId,fasteningTypeId,priceFrom);
+            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceAbove(typeId, fasteningTypeId, priceFrom);
         }
         if (materialId == null && materialColorId == null && typeId != null && fasteningTypeId != null && priceFrom == null && priceTo != null) {
-            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceUpTo(typeId,fasteningTypeId,priceTo);
+            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceUpTo(typeId, fasteningTypeId, priceTo);
         }
         if (materialId == null && materialColorId == null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceBetween(typeId,fasteningTypeId,priceFrom,priceTo);
+            products = productService.getActiveProductsByTypeIdAndFasteningIdAndPriceBetween(typeId, fasteningTypeId, priceFrom, priceTo);
         }
         //----------------------------------------------------------------------------------------------
         if (materialId == null && materialColorId != null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialColorIdAndTypeIdAndFasteningIdAndPriceBetween(materialColorId,typeId,fasteningTypeId,priceFrom,priceTo);
+            products = productService.getActiveProductsByMaterialColorIdAndTypeIdAndFasteningIdAndPriceBetween(materialColorId, typeId, fasteningTypeId, priceFrom, priceTo);
         }
         if (materialId != null && materialColorId == null && typeId != null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndTypeIdAndFasteningIdAndPriceBetween(materialId,typeId,fasteningTypeId,priceFrom,priceTo);
+            products = productService.getActiveProductsByMaterialIdAndTypeIdAndFasteningIdAndPriceBetween(materialId, typeId, fasteningTypeId, priceFrom, priceTo);
         }
         if (materialId != null && materialColorId == null && typeId == null && fasteningTypeId != null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndFasteningIdAndPriceBetween(materialId,fasteningTypeId,priceFrom,priceTo);
+            products = productService.getActiveProductsByMaterialIdAndFasteningIdAndPriceBetween(materialId, fasteningTypeId, priceFrom, priceTo);
         }
         if (materialId != null && materialColorId == null && typeId == null && fasteningTypeId == null && priceFrom != null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndPriceBetween(materialId,priceFrom,priceTo);
+            products = productService.getActiveProductsByMaterialIdAndPriceBetween(materialId, priceFrom, priceTo);
         }
         if (materialId != null && materialColorId == null && typeId == null && fasteningTypeId == null && priceFrom != null && priceTo == null) {
-            products = productService.getActiveProductsByMaterialIdAndPriceAbove(materialId,priceFrom);
+            products = productService.getActiveProductsByMaterialIdAndPriceAbove(materialId, priceFrom);
         }
         if (materialId != null && materialColorId == null && typeId == null && fasteningTypeId == null && priceFrom == null && priceTo != null) {
-            products = productService.getActiveProductsByMaterialIdAndPriceUpTo(materialId,priceTo);
+            products = productService.getActiveProductsByMaterialIdAndPriceUpTo(materialId, priceTo);
         }
         return products;
     }

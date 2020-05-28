@@ -73,13 +73,16 @@ public class OrderSentController {
     public String confirmDeliveryDate(@RequestParam int id, @RequestParam(required = false) String deliveryDate,
                                       @RequestParam(required = false) Integer paymentAmount) {
         WebOrder order = webOrderService.getOrderById(id);
-        if(paymentAmount==null){
+        if(paymentAmount==null && deliveryDate==null){
             return "redirect:/orderCenter/sent?orderId="+id;
         }
         if (paymentAmount != null) {
             order.setDeliveryDate(LocalDate.parse(deliveryDate));
             order.setPaymentAmount(paymentAmount);
             order.setPaid(true);
+        }
+        if(paymentAmount==null && deliveryDate!=null){
+            order.setDeliveryDate(LocalDate.parse(deliveryDate));
         }
         webOrderService.save(order);
         return "redirect:/orderCenter/sent";

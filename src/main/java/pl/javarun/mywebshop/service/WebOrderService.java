@@ -58,7 +58,7 @@ public class WebOrderService {
     }
 
     public List<WebOrder> getAllReady() {
-    return webOrderRepository.getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_Id(2);
+    return webOrderRepository.getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_IdAndCompletedFalse(2);
     }
 
     public List<WebOrder> getAllSentOrReadyToSelfPickUpOrders() {
