@@ -124,6 +124,7 @@ public class WebOrderConfirmationController {
         webOrderService.save(webOrder);
         emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemByOrderId(webOrder.getId()),
                 sumToPay,sumQuantity,deliveryCostsToPay);
+
         return  "redirect:/confirmation/finished?ono="+webOrder.getOrderNumber();
     }
 
