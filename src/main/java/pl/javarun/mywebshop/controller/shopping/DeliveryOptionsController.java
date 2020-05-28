@@ -68,10 +68,16 @@ public class DeliveryOptionsController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        int sumQuantity = calculateActualQuantityInUserBasket(userId);
-        int sumToPay = calculateActualSumToPayInUserBasket(userId);
+
         try {
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+            WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
+            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrder.getId()));
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrder.getId()));
+            int sumQuantity = calculateActualQuantityInUserBasket(userId);
+            int sumToPay = calculateActualSumToPayInUserBasket(userId);
+            modelAndView.addObject("sumQuantity", sumQuantity);
+            modelAndView.addObject("sumToPay", sumToPay);
+            modelAndView.addObject("webOrder", webOrder);
         } catch (OrderNotExistException ex) {
             modelAndView.addObject("productsInBasketSize", 0);
         }
@@ -80,10 +86,6 @@ public class DeliveryOptionsController {
         } catch (WishListNotExistException ex) {
             modelAndView.addObject("userWishListSize", 0);
         }
-        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
-        modelAndView.addObject("sumQuantity", sumQuantity);
-        modelAndView.addObject("sumToPay", sumToPay);
-        modelAndView.addObject("webOrder", webOrderService.getOrderByUserIdAndConfirmedFalse(userId));
         return modelAndView;
     }
 

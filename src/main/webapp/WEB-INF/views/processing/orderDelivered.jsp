@@ -65,7 +65,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px; width: 80%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -88,8 +88,9 @@
          <thead>
            <tr class="w3-light-grey ">
               <th>data zamówienia</th>
-              <th>Numer zamówienia</th>
-              <th>Klient</th>
+              <th>numer zamówienia</th>
+              <th>klient</th>
+              <th>uwagi</th>
               <th>data wysłania</th>
               <th>numer LP</th>
               <th>opcja wysyłki</th>
@@ -102,6 +103,7 @@
               <td>${order.confirmDate}</td>
               <td>${order.orderNumber}</td>
               <td>${order.user.firstName} ${order.user.lastName}</td>
+              <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
               <td>${order.shipmentDate}</td>
               <td>${order.shipmentNumber}</td>
               <td>${order.deliveryOption.namePl}</td>

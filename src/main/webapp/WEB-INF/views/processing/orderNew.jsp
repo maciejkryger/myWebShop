@@ -65,7 +65,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px; width: 80%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -92,17 +92,12 @@
                         <th>data zamówienia</th>
                         <th>numer zamówienia</th>
                         <th>Klient</th>
+                        <th>Uwagi</th>
                         <th>Metoda płatności</th>
                         <th>Opcja doręczenia</th>
                         <th>szczegóły</th>
                         <th>opcje</th>
                     </tr>
-                    <tr>
-                        <th colspan="7">
-                           uwagi do zamówienia
-                        </th>
-                    </tr>
-
                     </thead>
                     <tbody>
                     <c:forEach var="order" items="${ordersNew}">
@@ -111,6 +106,7 @@
                             <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
                             <td>${order.paymentMethod.namePl}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>
@@ -124,17 +120,8 @@
                               <input type="hidden" name="accepted" value="true">
                               <input type="submit" value="zaakcetuj" class="w3-button w3-white w3-border w3-round-large">
                             </form>
-
                             </td>
-
                         </tr>
-                        <c:if test="${order.comment!=null}">
-                        <tr>
-                        <td colspan="7">
-                          uwagi: <b>${order.comment}</b>
-                        </td>
-                        </tr>
-                        </c:if>
                     </c:forEach>
                     </tbody>
                 </table>

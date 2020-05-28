@@ -89,7 +89,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px; width: 80%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -107,8 +107,8 @@
             <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
         </div>
 
-<div class="w3-responsive">
-<table class="w3-table-all w3-hoverable">
+<div class="w3-responsive" >
+<table class="w3-table-all w3-hoverable" >
                     <thead>
                     <tr class="w3-light-grey ">
                         <th>data zamówienia</th>
@@ -116,7 +116,8 @@
                         <th>metoda płatności</th>
                         <th>czy opłacone</th>
                         <th>opcja dostawy</th>
-                        <th>Klient</th>
+                        <th>klient</th>
+                        <th>uwagi</th>
                         <th>szczegóły</th>
                         <th>potwierdź wysłanie/skompletowanie</th>
                     </tr>
@@ -131,6 +132,7 @@
                             <td>${order.paid==true?'TAK':'NIE'}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>

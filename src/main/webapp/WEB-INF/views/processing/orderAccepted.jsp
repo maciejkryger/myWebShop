@@ -74,7 +74,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px; width: 80%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -99,7 +99,8 @@
                         <th>data zamówienia</th>
                         <th>numer zamówienia</th>
                         <th>metoda płatności</th>
-                        <th>Klient</th>
+                        <th>klient</th>
+                        <th>uwagi</th>
                         <th>szczegóły</th>
                         <th>potwierdź płatność</th>
                     </tr>
@@ -112,20 +113,27 @@
                             <td>${order.orderNumber}</td>
                             <td>${order.paymentMethod.namePl}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
+                            <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
                             </a>
                             </td>
                             <td>
-                            <form method="post" >
+                            <form method="post" id="confirm">
                               <input type="hidden" name="id" value="${order.id}">
                               <input type="hidden" name="paid" value="true">
-                              <input type="number" name="paymentAmount" class="amountInput" placeholder="kwota">
+                              <input type="number" name="paymentAmount" class="amountInput"
+                                  value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
                               <input type="date" name="paymentDate" class="dataInput">
-                              <input type="submit" value="potwierdź" class="w3-button w3-white w3-border w3-round-large">
                             </form>
 
+                            <form method="post" >
+                               <input type="hidden" name="id" value="${order.id}">
+                               <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
+                            </form>
+
+                            <input type="submit" form="confirm" value="potwierdź" class="w3-button w3-white w3-border w3-round-large">
                             </td>
 
                         </tr>

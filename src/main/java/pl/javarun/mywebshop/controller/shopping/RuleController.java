@@ -59,19 +59,29 @@ public class RuleController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        int userId = 0;
+        int webOrderId = 0;
+
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        try {
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, user.getId()));
-        } catch (OrderNotExistException ex) {
+        if (user == null) {
             modelAndView.addObject("productsInBasketSize", 0);
-        }
-        try {
-            modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
-        } catch (WishListNotExistException ex) {
             modelAndView.addObject("userWishListSize", 0);
-        }
+        } else {
+            userId = user.getId();
+            webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+            try {
 
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
+            } catch (OrderNotExistException ex) {
+                modelAndView.addObject("productsInBasketSize", 0);
+            }
+            try {
+                modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(userId).size());
+            } catch (WishListNotExistException ex) {
+                modelAndView.addObject("userWishListSize", 0);
+            }
+        }
         return modelAndView;
     }
 }

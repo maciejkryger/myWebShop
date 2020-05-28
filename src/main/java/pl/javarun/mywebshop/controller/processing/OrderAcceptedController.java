@@ -10,6 +10,7 @@ import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 
 /**
@@ -53,20 +54,28 @@ public class OrderAcceptedController {
     }
 
     @GetMapping()
-    public ModelAndView showAcceptedOrders(HttpServletRequest httpServletRequest) {
+    public ModelAndView showAcceptedOrders(HttpServletRequest httpServletRequest,@PathParam("orderId") Integer orderId) {
         ModelAndView modelAndView = new ModelAndView("processing/orderAccepted");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("ordersAccepted",webOrderService.getAllAcceptedTruePaidFalsePrepayment());
+        if (orderId != null) {
+            WebOrder order=webOrderService.getOrderById(orderId);
+            int paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
+            modelAndView.addObject("paymentAmount", paymentAmount);
+            modelAndView.addObject("orderId",orderId);
+        }
         return modelAndView;
     }
 
     @PostMapping
-    public String checkPayment(@RequestParam int id, @RequestParam int paymentAmount, @RequestParam String paymentDate,
-                               @RequestParam boolean paid){
-        System.out.println("data: "+paymentDate);
+    public String checkPayment(@RequestParam int id, @RequestParam(required = false) Integer paymentAmount, @RequestParam(required = false) String paymentDate,
+                               @RequestParam(required = false) boolean paid){
         WebOrder order = webOrderService.getOrderById(id);
+        if(paymentAmount==null){
+            return "redirect:/orderCenter/accepted?orderId="+id;
+        }
         order.setPaid(paid);
         order.setPaymentAmount(paymentAmount);
         order.setPaymentDate(LocalDate.parse(paymentDate));

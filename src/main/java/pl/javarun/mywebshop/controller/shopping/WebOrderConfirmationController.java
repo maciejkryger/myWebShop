@@ -82,14 +82,14 @@ public class WebOrderConfirmationController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderService,userId);
-        sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId);
-        deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
+        sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrder.getId());
+        sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrder.getId());
+        deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
-        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
+        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrder.getId()));
         modelAndView.addObject("webOrder",webOrder);
         modelAndView.addObject("productsInBasketSize", sumQuantity);
         try{

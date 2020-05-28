@@ -65,10 +65,11 @@ public class WebOrderController {
         int userId = user.getId();
 
         try {
-            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId()));
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
-            int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId);
-            int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderService, userId);
+            int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderId));
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
+            int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderId);
+            int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
             modelAndView.addObject("sumQuantity", sumQuantity);
             modelAndView.addObject("sumToPay", sumToPay);
             } catch (OrderNotExistException ex) {

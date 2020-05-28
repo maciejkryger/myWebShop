@@ -86,7 +86,8 @@ public class InputAddressController {
         if (cityWrong) modelAndView.addObject("cityWrong", true);
         if (cityEmpty) modelAndView.addObject("cityEmpty", true);
         try {
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+            int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
         } catch (OrderNotExistException ex) {
             modelAndView.addObject("productsInBasketSize", 0);
         }

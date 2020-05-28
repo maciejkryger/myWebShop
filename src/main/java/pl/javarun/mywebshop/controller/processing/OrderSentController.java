@@ -10,6 +10,7 @@ import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 import java.time.LocalDate;
 
 /**
@@ -53,21 +54,30 @@ public class OrderSentController {
     }
 
     @GetMapping()
-    public ModelAndView showSentOrders(HttpServletRequest httpServletRequest) {
+    public ModelAndView showSentOrders(HttpServletRequest httpServletRequest, @PathParam("orderId") Integer orderId) {
         ModelAndView modelAndView = new ModelAndView("processing/orderSent");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("ordersSent", webOrderService.getAllSentOrReadyToSelfPickUpOrders());
+        if (orderId != null) {
+            WebOrder order=webOrderService.getOrderById(orderId);
+            int paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
+            modelAndView.addObject("paymentAmount", paymentAmount);
+            modelAndView.addObject("orderId",orderId);
+        }
         return modelAndView;
     }
 
     @PostMapping()
     public String confirmDeliveryDate(@RequestParam int id, @RequestParam(required = false) String deliveryDate,
-                                      @RequestParam (required = false) Integer paymentAmount) {
+                                      @RequestParam(required = false) Integer paymentAmount) {
         WebOrder order = webOrderService.getOrderById(id);
-        order.setDeliveryDate(LocalDate.parse(deliveryDate));
-        if(paymentAmount!=null){
+        if(paymentAmount==null){
+            return "redirect:/orderCenter/sent?orderId="+id;
+        }
+        if (paymentAmount != null) {
+            order.setDeliveryDate(LocalDate.parse(deliveryDate));
             order.setPaymentAmount(paymentAmount);
             order.setPaid(true);
         }

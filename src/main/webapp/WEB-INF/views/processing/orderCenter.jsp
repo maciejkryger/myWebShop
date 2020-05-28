@@ -38,28 +38,29 @@
 
 
     .myButton{
-    width: 400px;
-    height: 100px;
-    position: relative;
-    overflow: auto;
-    text-align:center;
-    padding: 34px 50px;
-    border: 3px solid green;
-    display: inline-block;
+        width: 400px;
+        height: 100px;
+        position: relative;
+        overflow: auto;
+        text-align:center;
+        padding: 34px 50px;
+        border: 3px solid green;
+        display: inline-block;
     }
 
 
       .myDivPosition{
-      padding: 5%;
+        padding: 5%;
       }
 
     .counter{
-    margin-left: 10px;
-    padding: 5px;
-    border: 3px solid black;
-    border-radius: 100%;
-    background-color: black;
-    color: white;
+        margin-left: 10px;
+        padding: 5px;
+        border: 3px solid black;
+        border-radius: 30%;
+        background-color: black;
+        color: white;
+
     }
 
     @media only screen and (max-width: 600px) {

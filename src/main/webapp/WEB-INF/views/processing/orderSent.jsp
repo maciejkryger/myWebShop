@@ -81,7 +81,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main" style="margin-left:250px; width: 85%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -109,6 +109,7 @@
                         <th>data wysłania /kompletacji</th>
                         <th>numer LP</th>
                         <th>opcja wysyłki</th>
+                        <th>szczegóły</th>
                         <th>Opcje</th>
                     </tr>
                     </thead>
@@ -129,6 +130,12 @@
                             </td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>
+                                <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
+                                   <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
+                                </a>
+
+                            </td>
+                            <td>
                             <c:if test="${order.deliveryOption.id<4}">
                                 <form method="post" >
                                     <input type="hidden" name="id" value="${order.id}">
@@ -137,15 +144,20 @@
                                 </form>
                             </c:if>
                             <c:if test="${order.deliveryOption.id==4}">
-                                <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
-                                   <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
-                                </a>
-                                <form method="post" >
+
+                                <form method="post" id="confirm" >
                                     <input type="hidden" name="id" value="${order.id}">
-                                    <input type="number" name="paymentAmount" class="amountInput">
+                                    <input type="text" name="paymentAmount" class="amountInput"
+                                    value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
                                     <input type="date" name="deliveryDate" class="dateInput">
-                                    <input type="submit" value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
                                 </form>
+
+                                 <form method="post" >
+                                     <input type="hidden" name="id" value="${order.id}">
+                                     <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
+                                 </form>
+
+                                <input type="submit" form="confirm" value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
                             </c:if>
 
                             </td>

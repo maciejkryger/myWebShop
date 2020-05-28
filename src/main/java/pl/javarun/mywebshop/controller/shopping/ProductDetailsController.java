@@ -77,7 +77,8 @@ public class ProductDetailsController {
         } else {
             int userId = user.getId();
             try {
-                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderService, userId));
+                int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+                modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
             } catch (OrderNotExistException ex) {
                 modelAndView.addObject("productsInBasketSize", 0);
             }

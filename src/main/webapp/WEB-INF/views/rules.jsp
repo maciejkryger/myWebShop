@@ -44,19 +44,6 @@
     </header>
 
     <!-- Image header -->
-<%--    <div class="w3-display-container w3-container">--%>
-<%--        <img src="#" alt="test" style="width:100%">--%>
-<%--        <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">--%>
-<%--            <h1 class="w3-jumbo w3-hide-small">New arrivals</h1>--%>
-<%--            <h1 class="w3-hide-large w3-hide-medium">New arrivals</h1>--%>
-<%--            <h1 class="w3-hide-small">COLLECTION 2020</h1>--%>
-<%--            &lt;%&ndash; <p><a href="#jeans" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO ZAKUPÓW</a></p>&ndash;%&gt;--%>
-<%--        </div>--%>
-<%--    </div>--%>
-
-    <%--    <div class="w3-container w3-text-grey" id="jeans">--%>
-    <%--        <p>8 items</p>--%>
-    <%--    </div>--%>
 
         <!-- Product grid -->
         <div class="w3-row w3-grayscale w3-padding-64 w3-small">
@@ -67,13 +54,6 @@
 
         </div>
 
-<%--        <!-- Subscribe section -->--%>
-<%--        <div class="w3-container w3-black w3-padding-32">--%>
-<%--            <h1>Subskrybuj</h1>--%>
-<%--            <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
-<%--            <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
-<%--            <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
-<%--        </div>--%>
 
     <!-- Footer -->
     <%@include file='footer.jsp' %>

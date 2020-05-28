@@ -49,9 +49,9 @@ public class WebOrderItemService {
     }
 
 
-    public int calculateActualQuantityInUserBasket(WebOrderService webOrderService, int userId) {
+    public int calculateActualQuantityInUserBasket(int webOrderId) {
         int result = 0;
-        List<WebOrderItem> items = getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = getOrderItemByOrderId(webOrderId);
         for (WebOrderItem item : items) {
             result += item.getQuantity();
         }
@@ -59,9 +59,9 @@ public class WebOrderItemService {
     }
 
 
-    public int calculateActualSumToPayInUserBasket(WebOrderService webOrderService,int userId) {
+    public int calculateActualSumToPayInUserBasket(int webOrderId) {
         int result = 0;
-        List<WebOrderItem> items = getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
+        List<WebOrderItem> items = getOrderItemByOrderId(webOrderId);
         for (WebOrderItem item : items) {
             result += (item.getQuantity() * item.getProductPrice());
         }

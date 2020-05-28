@@ -55,7 +55,6 @@ public class OrderDeliveredController {
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("ordersDelivered",webOrderService.getAllCompletedAndDeliveryDateNotNull());
-
         return modelAndView;
     }
 
