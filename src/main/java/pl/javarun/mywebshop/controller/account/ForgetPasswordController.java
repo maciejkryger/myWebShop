@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller.shopping;
+package pl.javarun.mywebshop.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +54,7 @@ public class ForgetPasswordController {
                                            @PathParam("noEmail") boolean noEmail,
                                            @PathParam("wrongEmailChar") boolean wrongEmailChar,
                                            @PathParam("email") String email) {
-        ModelAndView modelAndView = new ModelAndView("forgetPassword");
+        ModelAndView modelAndView = new ModelAndView("account/forgetPassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

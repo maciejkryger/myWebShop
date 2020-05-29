@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -32,8 +32,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
-
+<%@include file='../menu.jsp' %>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
@@ -54,53 +53,45 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">zmiana hasła</p>
-        <%@include file='header.jsp' %>
+        <p class="w3-left">profil użytkownika</p>
+        <%@include file='../header.jsp' %>
     </header>
 
-    <!-- Change password form -->
-        <h2>Zapomniałeś hasła?</h2>
-        <h4>Wprowadź swój adres e-mail podany przy rejestracji. <br> Wyślemy Ci link umożliwiający zmianę hasła.</h4>
+    <!-- Login form -->
+    <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <div class="w3-responsive">
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserDetails' />">
+            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
 
-            <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/forgetPassword">
-                   <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Email, który podałeś nie istnieje w naszej bazie!!!' :''}</a>
-                   <a class="w3-bar-item" style="color: green">${emailSent ? 'Link do zmiany hasła został wysłany na podany adres mailowy.' :''}</a>
-                   <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może zostać puste!' :''} </a>
-                   <a class="w3-bar-item" style="color: crimson">${wrongEmailChar ?  'Nieprawidłowy format maila, lub wykorzystano niedozwolone znaki specjalne.' :''}</a>
-                   <p>
-                        <label><b>Adres email podany podczas rejestracji:</b></label>
-                        <input type="text" name="email" placeholder="wpisz email" class="w3-input w3-border" value="${email}">
-                   </p>
-                    <input type="submit" class="w3-button w3-green w3-border w3-round-large" value="zatwierdź"/>
-                </form>
-                  <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
+            <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
+            <p>Twoje dane:</p>
+                <p><input class="w3-input w3-border" type="hidden" name="username" value="${user.username}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${user.firstName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${user.lastName}"></p>
+                <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
+                <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
+            <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left">zapisz
+            </button>
+        </form>
+                    <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" >anuluj</a>
 
-                        <script>
-                           function goBack() {
-                            window.history.back();
-                           }
-                        </script>
-
-            </table>
-        </div>
+    </div>
 
     <br>
 
-
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

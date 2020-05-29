@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -32,7 +32,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
+<%@include file='../menu.jsp' %>
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
@@ -54,7 +54,7 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">biżuteria ręcznie robiona</p>
-        <%@include file='header.jsp' %>
+        <%@include file='../header.jsp' %>
     </header>
 
     <!-- Login form -->
@@ -94,33 +94,18 @@
 
 
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
-<!-- Newsletter Modal -->
-<div id="newsletter" class="w3-modal">
-    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
-        <div class="w3-container w3-white w3-center">
-            <i onclick="document.getElementById('newsletter').style.display='none'"
-               class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-            <h2 class="w3-wide">NEWSLETTER</h2>
-            <p>Dołącz do mojej listy mailingowej by otrzymywać aktualności o nowościach i ofertach specjalnych.</p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Wpisz e-mail"></p>
-            <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom"
-                    onclick="document.getElementById('newsletter').style.display='none'">Subscribe
-            </button>
-        </div>
-    </div>
-</div>
 
 <script>
     // Accordion

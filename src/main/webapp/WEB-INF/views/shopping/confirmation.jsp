@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -50,7 +50,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
+<%@include file='../menu.jsp' %>
 
 
 <!-- Top menu on small screens -->
@@ -73,7 +73,7 @@
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
         <p class="w3-left">podsumowanie</p>
-        <%@include file='header.jsp' %>
+        <%@include file='../header.jsp' %>
     </header>
 
 
@@ -179,16 +179,16 @@
 
 </div>
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

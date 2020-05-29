@@ -60,7 +60,7 @@ public class PaymentController {
 
     @GetMapping()
     public ModelAndView showPaymentInBasket(HttpServletRequest httpServletRequest) {
-        ModelAndView modelAndView = new ModelAndView("payment");
+        ModelAndView modelAndView = new ModelAndView("shopping/payment");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

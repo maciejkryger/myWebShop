@@ -55,7 +55,7 @@ public class WebOrderController {
 
     @GetMapping()
     public ModelAndView showBasket(HttpServletRequest httpServletRequest) {
-        ModelAndView modelAndView = new ModelAndView("basket");
+        ModelAndView modelAndView = new ModelAndView("shopping/basket");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

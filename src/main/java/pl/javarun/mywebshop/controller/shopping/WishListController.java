@@ -57,7 +57,7 @@ public class WishListController {
 
     @GetMapping()
     public ModelAndView showWishList(HttpServletRequest httpServletRequest) {
-        ModelAndView modelAndView = new ModelAndView("wishList");
+        ModelAndView modelAndView = new ModelAndView("shopping/wishList");
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         if (user == null) {

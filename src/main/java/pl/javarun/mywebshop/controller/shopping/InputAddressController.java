@@ -61,7 +61,7 @@ public class InputAddressController {
                                      @PathParam("houseNoWrong") boolean houseNoWrong, @PathParam("houseNoEmpty") boolean houseNoEmpty,
                                      @PathParam("postCodeWrong") boolean postCodeWrong, @PathParam("postCodeEmpty") boolean postCodeEmpty,
                                      @PathParam("cityWrong") boolean cityWrong, @PathParam("cityEmpty") boolean cityEmpty) {
-        ModelAndView modelAndView = new ModelAndView("addressOrderInput");
+        ModelAndView modelAndView = new ModelAndView("shopping/addressOrderInput");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

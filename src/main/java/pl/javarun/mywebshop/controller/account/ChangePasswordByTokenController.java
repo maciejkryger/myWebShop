@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller.shopping;
+package pl.javarun.mywebshop.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +52,7 @@ public class ChangePasswordByTokenController {
                                            @PathParam("noPassword") boolean noPassword,
                                            @PathParam("userNotExist") boolean userNotExist,
                                            @PathParam("noSuccess") boolean noSuccess) {
-        ModelAndView modelAndView = new ModelAndView("changePasswordByToken");
+        ModelAndView modelAndView = new ModelAndView("account/changePasswordByToken");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

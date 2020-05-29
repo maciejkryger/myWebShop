@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -32,7 +32,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
+<%@include file='../menu.jsp' %>
 
 
 <!-- Top menu on small screens -->
@@ -54,62 +54,53 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">krok 3 - metoda płatności</p>
-        <%@include file='header.jsp' %>
+        <p class="w3-left">zmiana hasła</p>
+        <%@include file='../header.jsp' %>
     </header>
 
+    <!-- Change password form -->
+        <h2>Zapomniałeś hasła?</h2>
+        <h4>Wprowadź swój adres e-mail podany przy rejestracji. <br> Wyślemy Ci link umożliwiający zmianę hasła.</h4>
 
-<!-- Delivery grid -->
- <h2>Wybierz metodę płatności</h2>
-         <div class="w3-responsive">
-                     <c:if test="${sessionScope.user.username!=null}">
-                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
-                     </c:if>
-         </div>
+        <div class="w3-responsive">
 
-  <div class="w3-container w3-responsive w3-margin">
-  <p>Wartość koszyka: <strong> ${sumToPay} PLN </strong></p>
-  <p>Koszty dostawy: <strong> ${deliveryCostsToPay} PLN </strong></p>
-  <p>-------------------------------------------------</p>
-  <p>Łącznie do zapłaty: <strong> ${sumToPay+deliveryCostsToPay} PLN </strong></p>
-  </div>
+            <table class="w3-table-all w3-hoverable">
+                <form method="post" action="${pageContext.request.contextPath}/forgetPassword">
+                   <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Email, który podałeś nie istnieje w naszej bazie!!!' :''}</a>
+                   <a class="w3-bar-item" style="color: green">${emailSent ? 'Link do zmiany hasła został wysłany na podany adres mailowy.' :''}</a>
+                   <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może zostać puste!' :''} </a>
+                   <a class="w3-bar-item" style="color: crimson">${wrongEmailChar ?  'Nieprawidłowy format maila, lub wykorzystano niedozwolone znaki specjalne.' :''}</a>
+                   <p>
+                        <label><b>Adres email podany podczas rejestracji:</b></label>
+                        <input type="text" name="email" placeholder="wpisz email" class="w3-input w3-border" value="${email}">
+                   </p>
+                    <input type="submit" class="w3-button w3-green w3-border w3-round-large" value="zatwierdź"/>
+                </form>
+                  <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
 
- <div class="w3-responsive w3-container w3-padding w3-margin">
+                        <script>
+                           function goBack() {
+                            window.history.back();
+                           }
+                        </script>
 
-     <form method="POST" action="${pageContext.request.contextPath}/payment" id="payment">
-      <label class="w3-row w3-large"><b>Wybierz metodę płatności</b></label>
-      <c:forEach var="item" items="${paymentMethods}">
-         <input type="radio"
-            <c:if test="${item.id==1}">checked</c:if>
-         class="w3-radio w3-margin" name="paymentMethodId" value="${item.id}">${item.namePl}</input><br>
-      </c:forEach>
-    </form>
-</div>
+            </table>
+        </div>
 
-
-<div class="w3-container w3-responsive" style="padding: 10px">
+    <br>
 
 
-   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
-          <script>
-             function goBack() {
-              window.history.back();
-             }
-          </script>
-   <input type="submit" form="payment" class="w3-button w3-green w3-border w3-round-large w3-right" value="dalej"/>
-
-</div>
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

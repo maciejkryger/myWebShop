@@ -60,7 +60,7 @@ public class DeliveryOptionsController {
 
     @GetMapping()
     public ModelAndView showDeliveryInBasket(HttpServletRequest httpServletRequest) {
-        ModelAndView modelAndView = new ModelAndView("deliveryOptions");
+        ModelAndView modelAndView = new ModelAndView("shopping/deliveryOptions");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

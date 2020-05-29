@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller.shopping;
+package pl.javarun.mywebshop.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,7 +63,7 @@ public class ChangePasswordController {
                                            @PathParam("noNewPassword") boolean noNewPassword,
                                            @PathParam("noNewPassword2") boolean noNewPassword2,
                                            HttpServletRequest httpServletRequest) {
-        ModelAndView modelAndView = new ModelAndView("changePassword");
+        ModelAndView modelAndView = new ModelAndView("account/changePassword");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

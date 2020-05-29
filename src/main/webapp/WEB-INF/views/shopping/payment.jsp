@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<%@include file='head.html' %>
+<%@include file='../head.html' %>
 <style>
     .mySlides {
         display: none
@@ -32,7 +32,7 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<%@include file='menu.jsp' %>
+<%@include file='../menu.jsp' %>
 
 
 <!-- Top menu on small screens -->
@@ -54,69 +54,62 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">zmiana hasła</p>
-        <%@include file='header.jsp' %>
+        <p class="w3-left">krok 3 - metoda płatności</p>
+        <%@include file='../header.jsp' %>
     </header>
 
-    <!-- Change password form -->
-        <h2>Zmień hasło</h2>
 
-        <div class="w3-responsive">
+<!-- Delivery grid -->
+ <h2>Wybierz metodę płatności</h2>
+         <div class="w3-responsive">
+                     <c:if test="${sessionScope.user.username!=null}">
+                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
+                     </c:if>
+         </div>
 
-            <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/changePassword">
+  <div class="w3-container w3-responsive w3-margin">
+  <p>Wartość koszyka: <strong> ${sumToPay} PLN </strong></p>
+  <p>Koszty dostawy: <strong> ${deliveryCostsToPay} PLN </strong></p>
+  <p>-------------------------------------------------</p>
+  <p>Łącznie do zapłaty: <strong> ${sumToPay+deliveryCostsToPay} PLN </strong></p>
+  </div>
 
-                    <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPassword ? 'Błędne stare hasło!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${userNotExist ? 'Użytkownik którego podałeś nie istnieje w naszej bazie!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${newPasswordsNotTheSame ? 'Nowe hasło w obu polach musi być identyczne!!!' :''}</a>
-                    <a class="w3-bar-item" style="color: crimson">${wrongPasswordChar ?  'Zbyt słabe hasło, minimum 8 znaków , lub w polu wykorzystano niedozwolony znak specjalny, dozwolone !,?,@,$,&' :''}</a>
-                    <p>
-                       <label><b>Nazwa użytkownika: </b>${sessionScope.user.username}</label>
-                       <input type="hidden" name="username" placeholder="wpisz nazwę swojego użytkownika" class="w3-input w3-border" value="${sessionScope.user.username}">
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noOldPassword ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>stare hasło</b></label>
-                        <input type="password" name="oldPassword" placeholder="wpisz stare hasło" class="w3-input w3-border">
-                    </p>
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>wpisz nowe hasło</b></label>
-                        <input type="password" name="newPassword" placeholder="nowe hasło" class="w3-input w3-border">
-                    </p>
-                    <p>
-                    <a class="w3-bar-item" style="color: crimson">${noNewPassword2 ?  'Pole na hasło nie może być puste' :''}</a>
-                        <label><b>wpisz nowe hasło ponownie</b></label>
-                        <input type="password" name="newPassword2" placeholder="powtórz nowe hasło" class="w3-input w3-border">
-                    </p>
+ <div class="w3-responsive w3-container w3-padding w3-margin">
 
-                    <input type="submit" class="w3-button w3-green w3-border w3-round-large" value="zapisz"/>
-                </form>
-                  <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">anuluj</button>
-                 <!--       <a href="/" class="w3-button w3-white w3-border w3-round-large">Homepage</a>-->
-                        <script>
-                           function goBack() {
-                            window.history.back();
-                           }
-                        </script>
-
-            </table>
-        </div>
-
-    <br>
+     <form method="POST" action="${pageContext.request.contextPath}/payment" id="payment">
+      <label class="w3-row w3-large"><b>Wybierz metodę płatności</b></label>
+      <c:forEach var="item" items="${paymentMethods}">
+         <input type="radio"
+            <c:if test="${item.id==1}">checked</c:if>
+         class="w3-radio w3-margin" name="paymentMethodId" value="${item.id}">${item.namePl}</input><br>
+      </c:forEach>
+    </form>
+</div>
 
 
+<div class="w3-container w3-responsive" style="padding: 10px">
+
+
+   <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">cofnij</button>
+          <script>
+             function goBack() {
+              window.history.back();
+             }
+          </script>
+   <input type="submit" form="payment" class="w3-button w3-green w3-border w3-round-large w3-right" value="dalej"/>
+
+</div>
     <!-- Footer -->
-    <%@include file='footer.jsp' %>
+    <%@include file='../footer.jsp' %>
 
     <!-- Signature -->
-    <%@include file='signature.html' %>
+    <%@include file='../signature.html' %>
 
     <!-- End page content -->
 </div>
 
 <!-- Login Modal -->
-<%@include file='loginModal.jsp' %>
+<%@include file='../loginModal.jsp' %>
 
 
 <!-- Newsletter Modal -->

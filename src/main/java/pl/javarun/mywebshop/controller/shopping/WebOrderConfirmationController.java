@@ -73,7 +73,7 @@ public class WebOrderConfirmationController {
     @GetMapping()
     public ModelAndView confirmation(HttpServletRequest httpServletRequest, @PathParam("phoneEmpty") boolean phoneEmpty,
                                      @PathParam("phoneWrong") boolean phoneWrong) {
-        ModelAndView modelAndView = new ModelAndView("confirmation");
+        ModelAndView modelAndView = new ModelAndView("shopping/confirmation");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
@@ -130,7 +130,7 @@ public class WebOrderConfirmationController {
 
     @GetMapping("/finished")
     public ModelAndView showOrderNumber(HttpServletRequest httpServletRequest,@PathParam(value="ono") String ono){
-        ModelAndView modelAndView = new ModelAndView("confirmationWithOrderNumber");
+        ModelAndView modelAndView = new ModelAndView("shopping/confirmationWithOrderNumber");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

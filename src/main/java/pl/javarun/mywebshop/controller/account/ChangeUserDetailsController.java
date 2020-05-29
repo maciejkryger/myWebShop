@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller.shopping;
+package pl.javarun.mywebshop.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +51,7 @@ public class ChangeUserDetailsController {
                                               @PathParam("noFirstName") boolean noFirstName, @PathParam("firstName") String firstName,
                                               @PathParam("noLastName") boolean noLastName, @PathParam("lastName") String lastName,
                                               @PathParam("noEmail") boolean noEmail, @PathParam("email") String email) {
-        ModelAndView modelAndView = new ModelAndView("changeUserDetails");
+        ModelAndView modelAndView = new ModelAndView("account/changeUserDetails");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());

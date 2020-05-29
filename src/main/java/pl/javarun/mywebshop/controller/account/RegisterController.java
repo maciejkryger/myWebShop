@@ -1,4 +1,4 @@
-package pl.javarun.mywebshop.controller.shopping;
+package pl.javarun.mywebshop.controller.account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,7 +64,7 @@ public class RegisterController {
                                          @PathParam("wrongLastNameChar") boolean wrongLastNameChar,
                                          @PathParam("wrongEmailChar") boolean wrongEmailChar,
                                          @PathParam("emailExist") boolean emailExist) {
-        ModelAndView modelAndView = new ModelAndView("register");
+        ModelAndView modelAndView = new ModelAndView("account/register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
