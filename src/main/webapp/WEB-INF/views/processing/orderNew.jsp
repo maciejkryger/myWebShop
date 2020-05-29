@@ -106,7 +106,7 @@
                             <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
-                            <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
+                            <td>${order.comment!=null && order.comment!="" ? 'TAK' : 'NIE'}</td>
                             <td>${order.paymentMethod.namePl}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>

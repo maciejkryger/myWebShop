@@ -103,7 +103,7 @@
               <td>${order.confirmDate}</td>
               <td>${order.orderNumber}</td>
               <td>${order.user.firstName} ${order.user.lastName}</td>
-              <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
+              <td>${order.comment!=null && order.comment!="" ? 'TAK' : 'NIE'}</td>
               <td>${order.shipmentDate}</td>
               <td>${order.shipmentNumber}</td>
               <td>${order.deliveryOption.namePl}</td>
@@ -132,22 +132,6 @@
 <!-- Login Modal -->
 <%@include file='../loginModal.jsp' %>
 
-
-<!-- Newsletter Modal -->
-<div id="newsletter" class="w3-modal">
-    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
-        <div class="w3-container w3-white w3-center">
-            <i onclick="document.getElementById('newsletter').style.display='none'"
-               class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-            <h2 class="w3-wide">NEWSLETTER</h2>
-            <p>Dołącz do mojej listy mailingowej by otrzymywać aktualności o nowościach i ofertach specjalnych.</p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Wpisz e-mail"></p>
-            <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom"
-                    onclick="document.getElementById('newsletter').style.display='none'">Subscribe
-            </button>
-        </div>
-    </div>
-</div>
 
 <script>
     // Accordion

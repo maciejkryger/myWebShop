@@ -132,7 +132,7 @@
                             <td>${order.paid==true?'TAK':'NIE'}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>${order.user.firstName} ${order.user.lastName}</td>
-                            <td>${order.comment!=null? 'TAK' : 'NIE'}</td>
+                            <td>${order.comment!=null && order.comment!="" ? 'TAK' : 'NIE'}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>

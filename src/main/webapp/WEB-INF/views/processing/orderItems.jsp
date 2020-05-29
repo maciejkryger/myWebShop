@@ -146,8 +146,8 @@
   <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
   <p>${address.postCode} ${address.city}</p>
   <p>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'} <b>${user.phone}</b></p>
-  <p>uwagi do zamówienia: <c:if test="${webOrder.comment!=null}"><b>${webOrder.comment}</b></c:if>
-  <c:if test="${webOrder.comment==null}">BRAK</c:if></p>
+  <p>uwagi do zamówienia: <c:if test="${webOrder.comment!=null && webOrder.comment!=''}"><b>${webOrder.comment}</b></c:if>
+  <c:if test="${webOrder.comment==null || webOrder.comment==''}">BRAK</c:if></p>
 </div>
 
 <div class="w3-responsive w3-margin w3-row">
