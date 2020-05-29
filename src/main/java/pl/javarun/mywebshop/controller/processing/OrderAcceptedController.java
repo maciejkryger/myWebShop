@@ -70,15 +70,25 @@ public class OrderAcceptedController {
     }
 
     @PostMapping
-    public String checkPayment(@RequestParam int id, @RequestParam(required = false) Integer paymentAmount, @RequestParam(required = false) String paymentDate,
+    public String checkPayment(@RequestParam int id, @RequestParam(required = false) String paymentDate,
+                               @RequestParam(required = false) Integer paymentAmount,
                                @RequestParam(required = false) boolean paid){
         WebOrder order = webOrderService.getOrderById(id);
-        if(paymentAmount==null){
+        System.out.println("id "+id+" paymentAmount:"+paymentAmount+" paymentDate: "+paymentDate+" paid: "+paid);
+        if(paymentAmount==null && paymentDate==null){
+            System.out.println("if");
             return "redirect:/orderCenter/accepted?orderId="+id;
         }
-        order.setPaid(paid);
-        order.setPaymentAmount(paymentAmount);
-        order.setPaymentDate(LocalDate.parse(paymentDate));
+        if (paymentAmount != null) {
+            System.out.println("poza if2");
+            order.setPaid(paid);
+            order.setPaymentAmount(paymentAmount);
+            order.setPaymentDate(LocalDate.parse(paymentDate));
+        }
+        if(paymentAmount==null && paymentDate!=null){
+            System.out.println("if3");
+            order.setDeliveryDate(LocalDate.parse(paymentDate));
+        }
         webOrderService.save(order);
         return "redirect:/orderCenter/accepted";
     }

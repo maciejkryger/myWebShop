@@ -28,6 +28,21 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+
+    .myData-container{
+        padding-bottom: 50px;
+        width: 50%;
+        margin-bottom: 20px;
+    }
+
+    @media only screen and (max-width: 600px) {
+          /* For mobile phones: */
+        .myData-container{
+            padding-bottom: 50px;
+            width: 100%
+        }
+
+    }
 </style>
 <body class="w3-content" style="max-width:1200px">
 
@@ -53,30 +68,26 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">profil użytkownika</p>
+        <p class="w3-left">moje konto</p>
         <%@include file='../header.jsp' %>
     </header>
 
     <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
-
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserDetails' />">
-            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
-
-            <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
-            <p>moje dane:</p>
-                <p><input class="w3-input w3-border" type="hidden" name="username" value="${user.username}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
-                <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${user.firstName}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
-                <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${user.lastName}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
-                <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
-            <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left">zapisz
-            </button>
-        </form>
-                    <a href="${pageContext.request.contextPath}/account" class="w3-button w3-white w3-border w3-round-large" >anuluj</a>
-
+    <div class="w3-content w3-display-container w3-padding" style="max-width:100%">
+        <div class="w3-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
+            <p class="w3-row">moje zamówienia</p>
+            <a href="${pageContext.request.contextPath}/actual" class="w3-bar-item w3-button w3-border w3-round-large">bieżące zamówienia</a>
+            <a href="${pageContext.request.contextPath}/history" class="w3-bar-item w3-button w3-border w3-round-large">historia zamówień</a>
+        </div>
+        <div class="w3-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
+            <p class="w3-row">moje dane</p>
+            <a href="${pageContext.request.contextPath}/changeUserDetails" class="w3-bar-item w3-button w3-border w3-round-large">edycja danych</a>
+            <a href="${pageContext.request.contextPath}/changeUserAddress" class="w3-bar-item w3-button w3-border w3-round-large">edycja adresu</a>
+            <a href="${pageContext.request.contextPath}/changePassword" class="w3-bar-item w3-button w3-border w3-round-large">zmień hasło</a>
+        </div>
+        <div class"w3-responsive w3-padding" style="margin-top: 10px; margin-left: 80%; margin-right:10px">
+           <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" style="margin-top: 10px">zamknij</a>
+        </div>
     </div>
 
     <br>
@@ -94,6 +105,21 @@
 <%@include file='../loginModal.jsp' %>
 
 
+<!-- Newsletter Modal -->
+<div id="newsletter" class="w3-modal">
+    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
+        <div class="w3-container w3-white w3-center">
+            <i onclick="document.getElementById('newsletter').style.display='none'"
+               class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
+            <h2 class="w3-wide">NEWSLETTER</h2>
+            <p>Dołącz do mojej listy mailingowej by otrzymywać aktualności o nowościach i ofertach specjalnych.</p>
+            <p><input class="w3-input w3-border" type="text" placeholder="Wpisz e-mail"></p>
+            <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom"
+                    onclick="document.getElementById('newsletter').style.display='none'">Subscribe
+            </button>
+        </div>
+    </div>
+</div>
 
 <script>
     // Accordion

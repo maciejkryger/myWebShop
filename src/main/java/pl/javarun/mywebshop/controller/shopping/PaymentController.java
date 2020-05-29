@@ -97,9 +97,11 @@ public class PaymentController {
         WebOrder order = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         order.setPaymentMethod(paymentMethod);
         webOrderService.save(order);
-        if (order.getDeliveryOption().getPaymentType() == paymentTypeService.getById(1)) {
+        //with transport
+        if (order.getDeliveryOption().getPaymentType() == paymentTypeService.getById(1) && order.getDeliveryOption().getId()!=4) {
             return "redirect:/address";
         }
+        //without transport - OWL(self-pickup)
         return "redirect:/confirmation";
     }
 

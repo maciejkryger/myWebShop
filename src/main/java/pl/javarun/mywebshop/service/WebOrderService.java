@@ -2,6 +2,7 @@ package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.repository.WebOrderRepository;
 
@@ -67,5 +68,13 @@ public class WebOrderService {
 
     public List<WebOrder> getAllCompletedAndDeliveryDateNotNull() {
         return webOrderRepository.findAllByCompletedTrueAndDeliveryDateNotNull();
+    }
+
+    public List<WebOrder> getAllActualOrdersByUser(User user) {
+        return webOrderRepository.findAllByUserAndDeliveryDateIsNull(user);
+    }
+
+    public List<WebOrder> getAllHistoryOrdersByUser(User user) {
+        return webOrderRepository.findByUserAndDeliveryDateIsNotNull(user);
     }
 }

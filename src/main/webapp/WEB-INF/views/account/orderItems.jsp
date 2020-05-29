@@ -28,20 +28,12 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
-    .amountInput{
-        border: 2px solid grey;
+    .myInput{
+        border: 2px solid green;
         border-radius: 8px;
+        width: 5000px;
         color: black;
         text-align: center;
-        width: 65px;
-        }
-
-    .dateInput{
-        border: 2px solid grey;
-        border-radius: 8px;
-        color: black;
-        text-align: center;
-        width: 150px;
         }
 
     .myButton{
@@ -74,80 +66,107 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px; width: 80%">
+<div class="w3-main" style="margin-left:250px">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">centrum zamówień</p>
+        <p class="w3-left">moje zamówienia</p>
         <%@include file='../header.jsp' %>
     </header>
 
 
 <!-- Delivery grid -->
- <h2>Zamówienia zaakceptowane</h2>
-<div class="w3-responsive w3-padding">
-    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
-</div>
+ <h2>moje zamówienia</h2>
+
+        <div class="w3-responsive w3-padding">
+                    <c:if test="${sessionScope.user.username!=null}">
+                        <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
+                    </c:if>
+                    <button class="w3-button w3-white w3-border w3-round-large w3-right" onclick="goBack()">cofnij</button>
+        </div>
+
 
 <div class="w3-responsive">
- <table class="w3-table-all w3-hoverable">
+        Szczegóły zamówienia nr: ${webOrder.orderNumber}
+                <table class="w3-table-all w3-hoverable">
                     <thead>
                     <tr class="w3-light-grey ">
-                        <th>data zamówienia</th>
+                        <th>id produktu</th>
+                        <th>zdjęcie</th>
+                        <th>nazwa produktu</th>
                         <th>numer zamówienia</th>
-                        <th>metoda płatności</th>
-                        <th>klient</th>
-                        <th>uwagi</th>
-                        <th>szczegóły</th>
-                        <th>potwierdź płatność</th>
+                        <th>cena produktu</th>
+                        <th>ilość</th>
+                        <th>suma</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="order" items="${ordersAccepted}">
-
+                    <c:forEach var="item" items="${orderItems}">
                         <tr>
-                            <td>${order.confirmDate}</td>
-                            <td>${order.orderNumber}</td>
-                            <td>${order.paymentMethod.namePl}</td>
-                            <td>${order.user.firstName} ${order.user.lastName}</td>
-                            <td>${order.comment!=null && order.comment!="" ? 'TAK' : 'NIE'}</td>
-                            <td>
-                            <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
-                                <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
-                            </a>
-                            </td>
-                            <td>
-                            <form method="post" id="confirm">
-                              <input type="hidden" name="id" value="${order.id}">
-                              <input type="hidden" name="paid" value="true">
-                              <input type="text" name="paymentAmount" class="amountInput"
-                                  value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
-                              <input type="date" name="paymentDate" class="dateInput">
-                            </form>
-
-                            <form method="post" >
-                               <input type="hidden" name="id" value="${order.id}">
-                               <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
-                            </form>
-
-                            <input type="submit" form="confirm" value="potwierdź" class="w3-button w3-white w3-border w3-round-large">
-                            </td>
-
+                            <td>${item.product.id}</td>
+                            <td style="width:7%">
+                                <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                             </td>
+                            <td>${item.product.namePl}</td>
+                            <td>${item.webOrder.orderNumber}</td>
+                            <td>${item.productPrice}</td>
+                            <td>${item.quantity}</td>
+                            <td>${item.quantity*item.productPrice}</td>
                         </tr>
+                   </tbody>
+                     </c:forEach>
 
-
-                    </c:forEach>
-                    </tbody>
+                     <tfoot>
+                       <tr class="w3-light-grey ">
+                         <th colspan="5" style="text-align:right;">podsumowanie:</th>
+                         <th>${sumQuantity} szt</th>
+                         <th>${sumToPay} PLN</th>
+                       </tr>
+                       <tr class="w3-light-grey ">
+                         <th colspan="5" style="text-align:right;">koszty transportu:</th>
+                         <th></th>
+                         <th>${webOrder.deliveryOption.price} PLN</th>
+                       </tr>
+                       <tr class="w3-light-grey ">
+                         <th colspan="5" style="text-align:right;">łącznie do zapłaty:</th>
+                         <th></th>
+                         <th>${sumToPay+webOrder.deliveryOption.price} PLN</th>
+                       </tr>
                 </table>
+
 
             </div>
 
+<div class="w3-responsive w3-margin">
+  <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
+  <p>${user.firstName} ${user.lastName}</p>
+  <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
+  <p>${address.postCode} ${address.city}</p>
+  <p>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'} <b>${user.phone}</b></p>
+  <p>uwagi do zamówienia: <c:if test="${webOrder.comment!=null && webOrder.comment!=''}"><b>${webOrder.comment}</b></c:if>
+  <c:if test="${webOrder.comment==null || webOrder.comment==''}">BRAK</c:if></p>
+</div>
+
+<div class="w3-responsive w3-margin w3-row">
+    <p class="w3-large"><strong>Metoda płatności:</strong></p>
+    <p>${webOrder.paymentMethod.namePl}</p>
+</div>
+<div class="w3-responsive w3-margin w3-row">
+    <p class="w3-large"><strong>Opcja dostawy:</strong></p>
+    <p>${webOrder.deliveryOption.namePl}</p>
+</div>
+
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
+   <button class="w3-button w3-white w3-border w3-round-large w3-left" onclick="goBack()">cofnij</button>
+          <script>
+             function goBack() {
+              window.history.back();
+             }
+          </script>
 </div>
 
     <!-- Footer -->
@@ -163,21 +182,6 @@
 <%@include file='../loginModal.jsp' %>
 
 
-<!-- Newsletter Modal -->
-<div id="newsletter" class="w3-modal">
-    <div class="w3-modal-content w3-animate-zoom" style="padding:32px">
-        <div class="w3-container w3-white w3-center">
-            <i onclick="document.getElementById('newsletter').style.display='none'"
-               class="fa fa-remove w3-right w3-button w3-transparent w3-xxlarge"></i>
-            <h2 class="w3-wide">NEWSLETTER</h2>
-            <p>Dołącz do mojej listy mailingowej by otrzymywać aktualności o nowościach i ofertach specjalnych.</p>
-            <p><input class="w3-input w3-border" type="text" placeholder="Wpisz e-mail"></p>
-            <button type="button" class="w3-button w3-padding-large w3-red w3-margin-bottom"
-                    onclick="document.getElementById('newsletter').style.display='none'">Subscribe
-            </button>
-        </div>
-    </div>
-</div>
 
 <script>
     // Accordion

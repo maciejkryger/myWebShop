@@ -135,6 +135,7 @@ public class WebOrderConfirmationController {
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("orderNumber",ono);
+        modelAndView.addObject("companyName",companyService.getCompanyData().getName());
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();

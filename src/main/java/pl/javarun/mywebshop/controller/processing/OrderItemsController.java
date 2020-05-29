@@ -60,8 +60,8 @@ public class OrderItemsController {
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("orderItems",webOrderItemService.getOrderItemByOrderId(id));
-        modelAndView.addObject("sumToPay", calculateActualSumToPayByOrderId(id));
-        modelAndView.addObject("sumQuantity", calculateActualQuantityOrderId(id));
+        modelAndView.addObject("sumToPay", webOrderItemService.calculateActualSumToPayInUserBasket(id));
+        modelAndView.addObject("sumQuantity", webOrderItemService.calculateActualQuantityInUserBasket(id));
         WebOrder webOrder = webOrderService.getOrderById(id);
         modelAndView.addObject("webOrder",webOrder);
         try{
@@ -70,21 +70,4 @@ public class OrderItemsController {
         return modelAndView;
     }
 
-    private int calculateActualSumToPayByOrderId(int id) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(id);
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
-    }
-
-    private int calculateActualQuantityOrderId(int id) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(id);
-        for (WebOrderItem item : items) {
-            result += item.getQuantity();
-        }
-        return result;
-    }
 }

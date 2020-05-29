@@ -13,12 +13,11 @@
             <c:if test="${sessionScope.user.enabled}">
                 <p class="w3-bar-item w3-padding">Jesteś zalogowany jako: ${sessionScope.user.username}</p>
                 <c:if test="${sessionScope.user.role.id<='2'}">
-                    <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button">superPanel</a>
-                    <a href="${pageContext.request.contextPath}/orderCenter" class="w3-bar-item w3-button">zamówienia</a>
+                    <a href="${pageContext.request.contextPath}/panels/superpanel" class="w3-bar-item w3-button w3-border w3-round-large">superPanel</a>
+                    <a href="${pageContext.request.contextPath}/orderCenter" class="w3-bar-item w3-button w3-border w3-round-large">zamówienia</a>
                 </c:if>
-                <a href="${pageContext.request.contextPath}/changeUserDetails" class="w3-bar-item w3-button">edycja danych</a>
-                <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button">wyloguj</a>
-                 <a href="${pageContext.request.contextPath}/changePassword" class="w3-bar-item w3-button">zmień hasło</a>
+                <a href="${pageContext.request.contextPath}/account" class="w3-bar-item w3-button w3-white w3-border w3-round-large">moje konto</a>
+                <a href="${pageContext.request.contextPath}/logout" class="w3-bar-item w3-button w3-white w3-border w3-round-large">wyloguj</a>
             </c:if>
             <c:if test="${!sessionScope.user.enabled}">
                 <h2 class="w3-wide">Logowanie</h2>

@@ -80,7 +80,6 @@ public class ChangeUserDetailsController {
     public String changeUserDetails(@RequestParam(required = false) String username,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
                                @RequestParam(required = false) String email) {
-        System.out.println("Dane użytkownika do zmiany: " + username + ": "  + " : " + firstName + " " + lastName + ", " + email);
         if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
             String firstNameAnswer;
             String lastNameAnswer;

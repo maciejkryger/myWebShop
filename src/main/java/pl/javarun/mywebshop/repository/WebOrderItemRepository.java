@@ -1,6 +1,7 @@
 package pl.javarun.mywebshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrderItem;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface WebOrderItemRepository extends JpaRepository<WebOrderItem, Inte
     Optional<WebOrderItem> findByWebOrder_IdAndProduct_Id(int orderId, int productId);
 
     List<WebOrderItem> findByWebOrder_Id(int orderId);
+
+
 }

@@ -87,6 +87,7 @@
                         onclick="document.getElementById('login').style.display='none'">zarejestruj
                 </button>
             </form>
+            <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" >anuluj</a>
         </table>
     </div>
 

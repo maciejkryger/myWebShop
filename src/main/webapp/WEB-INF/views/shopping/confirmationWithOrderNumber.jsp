@@ -72,7 +72,7 @@
                  <br><br>
                  Dziękuję za dokonane zakupy.<BR> Osobne potwierdzenie przyjdzie do Ciebie drogą mailową. <BR>
                  Życzę miłego dnia i zapraszam ponownie :)<BR>
-                 <B>Sylwia</B>
+                 <B>${companyName}</B>
  </div>
 
 

@@ -53,25 +53,27 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">profil użytkownika</p>
+        <p class="w3-left">zmiana adresu</p>
         <%@include file='../header.jsp' %>
     </header>
 
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserDetails' />">
-            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserAddress' />">
+            <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Adres został zapisany' :''}</a>
 
-            <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
-            <p>moje dane:</p>
-                <p><input class="w3-input w3-border" type="hidden" name="username" value="${user.username}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>
-                <p><input class="w3-input w3-border" type="text" name="firstName" placeholder="Wpisz imię" value="${user.firstName}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noLastName ?  'Pole na nazwisko nie może być puste' :''}</a>
-                <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${user.lastName}"></p>
-                <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
-                <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
+            <p class="w3-xlarge">Edycja adresu użytkownika: <b>${sessionScope.user.username}</b></p>
+            <p>Mój adres:</p>
+                <a class="w3-bar-item w3-row" style="color: red">${streetWrong ? 'Pole ulicy posiada niedozwolone znaki.' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="street" placeholder="wpisz ulicę" value="${address.street}"></p>
+                <a class="w3-bar-item w3-row" style="color: red">${houseNoWrong ? 'Pole numeru domu posiada niedozwolone znaki.' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="houseNo" placeholder="numer domu" value="${address.houseNo}"></p>
+                <p><input class="w3-input w3-border" type="text" name="flatNo" placeholder="numer mieszkania" value="${address.flatNo}"></p>
+                <a class="w3-bar-item w3-row" style="color: red">${postCodeWrong ? 'Pole kodu pocztowego ma zły format' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="postCode" placeholder="numer kodu pocztowego (00-000)" value="${address.postCode}"></p>
+                <a class="w3-bar-item w3-row" style="color: red">${cityWrong ? 'Pole miasta ma zły format.' :''}</a>
+                <p><input class="w3-input w3-border" type="text" name="city" placeholder="numer mieszkania" value="${address.city}"></p>
             <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left">zapisz
             </button>
         </form>

@@ -28,13 +28,6 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
-    .myInput{
-        border: 2px solid green;
-        border-radius: 8px;
-        color: black;
-        text-align: center;
-        }
-
     .amountInput{
         border: 2px solid grey;
         border-radius: 8px;
@@ -44,12 +37,12 @@
         }
 
     .dateInput{
-            border: 2px solid grey;
-            border-radius: 8px;
-            color: black;
-            text-align: center;
-            width: 150px;
-            }
+        border: 2px solid grey;
+        border-radius: 8px;
+        color: black;
+        text-align: center;
+        width: 150px;
+        }
 
     .myButton{
         height: 100px;
@@ -81,89 +74,61 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px; width: 85%">
+<div class="w3-main" style="margin-left:250px; width: 80%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">centrum zamówień</p>
+        <p class="w3-left">moje zamówienia</p>
         <%@include file='../header.jsp' %>
     </header>
 
 
 <!-- Delivery grid -->
- <h2>Zamówienia wysłane lub czekające na odbiór własny</h2>
-        <div class="w3-responsive w3-padding">
-            <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
-        </div>
+ <h2>zamówienia bieżące</h2>
+<div class="w3-responsive w3-padding">
+    <a href="${pageContext.request.contextPath}/account/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
+</div>
 
 <div class="w3-responsive">
-                <table class="w3-table-all w3-hoverable">
+ <table class="w3-table-all w3-hoverable">
                     <thead>
                     <tr class="w3-light-grey ">
                         <th>data zamówienia</th>
-                        <th>Numer zamówienia</th>
-                        <th>Klient</th>
-                        <th>data wysłania /kompletacji</th>
-                        <th>numer LP</th>
-                        <th>opcja wysyłki</th>
+                        <th>numer zamówienia</th>
+                        <th>metoda płatności</th>
+                        <th>opcja dostawy</th>
+                        <th>list przewozowy</th>
+                        <th>status</th>
+                        <th>data doręczenia / odbioru</th>
                         <th>szczegóły</th>
-                        <th>Opcje</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="order" items="${ordersSent}">
+                    <c:forEach var="order" items="${historyOrders}">
 
                         <tr>
                             <td>${order.confirmDate}</td>
                             <td>${order.orderNumber}</td>
-                            <td>${order.user.firstName} ${order.user.lastName}</td>
-                            <td><c:if test="${order.deliveryOption.id<4}">${order.shipmentDate} (wysłano)</c:if>
-                                <c:if test="${order.deliveryOption.id>3}">${order.completeDate} (e-mail)</c:if>
-                            </td>
-                            <td>${order.shipmentNumber}
-                              <c:if test="${order.deliveryOption.id<3}">
-                                 <a href="https://sprawdz.dhl.com.pl/" onclick="this.target='_blank'" class="w3-button w3-white w3-border w3-round-large w3-center">sprawdź na DHL</a>
-                              </c:if>
-                            </td>
+                            <td>${order.paymentMethod.namePl}</td>
                             <td>${order.deliveryOption.namePl}</td>
+                            <td>${order.shipmentNumber}</td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/orderCenter/orderItems/${order.id}">
-                                   <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
-                                </a>
-
-                            </td>
+                            <c:if test="${order.deliveryDate!=null && order.shipmentNumber!=null}">
+                            DORĘCZONE
+                            </c:if>
+                            <c:if test="${order.deliveryDate!=null && order.shipmentNumber==null}">
+                            ODEBRANE
+                            </c:if>
+                            <td>${order.deliveryDate}</td>
                             <td>
-                            <c:if test="${order.deliveryOption.id<4}">
-                                <form method="post" >
-                                    <input type="hidden" name="id" value="${order.id}">
-                                    <input type="date" name="deliveryDate" class="dataInput">
-                                    <input type="submit" value="potwierdź doręczenie" class="w3-button w3-white w3-border w3-round-large">
-                                </form>
-                            </c:if>
-                            <c:if test="${order.deliveryOption.id>3}">
-
-                                <form method="post" id="confirm" >
-                                    <input type="hidden" name="id" value="${order.id}">
-                                    <input type="text" name="paymentAmount" class="amountInput"
-                                    value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
-                                    <input type="date" name="deliveryDate" class="dateInput">
-                                </form>
-
-                                 <form method="post" >
-                                     <input type="hidden" name="id" value="${order.id}">
-                                     <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
-                                 </form>
-
-                                <input type="submit" form="confirm" value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
-                            </c:if>
-
+                            <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">
+                                <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
+                            </a>
                             </td>
                         </tr>
-
-
                     </c:forEach>
                     </tbody>
                 </table>
@@ -172,7 +137,7 @@
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">
-    <a href="${pageContext.request.contextPath}/orderCenter/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
+    <a href="${pageContext.request.contextPath}/account/" class="w3-button w3-white w3-border w3-round-large w3-left">cofnij</a>
 </div>
 
     <!-- Footer -->

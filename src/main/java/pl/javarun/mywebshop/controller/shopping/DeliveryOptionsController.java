@@ -98,16 +98,22 @@ public class DeliveryOptionsController {
         WebOrder order = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
         order.setDeliveryOption(deliveryOption);
         webOrderService.save(order);
+
+        //prepayment
         if (deliveryOption.getPaymentType() == paymentTypeService.getById(1)) {
             return "redirect:/payment";
         }
-        if (deliveryOption.getId() == 4) {
+        //courier COD
+        if (deliveryOption.getId() == 2) {
+            order.setPaymentMethod(paymentMethodService.getById(3));
+            webOrderService.save(order);
+        }
+        //OWL(self-pickup) + Cash
+        if (deliveryOption.getId() == 5) {
             order.setPaymentMethod(paymentMethodService.getById(4));
             webOrderService.save(order);
             return "redirect:/confirmation";
         }
-        order.setPaymentMethod(paymentMethodService.getById(3));
-        webOrderService.save(order);
         return "redirect:/address";
     }
 

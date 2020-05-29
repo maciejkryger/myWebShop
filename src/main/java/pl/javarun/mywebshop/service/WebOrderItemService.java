@@ -2,6 +2,7 @@ package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.OrderItemNotExistException;
+import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrderItem;
 import pl.javarun.mywebshop.repository.WebOrderItemRepository;
 
@@ -49,6 +50,8 @@ public class WebOrderItemService {
     }
 
 
+
+
     public int calculateActualQuantityInUserBasket(int webOrderId) {
         int result = 0;
         List<WebOrderItem> items = getOrderItemByOrderId(webOrderId);
@@ -67,4 +70,6 @@ public class WebOrderItemService {
         }
         return result;
     }
+
+
 }

@@ -115,19 +115,20 @@ public class EmailOrderConfirmation {
                 StringBuilder builder2 = new StringBuilder();
                 builder2.append("Dobra wiadomość!<BR><BR>").
                         append("Masz nowe zamówienie: <B>").append(webOrder.getOrderNumber()).append("</B><BR>").
-                        append("Klient: <B>").append(user.getFirstName()).append(" ").append(user.getLastName()).append("</B><BR>").
+                        append("Dane klienta: <BR>Imię i nazwisko:<B>").
+                        append(user.getFirstName()).append(" ").append(user.getLastName()).append("</B><BR>").
                         append("email: <B>").append(user.getEmail()).append("</B><BR>").
                         append("telefon: <B>").append(user.getPhone()).append("</B><BR>");
                 try {
                     address = addressService.getByUser(user);
-                    builder2.append(address.getStreet()).append(" ").append(address.getHouseNo());
+                    builder2.append("adres:<BR>").append(address.getStreet()).append(" ").append(address.getHouseNo());
                     if (address.getFlatNo() != null && !address.getFlatNo().isEmpty()) {
                         builder.append("/").append(address.getFlatNo());
                     }
                     builder2.append("<BR>").append(address.getPostCode()).append(" ").append(address.getCity()).append("<BR>");
                 } catch (AddressNotExistException ignored) {
                 }
-                builder2.append("<BR><<BR>").append("<BR><BR><B>PODSUMOWANIE</B><BR>").
+                builder2.append("<BR><BR><B>PODSUMOWANIE</B><BR>").
                         append("------------------------------------------------------------<BR>").
                         append("- Ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
                         append("- Wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
