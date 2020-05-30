@@ -75,6 +75,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/rules/**")
                 .permitAll()
+                .antMatchers("/account**")
+                .hasAnyAuthority("ADMIN", "SUPERUSER","USER")
                 .antMatchers("/basket**")
                 .hasAnyAuthority("ADMIN", "SUPERUSER","USER")
                 .antMatchers("/order**")

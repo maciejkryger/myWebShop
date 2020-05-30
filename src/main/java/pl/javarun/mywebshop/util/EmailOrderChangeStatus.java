@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Properties;
 
 @Controller
-public class EmailOrderConfirmation {
+public class EmailOrderChangeStatus {
 
     private ConfigDataService configDataService;
     private AddressService addressService;
@@ -30,8 +30,8 @@ public class EmailOrderConfirmation {
     @Value("${mail_href}")
     private String href;
 
-    public EmailOrderConfirmation(ConfigDataService configDataService, AddressService addressService,
-                                  CompanyService companyService,  WebOrderItemService webOrderItemService) {
+    public EmailOrderChangeStatus(ConfigDataService configDataService, AddressService addressService,
+                                  CompanyService companyService, WebOrderItemService webOrderItemService) {
         this.configDataService = configDataService;
         this.addressService = addressService;
         this.companyService = companyService;
@@ -59,7 +59,6 @@ public class EmailOrderConfirmation {
         });
 
         Message message = new MimeMessage(session);
-
         int orderId = webOrder.getId();
         int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(orderId);
         int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(orderId);
@@ -71,17 +70,22 @@ public class EmailOrderConfirmation {
             message.setFrom(new InternetAddress("potwierdzenie@qunsztowna.pl"));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(webOrder.getUser().getEmail()));
-            String subject = "Qunsztowna.pl - informacja o zlozonym zamowieniu nr " + webOrder.getOrderNumber();
+            String subject = "Qunsztowna.pl - twoje zamówienie nr " + webOrder.getOrderNumber() + " zmieniło status";
             message.setSubject(subject);
             Address address;
 
-//------------------------------------------------------------------------------------------------------------
-//|                                 first message to client                                                  |
-// -----------------------------------------------------------------------------------------------------------
+
             StringBuilder builder = new StringBuilder();
             builder.append("Cześć <B>").append(webOrder.getUser().getFirstName()).append("!</B><BR><BR>").
-                    append("Twoje zamówienie zostało przyjęte i zarejestrowane pod numerem: <B>").append(webOrder.getOrderNumber()).
-                    append("</B><BR>").append("<BR><BR><B>PODSUMOWANIE</B><BR>").
+                    append("Twoje zamówienie nr ").append(webOrder.getOrderNumber()).append(" zmieniło status na: <B>").
+                    append(webOrder.getStatus().getNamePl()).append("</B><BR>");
+            if (webOrder.getShipmentNumber() != null) {
+                builder.append("Numer listu przewozowego: <B>").append(webOrder.getShipmentNumber()).append("</B>");
+            }
+            if (webOrder.getStatus().getId() != 6 || webOrder.getStatus().getId() != 7) {
+                builder.append("<BR><BR>").append("Będziemy Ciebie informować o kolejnych etapach realizacji tego zamówienia");
+            }
+            builder.append("<BR><BR><B>PODSUMOWANIE</B><BR>").
                     append("------------------------------------------------------------<BR>").
                     append("- ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
                     append("- wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
@@ -118,50 +122,6 @@ public class EmailOrderConfirmation {
 
             String msg = builder.toString();
 
-//------------------------------------------------------------------------------------------------------------
-//|                                 second message to owner                                                  |
-// -----------------------------------------------------------------------------------------------------------
-
-
-            StringBuilder builder2 = new StringBuilder();
-            builder2.append("Dobra wiadomość!<BR><BR>").
-                    append("Masz nowe zamówienie: <B>").append(webOrder.getOrderNumber()).append("</B><BR>").
-                    append("Dane klienta: <BR>Imię i nazwisko:<B>").
-                    append(webOrder.getUser().getFirstName()).append(" ").append(webOrder.getUser().getLastName()).append("</B><BR>").
-                    append("email: <B>").append(webOrder.getUser().getEmail()).append("</B><BR>").
-                    append("telefon: <B>").append(webOrder.getUser().getPhone()).append("</B><BR>");
-            try {
-                address = addressService.getByUser(webOrder.getUser());
-                builder2.append("adres:<BR>").append(address.getStreet()).append(" ").append(address.getHouseNo());
-                if (address.getFlatNo() != null && !address.getFlatNo().isEmpty()) {
-                    builder.append("/").append(address.getFlatNo());
-                }
-                builder2.append("<BR>").append(address.getPostCode()).append(" ").append(address.getCity()).append("<BR>");
-            } catch (AddressNotExistException ignored) {
-            }
-            builder2.append("<BR><BR><B>PODSUMOWANIE</B><BR>").
-                    append("------------------------------------------------------------<BR>").
-                    append("- Ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
-                    append("- Wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
-                    append("- Koszty tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
-                    append("------------------------------------------------------------<BR>").
-                    append("łącznie do  zapłaty: ").append(sumToPay + deliveryCostsToPay).append(" PLN<BR><BR><BR>").
-                    append("uwagi do zamówienia: <B>");
-            if (webOrder.getComment() == null) {
-                builder.append("BRAK");
-            } else {
-                builder.append(webOrder.getComment()).append("</B><BR>");
-            }
-            builder.append("-------------------------------------------------------------<BR>").
-                    append("wybrana forma płatności: <B>").append(webOrder.getPaymentMethod().getNamePl()).append("</B><BR>").
-                    append("wybrana forma dostawy: <B>").append(webOrder.getDeliveryOption().getNamePl()).append("</B><BR>").
-                    append("-------------------------------------------------------------<BR><BR>").
-                    append("Nie zapomnij sprocesować tego zamówienia !<BR>");
-
-
-            String msg2 = builder2.toString();
-
-
             MimeBodyPart mimeBodyPart = new MimeBodyPart();
             mimeBodyPart.setContent(msg, "text/html; charset=UTF-8");
 
@@ -171,20 +131,6 @@ public class EmailOrderConfirmation {
             message.setContent(multipart);
 
             Transport.send(message);
-
-            message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(companyService.getCompanyData().getEmail()));
-
-            MimeBodyPart mimeBodyPart2 = new MimeBodyPart();
-            mimeBodyPart2.setContent(msg2, "text/html; charset=UTF-8");
-
-            Multipart multipart2 = new MimeMultipart();
-            multipart2.addBodyPart(mimeBodyPart2);
-
-            message.setContent(multipart2);
-
-            Transport.send(message);
-
 
         } catch (MessagingException e) {
             e.printStackTrace();

@@ -122,8 +122,7 @@ public class WebOrderConfirmationController {
         webOrder.setConfirmDate(Timestamp.valueOf(LocalDateTime.now()));
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
-        emailOrderConfirmation.send(user,webOrder,webOrderItemService.getOrderItemByOrderId(webOrder.getId()),
-                sumToPay,sumQuantity,deliveryCostsToPay);
+        emailOrderConfirmation.send(webOrder);
 
         return  "redirect:/confirmation/finished?ono="+webOrder.getOrderNumber();
     }

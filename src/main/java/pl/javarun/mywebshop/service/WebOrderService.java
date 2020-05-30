@@ -2,9 +2,12 @@ package pl.javarun.mywebshop.service;
 
 import org.springframework.stereotype.Service;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.model.Status;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
+import pl.javarun.mywebshop.repository.StatusRepository;
 import pl.javarun.mywebshop.repository.WebOrderRepository;
+import pl.javarun.mywebshop.util.EmailOrderChangeStatus;
 
 import java.util.List;
 
@@ -33,17 +36,17 @@ public class WebOrderService {
         webOrderRepository.delete(webOrder);
     }
 
-    public List<WebOrder> getAllOrders(){
+    public List<WebOrder> getAllOrders() {
         return webOrderRepository.findAll();
     }
 
 
     public WebOrder getOrderByUserIdAndConfirmedFalse(int userId) {
-        return webOrderRepository.findByUser_IdAndConfirmedFalse(userId).orElseThrow(()->new OrderNotExistException("Zamówienie w bazie dla twojego użytkownika jeszcze nie istnieje!"));
+        return webOrderRepository.findByUser_IdAndConfirmedFalse(userId).orElseThrow(() -> new OrderNotExistException("Zamówienie w bazie dla twojego użytkownika jeszcze nie istnieje!"));
     }
 
     public WebOrder getOrderById(int orderId) {
-        return webOrderRepository.findById(orderId).orElseThrow(()->new OrderNotExistException("Zamówienie w bazie nie istnieje!"));
+        return webOrderRepository.findById(orderId).orElseThrow(() -> new OrderNotExistException("Zamówienie w bazie nie istnieje!"));
     }
 
     public List<WebOrder> getAllConfirmedFalse() {
@@ -59,7 +62,7 @@ public class WebOrderService {
     }
 
     public List<WebOrder> getAllReady() {
-    return webOrderRepository.getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_IdAndCompletedFalse(2);
+        return webOrderRepository.getAllByCompletedFalseAndPaidTrueOrPaymentMethod_PaymentType_IdAndCompletedFalse(2);
     }
 
     public List<WebOrder> getAllSentOrReadyToSelfPickUpOrders() {
@@ -76,5 +79,44 @@ public class WebOrderService {
 
     public List<WebOrder> getAllHistoryOrdersByUser(User user) {
         return webOrderRepository.findByUserAndDeliveryDateIsNotNull(user);
+    }
+
+    public void updateStatus(WebOrder order, StatusService statusService, EmailOrderChangeStatus emailOrderChangeStatus) {
+
+        if (order.isAccepted() == false) {
+            order.setStatus(statusService.getById(1));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.isAccepted() == true && order.isCompleted() == false && order.isPaid() == false && order.getDeliveryOption().getPaymentType().getId() == 1) {
+            order.setStatus(statusService.getById(2));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.isAccepted() == true && order.isCompleted() == false && (order.isPaid() == true || order.getDeliveryOption().getPaymentType().getId() == 2)) {
+            order.setStatus(statusService.getById(3));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.getDeliveryDate() == null && order.getShipmentNumber() == null && order.getShipmentDate() == null && order.isCompleted() == true) {
+            order.setStatus(statusService.getById(4));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.getDeliveryDate() == null && order.getShipmentNumber() != null) {
+            order.setStatus(statusService.getById(5));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.getDeliveryDate() != null && order.getShipmentNumber() == null) {
+            order.setStatus(statusService.getById(6));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
+        if (order.getDeliveryDate() != null && order.getShipmentNumber() != null) {
+            order.setStatus(statusService.getById(7));
+            webOrderRepository.save(order);
+            emailOrderChangeStatus.send(order);
+        }
     }
 }

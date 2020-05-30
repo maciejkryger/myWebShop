@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
+import pl.javarun.mywebshop.util.EmailOrderChangeStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.websocket.server.PathParam;
@@ -35,12 +36,15 @@ public class OrderAcceptedController {
     private final DeliveryOptionService deliveryOptionService;
     private final PaymentTypeService paymentTypeService;
     private final AddressService addressService;
+    private final EmailOrderChangeStatus emailOrderChangeStatus;
+    private final StatusService statusService;
 
 
     public OrderAcceptedController(UserService userService, TypeService typeService, CompanyService companyService,
                                    RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                    ProductService productService, DeliveryOptionService deliveryOptionService,
-                                   PaymentTypeService paymentTypeService, AddressService addressService) {
+                                   PaymentTypeService paymentTypeService, AddressService addressService,
+                                   EmailOrderChangeStatus emailOrderChangeStatus,StatusService statusService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -51,6 +55,8 @@ public class OrderAcceptedController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
+        this.emailOrderChangeStatus=emailOrderChangeStatus;
+        this.statusService=statusService;
     }
 
     @GetMapping()
@@ -90,6 +96,7 @@ public class OrderAcceptedController {
             order.setDeliveryDate(LocalDate.parse(paymentDate));
         }
         webOrderService.save(order);
+        webOrderService.updateStatus(order, statusService , emailOrderChangeStatus);
         return "redirect:/orderCenter/accepted";
     }
 

@@ -93,6 +93,10 @@ public class WebOrder {
 
     private String comment;
 
+    @Nullable
+    @ManyToOne(targetEntity = Status.class)
+    private Status status;
+
     public WebOrder() {
     }
 
@@ -323,5 +327,14 @@ public class WebOrder {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Nullable
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(@Nullable Status status) {
+        this.status = status;
     }
 }

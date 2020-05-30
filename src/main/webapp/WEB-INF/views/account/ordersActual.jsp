@@ -114,28 +114,7 @@
                             <td>${order.orderNumber}</td>
                             <td>${order.paymentMethod.namePl}</td>
                             <td>${order.deliveryOption.namePl}</td>
-                            <td>
-                            <c:choose>
-                            <c:when test="${order.deliveryDate!=null}">
-                            DORĘCZONE
-                            </c:when>
-                            <c:when test="${order.deliveryDate==null && order.shipmentNumber!=null}">
-                            WYSŁANE
-                            </c:when>
-                            <c:when test="${order.deliveryDate==null && order.shipmentNumber==null && order.shipmentDate==null && order.completed==true}">
-                            GOTOWE
-                            </c:when>
-                            <c:when test="${order.accepted==true && order.completed==false && order.paid==true || order.deliveryOption.paymentType.id==2}">
-                            W TRAKCIE REALIZACJI
-                            </c:when>
-                            <c:when test="${order.accepted==true && order.completed==false && order.paid==false && order.deliveryOption.paymentType.id==1}">
-                            OCZEKUJE NA PŁATNOŚĆ
-                            </c:when>
-                            <c:otherwise>
-                            OCZEKUJE NA AKCEPTACJE
-                            </c:otherwise>
-                            </c:choose>
-                            </td>
+                            <td>${order.status.namePl}</td>
                             <td>${order.shipmentNumber}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">

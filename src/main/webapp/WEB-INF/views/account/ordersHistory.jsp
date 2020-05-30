@@ -115,13 +115,7 @@
                             <td>${order.paymentMethod.namePl}</td>
                             <td>${order.deliveryOption.namePl}</td>
                             <td>${order.shipmentNumber}</td>
-                            <td>
-                            <c:if test="${order.deliveryDate!=null && order.shipmentNumber!=null}">
-                            DORĘCZONE
-                            </c:if>
-                            <c:if test="${order.deliveryDate!=null && order.shipmentNumber==null}">
-                            ODEBRANE
-                            </c:if>
+                            <td>${order.status.namePl}</td>
                             <td>${order.deliveryDate}</td>
                             <td>
                             <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">

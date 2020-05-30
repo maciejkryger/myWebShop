@@ -74,7 +74,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px; width: 80%">
+<div class="w3-main mainStyle" style="margin-left:250px; width: 100%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -120,7 +120,7 @@
                             </a>
                             </td>
                             <td>
-                            <form method="post" id="confirm">
+                            <form method="post" id="confirm" action="${pageContext.request.contextPath}/orderCenter/accepted/">
                               <input type="hidden" name="id" value="${order.id}">
                               <input type="hidden" name="paid" value="true">
                               <input type="text" name="paymentAmount" class="amountInput"
@@ -128,7 +128,7 @@
                               <input type="date" name="paymentDate" class="dateInput">
                             </form>
 
-                            <form method="post" >
+                            <form method="post" action="${pageContext.request.contextPath}/orderCenter/accepted/" >
                                <input type="hidden" name="id" value="${order.id}">
                                <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
                             </form>

@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
+import pl.javarun.mywebshop.util.EmailOrderChangeStatus;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
@@ -33,12 +34,15 @@ public class OrderReadyController {
     private final DeliveryOptionService deliveryOptionService;
     private final PaymentTypeService paymentTypeService;
     private final AddressService addressService;
+    private final EmailOrderChangeStatus emailOrderChangeStatus;
+    private final StatusService statusService;
 
 
     public OrderReadyController(UserService userService, TypeService typeService, CompanyService companyService,
                                 RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                 ProductService productService, DeliveryOptionService deliveryOptionService,
-                                PaymentTypeService paymentTypeService, AddressService addressService) {
+                                PaymentTypeService paymentTypeService, AddressService addressService,
+                                EmailOrderChangeStatus emailOrderChangeStatus,StatusService statusService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -49,6 +53,8 @@ public class OrderReadyController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
+        this.emailOrderChangeStatus=emailOrderChangeStatus;
+        this.statusService=statusService;
     }
 
     @GetMapping({"","/{id}"})
@@ -76,6 +82,7 @@ public class OrderReadyController {
             order.setShipmentDate(LocalDate.parse(shipmentDate));
         }
         webOrderService.save(order);
+        webOrderService.updateStatus(order, statusService , emailOrderChangeStatus);
         return "redirect:/orderCenter/paid";
     }
 

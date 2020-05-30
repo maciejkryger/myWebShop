@@ -142,10 +142,10 @@
 
 <div class="w3-responsive w3-margin">
   <p class="w3-large"><strong>Dane do wysyłki:</strong></p>
-  <p>${user.firstName} ${user.lastName}</p>
+  <p>${webOrder.user.firstName} ${webOrder.user.lastName}</p>
   <p>${address.street} ${address.houseNo}<c:if test="${address.flatNo!='' && address.flatNo!=null}">/${address.flatNo}</c:if></p>
   <p>${address.postCode} ${address.city}</p>
-  <p>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'} <b>${user.phone}</b></p>
+  <p>numer telefonu${webOrder.deliveryOption.id<4 ? ' dla kuriera: ' :':'} <b>${webOrder.user.phone}</b></p>
   <p>uwagi do zamówienia: <c:if test="${webOrder.comment!=null && webOrder.comment!=''}"><b>${webOrder.comment}</b></c:if>
   <c:if test="${webOrder.comment==null || webOrder.comment==''}">BRAK</c:if></p>
 </div>

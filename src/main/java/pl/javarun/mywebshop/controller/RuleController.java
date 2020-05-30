@@ -69,9 +69,8 @@ public class RuleController {
             modelAndView.addObject("userWishListSize", 0);
         } else {
             userId = user.getId();
-            webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
             try {
-
+                webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
                 modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
             } catch (OrderNotExistException ex) {
                 modelAndView.addObject("productsInBasketSize", 0);

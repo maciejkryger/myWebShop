@@ -36,13 +36,13 @@
         }
 
     .myButton{
-    height: 100px;
-    min-width: 400px;
-    position: relative;
-    overflow: auto;
-    text-align:center;
-    padding: 34px 50px;
-    border: 3px solid green;
+        height: 100px;
+        min-width: 400px;
+        position: relative;
+        overflow: auto;
+        text-align:center;
+        padding: 34px 50px;
+        border: 3px solid green;
     }
 
         .shipmentInput{
@@ -89,7 +89,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px; width: 80%">
+<div class="w3-main" style="margin-left:250px; width: 100%">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -140,7 +140,7 @@
                             </td>
                             <td>
 
-                            <form method="post" >
+                            <form method="post" action="${pageContext.request.contextPath}/orderCenter/paid/">
                               <input type="hidden" name="id" value="${order.id}">
                               <input type="hidden" name="completed" value="true">
                               <c:if test="${order.deliveryOption.id<4}">
