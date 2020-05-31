@@ -54,6 +54,21 @@
         border: 3px solid green;
     }
 
+        .myData-container{
+            padding-bottom: 50px;
+            width: 50%;
+            margin-bottom: 20px;
+        }
+
+        @media only screen and (max-width: 600px) {
+              /* For mobile phones: */
+            .myData-container{
+                padding-bottom: 50px;
+                width: 100%
+            }
+
+        }
+
 </style>
 
 <body class="w3-content" style="max-width:1200px">
@@ -92,42 +107,26 @@
     <a href="${pageContext.request.contextPath}/account/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
 </div>
 
-<div class="w3-responsive">
- <table class="w3-table-all w3-hoverable">
-                    <thead>
-                    <tr class="w3-light-grey ">
-                        <th>data zamówienia</th>
-                        <th>numer zamówienia</th>
-                        <th>metoda płatności</th>
-                        <th>opcja dostawy</th>
-                        <th>list przewozowy</th>
-                        <th>status</th>
-                        <th>data doręczenia / odbioru</th>
-                        <th>szczegóły</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="order" items="${historyOrders}">
 
-                        <tr>
-                            <td>${order.confirmDate}</td>
-                            <td>${order.orderNumber}</td>
-                            <td>${order.paymentMethod.namePl}</td>
-                            <td>${order.deliveryOption.namePl}</td>
-                            <td>${order.shipmentNumber}</td>
-                            <td>${order.status.namePl}</td>
-                            <td>${order.deliveryDate}</td>
-                            <td>
-                            <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">
-                                <button class="w3-button w3-white w3-border w3-round-large">szczegóły</button>
-                            </a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    </tbody>
-                </table>
+<div class="w3-content w3-display-container w3-padding">
+    <c:forEach var="order" items="${historyOrders}">
+        <div class="w3-display-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
+              <p class="w3-row">numer zamówienia: <b>${order.orderNumber}</b></p>
+              <p class="w3-row">data zamówienia: <b>${order.confirmDate}</b></p>
+              <p class="w3-row">metoda płatności: <b>${order.paymentMethod.namePl}</b></p>
+              <p class="w3-row">opcja dostawy: <b>${order.deliveryOption.namePl}</b></p>
+              <p class="w3-row">status zamówienia: <b>${order.status.namePl}</b></p>
+              <p class="w3-row">list przewozowy: <b>${order.shipmentNumber}</b></p>
+              <p class="w3-row">data doręczenia / odbioru: <b>${order.deliveryDate}</b></p>
+              <p class="w3-row">
+                <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">
+                    <button class="w3-button w3-white w3-border w3-round-large w3-display-topright">szczegóły</button>
+                </a>
+              </p>
+        </div>
+    </c:forEach>
+</div>
 
-            </div>
 
 
 <div class="w3-container w3-responsive" style="padding: 10px">

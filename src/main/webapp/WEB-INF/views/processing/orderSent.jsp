@@ -136,28 +136,28 @@
 
                             </td>
                             <td>
-                            <c:if test="${order.deliveryOption.id<4}">
-                                <form method="post" >
+                            <c:if test="${order.deliveryOption.id<4}" >
+                                <form method="post" action="${pageContext.request.contextPath}/orderCenter/sent">
                                     <input type="hidden" name="id" value="${order.id}">
                                     <input type="date" name="deliveryDate" class="dataInput">
                                     <input type="submit" value="potwierdź doręczenie" class="w3-button w3-white w3-border w3-round-large">
                                 </form>
                             </c:if>
                             <c:if test="${order.deliveryOption.id>3}">
-
-                                <form method="post" id="confirm" >
+                                <form method="post" action="${pageContext.request.contextPath}/orderCenter/sent">
                                     <input type="hidden" name="id" value="${order.id}">
                                     <input type="text" name="paymentAmount" class="amountInput"
-                                    value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
+                                    value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">
                                     <input type="date" name="deliveryDate" class="dateInput">
+                                    <input type="submit"  value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
                                 </form>
 
-                                 <form method="post" >
+                                 <form method="post" action="${pageContext.request.contextPath}/orderCenter/sent">
                                      <input type="hidden" name="id" value="${order.id}">
                                      <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
                                  </form>
 
-                                <input type="submit" form="confirm" value="potwierdź OWL" class="w3-button w3-white w3-border w3-round-large">
+
                             </c:if>
 
                             </td>

@@ -72,7 +72,7 @@
         <%@include file='../header.jsp' %>
     </header>
 
-    <!-- Login form -->
+    <!-- account content -->
     <div class="w3-content w3-display-container w3-padding" style="max-width:100%">
         <div class="w3-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
             <p class="w3-row">moje zamówienia</p>
