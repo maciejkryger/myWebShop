@@ -15,6 +15,24 @@
         font-family: "Montserrat", sans-serif;
     }
 
+        .myData-container{
+            padding-bottom: 20px;
+            max-width:500px;
+            border-radius: 10px;
+            margin: 10px;
+        }
+
+        @media only screen and (max-width: 600px) {
+              /* For mobile phones: */
+            .myData-container{
+                font-size: 11px;
+                padding-bottom: 10px;
+                border-radius: 10px;
+                max-width:45%;
+            }
+
+        }
+
 </style>
 <body class="w3-content" style="max-width:2200px">
 
@@ -49,16 +67,16 @@
 
         <h2>Konfiguracja</h2>
 
-        <a href="${pageContext.request.contextPath}/panels/superpanel/">
-                                                <button class="w3-button w3-white w3-border w3-round-large">zamknij okno</button>
-                                </a>
-        <div class="w3-responsive w3-row" style="padding-top: 10px">
+            <a href="${pageContext.request.contextPath}/panels/superpanel/">
+                <button class="w3-button w3-white w3-border w3-round-large">zamknij okno</button>
+            </a>
+        <div class="w3-responsive w3-row" style="padding-top: 10px;">
 
             <c:forEach var="config" items="${configs}">
-            <div style="padding-bottom: 50px; width: 50%" class="w3-col l3 s6 w3-container">
-            <!--<table class="w3-table-all w3-hoverable w3-border">-->
+            <div class="w3-col l6 s6 w3-container myData-container w3-border">
+
                 <form method="post" action="${pageContext.request.contextPath}/panels/data/config/save"
-                      modelAttribute="config" class="w3-table-all ">
+                      modelAttribute="config" >
 
                     <p>
                         <input type="hidden" name="id" class="w3-input w3-border" value="${config.id}">
@@ -78,7 +96,6 @@
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large w3-right" value="zapisz"/>
                 </form>
 
-            <!--</table>-->
             </div>
             </c:forEach>
         </div>

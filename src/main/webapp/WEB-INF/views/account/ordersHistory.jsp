@@ -58,6 +58,10 @@
             padding-bottom: 50px;
             width: 50%;
             margin-bottom: 20px;
+            margin-left:20px;
+            min-width:45%;
+            min-height: 344px;
+            border-radius: 10px;
         }
 
         @media only screen and (max-width: 600px) {
@@ -65,6 +69,12 @@
             .myData-container{
                 padding-bottom: 50px;
                 width: 100%
+                margin-bottom: 20px;
+                margin-left:20px;
+                margin-right:20px;
+                min-height: 344px;
+                min-width:92%;
+                border-radius: 10px;
             }
 
         }
@@ -102,29 +112,43 @@
 
 
 <!-- Delivery grid -->
- <h2>zamówienia bieżące</h2>
+ <h2>historia zamówień</h2>
 <div class="w3-responsive w3-padding">
     <a href="${pageContext.request.contextPath}/account/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
 </div>
 
 
-<div class="w3-content w3-display-container w3-padding">
+<div class="w3-responsive w3-row">
+
+    <c:if test="${historyOrders.isEmpty()}">
+        <p class="w3-row w3-margin">nie masz historii zamówień :(</p>
+        <p class="w3-row w3-margin">koniecznie coś sobie kup ładnego jeszcze dzisiaj ! :)</p>
+    </c:if>
+
     <c:forEach var="order" items="${historyOrders}">
-        <div class="w3-display-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
+        <div class="w3-col l5 s6 w3-display-container w3-padding w3-border myData-container">
               <p class="w3-row">numer zamówienia: <b>${order.orderNumber}</b></p>
               <p class="w3-row">data zamówienia: <b>${order.confirmDate}</b></p>
               <p class="w3-row">metoda płatności: <b>${order.paymentMethod.namePl}</b></p>
               <p class="w3-row">opcja dostawy: <b>${order.deliveryOption.namePl}</b></p>
               <p class="w3-row">status zamówienia: <b>${order.status.namePl}</b></p>
+           <c:if test="${order.shipmentNumber!=null}">
+              <p class="w3-row">data wysłania: <b>${order.shipmentDate}</b></p>
               <p class="w3-row">list przewozowy: <b>${order.shipmentNumber}</b></p>
-              <p class="w3-row">data doręczenia / odbioru: <b>${order.deliveryDate}</b></p>
+              <p class="w3-row">data doręczenia: <b>${order.deliveryDate}</b></p>
+           </c:if>
+           <c:if test="${order.shipmentNumber==null}">
+              <p class="w3-row">data odbioru: <b>${order.deliveryDate}</b></p>
+           </c:if>
               <p class="w3-row">
                 <a href="${pageContext.request.contextPath}/account/orderItems/${order.id}">
                     <button class="w3-button w3-white w3-border w3-round-large w3-display-topright">szczegóły</button>
                 </a>
               </p>
         </div>
+
     </c:forEach>
+
 </div>
 
 

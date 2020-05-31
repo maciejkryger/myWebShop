@@ -46,9 +46,9 @@
     <!-- Image header -->
     <div class="w3-display-container w3-container">
         <img src="${pageContext.request.contextPath}/images/type${productType.id}.jpg" alt="${productType.namePl}" style="width:100%">
-        <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-            <p><a href="#products" class="w3-button w3-black w3-padding w3-small">PRZEJDŹ DO PRODUKTÓW</a></p>
-        </div>
+  <!--  <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
+            <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO PRODUKTÓW</a></p>
+        </div>-->
     </div>
 
     <div class="w3-container w3-text-grey" id="products">
@@ -74,10 +74,8 @@
 
     <!-- Product grid -->
     <div class="w3-row">
-
         <c:forEach var="item" items="${products}">
-
-            <div class="w3-col l3 s6">
+            <div class="w3-col l3 s6" style="min-height: 270px;">
                 <div class="w3-container">
                      <div class="w3-display-container">
                        <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
