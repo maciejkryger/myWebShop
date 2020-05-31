@@ -70,7 +70,7 @@ public class EmailOrderChangeStatus {
             message.setFrom(new InternetAddress("potwierdzenie@qunsztowna.pl"));
             message.setRecipients(
                     Message.RecipientType.TO, InternetAddress.parse(webOrder.getUser().getEmail()));
-            String subject = "Qunsztowna.pl - twoje zamówienie nr " + webOrder.getOrderNumber() + " zmieniło status";
+            String subject = "Qunsztowna.pl - twoje zamowienie nr " + webOrder.getOrderNumber() + " zmienilo status";
             message.setSubject(subject);
             Address address;
 
@@ -83,7 +83,7 @@ public class EmailOrderChangeStatus {
                 builder.append("Numer listu przewozowego: <B>").append(webOrder.getShipmentNumber()).append("</B>");
             }
             if (webOrder.getStatus().getId() != 6 || webOrder.getStatus().getId() != 7) {
-                builder.append("<BR><BR>").append("Będziemy Ciebie informować o kolejnych etapach realizacji tego zamówienia");
+                builder.append("<BR><BR>").append("Będziemy Ciebie informować o kolejnych etapach realizacji Twojego zamówienia");
             }
             builder.append("<BR><BR><B>PODSUMOWANIE</B><BR>").
                     append("------------------------------------------------------------<BR>").

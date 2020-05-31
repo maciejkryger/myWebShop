@@ -60,7 +60,7 @@
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserAddress' />">
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/account/changeUserAddress' />">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Adres został zapisany' :''}</a>
 
             <p class="w3-xlarge">Edycja adresu użytkownika: <b>${sessionScope.user.username}</b></p>

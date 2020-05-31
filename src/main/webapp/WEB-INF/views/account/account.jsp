@@ -76,14 +76,14 @@
     <div class="w3-content w3-display-container w3-padding" style="max-width:100%">
         <div class="w3-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
             <p class="w3-row">moje zamówienia</p>
-            <a href="${pageContext.request.contextPath}/actual" class="w3-bar-item w3-button w3-border w3-round-large">bieżące zamówienia</a>
-            <a href="${pageContext.request.contextPath}/history" class="w3-bar-item w3-button w3-border w3-round-large">historia zamówień</a>
+            <a href="${pageContext.request.contextPath}/account/actual" class="w3-bar-item w3-button w3-border w3-round-large">bieżące zamówienia</a>
+            <a href="${pageContext.request.contextPath}/account/history" class="w3-bar-item w3-button w3-border w3-round-large">historia zamówień</a>
         </div>
         <div class="w3-container w3-responsive w3-hoverable w3-border w3-padding myData-container">
             <p class="w3-row">moje dane</p>
-            <a href="${pageContext.request.contextPath}/changeUserDetails" class="w3-bar-item w3-button w3-border w3-round-large">edycja danych</a>
-            <a href="${pageContext.request.contextPath}/changeUserAddress" class="w3-bar-item w3-button w3-border w3-round-large">edycja adresu</a>
-            <a href="${pageContext.request.contextPath}/changePassword" class="w3-bar-item w3-button w3-border w3-round-large">zmień hasło</a>
+            <a href="${pageContext.request.contextPath}/account/changeUserDetails" class="w3-bar-item w3-button w3-border w3-round-large">edycja danych</a>
+            <a href="${pageContext.request.contextPath}/account/changeUserAddress" class="w3-bar-item w3-button w3-border w3-round-large">edycja adresu</a>
+            <a href="${pageContext.request.contextPath}/account/changePassword" class="w3-bar-item w3-button w3-border w3-round-large">zmień hasło</a>
         </div>
         <div class"w3-responsive w3-padding" style="margin-top: 10px; margin-left: 80%; margin-right:10px">
            <a href="${pageContext.request.contextPath}/" class="w3-button w3-white w3-border w3-round-large" style="margin-top: 10px">zamknij</a>

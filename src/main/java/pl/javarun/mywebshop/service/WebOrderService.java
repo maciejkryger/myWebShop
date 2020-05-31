@@ -103,6 +103,8 @@ public class WebOrderService {
             webOrderRepository.save(order);
             emailOrderChangeStatus.send(order);
         }
+
+        // te statusy nie działaj !!!!!!!!!!!!!!!!
         if (order.getDeliveryDate() == null && order.getShipmentNumber() != null) {
             order.setStatus(statusService.getById(5));
             webOrderRepository.save(order);

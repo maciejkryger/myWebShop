@@ -64,7 +64,7 @@
         <div class="w3-responsive">
 
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/changePassword">
+                <form method="post" action="${pageContext.request.contextPath}/account/changePassword">
 
                     <a class="w3-bar-item" style="color: blue">${passwordChanged ? 'Hasło zostało poprawnie zmienione' :''}</a>
                     <a class="w3-bar-item" style="color: crimson">${wrongPassword ? 'Błędne stare hasło!!!' :''}</a>

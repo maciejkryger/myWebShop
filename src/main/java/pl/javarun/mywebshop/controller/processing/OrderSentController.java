@@ -92,6 +92,7 @@ public class OrderSentController {
             order.setDeliveryDate(LocalDate.parse(deliveryDate));
         }
         webOrderService.save(order);
+        webOrderService.updateStatus(order, statusService , emailOrderChangeStatus);
         return "redirect:/orderCenter/sent";
     }
 

@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/actual")
+@RequestMapping("/account/actual")
 public class OrdersActualController {
 
     private final UserService userService;

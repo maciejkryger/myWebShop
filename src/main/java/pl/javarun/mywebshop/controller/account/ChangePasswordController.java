@@ -29,7 +29,7 @@ import static pl.javarun.mywebshop.util.InputValidator.passwordValidator;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/changePassword")
+@RequestMapping("/account/changePassword")
 public class ChangePasswordController {
 
     private final UserService userService;
@@ -120,10 +120,10 @@ public class ChangePasswordController {
             } else {
                 newPasswordAnswer2 = "";
             }
-            return "redirect:/changePassword?"+ oldPasswordAnswer + "&" + newPasswordAnswer + "&" + newPasswordAnswer2 + "&" + wrongPasswordAnswer;
+            return "redirect:/account/changePassword?"+ oldPasswordAnswer + "&" + newPasswordAnswer + "&" + newPasswordAnswer2 + "&" + wrongPasswordAnswer;
     }
         if (!newPassword.equals(newPassword2)) {
-            return "redirect:/changePassword?newPasswordsNotTheSame=true";
+            return "redirect:/account/changePassword?newPasswordsNotTheSame=true";
         }
 
         String hashedPassword = PasswordUtil.hashPassword(newPassword);
@@ -132,19 +132,19 @@ public class ChangePasswordController {
             User user = userService.getUserByUsername(username);
 
             if (!newPassword.equals(newPassword2)) {
-                return "redirect:/changePassword?newPasswordsNotTheSame=true";
+                return "redirect:/account/changePassword?newPasswordsNotTheSame=true";
             }
 
             if (PasswordUtil.checkPassword(oldPassword, user.getPassword())) {
                 user = userService.getUserByUsername(username);
                 user.setPassword(hashedPassword);
                 userService.saveUser(user);
-                return "redirect:/changePassword?passwordChanged=true";
+                return "redirect:/account/changePassword?passwordChanged=true";
             }
-            return "redirect:/changePassword?wrongPassword=true";
+            return "redirect:/account/changePassword?wrongPassword=true";
 
         } catch (UserNotExistException ex) {
-            return "redirect:/changePassword?userNotExist=true";
+            return "redirect:/account/changePassword?userNotExist=true";
         }
     }
 

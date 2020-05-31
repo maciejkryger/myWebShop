@@ -60,7 +60,7 @@
     <!-- Login form -->
     <div class="w3-content w3-display-container" style="max-width:100%">
 
-        <form method="post" action="<c:url value='${pageContext.request.contextPath}/changeUserDetails' />">
+        <form method="post" action="<c:url value='${pageContext.request.contextPath}/account/changeUserDetails' />">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
 
             <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
@@ -72,6 +72,7 @@
                 <p><input class="w3-input w3-border" type="text" name="lastName" placeholder="Wpisz nazwisko" value="${user.lastName}"></p>
                 <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
                 <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
+                <p><input class="w3-input w3-border" type="phone" name="phone" placeholder="Wpisz numer telefonu" value="${user.phone}"></p>
             <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left">zapisz
             </button>
         </form>

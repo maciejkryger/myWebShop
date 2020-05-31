@@ -23,7 +23,7 @@ import static pl.javarun.mywebshop.util.InputValidator.*;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/changeUserAddress")
+@RequestMapping("/account/changeUserAddress")
 public class ChangeUserAddressController {
 
     private final UserService userService;
@@ -129,7 +129,7 @@ public class ChangeUserAddressController {
                 cityAnswerWrong = "";
             }
 
-            return "redirect:/changeUserAddress?" + streetAnswerWrong + "&"  + houseNumberAnswerWrong + "&" + postCodeAnswerWrong +
+            return "redirect:/account/changeUserAddress?" + streetAnswerWrong + "&"  + houseNumberAnswerWrong + "&" + postCodeAnswerWrong +
                     "&" + cityAnswerWrong ;
         }
 
@@ -146,7 +146,7 @@ public class ChangeUserAddressController {
         address.setPostCode(postCode);
         address.setCity(city);
         addressService.save(address);
-        return "redirect:/changeUserAddress?success=true";
+        return "redirect:/account/changeUserAddress?success=true";
     }
 
 }

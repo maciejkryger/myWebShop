@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/history")
+@RequestMapping("/account/history")
 public class OrdersHistoryController {
 
     private final UserService userService;

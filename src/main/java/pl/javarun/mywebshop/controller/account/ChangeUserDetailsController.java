@@ -19,7 +19,7 @@ import javax.websocket.server.PathParam;
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/changeUserDetails")
+@RequestMapping("/account/changeUserDetails")
 public class ChangeUserDetailsController {
 
     private final UserService userService;
@@ -79,7 +79,7 @@ public class ChangeUserDetailsController {
     @PostMapping()
     public String changeUserDetails(@RequestParam(required = false) String username,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                               @RequestParam(required = false) String email) {
+                               @RequestParam(required = false) String email, @RequestParam(required = false) String phone) {
         if (username.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
             String firstNameAnswer;
             String lastNameAnswer;
@@ -100,15 +100,16 @@ public class ChangeUserDetailsController {
             } else {
                 emailAnswer = "email="+email;
             }
-            return "redirect:/changeUserDetails?username=" + username + "&" + firstNameAnswer + "&" + lastNameAnswer + "&" + emailAnswer;
+            return "redirect:/account/changeUserDetails?username=" + username + "&" + firstNameAnswer + "&" + lastNameAnswer + "&" + emailAnswer;
         }
 
             User user = userService.getUserByUsername(username);
             user.setFirstName(firstName);
             user.setLastName(lastName);
             user.setEmail(email);
+            user.setPhone(phone);
             userService.saveUser(user);
-            return "redirect:/changeUserDetails?username="+username+"&success=true";
+            return "redirect:/account/changeUserDetails?username="+username+"&success=true";
 
     }
 
