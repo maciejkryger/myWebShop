@@ -5,7 +5,17 @@
   Time: 12:28
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<style>
+    .footer-font{
 
+    }
+
+    @media only screen and (max-width: 600px) {
+          /* For mobile phones: */
+        .footer-font{
+            font-size: 10px;
+        }
+</style>
 <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
     <div class="w3-row-padding">
         <div class="w3-col s4">
@@ -35,7 +45,7 @@
             <h4>Dane kontaktowe</h4>
             <p><i class="fa fa-fw fa-map-marker"></i>${company.name}</p>
             <p><i class="fa fa-fw fa-phone"></i>${company.phone}</p>
-            <p><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
+            <p class="footer-font"><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
             <br>
             <h6>Facebook</h6>
             <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i

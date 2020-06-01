@@ -44,7 +44,7 @@
 
 <!-- Top menu on small screens -->
 <header class="w3-bar w3-top w3-hide-large w3-black w3-xlarge">
-    <div class="w3-bar-item w3-padding-24 w3-wide">QUNSZTOWNA</div>
+    <div class="w3-bar-item w3-padding-24 w3-wide"><a href="${pageContext.request.contextPath}/">QUNSZTOWNA</a></div>
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding-24 w3-right" onclick="w3_open()"><i
             class="fa fa-bars"></i></a>
 </header>
@@ -76,16 +76,16 @@
     </div>
 
     <!-- Image header -->
-    <%--    <div class="w3-display-container w3-container">--%>
-    <%--        <img src="${pageContext.request.contextPath}/images/1.webp" alt="mainPage" style="width:100%">--%>
+        <div class="w3-display-container w3-container">
+          <img src="${pageContext.request.contextPath}/images/start1.jpg" alt="mainPage" style="width:100%">
     <%--        <div class="w3-display-topleft w3-text-black" style="padding:24px 48px">--%>
     <%--            <h1 class="w3-jumbo w3-hide-small">Witam na mojej stronie :)</h1>--%>
     <%--            <h1 class="w3-hide-large w3-hide-medium">Witam na mojej stronie :)</h1>--%>
     <%--            <h1 class="w3-hide-small">Sylwia</h1>--%>
     <%--        </div>--%>
-    <%--    </div>--%>
+        </div>
 
-    <div class="w3-content w3-display-container w3-responsive" style="max-width:100%">
+<!--    <div class="w3-content w3-display-container w3-responsive" style="max-width:100%">
           <img class="mySlides" src="${pageContext.request.contextPath}/images/start1.jpg" style="width:100%">
         <img class="mySlides" src="${pageContext.request.contextPath}/images/start2.jpg" style="width:100%">
         <img class="mySlides" src="${pageContext.request.contextPath}/images/start3.jpg" style="width:100%">
@@ -97,11 +97,11 @@
             <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(2)"></span>
             <span class="w3-badge demo w3-border w3-transparent w3-hover-white" onclick="currentDiv(3)"></span>
         </div>
-    </div>
+    </div>-->
 
 
     <br>
-    <%--    <div class="w3-container w3-text-grey" id="jeans">--%>
+    <%--    <div class="w3-container w3-text-grey" id="itemsCounter">--%>
     <%--        <p>8 items</p>--%>
     <%--    </div>--%>
 
