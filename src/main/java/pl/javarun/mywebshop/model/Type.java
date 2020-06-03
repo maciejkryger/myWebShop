@@ -22,6 +22,8 @@ public class Type {
     private int id;
     private String name;
     private String namePl;
+    private String description;
+    private String descriptionPl;
 
     public Type() {
     }
@@ -49,5 +51,21 @@ public class Type {
 
     public void setNamePl(String namePl) {
         this.namePl = namePl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescriptionPl() {
+        return descriptionPl;
+    }
+
+    public void setDescriptionPl(String descriptionPl) {
+        this.descriptionPl = descriptionPl;
     }
 }

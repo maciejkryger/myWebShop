@@ -4,20 +4,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.TypeNotExistException;
+import pl.javarun.mywebshop.model.PaymentMethod;
 import pl.javarun.mywebshop.model.Type;
 import pl.javarun.mywebshop.service.*;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
- * @date : 29.03.2020 19:11
+ * @date : 02.06.2020 22:11
  * *
- * @className: TypeController
+ * @className: PaymentMethodController
  * *
  * *
  ******************************************************/
 @Controller
-@RequestMapping("/panels/data/type/")
-public class TypeManageController {
+@RequestMapping("/panels/data/paymentMethod/")
+public class PaymentMethodController {
 
     private ModelAndView modelAndView;
     private final ProductService productService;
@@ -30,12 +31,14 @@ public class TypeManageController {
     private final UserService userService;
     private final CompanyService companyService;
     private final RuleService ruleService;
+    private final PaymentMethodService paymentMethodService;
 
 
-    public TypeManageController(ProductService productService, TypeService typeService, MaterialService materialService,
-                                MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
-                                FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
-                                UserService userService, CompanyService companyService, RuleService ruleService) {
+    public PaymentMethodController(ProductService productService, TypeService typeService, MaterialService materialService,
+                                   MaterialColorService materialColorService, FasteningTypeService fasteningTypeService,
+                                   FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
+                                   UserService userService, CompanyService companyService, RuleService ruleService,
+                                   PaymentMethodService paymentMethodService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;
@@ -46,34 +49,29 @@ public class TypeManageController {
         this.userService = userService;
         this.companyService = companyService;
         this.ruleService = ruleService;
+        this.paymentMethodService=paymentMethodService;
     }
 
-    @GetMapping({"/{id}","/new"})
-    public ModelAndView editTypeItem(@PathVariable (required = false) Integer id) {
-        modelAndView = new ModelAndView("panels/typeItemManager");
-        if (id==null){
-          modelAndView.addObject("type", new Type());
-        } else {
-        modelAndView.addObject("type", typeService.getTypeById(id));
-        }
+    @GetMapping({"/{id}"})
+    public ModelAndView editPaymentMethodItem(@PathVariable (required = false) Integer id) {
+        modelAndView = new ModelAndView("panels/paymentMethodItemManager");
+        modelAndView.addObject("paymentMethod", paymentMethodService.getPaymentMethodById(id));
         return modelAndView;
     }
 
     @PostMapping("/save")
-    public String saveTypeItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl,
-                               @RequestParam String description, @RequestParam String descriptionPl) {
-        Type type;
+    public String savePaymentMethodItem(@RequestParam (required = false) Integer id, @RequestParam String name, @RequestParam String namePl) {
+        PaymentMethod paymentMethod;
         try{
-            type = typeService.getTypeById(id);
+            paymentMethod = paymentMethodService.getPaymentMethodById(id);
         } catch (TypeNotExistException ex){
-            type = new Type();
+            paymentMethod = new PaymentMethod();
         }
-        type.setName(name);
-        type.setNamePl(namePl);
-        type.setDescription(description);
-        type.setDescriptionPl(descriptionPl);
-        typeService.save(type);
-        return "redirect:/panels/data/types";
+        paymentMethod.setName(name);
+        paymentMethod.setNamePl(namePl);
+
+        paymentMethodService.save(paymentMethod);
+        return "redirect:/panels/data/paymentMethods";
     }
 }
 

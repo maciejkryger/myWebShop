@@ -39,4 +39,12 @@ public class PaymentMethodService {
     public PaymentMethod getById(int paymentMethodId) {
         return paymentMethodRepository.findById(paymentMethodId).orElseThrow(()->new PaymentMethodNotExistException("wybrana metoda płatności nie istnieje"));
     }
+
+    public List<PaymentMethod> getAllPaymentMethod() {
+        return paymentMethodRepository.findAll();
+    }
+
+    public PaymentMethod getPaymentMethodById(Integer id) {
+        return paymentMethodRepository.findById(id).orElseThrow(()->new PaymentMethodNotExistException("metoda płatności nie istnieje"));
+    }
 }

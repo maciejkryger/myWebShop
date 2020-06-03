@@ -94,11 +94,10 @@
                 <table class="w3-table-all w3-hoverable">
                     <thead>
                     <tr class="w3-light-grey ">
-                        <th>id produktu</th>
                         <th>zdjęcie</th>
                         <th>nazwa produktu</th>
                         <th>numer zamówienia</th>
-                        <th>cena produktu</th>
+                        <th>cena</th>
                         <th>ilość</th>
                         <th>suma</th>
                     </tr>
@@ -106,32 +105,31 @@
                     <tbody>
                     <c:forEach var="item" items="${orderItems}">
                         <tr>
-                            <td>${item.product.id}</td>
                             <td style="width:7%">
                                 <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
                              </td>
                             <td>${item.product.namePl}</td>
                             <td>${item.webOrder.orderNumber}</td>
-                            <td>${item.productPrice}</td>
+                            <td>${item.productPrice} PLN</td>
                             <td>${item.quantity}</td>
-                            <td>${item.quantity*item.productPrice}</td>
+                            <td>${item.quantity*item.productPrice} PLN</td>
                         </tr>
                    </tbody>
                      </c:forEach>
 
                      <tfoot>
                        <tr class="w3-light-grey ">
-                         <th colspan="5" style="text-align:right;">podsumowanie:</th>
+                         <th colspan="4" style="text-align:right;">podsumowanie:</th>
                          <th>${sumQuantity} szt</th>
                          <th>${sumToPay} PLN</th>
                        </tr>
                        <tr class="w3-light-grey ">
-                         <th colspan="5" style="text-align:right;">koszty transportu:</th>
+                         <th colspan="4" style="text-align:right;">koszt transportu:</th>
                          <th></th>
                          <th>${webOrder.deliveryOption.price} PLN</th>
                        </tr>
                        <tr class="w3-light-grey ">
-                         <th colspan="5" style="text-align:right;">łącznie do zapłaty:</th>
+                         <th colspan="4" style="text-align:right;">łącznie do zapłaty:</th>
                          <th></th>
                          <th>${sumToPay+webOrder.deliveryOption.price} PLN</th>
                        </tr>

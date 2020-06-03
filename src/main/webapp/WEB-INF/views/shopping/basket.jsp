@@ -88,8 +88,9 @@
                     <tbody>
                     <c:forEach var="item" items="${productsInBasket}">
                         <tr>
-                            <td style="width:25%">
+                            <td style="width:25%"><a href="${pageContext.request.contextPath}/details/${item.product.id}">
                             <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
+                            </a>
                             </td>
                             <td>${item.product.namePl}</td>
                             <td>${item.product.price} PLN</td>

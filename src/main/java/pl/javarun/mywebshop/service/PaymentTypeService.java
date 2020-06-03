@@ -5,6 +5,8 @@ import pl.javarun.mywebshop.exception.PaymentTypeNotExistException;
 import pl.javarun.mywebshop.model.PaymentType;
 import pl.javarun.mywebshop.repository.PaymentTypeRepository;
 
+import java.util.List;
+
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
  * @date : 10.05.2020 15:12
@@ -28,5 +30,9 @@ public class PaymentTypeService {
 
     public PaymentType getByName(String name) {
         return paymentTypeRepository.findByName(name).orElseThrow(()->new PaymentTypeNotExistException("Payment Type name-"+ name+" not exist"));
+    }
+
+    public List<PaymentType> getAllPaymentTypes() {
+        return paymentTypeRepository.findAll();
     }
 }

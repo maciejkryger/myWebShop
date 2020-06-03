@@ -46,48 +46,30 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Edycja asortymentu</h2>
+        <h2>Tabela metod płatności</h2>
+
         <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/types/">
-                <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-            </a>
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/type/save"
-                      modelAttribute="type">
-                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
-
-
-                    <p>
-                        <label><b>id: ${type.id}</b></label>
-                        <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
-                               value="${type.id}">
-                    </p>
-                    <p>
-                        <label><b>Nazwa ENG</b></label>
-                        <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
-                               value="${type.name}">
-                    </p>
-                    <p>
-                        <label><b>Nazwa PL</b></label>
-                        <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
-                               value="${type.namePl}">
-                    </p>
-                    <p>
-                        <label><b>Opis ENG</b></label>
-                        <input type="text" name="description" placeholder="opis ENG" class="w3-input w3-border"
-                               value="${type.description}">
-                    </p>
-                    <p>
-                        <label><b>Opis PL</b></label>
-                        <input type="text" name="descriptionPl" placeholder="opis PL" class="w3-input w3-border"
-                               value="${type.descriptionPl}">
-                    </p>
-                    <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
-                </form>
-                <a href="${pageContext.request.contextPath}/panels/data/types/">
-                    <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
-                </a>
-
+                <thead>
+                <tr class="w3-light-grey ">
+                    <th>id</th>
+                    <th>nazwa ENG</th>
+                    <th>nazwa PL</th>
+                    <th>opis ENG</th>
+                </tr>
+                </thead>
+                <c:forEach var="item" items="${paymentMethods}">
+                    <tr>
+                        <td>${item.id}</td>
+                        <td>${item.name}</td>
+                        <td>${item.namePl}</td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/panels/data/paymentMethod/${item.id}">
+                                <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
+                            </a>
+                        </td>
+                    </tr>
+                </c:forEach>
             </table>
         </div>
 

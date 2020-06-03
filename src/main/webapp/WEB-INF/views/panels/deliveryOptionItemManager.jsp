@@ -48,11 +48,11 @@
 
         <h2>Edycja asortymentu</h2>
         <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/types/">
+            <a href="${pageContext.request.contextPath}/panels/data/deliveryOptions/">
                 <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
             </a>
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/type/save"
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/deliveryOption/save"
                       modelAttribute="type">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
@@ -60,31 +60,45 @@
                     <p>
                         <label><b>id: ${type.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
-                               value="${type.id}">
+                               value="${deliveryOption.id}">
                     </p>
                     <p>
                         <label><b>Nazwa ENG</b></label>
                         <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
-                               value="${type.name}">
+                               value="${deliveryOption.name}">
                     </p>
                     <p>
                         <label><b>Nazwa PL</b></label>
                         <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
-                               value="${type.namePl}">
+                               value="${deliveryOption.namePl}">
                     </p>
                     <p>
-                        <label><b>Opis ENG</b></label>
-                        <input type="text" name="description" placeholder="opis ENG" class="w3-input w3-border"
-                               value="${type.description}">
+                        <label><b>Typ płatności</b></label>
+                        <select class="w3-input w3-border" name="paymentTypeId">
+                           <option selected="selected" value="${deliveryOption.paymentType.id}">${deliveryOption.paymentType.namePl}</option>
+                             <c:forEach var="item" items="${paymentTypes}">
+                               <option value="${item.id}">${item.namePl}</option>
+                             </c:forEach>
+                           </select>
                     </p>
                     <p>
-                        <label><b>Opis PL</b></label>
-                        <input type="text" name="descriptionPl" placeholder="opis PL" class="w3-input w3-border"
-                               value="${type.descriptionPl}">
+                        <label><b>Cena</b></label>
+                        <input type="number" name="price" placeholder="cena" class="w3-input w3-border"
+                               value="${deliveryOption.price}">
+                    </p>
+                    <p>
+                        <label><b>Aktywny</b></label>
+                        <input type="text" name="active" placeholder="czy aktywny" class="w3-input w3-border"
+                               value="${deliveryOption.active}">
+                    </p>
+                    <p>
+                        <label><b>Domyślny</b></label>
+                        <input type="text" name="checked" placeholder="czy domyślny" class="w3-input w3-border"
+                               value="${deliveryOption.checked}">
                     </p>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/panels/data/types/">
+                <a href="${pageContext.request.contextPath}/panels/data/deliveryOptions/">
                     <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
                 </a>
 

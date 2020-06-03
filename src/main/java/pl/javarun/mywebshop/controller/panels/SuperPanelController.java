@@ -35,6 +35,8 @@ public class SuperPanelController {
     private final RoleService roleService;
     private final ColorPerMaterialService colorPerMaterialService;
     private final ConfigDataService configDataService;
+    private final PaymentMethodService paymentMethodService;
+    private final DeliveryOptionService deliveryOptionService;
 
 
     public SuperPanelController(ProductService productService, TypeService typeService, MaterialService materialService,
@@ -42,7 +44,8 @@ public class SuperPanelController {
                                 FasteningColorService fasteningColorService, MakingTechniqueService makingTechniqueService,
                                 UserService userService, CompanyService companyService, RuleService ruleService,
                                 RoleService roleService, ColorPerMaterialService colorPerMaterialService,
-                                ConfigDataService configDataService) {
+                                ConfigDataService configDataService,PaymentMethodService paymentMethodService,
+                                DeliveryOptionService deliveryOptionService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;
@@ -56,6 +59,8 @@ public class SuperPanelController {
         this.roleService = roleService;
         this.colorPerMaterialService = colorPerMaterialService;
         this.configDataService=configDataService;
+        this.paymentMethodService=paymentMethodService;
+        this.deliveryOptionService=deliveryOptionService;
     }
 
 
@@ -146,6 +151,14 @@ public class SuperPanelController {
             case "config":
                 modelAndView = new ModelAndView("panels/configManager");
                 modelAndView.addObject("configs", configDataService.getAllConfigs());
+                break;
+            case "paymentMethods":
+                modelAndView = new ModelAndView("panels/paymentMethodTableManager");
+                modelAndView.addObject("paymentMethods", paymentMethodService.getAllPaymentMethod());
+                break;
+            case "deliveryOptions":
+                modelAndView = new ModelAndView("panels/deliveryOptionTableManager");
+                modelAndView.addObject("deliveryOptions", deliveryOptionService.getAllDeliveryOptions());
                 break;
             default:
                 modelAndView = new ModelAndView("panels/superPanel");

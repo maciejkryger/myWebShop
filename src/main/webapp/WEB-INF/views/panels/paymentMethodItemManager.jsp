@@ -48,11 +48,11 @@
 
         <h2>Edycja asortymentu</h2>
         <div class="w3-responsive">
-            <a href="${pageContext.request.contextPath}/panels/data/types/">
+            <a href="${pageContext.request.contextPath}/panels/data/paymentMethods/">
                 <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
             </a>
             <table class="w3-table-all w3-hoverable">
-                <form method="post" action="${pageContext.request.contextPath}/panels/data/type/save"
+                <form method="post" action="${pageContext.request.contextPath}/panels/data/paymentMethod/save"
                       modelAttribute="type">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
 
@@ -60,31 +60,22 @@
                     <p>
                         <label><b>id: ${type.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
-                               value="${type.id}">
+                               value="${paymentMethod.id}">
                     </p>
                     <p>
                         <label><b>Nazwa ENG</b></label>
                         <input type="text" name="name" placeholder="nazwa ENG" class="w3-input w3-border"
-                               value="${type.name}">
+                               value="${paymentMethod.name}">
                     </p>
                     <p>
                         <label><b>Nazwa PL</b></label>
                         <input type="text" name="namePl" placeholder="nazwa PL" class="w3-input w3-border"
-                               value="${type.namePl}">
+                               value="${paymentMethod.namePl}">
                     </p>
-                    <p>
-                        <label><b>Opis ENG</b></label>
-                        <input type="text" name="description" placeholder="opis ENG" class="w3-input w3-border"
-                               value="${type.description}">
-                    </p>
-                    <p>
-                        <label><b>Opis PL</b></label>
-                        <input type="text" name="descriptionPl" placeholder="opis PL" class="w3-input w3-border"
-                               value="${type.descriptionPl}">
-                    </p>
+
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
-                <a href="${pageContext.request.contextPath}/panels/data/types/">
+                <a href="${pageContext.request.contextPath}/panels/data/paymentMethods/">
                     <button class="w3-button w3-white w3-border w3-round-large">anuluj</button>
                 </a>
 

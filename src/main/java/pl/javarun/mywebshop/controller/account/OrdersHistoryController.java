@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.model.User;
+import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -53,7 +57,9 @@ public class OrdersHistoryController {
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-        modelAndView.addObject("historyOrders",webOrderService.getAllHistoryOrdersByUser(user));
+        List<WebOrder> historyOrdersByUser = webOrderService.getAllHistoryOrdersByUser(user);
+        Collections.reverse(historyOrdersByUser);
+        modelAndView.addObject("historyOrders",historyOrdersByUser);
         return modelAndView;
     }
 

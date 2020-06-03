@@ -32,4 +32,16 @@ public class DeliveryOptionService {
     public DeliveryOption getById(int deliveryOptionId) {
         return deliveryOptionRepository.findById(deliveryOptionId).orElseThrow(()->new DeliveryOptionNotExistException("Wybrana opcja dostawy nie istnieje"));
     }
+
+    public DeliveryOption getDeliveryOptionById(Integer id) {
+        return deliveryOptionRepository.findById(id).orElseThrow(()-> new DeliveryOptionNotExistException("opcja dostawy nie istnieje"));
+    }
+
+    public void save(DeliveryOption deliveryOption) {
+        deliveryOptionRepository.save(deliveryOption);
+    }
+
+    public List<DeliveryOption> getAllDeliveryOptions() {
+        return deliveryOptionRepository.findAll();
+    }
 }

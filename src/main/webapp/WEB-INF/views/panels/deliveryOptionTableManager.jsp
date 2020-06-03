@@ -14,6 +14,12 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+    .default-btn{
+        background-color: rgba(0%, 0%, 100%, 0); /* Blue background */
+        border: none; /* Remove borders */
+        padding: 12px 16px; /* Some padding */
+        cursor: pointer; /* Mouse pointer on hover */
+    }
 </style>
 <body class="w3-content" style="max-width:2200px">
 
@@ -47,9 +53,7 @@
     <div class="w3-container">
 
         <h2>Tabela asortymentu</h2>
-                <a href="${pageContext.request.contextPath}/panels/data/type/new">
-                    <button class="w3-button w3-white w3-border w3-round-large" >dodaj</button>
-                </a>
+
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
                 <thead>
@@ -57,22 +61,43 @@
                     <th>id</th>
                     <th>nazwa ENG</th>
                     <th>nazwa PL</th>
-                    <th>opis ENG</th>
-                    <th>opis PL</th>
-                    <th>Opcje</th>
+                    <th>typ płatności</th>
+                    <th>cena</th>
+                    <th>czy aktywny</th>
+                    <th>czy domyślny<th>
+                    <th>opcje</th>
                 </tr>
                 </thead>
-                <c:forEach var="item" items="${types}">
+                <c:forEach var="item" items="${deliveryOptions}">
                     <tr>
                         <td>${item.id}</td>
                         <td>${item.name}</td>
                         <td>${item.namePl}</td>
-                        <td>${item.description}</td>
-                        <td>${item.descriptionPl}</td>
+                        <td>${item.paymentType.namePl}</td>
+                        <td>${item.price}</td>
+                        <td><i class="${item.active ? 'far fa-eye' : 'far fa-eye-slash'}"></i></td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/panels/data/type/${item.id}">
+                        <form method="post" action="${pageContext.request.contextPath}/panels/data/deliveryOption/save">
+                          <input type="hidden" name="id" value="${item.id}">
+                          <input type="hidden" name="active" value="${item.active}">
+                          <input type="hidden" name="checked" value="${!item.checked}">
+
+                          <button type="submit" class="default-btn"><i class="${item.checked ? 'fas fa-toggle-on' : 'fas fa-toggle-off'}" style="font-size:24px;"></i></button>
+
+                        </form>
+                        </td>
+                        <td></td>
+                        <td>
+                            <a href="${pageContext.request.contextPath}/panels/data/deliveryOption/${item.id}">
                                 <button class="w3-button w3-white w3-border w3-round-large">edytuj</button>
                             </a>
+                            <form method="post" action="${pageContext.request.contextPath}/panels/data/deliveryOption/save">
+                                <input type="hidden" name="id" value="${item.id}">
+                                <input type="hidden" name="active" value="${!item.active}">
+                                <input type="hidden" name="checked" value="${item.checked}">
+                                <input type="submit" value="${item.active ? 'wyłącz' : 'włącz'}" class="w3-button w3-white w3-border w3-round-large">
+                            </form>
+
                         </td>
                     </tr>
                 </c:forEach>

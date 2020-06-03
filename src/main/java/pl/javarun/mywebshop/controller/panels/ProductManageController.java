@@ -61,10 +61,6 @@ public class ProductManageController {
                                         @RequestParam(required = false) String searchWhat,
                                         @RequestParam(required = false) String searchBy) {
         modelAndView = new ModelAndView("panels/productItemManager");
-        System.out.println("get mapping product item");
-        System.out.println("searchWhat: "+searchWhat);
-        System.out.println("searchBy:"+ searchBy);
-        System.out.println("-------------------------");
         if (id == null) {
             Product product = new Product();
             product.setActive(true);
@@ -101,10 +97,6 @@ public class ProductManageController {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println("Post mapping product item save");
-        System.out.println("searchWhat: "+searchWhat);
-        System.out.println("searchBy:"+ searchBy);
-        System.out.println("--------------------------------");
         Product product;
         try{
             product = productService.getProductById(id);

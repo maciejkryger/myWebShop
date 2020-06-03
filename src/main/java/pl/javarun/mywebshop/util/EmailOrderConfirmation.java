@@ -85,7 +85,7 @@ public class EmailOrderConfirmation {
                     append("------------------------------------------------------------<BR>").
                     append("- ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
                     append("- wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
-                    append("- koszty tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
+                    append("- koszt tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
                     append("------------------------------------------------------------<BR>").
                     append("łącznie do  zapłaty: ").append(sumToPay + deliveryCostsToPay).append(" PLN<BR><BR><BR>").
                     append("<strong>Twoje dane:</strong><BR>").
@@ -143,7 +143,7 @@ public class EmailOrderConfirmation {
                     append("------------------------------------------------------------<BR>").
                     append("- Ilość zamówionych produktów: ").append(sumQuantity).append(" szt.<BR>").
                     append("- Wartość zamówienia: ").append(sumToPay).append(" PLN<BR>").
-                    append("- Koszty tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
+                    append("- Koszt tranportu: ").append(deliveryCostsToPay).append(" PLN<BR>").
                     append("------------------------------------------------------------<BR>").
                     append("łącznie do  zapłaty: ").append(sumToPay + deliveryCostsToPay).append(" PLN<BR><BR><BR>").
                     append("uwagi do zamówienia: <B>");
