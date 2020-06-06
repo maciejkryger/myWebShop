@@ -75,10 +75,6 @@
                         style=padding-bottom:250px class="w3-button w3-white w3-border w3-round-large w3-left w3-padding-large w3-left">Nie pamiętam hasła</a>
         </table>
     </div>
-<div class="input-group">
-  <span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-  <input class="form-control" type="text" placeholder="Adres Email">
-</div>
 
     <br>
 

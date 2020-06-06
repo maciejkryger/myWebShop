@@ -82,8 +82,17 @@
                 <a class="w3-bar-item" style="color: crimson">${emailExist ?  'Ten mail jest już w naszej bazie, pewnie masz już u nas użytkownika :) skorzystaj z opcji zapomniałem hasła.' :''} </a>
                 <a class="w3-bar-item" style="color: crimson">${wrongEmailChar ?  'Nieprawidłowy format maila, lub wykorzystano niedozwolone znaki specjalne' :''}</a>
                 <p><input class="w3-input w3-border" type="text" name="email" placeholder="Wpisz adres e-mail" value="${email}"></p>
-                <input type="hidden" name="contextPath" value="${pageContext.request.contextPath}">
-                <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left"
+
+                <div style="padding-bottom: 20px">
+                    <a class="w3-bar-item" style="color: crimson">${withoutRulesAcceptation ?  'Akceptacja regulaminu jest obowiązkowa' :''}</a>
+                    <p><input class="w3-radio" type="checkbox" name="rulesAccepted" value="true">
+                    ${RulesAcceptedStatement}
+                    </p>
+                    <p><input class="w3-radio" type="checkbox" name="marketingAgreed" value="true">
+                    ${MarketingAgreedStatement}
+                    </p>
+                </div>
+                <button type="submit"  class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left"
                         onclick="document.getElementById('login').style.display='none'">zarejestruj
                 </button>
             </form>

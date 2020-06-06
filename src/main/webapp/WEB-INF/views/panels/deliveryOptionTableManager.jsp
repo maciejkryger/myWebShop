@@ -52,7 +52,7 @@
     <!-- Main grid -->
     <div class="w3-container">
 
-        <h2>Tabela asortymentu</h2>
+        <h2>Opcje dostawy</h2>
 
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
@@ -64,7 +64,7 @@
                     <th>typ płatności</th>
                     <th>cena</th>
                     <th>czy aktywny</th>
-                    <th>czy domyślny<th>
+                    <th>domyślny<th>
                     <th>opcje</th>
                 </tr>
                 </thead>

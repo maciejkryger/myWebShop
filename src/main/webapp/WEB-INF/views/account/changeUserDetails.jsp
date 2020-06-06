@@ -73,6 +73,17 @@
                 <a class="w3-bar-item" style="color: crimson">${noEmail ?  'Pole na email nie może być puste' :''} </a>
                 <p><input class="w3-input w3-border" type="email" name="email" placeholder="Wpisz adres e-mail" value="${user.email}"></p>
                 <p><input class="w3-input w3-border" type="phone" name="phone" placeholder="Wpisz numer telefonu" value="${user.phone}"></p>
+
+                <div style="padding-bottom: 20px">
+                    <a class="w3-bar-item" style="color: crimson">${withoutRulesAcceptation ?  'Akceptacja regulaminu jest obowiązkowa' :''}</a>
+                    <p><input class="w3-radio" type="checkbox" name="rulesAccepted" default="${user.rulesAccepted}" <c:if test='checked'>value="true"</c:if> ${user.rulesAccepted ? 'checked' : ''}>
+                    ${RulesAcceptedStatement}
+                    </p>
+                    <p><input class="w3-radio" type="checkbox" name="marketingAgreed" default="${user.marketingAgreed}" <c:if test='checked'>value="true"</c:if> ${user.marketingAgreed ? 'checked' : ''}>
+                    ${MarketingAgreedStatement}
+                    </p>
+                </div>
+
             <button type="submit" class="w3-button w3-padding-large w3-green w3-margin-bottom w3-round-large w3-left">zapisz
             </button>
         </form>

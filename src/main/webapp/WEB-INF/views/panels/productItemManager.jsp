@@ -51,15 +51,19 @@
 
             <table class="w3-table-all w3-hoverable">
                 <form method="get" action="${pageContext.request.contextPath}/panels/data/products/">
+                   <c:if test="${param.searchWhat!=null && param.searchBy!=null}">
                       <input type="hidden" name="searchWhat" value="${param.searchWhat}">
                       <input type="hidden" name="searchBy" value="${param.searchBy}">
+                   </c:if>
                       <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="anuluj">
                 </form>
                 <form method="post" action="${pageContext.request.contextPath}/panels/data/product/save"
                       modelAttribute="product">
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
+                  <c:if test="${param.searchWhat!=null && param.searchBy!=null}">
                     <input type="hidden" name="searchWhat" value="${param.searchWhat}">
                     <input type="hidden" name="searchBy" value="${param.searchBy}">
+                  </c:if>
                     <p>
                         <label><b>id: ${product.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
@@ -179,8 +183,10 @@
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="zapisz"/>
                 </form>
                 <form method="get" action="${pageContext.request.contextPath}/panels/data/products/">
+                  <c:if test="${param.searchWhat!=null && param.searchBy!=null}">
                     <input type="hidden" name="searchWhat" value="${param.searchWhat}">
                     <input type="hidden" name="searchBy" value="${param.searchBy}">
+                  </c:if>
                     <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="anuluj">
                 </form>
 

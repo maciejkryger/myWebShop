@@ -68,7 +68,7 @@ public class ProductManageController {
         } else {
             modelAndView.addObject("product", productService.getProductById(id));
         }
-        if ((searchWhat != null && searchBy != null) || (!searchWhat.isEmpty() && !searchBy.isEmpty())) {
+        if ((searchWhat != null && searchBy != null) && (!searchWhat.isEmpty() && !searchBy.isEmpty())) {
             modelAndView.addObject(searchWhat,searchWhat);
             modelAndView.addObject(searchBy,searchBy);
         }

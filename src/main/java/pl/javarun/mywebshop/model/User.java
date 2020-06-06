@@ -54,6 +54,11 @@ public class User implements UserDetails {
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deletingDate;
+
+    private boolean rulesAccepted;
+    private boolean marketingAgreed;
+    private Timestamp updateAgreedDate;
+
     private String token;
 
     public User() {
@@ -192,6 +197,31 @@ public class User implements UserDetails {
 
     public void setDeletingDate(@Nullable Date deletingDate) {
         this.deletingDate = deletingDate;
+    }
+
+    public boolean isRulesAccepted() {
+        return rulesAccepted;
+    }
+
+    public void setRulesAccepted(boolean rulesAccepted) {
+        this.rulesAccepted = rulesAccepted;
+    }
+
+    public boolean isMarketingAgreed() {
+        return marketingAgreed;
+    }
+
+    public void setMarketingAgreed(boolean marketingAgreed) {
+        this.marketingAgreed = marketingAgreed;
+    }
+
+
+    public Timestamp getUpdateAgreedDate() {
+        return updateAgreedDate;
+    }
+
+    public void setUpdateAgreedDate(Timestamp updateAgreedDate) {
+        this.updateAgreedDate = updateAgreedDate;
     }
 
     public String getToken() {

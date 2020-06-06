@@ -125,7 +125,10 @@
                             </td>
                             <td>${order.shipmentNumber}
                               <c:if test="${order.deliveryOption.id<3}">
-                                 <a href="https://sprawdz.dhl.com.pl/" onclick="this.target='_blank'" class="w3-button w3-white w3-border w3-round-large w3-center">sprawdź na DHL</a>
+                                 <a href="${DHLLink}" onclick="this.target='_blank'" class="w3-button w3-white w3-border w3-round-large w3-center">status na DHL</a>
+                              </c:if>
+                              <c:if test="${order.deliveryOption.id==3}">
+                                 <a href="${PocztaLink}" onclick="this.target='_blank'" class="w3-button w3-white w3-border w3-round-large w3-center">status na Poczcie</a>
                               </c:if>
                             </td>
                             <td>${order.deliveryOption.namePl}</td>

@@ -1,5 +1,6 @@
 package pl.javarun.mywebshop.controller.account;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import pl.javarun.mywebshop.util.PasswordUtil;
 
 import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 import static pl.javarun.mywebshop.util.InputValidator.*;
 
@@ -38,15 +40,21 @@ public class RegisterController {
     private final RuleService ruleService;
     private final RoleService roleService;
     private final EmailRegister emailRegister;
+    private final ConfigDataService configDataService;
+    @Value("${mail_href}")
+    private String href;
+
 
     public RegisterController(UserService userService, TypeService typeService, CompanyService companyService,
-                              RuleService ruleService, RoleService roleService, EmailRegister emailRegister) {
+                              RuleService ruleService, RoleService roleService, EmailRegister emailRegister,
+                              ConfigDataService configDataService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.ruleService = ruleService;
         this.roleService = roleService;
         this.emailRegister=emailRegister;
+        this.configDataService=configDataService;
     }
 
 
@@ -63,11 +71,14 @@ public class RegisterController {
                                          @PathParam("wrongFirstNameChar") boolean wrongFirstNameChar,
                                          @PathParam("wrongLastNameChar") boolean wrongLastNameChar,
                                          @PathParam("wrongEmailChar") boolean wrongEmailChar,
-                                         @PathParam("emailExist") boolean emailExist) {
+                                         @PathParam("emailExist") boolean emailExist,
+                                         @PathParam("withoutRulesAcceptation") boolean withoutRulesAcceptation) {
         ModelAndView modelAndView = new ModelAndView("account/register");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
+        modelAndView.addObject("RulesAcceptedStatement",String.format(configDataService.getConfigDataByName("RulesAcceptedStatement").getValue(), href));
+        modelAndView.addObject("MarketingAgreedStatement",configDataService.getConfigDataByName("MarketingAgreedStatement").getValue());
         if (success) modelAndView.addObject("success", true);
         if (userExist) modelAndView.addObject("userExist", true);
         if (userExistButNotActive) modelAndView.addObject("userExistButNotActive", true);
@@ -86,6 +97,7 @@ public class RegisterController {
         if (wrongLastNameChar) modelAndView.addObject("wrongLastNameChar", true);
         if (wrongEmailChar) modelAndView.addObject("wrongEmailChar", true);
         if (emailExist) modelAndView.addObject("emailExist", true);
+        if (withoutRulesAcceptation) modelAndView.addObject("withoutRulesAcceptation",true);
         modelAndView.addObject("productsInBasketSize", 0);
         modelAndView.addObject("userWishListSize", 0);
         return modelAndView;
@@ -94,11 +106,12 @@ public class RegisterController {
     @PostMapping()
     public String registerUser(@RequestParam(required = false) String username, @RequestParam(required = false) String password,
                                @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName,
-                               @RequestParam(required = false) String email) {
+                               @RequestParam(required = false) String email, @RequestParam (required = false) boolean rulesAccepted,
+                               @RequestParam(required = false) boolean marketingAgreed) {
 
             if (username.isEmpty() || password.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()
                     || !nameValidator(firstName) || !nameValidator(lastName) || !nameValidator(username)
-                    || !passwordValidator(password) || !emailValidator(email))  {
+                    || !passwordValidator(password) || !emailValidator(email) || rulesAccepted==false)  {
                 String usernameAnswer;
                 String passwordAnswer;
                 String firstNameAnswer;
@@ -109,6 +122,7 @@ public class RegisterController {
                 String wrongUsernameAnswer;
                 String wrongPasswordAnswer;
                 String wrongEmailAnswer;
+                String wrongRulesAgreedAnswer;
 
                 if (!nameValidator(firstName)) {
                     wrongFirstNameAnswer = "wrongFirstNameChar=true";
@@ -160,10 +174,15 @@ public class RegisterController {
                 } else {
                     emailAnswer = "email=" + email;
                 }
+                if (!rulesAccepted) {
+                    wrongRulesAgreedAnswer = "withoutRulesAcceptation=true";
+                } else {
+                    wrongRulesAgreedAnswer = "";
+                }
 
                 return "redirect:/register?" + usernameAnswer + "&" + passwordAnswer + "&" + firstNameAnswer + "&" +
                         lastNameAnswer + "&" + emailAnswer + "&" + wrongUsernameAnswer + "&" + wrongPasswordAnswer + "&" +
-                        wrongFirstNameAnswer + "&" + wrongLastNameAnswer + "&" + wrongEmailAnswer;
+                        wrongFirstNameAnswer + "&" + wrongLastNameAnswer + "&" + wrongEmailAnswer+"&"+wrongRulesAgreedAnswer;
             }
 
 
@@ -194,6 +213,11 @@ public class RegisterController {
                 user.setActivationDate(null);
                 user.setDeleted(false);
                 user.setDeletingDate(null);
+                user.setRulesAccepted(rulesAccepted);
+                if(user.isMarketingAgreed()!=marketingAgreed) {
+                    user.setMarketingAgreed(marketingAgreed);
+                    user.setUpdateAgreedDate(new Timestamp(System.currentTimeMillis()));
+                }
                 user.setToken(token);
                 userService.saveUser(user);
                 emailRegister.send(username, firstName, email, token);

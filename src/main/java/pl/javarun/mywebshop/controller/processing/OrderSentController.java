@@ -39,6 +39,7 @@ public class OrderSentController {
     private final AddressService addressService;
     private final EmailOrderChangeStatus emailOrderChangeStatus;
     private final StatusService statusService;
+    private final ConfigDataService configDataService;
 
 
 
@@ -46,7 +47,8 @@ public class OrderSentController {
                                RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                ProductService productService, DeliveryOptionService deliveryOptionService,
                                PaymentTypeService paymentTypeService, AddressService addressService,
-                               EmailOrderChangeStatus emailOrderChangeStatus,StatusService statusService) {
+                               EmailOrderChangeStatus emailOrderChangeStatus,StatusService statusService,
+                               ConfigDataService configDataService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -59,6 +61,7 @@ public class OrderSentController {
         this.addressService = addressService;
         this.emailOrderChangeStatus=emailOrderChangeStatus;
         this.statusService=statusService;
+        this.configDataService=configDataService;
     }
 
     @GetMapping()
@@ -68,6 +71,8 @@ public class OrderSentController {
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("ordersSent", webOrderService.getAllSentOrReadyToSelfPickUpOrders());
+        modelAndView.addObject("DHLLink", configDataService.getConfigDataByName("DHLTrack&Trace").getValue());
+        modelAndView.addObject("PocztaLink", configDataService.getConfigDataByName("PocztaTrack&Trace").getValue());
         if (orderId != null) {
             WebOrder order=webOrderService.getOrderById(orderId);
             int paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();

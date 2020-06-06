@@ -89,8 +89,6 @@ public class DeliveryOptionController {
             }
             deliveryOption.setChecked(checked);
         }
-
-
         deliveryOptionService.save(deliveryOption);
         return "redirect:/panels/data/deliveryOptions";
     }

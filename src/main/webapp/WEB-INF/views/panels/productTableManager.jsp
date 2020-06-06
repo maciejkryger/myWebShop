@@ -93,8 +93,10 @@
                         <td><i class="${item.active ? 'far fa-eye' : 'far fa-eye-slash'}"></i></td>
                         <td>
                             <form method="GET" action="${pageContext.request.contextPath}/panels/data/product/${item.id}">
+                              <c:if test="${param.searchWhat!=null && param.searchBy!=null}">
                                 <input type="hidden" name="searchWhat" value="${param.searchWhat}">
                                 <input type="hidden" name="searchBy" value="${param.searchBy}">
+                              </c:if>
                                 <input type="submit" class="w3-button w3-white w3-border w3-round-large" value="edytuj">
                             </form>
                             <form method="post" >
@@ -108,7 +110,7 @@
                         </td>
                          <td>${item.mainProduct.id==null ? 'TAK' : item.mainProduct.id}</td>
                     </tr>
-                    <tr>
+                    <tr style="border-down: 10px; border-color: black">
                         <td colspan="15">${item.descriptionPl}</td>
                     </tr>
                 </c:forEach>

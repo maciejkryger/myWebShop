@@ -96,7 +96,6 @@
                     <tr class="w3-light-grey ">
                         <th>zdjęcie</th>
                         <th>nazwa produktu</th>
-                        <th>numer zamówienia</th>
                         <th>cena</th>
                         <th>ilość</th>
                         <th>suma</th>
@@ -109,7 +108,6 @@
                                 <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
                              </td>
                             <td>${item.product.namePl}</td>
-                            <td>${item.webOrder.orderNumber}</td>
                             <td>${item.productPrice} PLN</td>
                             <td>${item.quantity}</td>
                             <td>${item.quantity*item.productPrice} PLN</td>

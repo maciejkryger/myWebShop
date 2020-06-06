@@ -16,7 +16,8 @@
                class="w3-bar-item w3-button">${productType.namePl}</a>
         </c:forEach>
     </div>
-    <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>
+
+    <%--    <a href="#footer" class="w3-bar-item w3-button w3-padding">Kontakt</a>--%>
 
     <%--    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-padding"--%>
     <%--       onclick="document.getElementById('newsletter').style.display='block'">Newsletter</a>--%>
