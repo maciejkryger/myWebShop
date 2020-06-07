@@ -6,6 +6,7 @@ import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrderItem;
 import pl.javarun.mywebshop.repository.WebOrderItemRepository;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -50,8 +51,6 @@ public class WebOrderItemService {
     }
 
 
-
-
     public int calculateActualQuantityInUserBasket(int webOrderId) {
         int result = 0;
         List<WebOrderItem> items = getOrderItemByOrderId(webOrderId);
@@ -62,11 +61,13 @@ public class WebOrderItemService {
     }
 
 
-    public int calculateActualSumToPayInUserBasket(int webOrderId) {
-        int result = 0;
+    public double calculateActualSumToPayInUserBasket(int webOrderId) {
+        double result = 0;
         List<WebOrderItem> items = getOrderItemByOrderId(webOrderId);
+
         for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
+            double discountInDecimal = ((1 - (item.getDiscount()) * 0.01));
+            result += (item.getQuantity() * item.getProductPrice() * discountInDecimal);
         }
         return result;
     }

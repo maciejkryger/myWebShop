@@ -60,7 +60,7 @@ public class EmailOrderChangeStatus {
 
         Message message = new MimeMessage(session);
         int orderId = webOrder.getId();
-        int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(orderId);
+        double sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(orderId);
         int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(orderId);
         int deliveryCostsToPay = webOrder.getDeliveryOption().getPrice();
         List<WebOrderItem> webOrderItems = webOrderItemService.getOrderItemByOrderId(orderId);

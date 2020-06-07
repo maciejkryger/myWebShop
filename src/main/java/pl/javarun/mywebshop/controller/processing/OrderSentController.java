@@ -75,7 +75,7 @@ public class OrderSentController {
         modelAndView.addObject("PocztaLink", configDataService.getConfigDataByName("PocztaTrack&Trace").getValue());
         if (orderId != null) {
             WebOrder order=webOrderService.getOrderById(orderId);
-            int paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
+            double paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
             modelAndView.addObject("paymentAmount", paymentAmount);
             modelAndView.addObject("orderId",orderId);
         }

@@ -55,7 +55,7 @@ public class PaymentController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.paymentMethodService = paymentMethodService;
-        this.wishListService=wishListService;
+        this.wishListService = wishListService;
     }
 
     @GetMapping()
@@ -67,19 +67,15 @@ public class PaymentController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        int sumQuantity = calculateActualQuantityInUserBasket(userId);
-        int sumToPay = calculateActualSumToPayInUserBasket(userId);
+        int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+        int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderId);
+        double sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
         int deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         modelAndView.addObject("paymentMethods", paymentMethodService.getByPaymentTypeId(1));
         modelAndView.addObject("sumQuantity", sumQuantity);
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
-        try {
-            int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
-        } catch (OrderNotExistException ex) {
-            modelAndView.addObject("productsInBasketSize", 0);
-        }
+        modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
         try {
             modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
         } catch (WishListNotExistException ex) {
@@ -98,30 +94,10 @@ public class PaymentController {
         order.setPaymentMethod(paymentMethod);
         webOrderService.save(order);
         //with transport
-        if (order.getDeliveryOption().getPaymentType() == paymentTypeService.getById(1) && order.getDeliveryOption().getId()!=4) {
+        if (order.getDeliveryOption().getPaymentType() == paymentTypeService.getById(1) && order.getDeliveryOption().getId() != 4) {
             return "redirect:/address";
         }
         //without transport - OWL(self-pickup)
         return "redirect:/confirmation";
     }
-
-
-    private int calculateActualQuantityInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += item.getQuantity();
-        }
-        return result;
-    }
-
-    private int calculateActualSumToPayInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
-    }
-
 }

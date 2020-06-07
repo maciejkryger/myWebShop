@@ -68,7 +68,7 @@ public class OrderAcceptedController {
         modelAndView.addObject("ordersAccepted",webOrderService.getAllAcceptedTruePaidFalsePrepayment());
         if (orderId != null) {
             WebOrder order=webOrderService.getOrderById(orderId);
-            int paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
+            double paymentAmount = webOrderItemService.calculateActualSumToPayInUserBasket(orderId)+order.getDeliveryOption().getPrice();
             modelAndView.addObject("paymentAmount", paymentAmount);
             modelAndView.addObject("orderId",orderId);
         }
@@ -77,22 +77,18 @@ public class OrderAcceptedController {
 
     @PostMapping
     public String checkPayment(@RequestParam int id, @RequestParam(required = false) String paymentDate,
-                               @RequestParam(required = false) Integer paymentAmount,
+                               @RequestParam(required = false) String paymentAmount,
                                @RequestParam(required = false) boolean paid){
         WebOrder order = webOrderService.getOrderById(id);
-        System.out.println("id "+id+" paymentAmount:"+paymentAmount+" paymentDate: "+paymentDate+" paid: "+paid);
         if(paymentAmount==null && paymentDate==null){
-            System.out.println("if");
             return "redirect:/orderCenter/accepted?orderId="+id;
         }
         if (paymentAmount != null) {
-            System.out.println("poza if2");
             order.setPaid(paid);
-            order.setPaymentAmount(paymentAmount);
+            order.setPaymentAmount(Double.valueOf(paymentAmount));
             order.setPaymentDate(LocalDate.parse(paymentDate));
         }
         if(paymentAmount==null && paymentDate!=null){
-            System.out.println("if3");
             order.setDeliveryDate(LocalDate.parse(paymentDate));
         }
         webOrderService.save(order);

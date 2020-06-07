@@ -8,13 +8,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderItemNotExistException;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.exception.PromoCodeNotExistException;
 import pl.javarun.mywebshop.exception.WishListNotExistException;
 import pl.javarun.mywebshop.model.*;
 import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.sql.Timestamp;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,7 +25,7 @@ import java.util.List;
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
  * @date : 04.04.2020 12:28
  * *
- * @className: OrderController
+ * @className: WebOrderController
  * *
  * *
  ******************************************************/
@@ -38,11 +41,12 @@ public class WebOrderController {
     private final WebOrderItemService webOrderItemService;
     private final ProductService productService;
     private final WishListService wishListService;
+    private final PromoCodeService promoCodeService;
 
 
     public WebOrderController(UserService userService, TypeService typeService, CompanyService companyService,
                               RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
-                              ProductService productService, WishListService wishListService) {
+                              ProductService productService, WishListService wishListService, PromoCodeService promoCodeService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -51,41 +55,83 @@ public class WebOrderController {
         this.webOrderItemService = webOrderItemService;
         this.productService = productService;
         this.wishListService = wishListService;
+        this.promoCodeService = promoCodeService;
     }
 
     @GetMapping()
-    public ModelAndView showBasket(HttpServletRequest httpServletRequest) {
+    public ModelAndView showBasket(HttpServletRequest httpServletRequest, @PathParam("wrongCode") boolean wrongCode,
+                                   @PathParam("codeIsNotActive") boolean codeIsNotActive) {
         ModelAndView modelAndView = new ModelAndView("shopping/basket");
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("rules", ruleService.getAllRules());
-
+        if (wrongCode) modelAndView.addObject("wrongCode", true);
+        if (codeIsNotActive) modelAndView.addObject("codeIsNotActive", true);
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-
         try {
             int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
-            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderId));
+            List<WebOrderItem> webOrderItemList = webOrderItemService.getOrderItemByOrderId(webOrderId);
+            modelAndView.addObject("productsInBasket", webOrderItemList);
             modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
             int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderId);
-            int sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
-            modelAndView.addObject("sumQuantity", sumQuantity);
+            double sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
+            if (webOrderItemList.size() != 0) {
+                int discountCounter = 0;
+                int discountSum = 0;
+                for (WebOrderItem item : webOrderItemList) {
+                    if (item.getDiscount() > 0) {
+                        discountSum += item.getDiscount();
+                        discountCounter++;
+                    }
+                }
+                if (webOrderItemList.size() == discountCounter && discountSum / webOrderItemList.size() == webOrderItemList.get(0).getDiscount()) {
+                    modelAndView.addObject("discount", webOrderItemList.get(0).getDiscount());
+                }
+            }
+            DecimalFormat decimalFormat = new DecimalFormat();
+            decimalFormat.setMaximumFractionDigits(2);
             modelAndView.addObject("sumToPay", sumToPay);
-            } catch (OrderNotExistException ex) {
+            modelAndView.addObject("sumQuantity", sumQuantity);
+        } catch (OrderNotExistException ex) {
             modelAndView.addObject("productsInBasketSize", 0);
             modelAndView.addObject("productsInBasket", "");
             modelAndView.addObject("sumQuantity", "");
             modelAndView.addObject("sumToPay", "");
-          }
+        }
         try {
             modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
-        }catch (WishListNotExistException ex){
+        } catch (WishListNotExistException ex) {
             modelAndView.addObject("userWishListSize", 0);
         }
         return modelAndView;
     }
 
+    @PostMapping("/discount")
+    public String addDiscount(HttpServletRequest httpServletRequest,
+                              @RequestParam(required = false) String discountCode) {
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        int userId = user.getId();
+        PromoCode promoCode;
+        try {
+            promoCode = promoCodeService.getPromoCodeByPromoCode(discountCode);
+        } catch (PromoCodeNotExistException ex) {
+            return "redirect:/basket?wrongCode=true";
+        }
+        if (!promoCode.isActive()) {
+            return "redirect:/basket?codeIsNotActive=true";
+        }
+        int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+        for (WebOrderItem item : webOrderItemService.getOrderItemByOrderId(webOrderId)) {
+            if (item.getDiscount() < promoCode.getDiscount()) {
+                item.setDiscount(promoCode.getDiscount());
+                webOrderItemService.save(item);
+            }
+        }
+        return "redirect:/basket";
+    }
 
     @PostMapping("/addFromList")
     public String addToBasketFromList(@RequestParam(required = false) Integer productId, HttpServletRequest httpServletRequest) {
@@ -178,8 +224,9 @@ public class WebOrderController {
             webOrderItem.setProduct(product);
             webOrderItem.setProductPrice(product.getPrice());
             webOrderItem.setQuantity(1);
-
-
+        }
+        if (product.getDiscount() > 0) {
+            webOrderItem.setDiscount(product.getDiscount());
         }
         webOrderItemService.save(webOrderItem);
     }

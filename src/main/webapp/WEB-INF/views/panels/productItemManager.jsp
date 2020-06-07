@@ -171,6 +171,11 @@
                         </select>
                     </p>
                     <p>
+                        <label><b>Promocja</b></label>
+                        <input type="text" name="discount" placeholder="rabat" class="w3-input w3-border"
+                                                    value="${product.discount}">
+                    </p>
+                    <p>
                         <label><b>Produkt główny</b></label>
                         <select class="w3-input w3-border" name="mainProductId">
                              <option selected="selected" placeholder="główny produkt"

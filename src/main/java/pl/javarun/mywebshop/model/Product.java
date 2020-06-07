@@ -58,6 +58,9 @@ public class Product {
     private Timestamp lastUpdateDate;
     @ManyToOne(targetEntity = User.class)
     private User lastUpdateUser;
+    @Nullable
+    private int discount;
+
 
     public Product() {
     }
@@ -216,5 +219,14 @@ public class Product {
 
     public void setLastUpdateUser(User lastUpdateUser) {
         this.lastUpdateUser = lastUpdateUser;
+    }
+
+    @Nullable
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(@Nullable int discount) {
+        this.discount = discount;
     }
 }

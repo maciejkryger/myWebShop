@@ -126,19 +126,15 @@
                               <input type="text" name="paymentAmount" class="amountInput"
                                   value="${orderId==order.id ? paymentAmount : ''}" placeholder="kwota">PLN
                               <input type="date" name="paymentDate" class="dateInput">
+                              <input type="submit" value="potwierdź" class="w3-button w3-white w3-border w3-round-large">
                             </form>
 
                             <form method="post" action="${pageContext.request.contextPath}/orderCenter/accepted/" >
                                <input type="hidden" name="id" value="${order.id}">
                                <input type="submit" value="pobierz kwotę" class="w3-button w3-white w3-border w3-round-large">
                             </form>
-
-                            <input type="submit" form="confirm" value="potwierdź" class="w3-button w3-white w3-border w3-round-large">
                             </td>
-
                         </tr>
-
-
                     </c:forEach>
                     </tbody>
                 </table>

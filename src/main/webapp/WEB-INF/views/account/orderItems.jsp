@@ -108,26 +108,43 @@
                                 <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
                              </td>
                             <td>${item.product.namePl}</td>
-                            <td>${item.productPrice} PLN</td>
+                            <td>
+                            <c:if test="${item.discount==0}">
+                            ${item.product.price} PLN
+                            </c:if>
+                            <c:if test="${item.discount>0}">
+                            <div class="w3-display-container" style="min-width: 90px; max-width: 60%">
+                            <s>${item.product.price} PLN</s><a class="w3-display-topright w3-small w3-red">-${item.discount}%</a>
+                            <p><b>${item.product.price*(1-((item.discount)*0.01))} PLN</b></p>
+                            <div>
+                            </c:if>
+                            </td>
                             <td>${item.quantity}</td>
-                            <td>${item.quantity*item.productPrice} PLN</td>
+                            <td>
+                            <c:if test="${item.discount==0}">
+                            ${item.product.price*item.quantity} PLN
+                            </c:if>
+                            <c:if test="${item.discount>0}">
+                            ${(item.product.price*(1-((item.discount)*0.01)))*item.quantity} PLN
+                            </c:if>
+                            </td>
                         </tr>
                    </tbody>
                      </c:forEach>
 
                      <tfoot>
                        <tr class="w3-light-grey ">
-                         <th colspan="4" style="text-align:right;">podsumowanie:</th>
+                         <th colspan="3" style="text-align:right;">podsumowanie:</th>
                          <th>${sumQuantity} szt</th>
                          <th>${sumToPay} PLN</th>
                        </tr>
                        <tr class="w3-light-grey ">
-                         <th colspan="4" style="text-align:right;">koszt transportu:</th>
+                         <th colspan="3" style="text-align:right;">koszt transportu:</th>
                          <th></th>
                          <th>${webOrder.deliveryOption.price} PLN</th>
                        </tr>
                        <tr class="w3-light-grey ">
-                         <th colspan="4" style="text-align:right;">łącznie do zapłaty:</th>
+                         <th colspan="3" style="text-align:right;">łącznie do zapłaty:</th>
                          <th></th>
                          <th>${sumToPay+webOrder.deliveryOption.price} PLN</th>
                        </tr>

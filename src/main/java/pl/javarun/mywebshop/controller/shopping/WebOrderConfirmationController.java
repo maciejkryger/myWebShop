@@ -46,7 +46,7 @@ public class WebOrderConfirmationController {
     private final PaymentTypeService paymentTypeService;
     private final AddressService addressService;
     private final EmailOrderConfirmation emailOrderConfirmation;
-    private int sumToPay;
+    private double sumToPay;
     private int sumQuantity;
     private int deliveryCostsToPay;
     private final WishListService wishListService;

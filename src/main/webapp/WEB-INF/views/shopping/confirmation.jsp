@@ -104,9 +104,26 @@
                              <img src="${pageContext.request.contextPath}/images/${item.product.type.id}/${item.product.id}.jpg" style="width:100%">
                              </td>
                              <td>${item.product.namePl}</td>
-                             <td>${item.product.price} PLN</td>
+                             <td>
+                                <c:if test="${item.discount==0}">
+                                    ${item.product.price} PLN
+                                </c:if>
+                                <c:if test="${item.discount>0}">
+                                  <div class="w3-display-container" style="min-width: 90px; max-width: 60%">
+                                    <s>${item.product.price} PLN</s><a class="w3-display-topright w3-small w3-red">-${item.discount}%</a>
+                                    <p><b>${item.product.price*(1-((item.discount)*0.01))} PLN</b></p>
+                                  <div>
+                                </c:if>
+                             </td>
                              <td>${item.quantity}</td>
-                             <td>${item.product.price*item.quantity} PLN</td>
+                             <td>
+                             <c:if test="${item.discount==0}">
+                                 ${item.product.price*item.quantity} PLN
+                             </c:if>
+                             <c:if test="${item.discount>0}">
+                                 ${(item.product.price*(1-((item.discount)*0.01)))*item.quantity} PLN
+                             </c:if>
+                             </td>
                          </tr>
                      </c:forEach>
                      </tbody>

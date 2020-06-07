@@ -93,7 +93,17 @@
                             </a>
                             </td>
                             <td>${item.product.namePl}</td>
-                            <td>${item.product.price} PLN</td>
+                            <td>
+                                <c:if test="${item.discount==0}">
+                                    ${item.product.price} PLN
+                                </c:if>
+                                <c:if test="${item.discount>0}">
+                                    <div class="w3-display-container" style="min-width: 90px; max-width: 60%">
+                                        <s>${item.product.price} PLN</s><a class="w3-display-topright w3-small w3-red">-${item.discount}%</a>
+                                        <p><b>${item.product.price*(1-((item.discount)*0.01))} PLN</b></p>
+                                    <div>
+                                </c:if>
+                            </td>
                             <td>
                                 <form method="POST" action="${pageContext.request.contextPath}/basket/addFromBasket" onclick="submit">
                                     <input type="hidden" name="productId" value="${item.product.id}">
@@ -106,7 +116,14 @@
                                 </form>
 
                             </td>
-                            <td>${item.product.price*item.quantity} PLN</td>
+                            <td>
+                                <c:if test="${item.discount==0}">
+                                     ${item.product.price*item.quantity} PLN
+                                </c:if>
+                                <c:if test="${item.discount>0}">
+                                    ${(item.product.price*(1-((item.discount)*0.01)))*item.quantity} PLN
+                                </c:if>
+                            </td>
                             <td>
                                    <form method="POST" action="${pageContext.request.contextPath}/basket/removeAllQuantityFromBasket" onclick="submit">
                                         <input type="hidden" name="productId" value="${item.product.id}">
@@ -118,16 +135,28 @@
                     </tbody>
                     <tfoot>
                       <tr class="w3-light-grey ">
-                        <th</th>
-                        <th></th>
-                        <th></th>
-                        <th>PODSUMOWANIE:</th>
+                        <th colspan="3" style="text-align:right;">PODSUMOWANIE:</th>
                         <th>${sumQuantity} szt</th>
                         <th>${sumToPay} PLN</th>
                         <th></th>
+                    <!--    <c:if test="${discount==null}">-->
+
+                   <!--     </c:if>
+                        <c:if test="${discount!=null}">
+                        <th class="w3-small w3-red">rabat -${discount}%</th>
+                        </c:if>-->
                       </tr>
                     </tfoot>
                 </table>
+                <div>
+                <form method="post" action="${pageContext.request.contextPath}/basket/discount">
+                <p class="w3-row">mam kod rabatowy:</p>
+                <a class="w3-bar-item w3-row" style="color: red">${wrongCode ? 'wprowadź poprawny kod' :''} </a>
+                <a class="w3-bar-item w3-row" style="color: orange">${codeIsNotActive ? 'kod nie jest aktywny' :''} </a>
+                <input type="text" placeholder="miejsce na kod" name="discountCode" class="w3-input" style="max-width:200px">
+                <input type="submit" value="zatwierdź" class="w3-button w3-padding-small w3-orange w3-margin-bottom w3-round-large">
+                </form>
+                </div>
             </div>
 
     </c:if>

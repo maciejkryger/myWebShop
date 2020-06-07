@@ -52,7 +52,7 @@ public class InputAddressController {
         this.webOrderService = webOrderService;
         this.webOrderItemService = webOrderItemService;
         this.addressService = addressService;
-        this.wishListService=wishListService;
+        this.wishListService = wishListService;
     }
 
     @GetMapping()
@@ -68,15 +68,15 @@ public class InputAddressController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
-        int sumToPay = calculateActualSumToPayInUserBasket(userId);
+        int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
+        double sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
         int deliveryCostsToPay = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getDeliveryOption().getPrice();
         modelAndView.addObject("sumToPay", sumToPay);
         modelAndView.addObject("deliveryCostsToPay", deliveryCostsToPay);
         try {
             Address address = addressService.getByUser(user);
             modelAndView.addObject("address", address);
-        } catch (AddressNotExistException ignored) {
-        }
+        } catch (AddressNotExistException ignored) {}
         if (streetWrong) modelAndView.addObject("streetWrong", true);
         if (streetEmpty) modelAndView.addObject("streetEmpty", true);
         if (houseNoWrong) modelAndView.addObject("houseNoWrong", true);
@@ -85,12 +85,7 @@ public class InputAddressController {
         if (postCodeEmpty) modelAndView.addObject("postCodeEmpty", true);
         if (cityWrong) modelAndView.addObject("cityWrong", true);
         if (cityEmpty) modelAndView.addObject("cityEmpty", true);
-        try {
-            int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
-        } catch (OrderNotExistException ex) {
-            modelAndView.addObject("productsInBasketSize", 0);
-        }
+        modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
         try {
             modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
         } catch (WishListNotExistException ex) {
@@ -173,16 +168,6 @@ public class InputAddressController {
                     "&" + postCodeAnswerWrong + "&" + postCodeAnswerEmpty + "&" + cityAnswerWrong + "&" + cityAnswerEmpty;
         }
         return "redirect:/confirmation";
-    }
-
-
-    private int calculateActualSumToPayInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
     }
 
 }

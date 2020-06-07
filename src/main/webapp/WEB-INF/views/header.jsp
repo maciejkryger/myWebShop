@@ -7,11 +7,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <p class="w3-right">
 
-    <a href="javascript:void(0)" class="w3-bar-item w3-button"
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-display-container"
        onclick="document.getElementById('login').style.display='block'">
-       <i class="fa fa-user"></i>
+       <i class="${sessionScope.user.enabled ? 'fas fa-user-lock' : 'fa fa-user'}"></i>
     </a>
+
     <a href="${pageContext.request.contextPath}/search" class="w3-bar-item w3-button"><i class="fa fa-search"></i></a>
-    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-button"><i class="fa fa-heart"></i><span class="w3-bar-item w3-medium w3-">${userWishListSize}</span></a>
+    <a href="${pageContext.request.contextPath}/wishList" class="w3-bar-item w3-button"><i class="fa fa-heart"></i><span class="w3-bar-item w3-medium">${userWishListSize}</span></a>
     <a href="${pageContext.request.contextPath}/basket" class="w3-bar-item w3-button w3-display-container"><i class="fa fa-shopping-cart"></i><span class="w3-bar-item w3-medium ">${productsInBasketSize}</span></a>
 </p>

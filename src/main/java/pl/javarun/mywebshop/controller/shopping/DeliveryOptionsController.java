@@ -54,8 +54,8 @@ public class DeliveryOptionsController {
         this.productService = productService;
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
-        this.paymentMethodService=paymentMethodService;
-        this.wishListService=wishListService;
+        this.paymentMethodService = paymentMethodService;
+        this.wishListService = wishListService;
     }
 
     @GetMapping()
@@ -68,19 +68,16 @@ public class DeliveryOptionsController {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         int userId = user.getId();
+        WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
+        int webOrderId = webOrder.getId();
+        modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrderId));
+        modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
+        int sumQuantity = webOrderItemService.calculateActualQuantityInUserBasket(webOrderId);
+        double sumToPay = webOrderItemService.calculateActualSumToPayInUserBasket(webOrderId);
+        modelAndView.addObject("sumQuantity", sumQuantity);
+        modelAndView.addObject("sumToPay", sumToPay);
+        modelAndView.addObject("webOrder", webOrder);
 
-        try {
-            WebOrder webOrder = webOrderService.getOrderByUserIdAndConfirmedFalse(userId);
-            modelAndView.addObject("productsInBasket", webOrderItemService.getOrderItemByOrderId(webOrder.getId()));
-            modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrder.getId()));
-            int sumQuantity = calculateActualQuantityInUserBasket(userId);
-            int sumToPay = calculateActualSumToPayInUserBasket(userId);
-            modelAndView.addObject("sumQuantity", sumQuantity);
-            modelAndView.addObject("sumToPay", sumToPay);
-            modelAndView.addObject("webOrder", webOrder);
-        } catch (OrderNotExistException ex) {
-            modelAndView.addObject("productsInBasketSize", 0);
-        }
         try {
             modelAndView.addObject("userWishListSize", wishListService.getAllWishListByUserId(user.getId()).size());
         } catch (WishListNotExistException ex) {
@@ -117,23 +114,5 @@ public class DeliveryOptionsController {
         return "redirect:/address";
     }
 
-
-    private int calculateActualQuantityInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += item.getQuantity();
-        }
-        return result;
-    }
-
-    private int calculateActualSumToPayInUserBasket(int userId) {
-        int result = 0;
-        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId());
-        for (WebOrderItem item : items) {
-            result += (item.getQuantity() * item.getProductPrice());
-        }
-        return result;
-    }
 
 }

@@ -92,8 +92,8 @@ public class ProductManageController {
             @RequestParam Double length, @RequestParam Double width, @RequestParam Integer price,
             @RequestParam String description, @RequestParam String descriptionPl, @RequestParam boolean active,
             @RequestParam Integer mainProductId, HttpServletRequest httpServletRequest,
-            @RequestParam(required = false) String searchWhat,
-            @RequestParam(required = false) String searchBy) {
+            @RequestParam(required = false) String searchWhat, @RequestParam(required = false) String searchBy,
+            @RequestParam int discount) {
 
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
@@ -122,6 +122,7 @@ public class ProductManageController {
         product.setActive(active);
         product.setLastUpdateUser(user);
         product.setLastUpdateDate(Timestamp.valueOf(LocalDateTime.now()));
+        product.setDiscount(discount);
         if(mainProductId!=null){
             product.setMainProduct(productService.getProductById(mainProductId));
         }

@@ -82,6 +82,9 @@
                        <c:if test="${item.creationDate>=newProductPeriod}">
                          <span class="w3-tag w3-display-topleft">Nowość</span>
                        </c:if>
+                        <c:if test="${item.discount>0}">
+                         <span class="w3-tag w3-red w3-display-topright">-${item.discount}%</span>
+                       </c:if>
          <!--   <c:if test="${sessionScope.user.enabled}">
                         <div class="w3-display-topright w3-display-hover">
                             <c:if test="${userWishList.isEmpty()}">

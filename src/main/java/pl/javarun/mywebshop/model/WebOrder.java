@@ -44,7 +44,7 @@ public class WebOrder {
     @Nullable
     private boolean paid;
     @Nullable
-    private int paymentAmount;
+    private double paymentAmount;
     @Nullable
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate paymentDate;
@@ -182,11 +182,11 @@ public class WebOrder {
         this.paid = paid;
     }
 
-    public int getPaymentAmount() {
+    public double getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(int paymentAmount) {
+    public void setPaymentAmount(double paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 

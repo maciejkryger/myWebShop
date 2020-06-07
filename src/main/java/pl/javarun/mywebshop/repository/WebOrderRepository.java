@@ -35,7 +35,7 @@ public interface WebOrderRepository extends JpaRepository<WebOrder, Integer> {
 
     List<WebOrder> findAllByCompletedTrueAndDeliveryDateNotNull();
 
-    List<WebOrder> findAllByUserAndDeliveryDateIsNull(User user);
+    List<WebOrder> findAllByUserAndConfirmedIsTrueAndDeliveryDateIsNull(User user);
 
     List<WebOrder> findByUserAndDeliveryDateIsNotNull(User user);
 }

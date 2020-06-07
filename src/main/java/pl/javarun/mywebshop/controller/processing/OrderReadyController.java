@@ -42,7 +42,7 @@ public class OrderReadyController {
                                 RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                 ProductService productService, DeliveryOptionService deliveryOptionService,
                                 PaymentTypeService paymentTypeService, AddressService addressService,
-                                EmailOrderChangeStatus emailOrderChangeStatus,StatusService statusService) {
+                                EmailOrderChangeStatus emailOrderChangeStatus, StatusService statusService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -53,11 +53,11 @@ public class OrderReadyController {
         this.deliveryOptionService = deliveryOptionService;
         this.paymentTypeService = paymentTypeService;
         this.addressService = addressService;
-        this.emailOrderChangeStatus=emailOrderChangeStatus;
-        this.statusService=statusService;
+        this.emailOrderChangeStatus = emailOrderChangeStatus;
+        this.statusService = statusService;
     }
 
-    @GetMapping({"","/{id}"})
+    @GetMapping({"", "/{id}"})
     public ModelAndView showPaid(@PathVariable(required = false) Integer id) {
         ModelAndView modelAndView = new ModelAndView("processing/orderReady");
         modelAndView.addObject("company", companyService.getCompanyData());
@@ -72,17 +72,21 @@ public class OrderReadyController {
     }
 
     @PostMapping
-    public String completeOrder(@RequestParam int id, @RequestParam boolean completed,
+    public String completeOrder(@RequestParam int id, @RequestParam boolean completed, @RequestParam boolean isItToSend,
                                 @RequestParam(required = false) String shipmentNumber, @RequestParam(required = false) String shipmentDate) {
         WebOrder order = webOrderService.getOrderById(id);
-        order.setCompleted(completed);
-        order.setCompleteDate(Timestamp.valueOf(LocalDateTime.now()));
+        if(!isItToSend) {
+            order.setCompleted(completed);
+            order.setCompleteDate(Timestamp.valueOf(LocalDateTime.now()));
+        }
         if (shipmentNumber != null && !shipmentNumber.isEmpty()) {
+            order.setCompleted(completed);
+            order.setCompleteDate(Timestamp.valueOf(LocalDateTime.now()));
             order.setShipmentNumber(shipmentNumber);
             order.setShipmentDate(LocalDate.parse(shipmentDate));
         }
         webOrderService.save(order);
-        webOrderService.updateStatus(order, statusService , emailOrderChangeStatus);
+        webOrderService.updateStatus(order, statusService, emailOrderChangeStatus);
         return "redirect:/orderCenter/paid";
     }
 

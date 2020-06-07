@@ -69,9 +69,10 @@
                     <th>czy aktywny</th>
                     <th>opcje</th>
                     <th>produkt główny<th>
+                    <th>rabat</th>
                 </tr>
                 <tr>
-                    <th colspan="15">opis</th>
+                    <th colspan="17">opis</th>
                 </tr>
                 </thead>
                 <c:forEach var="item" items="${products}">
@@ -109,9 +110,11 @@
                             </a>
                         </td>
                          <td>${item.mainProduct.id==null ? 'TAK' : item.mainProduct.id}</td>
+                         <td colspan="2" >${item.discount} %</td>
                     </tr>
                     <tr style="border-down: 10px; border-color: black">
-                        <td colspan="15">${item.descriptionPl}</td>
+                        <td colspan="17">${item.descriptionPl}</td>
+
                     </tr>
                 </c:forEach>
             </table>

@@ -143,6 +143,7 @@
                             <form method="post" action="${pageContext.request.contextPath}/orderCenter/paid/">
                               <input type="hidden" name="id" value="${order.id}">
                               <input type="hidden" name="completed" value="true">
+                              <input type="hidden" name="isItToSend" value="${order.deliveryOption.id<4 ? 'true' : 'false'}">
                               <c:if test="${order.deliveryOption.id<4}">
                                 <input type="text" name="shipmentNumber" class="shipmentInput" placeholder="nr LP">
                                 <input type="date" name="shipmentDate" class="dateInput">
