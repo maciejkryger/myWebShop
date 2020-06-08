@@ -78,7 +78,8 @@
             <div class="w3-col l3 s6" style="min-height: 270px;">
                 <div class="w3-container">
                      <div class="w3-display-container">
-                       <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
+                       <a href="${pageContext.request.contextPath}/details/${item.id}">
+                       <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%"></a>
                        <c:if test="${item.creationDate>=newProductPeriod}">
                          <span class="w3-tag w3-display-topleft">Nowość</span>
                        </c:if>
@@ -120,7 +121,14 @@
                             <button class="w3-button w3-green">dodaj do koszyka<i class="fa fa-shopping-cart"></i></button>
                             </form>
                         </div>
-                      <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
+                      <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br>
+                      <c:if test="${item.discount==0}">
+                      <b>${item.price} PLN</b></a></p>
+                      </c:if>
+                      <c:if test="${item.discount>0}">
+                            <s><b>${item.price} PLN</b></s></a>
+                            <b class="w3-padding-small" style="color:red">${item.price*(1-((item.discount)*0.01))} PLN</b>
+                      </c:if>
                      </div>
                    </div>
             </div>

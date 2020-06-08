@@ -22,6 +22,7 @@
             wykonania</a>
         <a href="${pageContext.request.contextPath}/panels/data/paymentMethods" class="w3-bar-item w3-button">Metody płatności</a>
         <a href="${pageContext.request.contextPath}/panels/data/deliveryOptions" class="w3-bar-item w3-button">Opcje dostawy</a>
+        <a href="${pageContext.request.contextPath}/panels/data/promoCodes" class="w3-bar-item w3-button">Kody rabatowe</a>
         ------------------------------------
         <a href="${pageContext.request.contextPath}/panels/data/companies" class="w3-bar-item w3-button">Dane firmy</a>
         <a href="${pageContext.request.contextPath}/panels/data/rules" class="w3-bar-item w3-button">Regulaminy</a>

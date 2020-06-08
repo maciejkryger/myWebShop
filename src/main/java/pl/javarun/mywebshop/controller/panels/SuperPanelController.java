@@ -37,6 +37,7 @@ public class SuperPanelController {
     private final ConfigDataService configDataService;
     private final PaymentMethodService paymentMethodService;
     private final DeliveryOptionService deliveryOptionService;
+    private final PromoCodeService promoCodeService;
 
 
     public SuperPanelController(ProductService productService, TypeService typeService, MaterialService materialService,
@@ -45,7 +46,7 @@ public class SuperPanelController {
                                 UserService userService, CompanyService companyService, RuleService ruleService,
                                 RoleService roleService, ColorPerMaterialService colorPerMaterialService,
                                 ConfigDataService configDataService,PaymentMethodService paymentMethodService,
-                                DeliveryOptionService deliveryOptionService) {
+                                DeliveryOptionService deliveryOptionService,PromoCodeService promoCodeService) {
         this.productService = productService;
         this.typeService = typeService;
         this.materialService = materialService;
@@ -61,6 +62,7 @@ public class SuperPanelController {
         this.configDataService=configDataService;
         this.paymentMethodService=paymentMethodService;
         this.deliveryOptionService=deliveryOptionService;
+        this.promoCodeService=promoCodeService;
     }
 
 
@@ -159,6 +161,10 @@ public class SuperPanelController {
             case "deliveryOptions":
                 modelAndView = new ModelAndView("panels/deliveryOptionTableManager");
                 modelAndView.addObject("deliveryOptions", deliveryOptionService.getAllDeliveryOptions());
+                break;
+            case "promoCodes":
+                modelAndView = new ModelAndView("panels/promoCodeTableManager");
+                modelAndView.addObject("promoCodes", promoCodeService.getAllPromoCodes());
                 break;
             default:
                 modelAndView = new ModelAndView("panels/superPanel");

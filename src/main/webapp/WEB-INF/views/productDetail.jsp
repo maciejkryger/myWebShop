@@ -57,9 +57,24 @@
 
     <!-- Image header -->
     <div class="w3-content" style="max-width:1200px">
-        <div class="w3-display-container w3-container w3-right">
-            <img src="${pageContext.request.contextPath}/images/${productType.id}/${product.id}.jpg" alt="${product.name}" class="main-img">
-            <p>${product.namePl} - cena: <b>${product.price} PLN</b></p>
+        <div class="w3-container w3-right">
+            <div class="w3-display-container">
+                <img src="${pageContext.request.contextPath}/images/${productType.id}/${product.id}.jpg" alt="${product.name}" class="main-img">
+                <c:if test="${product.creationDate>=newProductPeriod}">
+                   <span class="w3-tag w3-display-topleft">Nowość</span>
+                </c:if>
+                <c:if test="${product.discount>0}">
+                   <span class="w3-tag w3-red w3-display-topmiddle">-${product.discount}%</span>
+                </c:if>
+            </div>
+                    <p>${product.namePl} - cena:
+                <c:if test="${product.discount==0}">
+                    <b>${product.price} PLN</b></p>
+                </c:if>
+                <c:if test="${product.discount>0}">
+                   <s><b>${product.price} PLN</s>
+                   <a class="w3-padding-small" style="color:red">${product.price*(1-((product.discount)*0.01))} PLN</a></b></p>
+                </c:if>
         </div>
     </div>
 
@@ -117,9 +132,23 @@
                    <p>Produkt występuje w następujących kolorach:</p>
                     <c:forEach var="item" items="${productsGroup}">
                         <div class="w3-col l3 s6">
-                        <div class="w3-container">
-                                <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%">
-                                <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
+                            <div class="w3-display-container">
+                                <a href="${pageContext.request.contextPath}/details/${item.id}">
+                                <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%"></a>
+                                <c:if test="${item.creationDate>=newProductPeriod}">
+                                    <span class="w3-tag w3-display-topleft">Nowość</span>
+                                </c:if>
+                                <c:if test="${item.discount>0}">
+                                    <span class="w3-tag w3-red w3-display-topright">-${item.discount}%</span>
+                                </c:if>
+                                <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br>
+                                <c:if test="${item.discount==0}">
+                                   <b>${item.price} PLN</b></a></p>
+                                </c:if>
+                                <c:if test="${item.discount>0}">
+                                   <s><b>${item.price} PLN</s></a>
+                                   <a class="w3-padding-small" style="color:red">${item.price*(1-((item.discount)*0.01))} PLN</a></b></p>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>

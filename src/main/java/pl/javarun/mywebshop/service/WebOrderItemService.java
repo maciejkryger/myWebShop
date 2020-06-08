@@ -9,6 +9,8 @@ import pl.javarun.mywebshop.repository.WebOrderItemRepository;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import static pl.javarun.mywebshop.util.NumberUtil.roundToDecimal;
+
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
  * @date : 10.05.2020 12:51
@@ -69,7 +71,7 @@ public class WebOrderItemService {
             double discountInDecimal = ((1 - (item.getDiscount()) * 0.01));
             result += (item.getQuantity() * item.getProductPrice() * discountInDecimal);
         }
-        return result;
+        return roundToDecimal(result,2);
     }
 
 

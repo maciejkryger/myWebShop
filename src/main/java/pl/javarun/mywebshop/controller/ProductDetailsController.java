@@ -14,6 +14,9 @@ import pl.javarun.mywebshop.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.Period;
 
 /**
  * @author: Maciej Kryger  [https://github.com/maciejkryger]
@@ -36,10 +39,12 @@ public class ProductDetailsController {
     private final WishListService wishListService;
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
+    private final ConfigDataService configDataService;
 
     public ProductDetailsController(UserService userService, ProductService productService, ColorPerMaterialService colorPerMaterialService,
                                     TypeService typeService, CompanyService companyService, RuleService ruleService,
-                                    WishListService wishListService, WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
+                                    WishListService wishListService, WebOrderItemService webOrderItemService,
+                                    WebOrderService webOrderService, ConfigDataService configDataService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -49,6 +54,7 @@ public class ProductDetailsController {
         this.wishListService = wishListService;
         this.webOrderItemService = webOrderItemService;
         this.webOrderService = webOrderService;
+        this.configDataService=configDataService;
     }
 
     @GetMapping("/{id}")
@@ -90,10 +96,12 @@ public class ProductDetailsController {
             }
             modelAndView.addObject("userWishListProduct", wishListService.getWishListByUserIdAndProductId(user.getId(), id));
         }
+        int newProductPeriod = Integer.valueOf(configDataService.getConfigDataByName("newProductPeriod").getValue());
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("productType", typeService.getTypeById(productService.getProductById(id).getType().getId()));
         modelAndView.addObject("rules", ruleService.getAllRules());
+        modelAndView.addObject("newProductPeriod", Timestamp.valueOf(LocalDateTime.now().minus(Period.ofDays(newProductPeriod))));
         return modelAndView;
     }
 }
