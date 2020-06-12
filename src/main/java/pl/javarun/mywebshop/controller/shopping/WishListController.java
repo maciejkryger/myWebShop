@@ -12,6 +12,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.WishListNotExistException;
+import pl.javarun.mywebshop.model.ProductCounter;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WishList;
 import pl.javarun.mywebshop.service.*;
@@ -40,11 +41,13 @@ public class WishListController {
     private final ProductService productService;
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
+    private final ProductCounterService productCounterService;
 
 
     public WishListController(UserService userService, TypeService typeService, CompanyService companyService,
                               RuleService ruleService, WishListService wishListService, ProductService productService,
-                              WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
+                              WebOrderItemService webOrderItemService, WebOrderService webOrderService,
+                              ProductCounterService productCounterService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -53,6 +56,7 @@ public class WishListController {
         this.productService = productService;
         this.webOrderItemService = webOrderItemService;
         this.webOrderService = webOrderService;
+        this.productCounterService=productCounterService;
     }
 
     @GetMapping()
@@ -93,7 +97,7 @@ public class WishListController {
         ModelAndView modelAndView = new ModelAndView("wishList");
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        Integer userId =(Integer)user.getId();
+        Integer userId = user.getId();
         if (userId != null && productId != null) {
             WishList wishList;
             if (wishListService.getWishListByUserIdAndProductId(userId, productId) == null) {
@@ -104,7 +108,7 @@ public class WishListController {
             wishList.setProduct(productService.getProductById(productId));
             wishList.setUser(userService.getUserById(userId));
             wishListService.save(wishList);
-
+//            countWishListStatistic(productId);
             String typeName = productService.getProductById(productId).getType().getName();
             return "redirect:/types/" + typeName;
         }
@@ -118,8 +122,8 @@ public class WishListController {
         ModelAndView modelAndView = new ModelAndView("wishList");
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        Integer userId =(Integer)user.getId();
-        if ((Integer)user.getId() != null && productId != null) {
+        Integer userId = user.getId();
+        if (userId != null && productId != null) {
             WishList wishList = wishListService.getWishListByUserIdAndProductId(userId, productId);
             wishListService.delete(wishList);
             String typeName = productService.getProductById(productId).getType().getName();
@@ -133,7 +137,7 @@ public class WishListController {
                                                       HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        Integer userId =(Integer)user.getId();
+        Integer userId = user.getId();
         WishList wishList = wishListService.getWishListByUserIdAndProductId(userId, productId);
         wishListService.delete(wishList);
         return "redirect:/wishList";
@@ -146,7 +150,7 @@ public class WishListController {
                                                         HttpServletRequest httpServletRequest) {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        Integer userId =(Integer)user.getId();
+        Integer userId =user.getId();
         if (wishListService.getWishListByUserIdAndProductId(user.getId(), productId) == null) {
             WishList wishList;
             if (wishListService.getWishListByUserIdAndProductId(userId, productId) == null) {
@@ -157,6 +161,7 @@ public class WishListController {
             wishList.setProduct(productService.getProductById(productId));
             wishList.setUser(userService.getUserById(user.getId()));
             wishListService.save(wishList);
+//            countWishListStatistic(productId);
         }
         return "redirect:/details/" + productId;
     }
@@ -169,6 +174,25 @@ public class WishListController {
         WishList wishList = wishListService.getWishListByUserIdAndProductId(user.getId(), productId);
         wishListService.delete(wishList);
         return "redirect:/details/" + productId;
+    }
+
+    private void countWishListStatistic(int id){
+        ProductCounter productCounter;
+        try {
+            productCounter = productCounterService.getByProductId(id);
+            if((Integer)productCounter.getWishList()==null){
+                productCounter.setWishList(1);
+            }else {
+                int wishListCounter = productCounter.getWishList();
+                wishListCounter++;
+                productCounter.setWishList(wishListCounter);
+            }
+        }catch (Exception ex){
+            productCounter = new ProductCounter();
+            productCounter.setProduct(productService.getProductById(id));
+            productCounter.setWishList(1);
+        }
+        productCounterService.save(productCounter);
     }
 
 }

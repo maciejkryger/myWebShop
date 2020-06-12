@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.WishListNotExistException;
+import pl.javarun.mywebshop.model.Type;
+import pl.javarun.mywebshop.model.Counter;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
@@ -38,21 +40,24 @@ public class ProductTypeController {
     private final WishListService wishListService;
     private final WebOrderItemService webOrderItemService;
     private final WebOrderService webOrderService;
+    private final CounterService counterService;
 
     public ProductTypeController(UserService userService, ProductService productService, TypeService typeService,
                                  CompanyService companyService, ColorPerMaterialService colorPerMaterialService,
                                  RuleService ruleService, WishListService wishListService, ConfigDataService configDataService,
-                                 WebOrderItemService webOrderItemService, WebOrderService webOrderService) {
+                                 WebOrderItemService webOrderItemService, WebOrderService webOrderService,
+                                 CounterService counterService) {
         this.userService = userService;
         this.productService = productService;
         this.typeService = typeService;
         this.companyService = companyService;
         this.colorPerMaterialService = colorPerMaterialService;
         this.ruleService = ruleService;
-        this.configDataService=configDataService;
+        this.configDataService = configDataService;
         this.wishListService = wishListService;
-        this.webOrderItemService=webOrderItemService;
-        this.webOrderService=webOrderService;
+        this.webOrderItemService = webOrderItemService;
+        this.webOrderService = webOrderService;
+        this.counterService = counterService;
     }
 
     @GetMapping("/{productType}")
@@ -70,7 +75,7 @@ public class ProductTypeController {
             try {
                 int webOrderId = webOrderService.getOrderByUserIdAndConfirmedFalse(userId).getId();
                 modelAndView.addObject("productsInBasketSize", webOrderItemService.calculateActualQuantityInUserBasket(webOrderId));
-            }catch (OrderNotExistException ex){
+            } catch (OrderNotExistException ex) {
                 modelAndView.addObject("productsInBasketSize", 0);
             }
             try {
@@ -79,7 +84,7 @@ public class ProductTypeController {
                 modelAndView.addObject("userWishListSize", 0);
             }
         }
-        int newProductPeriod = Integer.valueOf(configDataService.getConfigDataByName("newProductPeriod").getValue());
+        int newProductPeriod = Integer.parseInt(configDataService.getConfigDataByName("newProductPeriod").getValue());
         modelAndView.addObject("productType", typeService.getTypeByName(productType));
         modelAndView.addObject("productsCounter", productService.getActiveProductsByTypeName(productType).size());
         modelAndView.addObject("company", companyService.getCompanyData());
@@ -87,6 +92,37 @@ public class ProductTypeController {
         modelAndView.addObject("rules", ruleService.getAllRules());
         modelAndView.addObject("newProductPeriod", Timestamp.valueOf(LocalDateTime.now().minus(Period.ofDays(newProductPeriod))));
 
+//        countVisitStatistic(productType);
+
         return modelAndView;
+    }
+
+    private void countVisitStatistic(String productTypename){
+        Counter counter;
+        System.out.println(productTypename);
+        Type type= typeService.getTypeByName(productTypename);
+        System.out.println(type.getName());
+
+        try {
+            System.out.println("try 1");
+            counter = counterService.getByTypeName(type.getId());
+            int visitCounter = counter.getVisit();
+            visitCounter++;
+            counter.setVisit(visitCounter);
+            System.out.println("try2");
+
+        }catch (Exception ex){
+            System.out.println("catch");
+            counter = new Counter();
+            System.out.println("dodano nowy");
+            counter.setType(type.getId());
+            System.out.println("set type");
+            counter.setVisit(1);
+            System.out.println("set visit");
+        }
+
+        System.out.println("save");
+        counterService.save(counter);
+
     }
 }

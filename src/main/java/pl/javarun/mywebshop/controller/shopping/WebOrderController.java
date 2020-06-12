@@ -42,11 +42,13 @@ public class WebOrderController {
     private final ProductService productService;
     private final WishListService wishListService;
     private final PromoCodeService promoCodeService;
+    private final ProductCounterService productCounterService;
 
 
     public WebOrderController(UserService userService, TypeService typeService, CompanyService companyService,
                               RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
-                              ProductService productService, WishListService wishListService, PromoCodeService promoCodeService) {
+                              ProductService productService, WishListService wishListService, PromoCodeService promoCodeService,
+                              ProductCounterService productCounterService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -56,6 +58,7 @@ public class WebOrderController {
         this.productService = productService;
         this.wishListService = wishListService;
         this.promoCodeService = promoCodeService;
+        this.productCounterService= productCounterService;
     }
 
     @GetMapping()
@@ -228,7 +231,26 @@ public class WebOrderController {
         if (product.getDiscount() > 0) {
             webOrderItem.setDiscount(product.getDiscount());
         }
+//        countBasketStatistic(productId);
         webOrderItemService.save(webOrderItem);
     }
 
+    private void countBasketStatistic(int id){
+        ProductCounter productCounter;
+        try {
+            productCounter = productCounterService.getByProductId(id);
+            if((Integer)productCounter.getBasket()==null){
+                productCounter.setBasket(1);
+            }else {
+                int basketCounter = productCounter.getBasket();
+                basketCounter++;
+                productCounter.setBasket(basketCounter);
+            }
+        }catch (Exception ex){
+            productCounter = new ProductCounter();
+            productCounter.setProduct(productService.getProductById(id));
+            productCounter.setBasket(1);
+        }
+        productCounterService.save(productCounter);
+    }
 }

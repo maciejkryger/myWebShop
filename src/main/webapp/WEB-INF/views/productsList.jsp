@@ -127,7 +127,8 @@
                       </c:if>
                       <c:if test="${item.discount>0}">
                             <s><b>${item.price} PLN</b></s></a>
-                            <b class="w3-padding-small" style="color:red">${item.price*(1-((item.discount)*0.01))} PLN</b>
+                            <b class="w3-padding-small" style="color:red"><fmt:formatNumber type="number" maxFractionDigits="2"
+                            value="${item.price*(1-((item.discount)*0.01))}"/> PLN</b>
                       </c:if>
                      </div>
                    </div>

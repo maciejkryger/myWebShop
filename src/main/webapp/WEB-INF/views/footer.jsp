@@ -10,11 +10,30 @@
 
     }
 
+    .first-logo{
+        font-size:48px
+     }
+
+    .second-logo{
+        width:100px;
+     }
+
     @media only screen and (max-width: 600px) {
           /* For mobile phones: */
         .footer-font{
             font-size: 10px;
         }
+
+        .first-logo{
+        font-size:36px;
+        <br>
+        }
+
+        .second-logo{
+        position: next-line;
+        width:80px;
+        }
+
 </style>
 <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">
     <div class="w3-row-padding">
@@ -52,7 +71,12 @@
                     class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
             <br><br>
             <h6>Obsługuje nas</h6>
-            <i class='fab fa-dhl' style='font-size:48px'></i>
+            <table>
+            <tr>
+            <th><i class='fab fa-dhl first-logo'></i></th>
+            <th><img src='https://secure.sitebees.com/file/mediakit/1449812/69/PP_logo_przezrocz+achrom.png' class='second-logo'></th>
+            </tr>
+            </table>
             <%--                <h4>We accept</h4>--%>
             <%--                <p><i class="fa fa-fw fa-cc-amex"></i> Amex</p>--%>
             <%--                <p><i class="fa fa-fw fa-credit-card"></i> Credit Card</p>--%>

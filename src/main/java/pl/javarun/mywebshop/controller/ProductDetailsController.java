@@ -1,6 +1,5 @@
 package pl.javarun.mywebshop.controller;
 
-import com.fasterxml.jackson.core.JsonPointer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
 import pl.javarun.mywebshop.exception.WishListNotExistException;
-import pl.javarun.mywebshop.model.Product;
+import pl.javarun.mywebshop.model.ProductCounter;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.service.*;
 
@@ -40,11 +39,13 @@ public class ProductDetailsController {
     private final WebOrderService webOrderService;
     private final WebOrderItemService webOrderItemService;
     private final ConfigDataService configDataService;
+    private final ProductCounterService productCounterService;
 
     public ProductDetailsController(UserService userService, ProductService productService, ColorPerMaterialService colorPerMaterialService,
                                     TypeService typeService, CompanyService companyService, RuleService ruleService,
                                     WishListService wishListService, WebOrderItemService webOrderItemService,
-                                    WebOrderService webOrderService, ConfigDataService configDataService) {
+                                    WebOrderService webOrderService, ConfigDataService configDataService,
+                                    ProductCounterService productCounterService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -55,6 +56,7 @@ public class ProductDetailsController {
         this.webOrderItemService = webOrderItemService;
         this.webOrderService = webOrderService;
         this.configDataService=configDataService;
+        this.productCounterService=productCounterService;
     }
 
     @GetMapping("/{id}")
@@ -76,6 +78,9 @@ public class ProductDetailsController {
                 modelAndView.addObject("productsGroup", productService.getActiveProductsGroupByMainId(id));
             }
         }
+
+//        countVisitStatistic(id);
+
         if (user == null) {
             modelAndView.addObject("userWishListProduct", null);
             modelAndView.addObject("productsInBasketSize", 0);
@@ -96,7 +101,7 @@ public class ProductDetailsController {
             }
             modelAndView.addObject("userWishListProduct", wishListService.getWishListByUserIdAndProductId(user.getId(), id));
         }
-        int newProductPeriod = Integer.valueOf(configDataService.getConfigDataByName("newProductPeriod").getValue());
+        int newProductPeriod = Integer.parseInt(configDataService.getConfigDataByName("newProductPeriod").getValue());
         modelAndView.addObject("company", companyService.getCompanyData());
         modelAndView.addObject("productTypesList", typeService.getAllTypes());
         modelAndView.addObject("productType", typeService.getTypeById(productService.getProductById(id).getType().getId()));
@@ -104,4 +109,22 @@ public class ProductDetailsController {
         modelAndView.addObject("newProductPeriod", Timestamp.valueOf(LocalDateTime.now().minus(Period.ofDays(newProductPeriod))));
         return modelAndView;
     }
+
+
+    private void countVisitStatistic(int id){
+        ProductCounter productCounter;
+        try {
+            productCounter= productCounterService.getByProductId(id);
+            int visitCounter = productCounter.getVisit();
+            visitCounter++;
+            productCounter.setVisit(visitCounter);
+        }catch (Exception ex){
+            productCounter = new ProductCounter();
+            productCounter.setProduct(productService.getProductById(id));
+            productCounter.setVisit(1);
+        }
+        productCounterService.save(productCounter);
+    }
+
+
 }

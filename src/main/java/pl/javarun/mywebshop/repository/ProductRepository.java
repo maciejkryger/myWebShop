@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import pl.javarun.mywebshop.model.Product;
 import pl.javarun.mywebshop.model.Type;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -115,4 +116,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllActiveProductsWithWishListTagByProductTypeNameAndUserId(String type, int id);
 
 
+    List<Product> findAllByActiveIsTrueAndCreationDateAfter(Timestamp newProductPeriodDate);
+
+    List<Product> findAllByActiveIsTrueAndDiscountGreaterThan(int i);
 }

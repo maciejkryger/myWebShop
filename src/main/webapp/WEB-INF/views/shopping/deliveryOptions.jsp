@@ -79,7 +79,11 @@
       <c:forEach var="item" items="${deliveryOptions}">
          <input type="radio"
             ${item.checked ? 'checked' :''}
-         class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}" required>${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input><br>
+         class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}" required>
+         <c:if test="${item.id<3}"><img src='http://narzedzia.dhl.pl/images/dhl-logo.gif' class='second-logo'></c:if>
+                  <c:if test="${item.id==3}"><img src='https://secure.sitebees.com/file/mediakit/1449810/d8/PP_logo_podstaw.jpg' class='second-logo'></c:if>
+         ${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input>
+         <br>
       </c:forEach>
     </form>
 </div>

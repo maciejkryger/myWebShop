@@ -39,65 +39,60 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">wyniki szukania</p>
+        <p class="w3-left">Promocje</p>
         <%@include file='header.jsp' %>
     </header>
 
     <!-- Image header -->
-    <!--
-    <div class="w3-display-container w3-container">
-        <img src="${pageContext.request.contextPath}/images/type${productType.id}.jpg" alt="${productType.namePl}" style="width:100%">
-        <div class="w3-display-topleft w3-text-white" style="padding:24px 48px">
-            <p><a href="#products" class="w3-button w3-black w3-padding-large w3-large">PRZEJDŹ DO PRODUKTÓW</a></p>
-        </div>
-    </div>
-    -->
+
     <div class="w3-container w3-text-grey" id="products">
 
-        <c:if test="${products.size()==0}">
-            <p>znaleziono: ${products.size()} pozycji</p>
+        <c:if test="${promoProducts.size()==0}">
+            <p>znaleziono: ${promoProducts.size()} pozycji</p>
         </c:if>
-        <c:if test="${products.size()==1}">
-            <p>znaleziono: ${products.size()} pozycja</p>
+        <c:if test="${promoProducts.size()==1}">
+            <p>znaleziono: ${promoProducts.size()} pozycja</p>
         </c:if>
-        <c:if test="${products.size()==2}">
-             <p>znaleziono: ${products.size()} pozycje</p>
+        <c:if test="${promoProducts.size()==2}">
+             <p>znaleziono: ${promoProducts.size()} pozycje</p>
         </c:if>
-        <c:if test="${products.size()==3}">
-             <p>znaleziono: ${products.size()} pozycje</p>
+        <c:if test="${promoProducts.size()==3}">
+             <p>znaleziono: ${promoProducts.size()} pozycje</p>
         </c:if>
-        <c:if test="${products.size()==4}">
-             <p>znaleziono: ${products.size()} pozycje</p>
+        <c:if test="${promoProducts.size()==4 || promoProducts.size()==24 || promoProducts.size()==34 || promoProducts.size()==44 }">
+             <p>znaleziono: ${promoProducts.size()} pozycje</p>
         </c:if>
-        <c:if test="${products.size()>4}">
-            <p>znaleziono: ${products.size()} pozycji</p>
+        <c:if test="${promoProducts.size()>4}">
+            <p>znaleziono: ${promoProducts.size()} pozycji</p>
         </c:if>
     </div>
 
     <!-- Product grid -->
     <div class="w3-row">
-        <c:forEach var="item" items="${products}">
+        <c:forEach var="item" items="${promoProducts}">
             <div class="w3-col l3 s6" style="min-height: 270px;">
                 <div class="w3-container">
+                  <div class="w3-display-container">
                     <img src="${pageContext.request.contextPath}/images/${item.type.id}/${item.id}.jpg" style="width:100%">
                     <p><a href="${pageContext.request.contextPath}/details/${item.id}">${item.namePl}<br><b>${item.price} PLN</b></a></p>
+                       <c:if test="${item.creationDate>=newProductPeriod}">
+                         <span class="w3-tag w3-display-topleft">Nowość</span>
+                       </c:if>
+                        <c:if test="${item.discount>0}">
+                         <span class="w3-tag w3-red w3-display-topright">-${item.discount}%</span>
+                       </c:if>
+                     </div>
                 </div>
             </div>
         </c:forEach>
     </div>
-        <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć do wyszukiwarki</button>
+        <button class="w3-button w3-white w3-border w3-round-large" onclick="goBack()">wróć do strony głównej</button>
            <script>
              function goBack() {
              window.history.back();
                            }
            </script>
-    <!-- Subscribe section -->
-    <%--    <div class="w3-container w3-black w3-padding-32">--%>
-    <%--        <h1>Subskrybuj</h1>--%>
-    <%--        <p>By otrzymywać specjalne oferty oraz zyskać status klienta VIP:</p>--%>
-    <%--        <p><input class="w3-input w3-border" type="text" placeholder="Enter e-mail" style="width:100%"></p>--%>
-    <%--        <button type="button" class="w3-button w3-red w3-margin-bottom">subskrybuj</button>--%>
-    <%--    </div>--%>
+
 
     <!-- Footer -->
     <%@include file='footer.jsp' %>

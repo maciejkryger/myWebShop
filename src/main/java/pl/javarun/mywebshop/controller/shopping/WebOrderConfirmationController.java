@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.javarun.mywebshop.exception.AddressNotExistException;
 import pl.javarun.mywebshop.exception.OrderNotExistException;
+import pl.javarun.mywebshop.model.ProductCounter;
 import pl.javarun.mywebshop.model.User;
 import pl.javarun.mywebshop.model.WebOrder;
 import pl.javarun.mywebshop.model.WebOrderItem;
@@ -50,12 +51,14 @@ public class WebOrderConfirmationController {
     private int sumQuantity;
     private int deliveryCostsToPay;
     private final WishListService wishListService;
+    private final ProductCounterService productCounterService;
 
     public WebOrderConfirmationController(UserService userService, TypeService typeService, CompanyService companyService,
                                           RuleService ruleService, WebOrderService webOrderService, WebOrderItemService webOrderItemService,
                                           ProductService productService, DeliveryOptionService deliveryOptionService,
                                           PaymentTypeService paymentTypeService, AddressService addressService,
-                                          EmailOrderConfirmation emailOrderConfirmation, WishListService wishListService) {
+                                          EmailOrderConfirmation emailOrderConfirmation, WishListService wishListService,
+                                          ProductCounterService productCounterService) {
         this.userService = userService;
         this.typeService = typeService;
         this.companyService = companyService;
@@ -68,6 +71,7 @@ public class WebOrderConfirmationController {
         this.addressService = addressService;
         this.emailOrderConfirmation=emailOrderConfirmation;
         this.wishListService=wishListService;
+        this.productCounterService=productCounterService;
     }
 
     @GetMapping()
@@ -123,7 +127,7 @@ public class WebOrderConfirmationController {
         webOrder.setOrderNumber(webOrder.getId()+"/"+LocalDateTime.now().getMonthValue()+"/"+LocalDateTime.now().getYear());
         webOrderService.save(webOrder);
         emailOrderConfirmation.send(webOrder);
-
+//        countBuyStatistic(webOrder);
         return  "redirect:/confirmation/finished?ono="+webOrder.getOrderNumber();
     }
 
@@ -145,5 +149,28 @@ public class WebOrderConfirmationController {
             modelAndView.addObject("userWishListSize", 0);
         }
         return modelAndView;
+    }
+
+    private void countBuyStatistic(WebOrder webOrder){
+        ProductCounter productCounter;
+        List<WebOrderItem> items = webOrderItemService.getOrderItemByOrderId(webOrder.getId());
+        for(WebOrderItem item: items) {
+            int id = item.getProduct().getId();
+            try {
+                productCounter = productCounterService.getByProductId(id);
+                if ((Integer) productCounter.getBuy() == null) {
+                    productCounter.setBuy(1);
+                } else {
+                    int buyCounter = productCounter.getBuy();
+                    buyCounter++;
+                    productCounter.setBuy(buyCounter);
+                }
+            } catch (Exception ex) {
+                productCounter = new ProductCounter();
+                productCounter.setProduct(item.getProduct());
+                productCounter.setBuy(1);
+            }
+            productCounterService.save(productCounter);
+        }
     }
 }

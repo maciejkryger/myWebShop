@@ -73,7 +73,8 @@
                 </c:if>
                 <c:if test="${product.discount>0}">
                    <s><b>${product.price} PLN</s>
-                   <a class="w3-padding-small" style="color:red">${product.price*(1-((product.discount)*0.01))} PLN</a></b></p>
+                   <a class="w3-padding-small" style="color:red"><fmt:formatNumber type="number" maxFractionDigits="2"
+                          value="${product.price*(1-((product.discount)*0.01))}"/> PLN</a></b></p>
                 </c:if>
         </div>
     </div>
@@ -128,10 +129,10 @@
              </a>
           </c:if>
         </div>
-        <div class="w3-container">
+        <div class="w3-container" >
                    <p>Produkt występuje w następujących kolorach:</p>
                     <c:forEach var="item" items="${productsGroup}">
-                        <div class="w3-col l3 s6">
+                        <div class="w3-col l3 s6" style="min-height: 270px;">
                             <div class="w3-display-container">
                                 <a href="${pageContext.request.contextPath}/details/${item.id}">
                                 <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%"></a>
@@ -147,7 +148,8 @@
                                 </c:if>
                                 <c:if test="${item.discount>0}">
                                    <s><b>${item.price} PLN</s></a>
-                                   <a class="w3-padding-small" style="color:red">${item.price*(1-((item.discount)*0.01))} PLN</a></b></p>
+                                   <a class="w3-padding-small" style="color:red"><fmt:formatNumber type="number" maxFractionDigits="2"
+                                      value="${item.price*(1-((item.discount)*0.01))}"/> PLN</a></b></p>
                                 </c:if>
                             </div>
                         </div>

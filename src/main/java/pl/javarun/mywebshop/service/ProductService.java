@@ -7,6 +7,9 @@ import pl.javarun.mywebshop.model.Type;
 import pl.javarun.mywebshop.search.SearchProductModelOption;
 import pl.javarun.mywebshop.repository.ProductRepository;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,9 +25,11 @@ import java.util.List;
 public class ProductService {
 
     private ProductRepository productRepository;
+    private ConfigDataService configDataService ;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, ConfigDataService configDataService) {
         this.productRepository = productRepository;
+        this.configDataService=configDataService;
     }
 
     public void save(Product product) {
@@ -86,39 +91,39 @@ public class ProductService {
         }
     }
 
-    public List getActiveProductsByMaterialId(Integer materialId) {
+    public List<Product> getActiveProductsByMaterialId(Integer materialId) {
         return productRepository.findAllByMaterial_IdAndActiveIsTrue(materialId);
     }
 
-    public List getActiveProductsByMaterialColorId(Integer materialColorId) {
+    public List<Product> getActiveProductsByMaterialColorId(Integer materialColorId) {
         return productRepository.findAllByMaterialColor_IdAndActiveIsTrue(materialColorId);
     }
 
-    public List getActiveProductsByTypeId(Integer typeId) {
+    public List<Product> getActiveProductsByTypeId(Integer typeId) {
         return productRepository.findAllByType_IdAndActiveIsTrue(typeId);
     }
 
-    public List getActiveProductsByFasteningTypeId(Integer fasteningTypeId) {
+    public List<Product> getActiveProductsByFasteningTypeId(Integer fasteningTypeId) {
         return productRepository.findAllByFasteningType_IdAndActiveIsTrue(fasteningTypeId);
     }
 
-    public List getActiveProductsByPriceBetween(Integer priceFrom, Integer priceTo) {
+    public List<Product> getActiveProductsByPriceBetween(Integer priceFrom, Integer priceTo) {
         return productRepository.findAllByPriceBetweenAndActiveIsTrue(priceFrom, priceTo);
     }
 
-    public List getActiveProductsByMaterialIdAndMaterialColorId(Integer materialId, Integer materialColorId) {
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorId(Integer materialId, Integer materialColorId) {
         return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndActiveIsTrue(materialId, materialColorId);
     }
 
-    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeId(Integer materialId, Integer materialColorId, Integer typeId) {
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndTypeId(Integer materialId, Integer materialColorId, Integer typeId) {
         return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndActiveIsTrue(materialId, materialColorId, typeId);
     }
 
-    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeId(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId) {
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeId(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId) {
         return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId);
     }
 
-    public List getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceBetween(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
+    public List<Product> getActiveProductsByMaterialIdAndMaterialColorIdAndTypeIdAndFasteningTypeIdAndPriceBetween(Integer materialId, Integer materialColorId, Integer typeId, Integer fasteningTypeId, Integer priceFrom, Integer priceTo) {
         return productRepository.findAllByMaterial_IdAndMaterialColor_IdAndType_IdAndFasteningType_IdAndPriceBetweenAndActiveIsTrue(materialId, materialColorId, typeId, fasteningTypeId, priceFrom, priceTo);
     }
 
@@ -205,4 +210,14 @@ public class ProductService {
 
     public List<Product> getAllActiveProductsWithWishListTagByProductTypeNameAndUserId(String type, int id){
         return productRepository.findAllActiveProductsWithWishListTagByProductTypeNameAndUserId(type,id);}
+
+    public List<Product> getActiveProductsByNewPeriod() {
+        int newProductPeriod = Integer.parseInt(configDataService.getConfigDataByName("newProductPeriod").getValue());
+        Timestamp newProductPeriodDate = Timestamp.valueOf(LocalDateTime.now().minus(Period.ofDays(newProductPeriod)));
+        return productRepository.findAllByActiveIsTrueAndCreationDateAfter(newProductPeriodDate);
+    }
+
+    public List<Product> getActiveProductsByDiscount() {
+        return productRepository.findAllByActiveIsTrueAndDiscountGreaterThan(0);
+    }
 }
