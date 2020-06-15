@@ -59,24 +59,23 @@
     </header>
 
     <!-- user session  -->
-        <h2>Twoje ulubione produkty</h2>
+        <h2 class="w3-margin">Twoje ulubione produkty</h2>
 
-        <div class="w3-responsive">
-
-            <table class="w3-table-all w3-hoverable">
+        <div class="w3-responsive w3-margin">
                     <p>
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Ulubione produkty użytkownika: </b>${sessionScope.user.username}</label>
                         <input type="hidden" name="username"  value="${sessionScope.user.username}">
                     </c:if>
                     </p>
+        </div>
 
     <!-- Product grid -->
-    <div class="w3-row w3-grayscale">
+    <div class="w3-row w3-grayscale w3-margin">
         <a>${userWishList.isEmpty() ? 'Lista produktów ulubionych jest pusta.' :''}</a>
     </div>
-    <c:if test="${!userWishList.isEmpty()}">
 
+    <c:if test="${!userWishList.isEmpty()}">
     <!--
         <c:forEach var="item" items="${userWishList}">
             <div class="w3-col l3 s6">

@@ -110,18 +110,18 @@
             <c:if test="${userWishListProduct.product!=product}">
             <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromDetail">
                  <input type="hidden" name="productId" value="${product.id}">
-                 <button class="w3-button w3-border w3-white w3-left">dodaj do ulubionych <i class="far fa-heart"></i></button>
+                 <button class="w3-button w3-border w3-white w3-left w3-round-large">dodaj do ulubionych <i class="far fa-heart"></i></button>
             </form>
             </c:if>
             <c:if test="${userWishListProduct.product==product}">
              <form method="POST" action="${pageContext.request.contextPath}/wishList/removeFromDetail">
                  <input type="hidden" name="productId" value="${product.id}">
-                 <button class="w3-button w3-border w3-white w3-left">usuń z ulubionych <i class="fas fa-heart"></i></button>
+                 <button class="w3-button w3-border w3-white w3-left w3-round-large">usuń z ulubionych <i class="fas fa-heart"></i></button>
               </form>
             </c:if>
             <form method="POST" action="${pageContext.request.contextPath}/basket/addFromDetail">
                 <input type="hidden" name="productId" value="${product.id}">
-                <button class="w3-button w3-border w3-green w3-left">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
+                <button class="w3-button w3-border w3-green w3-left w3-round-large">dodaj do koszyka <i class="fa fa-shopping-cart"></i></button>
             </form>
           <c:if test="${sessionScope.user.role.id<='2'}">
              <a href="${pageContext.request.contextPath}/panels/data/product/${product.id}">
@@ -129,10 +129,11 @@
              </a>
           </c:if>
         </div>
-        <div class="w3-container" >
+        <div class="w3-row" >
                    <p>Produkt występuje w następujących kolorach:</p>
                     <c:forEach var="item" items="${productsGroup}">
                         <div class="w3-col l3 s6" style="min-height: 270px;">
+                          <div class="w3-container">
                             <div class="w3-display-container">
                                 <a href="${pageContext.request.contextPath}/details/${item.id}">
                                 <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%"></a>
@@ -152,9 +153,10 @@
                                       value="${item.price*(1-((item.discount)*0.01))}"/> PLN</a></b></p>
                                 </c:if>
                             </div>
+                           </div>
                         </div>
                     </c:forEach>
-         </div>
+        </div>
         <div class="w3-container">
             <i class="fa fa-arrow-left"></i>
             <a href="${pageContext.request.contextPath}/types/${product.type.name}">cofnij</a>
