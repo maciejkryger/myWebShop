@@ -67,8 +67,8 @@
 
 
 <!-- Delivery grid -->
- <h2>Podaj adres do wysyłki</h2>
-        <div class="w3-responsive">
+ <h2 class="w3-margin">Podaj adres do wysyłki</h2>
+        <div class="w3-responsive w3-margin">
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
                     </c:if>

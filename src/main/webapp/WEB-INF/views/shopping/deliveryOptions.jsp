@@ -27,6 +27,25 @@
 
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
+        }
+
+    .myLogo{
+      width: 80px;
+    }
+
+    .myDiv{
+        margin-left:250px
+    }
+
+
+    @media only screen and (max-width: 600px) {
+          /* For mobile phones: */
+          .myLogo{
+            width:50px;
+          }
+          .myDiv{
+            margin-left: 0px;
+          }
     }
 </style>
 <body class="w3-content" style="max-width:1200px">
@@ -47,7 +66,7 @@
      id="myOverlay"></div>
 
 <!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:250px">
+<div class="w3-main myDiv">
 
     <!-- Push down content on small screens -->
     <div class="w3-hide-large" style="margin-top:83px"></div>
@@ -60,19 +79,19 @@
 
 
 <!-- Delivery grid -->
- <h2>Wybór opcji dostawy</h2>
-        <div class="w3-responsive">
+ <h2 class="w3-margin">Wybór opcji dostawy</h2>
+        <div class="w3-responsive w3-margin">
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
                     </c:if>
         </div>
 
- <div class="w3-container w3-responsive w3-margin">
+ <div class="w3-container w3-responsive w3-margin myDiv">
  Wartość koszyka: <strong> ${sumToPay} PLN </strong>
 
  </div>
 
- <div class="w3-responsive w3-container w3-padding w3-margin">
+ <div class="w3-responsive w3-container">
 
       <form method="POST" action="${pageContext.request.contextPath}/delivery" id="delivery">
       <label class="w3-row w3-large"><b>Wybierz opcję dostawy</b></label>
@@ -80,8 +99,8 @@
          <input type="radio"
             ${item.checked ? 'checked' :''}
          class="w3-radio w3-margin" name="deliveryOptionId" value="${item.id}" required>
-         <c:if test="${item.id<3}"><img src='http://narzedzia.dhl.pl/images/dhl-logo.gif' class='second-logo'></c:if>
-                  <c:if test="${item.id==3}"><img src='https://secure.sitebees.com/file/mediakit/1449810/d8/PP_logo_podstaw.jpg' class='second-logo'></c:if>
+         <c:if test="${item.id<3}"><img src='http://narzedzia.dhl.pl/images/dhl-logo.gif' class='myLogo'></c:if>
+         <c:if test="${item.id==3}"><img src='https://secure.sitebees.com/file/mediakit/1449810/d8/PP_logo_podstaw.jpg'  class='myLogo'></c:if>
          ${item.namePl} (${item.paymentType.namePl}): ${item.price} PLN</input>
          <br>
       </c:forEach>

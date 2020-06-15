@@ -26,11 +26,9 @@
 
         .first-logo{
         font-size:36px;
-        <br>
         }
 
         .second-logo{
-        position: next-line;
         width:80px;
         }
 

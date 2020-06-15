@@ -58,10 +58,10 @@
         <%@include file='../header.jsp' %>
     </header>
 
-    <!-- Change password form -->
-        <h2>Twój koszyk z zakupami</h2>
+    <!-- Title and username info -->
+        <h2 class="w3-margin">Twój koszyk z zakupami</h2>
 
-        <div class="w3-responsive">
+        <div class="w3-responsive w3-margin">
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Koszyk użytkownika: </b>${sessionScope.user.username}</label>
                     </c:if>
@@ -144,7 +144,7 @@
                       </tr>
                     </tfoot>
                 </table>
-                <div>
+                <div style="margin-left:10px">
                 <form method="post" action="${pageContext.request.contextPath}/basket/discount">
                 <p class="w3-row">mam kod rabatowy:</p>
                 <a class="w3-bar-item w3-row" style="color: red">${wrongCode ? 'wprowadź poprawny kod' :''} </a>

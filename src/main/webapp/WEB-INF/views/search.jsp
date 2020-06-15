@@ -59,13 +59,13 @@
     </header>
 
     <!-- search form -->
-        <h2>Wyszukiwarka</h2>
+        <h2 class="w3-margin">Wyszukiwarka</h2>
 
         <div class="w3-responsive">
             <table class="w3-table-all w3-hoverable">
             <form method="post" action="${pageContext.request.contextPath}/search">
 
-                <p>
+                <p class="w3-margin">
                    <label><b>użyty materiał</b></label>
                       <select class="w3-input w3-border" name="materialId">
                        <option selected="selected" value="">wybierz materiał...</option>
@@ -76,7 +76,7 @@
                     </select>
                  </p>
 
-                <p>
+                <p class="w3-margin">
                    <label><b>kolor materiału</b></label>
                        <select class="w3-input w3-border" name="materialColorId">
                        <option selected="selected" value="">wybierz kolor materiału...</option>
@@ -87,7 +87,7 @@
                     </select>
                  </p>
 
-                <p>
+                <p class="w3-margin">
                    <label><b>typ</b></label>
                        <select class="w3-input w3-border" name="typeId">
                        <option selected="selected" value="">wybierz typ biżuterii...</option>
@@ -98,7 +98,7 @@
                     </select>
                  </p>
 
-                <p>
+                <p class="w3-margin">
                    <label><b>typ zapięcia</b></label>
                        <select class="w3-input w3-border" name="fasteningTypeId">
                        <option selected="selected" value="">wybierz zapięcie...</option>
@@ -108,7 +108,7 @@
                        </select>
                     </select>
                  </p>
-                <p>
+                <p class="w3-margin">
                    <label><b>zakres ceny</b></label>
                      <input type="text" name="priceFrom" placeholder="od" class="w3-input w3-border">
                      <input type="text" name="priceTo" placeholder="do" class="w3-input w3-border">
