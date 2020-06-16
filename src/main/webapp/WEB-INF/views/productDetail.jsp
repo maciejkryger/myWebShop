@@ -51,7 +51,8 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">${productType.namePl}</p>
+        <a href="${pageContext.request.contextPath}/types/${productType.name}">
+        <p class="w3-left">${productType.namePl}</p></a>
         <%@include file='header.jsp' %>
     </header>
 
@@ -110,7 +111,7 @@
             <c:if test="${userWishListProduct.product!=product}">
             <form method="POST" action="${pageContext.request.contextPath}/wishList/addFromDetail">
                  <input type="hidden" name="productId" value="${product.id}">
-                 <button class="w3-button w3-border w3-white w3-left w3-round-large">dodaj do ulubionych <i class="far fa-heart"></i></button>
+                 <button style="margin-left:10px" class="w3-button w3-border w3-white w3-left w3-round-large">dodaj do ulubionych <i class="far fa-heart"></i></button>
             </form>
             </c:if>
             <c:if test="${userWishListProduct.product==product}">
@@ -125,14 +126,14 @@
             </form>
           <c:if test="${sessionScope.user.role.id<='2'}">
              <a href="${pageContext.request.contextPath}/panels/data/product/${product.id}">
-                    <button class="w3-button w3-red w3-border w3-round-large">edytuj <i class="far fa-edit"></i></button>
+                    <button style="margin-left:10px" class="w3-button w3-red w3-border w3-round-large">edytuj <i class="far fa-edit"></i></button>
              </a>
           </c:if>
         </div>
-        <div class="w3-row" >
+        <div class="w3-row w3-margin" >
                    <p>Produkt występuje w następujących kolorach:</p>
                     <c:forEach var="item" items="${productsGroup}">
-                        <div class="w3-col l3 s6" style="min-height: 270px;">
+                        <div class="w3-col l3 s6" style="min-height: 275px;">
                           <div class="w3-container">
                             <div class="w3-display-container">
                                 <a href="${pageContext.request.contextPath}/details/${item.id}">

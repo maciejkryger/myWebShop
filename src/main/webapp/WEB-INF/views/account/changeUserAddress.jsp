@@ -58,12 +58,12 @@
     </header>
 
     <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <div class="w3-content w3-container w3-margin" style="max-width:100%">
 
         <form method="post" action="<c:url value='${pageContext.request.contextPath}/account/changeUserAddress' />">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Adres został zapisany' :''}</a>
 
-            <p class="w3-xlarge">Edycja adresu użytkownika: <b>${sessionScope.user.username}</b></p>
+            <p class="w3-large">Edycja adresu użytkownika: <b>${sessionScope.user.username}</b></p>
             <p>Mój adres:</p>
                 <a class="w3-bar-item w3-row" style="color: red">${streetWrong ? 'Pole ulicy posiada niedozwolone znaki.' :''}</a>
                 <p><input class="w3-input w3-border" type="text" name="street" placeholder="wpisz ulicę" value="${address.street}"></p>

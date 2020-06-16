@@ -59,10 +59,12 @@
     </header>
 
     <!-- Change password form -->
-        <h2>Zapomniałeś hasła?</h2>
-        <h4>Wprowadź swój adres e-mail podany przy rejestracji. <br> Wyślemy Ci link umożliwiający zmianę hasła.</h4>
+    <div class="w3-margin">
+        <h3>Zapomniałeś hasła?</h2>
+        <h5>Wprowadź swój adres e-mail podany przy rejestracji. <br> Wyślemy Ci link umożliwiający zmianę hasła.</h4>
+    </div>
 
-        <div class="w3-responsive">
+        <div class="w3-responsive w3-margin">
 
             <table class="w3-table-all w3-hoverable">
                 <form method="post" action="${pageContext.request.contextPath}/forgetPassword">

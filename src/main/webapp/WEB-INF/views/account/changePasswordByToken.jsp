@@ -59,10 +59,10 @@
     </header>
 
     <!-- Change password form -->
-        <h2>Zmień hasło</h2>
 
-        <div class="w3-responsive">
 
+        <div class="w3-responsive w3-margin">
+            <h2>Zmień hasło</h2>
             <table class="w3-table-all w3-hoverable">
                 <form method="post" action="${pageContext.request.contextPath}/changePasswordByToken">
                     <input type="hidden" name="token" value="${token}">

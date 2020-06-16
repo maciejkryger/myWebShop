@@ -58,13 +58,13 @@
     </header>
 
     <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <div class="w3-content w3-container" style="max-width:100%">
         <table class="w3-table-all w3-hoverable">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Rejestracja zakończyła się pomyślnie, sprawdż pocztę by aktywować swojego użytkownia' :''}</a>
             <a class="w3-bar-item w3-padding" style="color: crimson">${userExist ? 'Użytkownik już w naszej bazie istnieje, skorzystać z przypomnienia hasła' :''}</a>
             <a class="w3-bar-item w3-padding" style="color: red">${userExistButNotActive ? 'Użytkownik już w naszej bazie istnieje, ale nie został aktywowany, odszukaj maila z linkiem aktywacyjnym' :''}</a>
             <form method="post" action="<c:url value='${pageContext.request.contextPath}/register' />">
-                <p class="w3-xlarge">Rejestracja nowego użytkownika</p>
+                <p class="w3-large">Rejestracja nowego użytkownika</p>
                 <p>zarejestruj się</p>
                 <a class="w3-bar-item" style="color: crimson">${noUsername ?  'Pole loginu nie może być puste' :''}</a>
                 <a class="w3-bar-item" style="color: crimson">${wrongUsernameChar ?  'W polu wykorzystano niedozwolony znak specjalny lub jest za krótkie, wpisz min 3' :''}</a>

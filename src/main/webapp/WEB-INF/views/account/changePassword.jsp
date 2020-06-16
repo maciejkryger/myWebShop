@@ -59,9 +59,10 @@
     </header>
 
     <!-- Change password form -->
-        <h2>Zmień hasło</h2>
 
-        <div class="w3-responsive">
+
+        <div class="w3-responsive w3-margin">
+            <p class="w3-large">Zmień hasło</p>
 
             <table class="w3-table-all w3-hoverable">
                 <form method="post" action="${pageContext.request.contextPath}/account/changePassword">

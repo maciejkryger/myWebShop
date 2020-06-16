@@ -58,12 +58,12 @@
     </header>
 
     <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <div class="w3-content w3-container" style="max-width:100%">
 
         <form method="post" action="<c:url value='${pageContext.request.contextPath}/account/changeUserDetails' />">
             <a class="w3-bar-item w3-padding" style="color: blue">${success ? 'Zmiana danych wykonała się pomyślnie' :''}</a>
 
-            <p class="w3-xlarge">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
+            <p class="w3-large">Edycja danych użytkownika: <b>${sessionScope.user.username}</b></p>
             <p>moje dane:</p>
                 <p><input class="w3-input w3-border" type="hidden" name="username" value="${user.username}"></p>
                 <a class="w3-bar-item" style="color: crimson">${noFirstName ?  'Pole na imię nie może być puste' :''}</a>

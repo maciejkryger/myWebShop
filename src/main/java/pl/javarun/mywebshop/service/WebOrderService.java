@@ -76,7 +76,7 @@ public class WebOrderService {
     }
 
     public List<WebOrder> getAllHistoryOrdersByUser(User user) {
-        return webOrderRepository.findByUserAndDeliveryDateIsNotNull(user);
+        return webOrderRepository.findByUserAndConfirmedIsTrueAndDeliveryDateIsNotNull(user);
     }
 
     public void updateStatus(WebOrder order, StatusService statusService, EmailOrderChangeStatus emailOrderChangeStatus) {

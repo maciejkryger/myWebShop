@@ -75,7 +75,7 @@
     <!-- Product grid -->
     <div class="w3-row">
         <c:forEach var="item" items="${products}">
-            <div class="w3-col l3 s6" style="min-height: 270px;">
+            <div class="w3-col l3 s6" style="min-height: 275px;">
                 <div class="w3-container">
                      <div class="w3-display-container">
                        <a href="${pageContext.request.contextPath}/details/${item.id}">

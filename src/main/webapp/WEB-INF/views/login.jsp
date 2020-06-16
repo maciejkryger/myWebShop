@@ -58,7 +58,7 @@
     </header>
 
     <!-- Login form -->
-    <div class="w3-content w3-display-container" style="max-width:100%">
+    <div class="w3-content w3-container" style="max-width:100%">
         <table class="w3-table-all w3-hoverable">
         <a class="w3-bar-item w3-padding" style="color: crimson">${error ?  'Błędny użytkownik lub hasło!!!' :''}</a>
         <form method="post" action="<c:url value='${pageContext.request.contextPath}/login' />">

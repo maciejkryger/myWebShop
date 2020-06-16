@@ -112,7 +112,7 @@
 
 
 <!-- Delivery grid -->
- <h2>historia zamówień</h2>
+ <h2 class="w3-margin">historia zamówień</h2>
 <div class="w3-responsive w3-padding">
     <a href="${pageContext.request.contextPath}/account/" class="w3-button w3-white w3-border w3-round-large w3-right">cofnij</a>
 </div>
