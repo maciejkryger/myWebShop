@@ -73,15 +73,16 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">moje zamówienia</p>
+        <p class="w3-left">zamówienia</p>
         <%@include file='../header.jsp' %>
     </header>
 
 
 <!-- Delivery grid -->
- <h2>moje zamówienia</h2>
+
 
         <div class="w3-responsive w3-padding">
+        <h2>moje zamówienia</h2>
                     <c:if test="${sessionScope.user.username!=null}">
                         <label><b>Jesteś zalogowany jako: </b>${sessionScope.user.username}</label>
                     </c:if>

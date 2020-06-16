@@ -104,7 +104,7 @@
 
     <!-- Top header -->
     <header class="w3-container w3-xlarge">
-        <p class="w3-left">moje zamówienia</p>
+        <p class="w3-left">zamówienia</p>
         <%@include file='../header.jsp' %>
     </header>
 
