@@ -65,7 +65,11 @@
             <p class="footer-font"><i class="fa fa-fw fa-envelope"></i>${company.email}</p>
             <br>
             <h6>Facebook</h6>
+            <!--
             <a href="https://www.facebook.com/KoralikowaPasjonatka/"><i
+                    class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
+                    -->
+            <a href="https://www.facebook.com/Qunsztowna-111868297094050/"><i
                     class="fab fa-facebook w3-hover-opacity w3-large"></i></a>
             <br><br>
             <h6>Obsługuje nas</h6>

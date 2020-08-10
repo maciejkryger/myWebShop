@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="icon" src="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon">
 <script src='https://kit.fontawesome.com/a076d05399.js'></script>
 <%@include file='icons.jsp' %>
 <style>
@@ -64,7 +65,7 @@
         <p class="w3-left">biżuteria ręcznie robiona</p>
         <%@include file='header.jsp' %>
     </header>
-
+    
     <!-- Info section  -->
     <div>
     <a class="w3-bar-item" style="color: blue">${activationFailed ? 'Błędny link aktywacyjny. Aktywacja się nie powiodła.' :''}</a>

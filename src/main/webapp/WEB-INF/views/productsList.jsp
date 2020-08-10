@@ -79,7 +79,7 @@
                 <div class="w3-container">
                      <div class="w3-display-container">
                        <a href="${pageContext.request.contextPath}/details/${item.id}">
-                       <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" style="width:100%"></a>
+                       <img src="${pageContext.request.contextPath}/images/${productType.id}/${item.id}.jpg" onmouseover="bigImg(this)" onmouseout="normalImg(this)" style="width:100%"></a>
                        <c:if test="${item.creationDate>=newProductPeriod}">
                          <span class="w3-tag w3-display-topleft">Nowość</span>
                        </c:if>
@@ -179,6 +179,17 @@
 </div>
 
 <script>
+    function bigImg(x) {
+        x.style.margin="-5%"
+        x.style.width = "110%";
+    }
+
+    function normalImg(x) {
+        x.style.margin="0%"
+        x.style.width = "100%";
+    }
+
+
     // Accordion
     function myAccFunc() {
         var x = document.getElementById("demoAcc");

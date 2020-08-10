@@ -95,7 +95,7 @@
       <a class="w3-bar-item w3-row" style="color: red">${houseNoWrong ? 'Pole numeru domu posiada niedozwolone znaki.' :''} ${houseNoEmpty ? 'Pole numeru domu  nie może zostać puste.' :''}</a>
       <p><label class="w3-row"><b>kod pocztowy(00-000) i miasto:</b></label></p>
       <p>
-      <input type="text" name="postCode" placeholder="kod poczt." maxlength="6" size="6"  value=${address.postCode} class="myInput">
+      <input type="text" name="postCode" placeholder="kod poczt." maxlength="6" size="6"  value="${address.postCode}" class="myInput">
       <input type="text" name="city" placeholder="miasto" value="${address.city}" class="myInput">
       </p>
       <a class="w3-bar-item w3-row" style="color: red">${postCodeWrong ? 'Pole kodu pocztowego ma zły format' :''} ${postCodeEmpty ? ', nie może zostać puste.' :''}</a>

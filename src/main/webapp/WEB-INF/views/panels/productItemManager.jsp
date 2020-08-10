@@ -14,6 +14,18 @@
     body, h1, h2, h3, h4, h5, h6, .w3-wide {
         font-family: "Montserrat", sans-serif;
     }
+
+    .main-img {
+          width: 20%;
+        }
+
+        @media only screen and (max-width: 600px) {
+              /* For mobile phones: */
+                  .main-img {
+                    width: 100%;
+                  }
+
+              }
 </style>
 <body class="w3-content" style="max-width:2200px">
 
@@ -64,6 +76,9 @@
                     <input type="hidden" name="searchWhat" value="${param.searchWhat}">
                     <input type="hidden" name="searchBy" value="${param.searchBy}">
                   </c:if>
+                    <p>
+                    <img src="${pageContext.request.contextPath}/images/${product.type.id}/${product.id}.jpg" class="main-img">
+                    </p>
                     <p>
                         <label><b>id: ${product.id}</b></label>
                         <input type="hidden" name="id" placeholder="id" class="w3-input w3-border"
@@ -155,8 +170,7 @@
                     </p>
                     <p>
                         <label><b>opis po polsku</b></label>
-                        <input type="text" name="descriptionPl" placeholder="opis po polsku" class="w3-input w3-border"
-                               value="${product.descriptionPl}">
+                        <textarea name="descriptionPl" rows = "5" cols = "60" placeholder="opis po polsku" class="w3-input w3-border">${product.descriptionPl}</textarea>
                     </p>
                     <p>
                         <label><b>opis po angielsku</b></label>
